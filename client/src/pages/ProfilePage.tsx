@@ -1,10 +1,9 @@
+import {FC} from "react";
 
-const ProfilePage = () => {
+export const ProfilePage: FC = () => {
     return (
         <div>
             Profile
         </div>
     );
 };
-
-export default ProfilePage;

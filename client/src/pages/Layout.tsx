@@ -1,6 +1,7 @@
 import {Outlet} from "react-router-dom"
+import {FC} from "react";
 
-const Layer = () => {
+export const Layout: FC = () => {
     return (
         <div>
 
@@ -19,5 +20,3 @@ const Layer = () => {
         </div>
     );
 };
-
-export default Layer;

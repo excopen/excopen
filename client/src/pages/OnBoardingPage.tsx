@@ -1,11 +1,9 @@
-import React from "react";
+import {FC} from "react";
 
-const OnBoardingPage: React.FC = () => {
+export const OnBoardingPage: FC = () => {
     return (
         <div>
             OnBoarding
         </div>
     );
 };
-
-export default OnBoardingPage;

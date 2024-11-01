@@ -1,10 +1,9 @@
+import {FC} from "react";
 
-const LocationsPage = () => {
+export const LocationsPage: FC = () => {
     return (
         <div>
             Locations
         </div>
     );
 };
-
-export default LocationsPage;

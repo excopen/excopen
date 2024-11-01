@@ -1,10 +1,9 @@
+import {FC} from "react";
 
-const ToursPage = () => {
+export const ToursPage: FC = () => {
     return (
         <div>
             Tours
         </div>
     );
 };
-
-export default ToursPage;

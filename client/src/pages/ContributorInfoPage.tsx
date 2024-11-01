@@ -1,10 +1,9 @@
+import {FC} from "react";
 
-const ContributorInfoPage = () => {
+export const ContributorInfoPage: FC = () => {
     return (
         <div>
             Contributor
         </div>
     );
 };
-
-export default ContributorInfoPage;

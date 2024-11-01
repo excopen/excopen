@@ -1,8 +1,8 @@
 import {useContext} from "react";
 import {UserContext} from "./userContext.tsx";
-import {IUserContext} from "./types.ts";
+import {UserType} from "./types.ts";
 
-export const useUserContext = (): IUserContext => {
+export const useUserContext = (): UserType => {
     const context = useContext(UserContext);
     if (!context) throw new Error("Context error!");
     return context;

@@ -1,10 +1,9 @@
+import {FC} from "react";
 
-const HomePage = () => {
+export const HomePage: FC = () => {
     return (
         <div>
             Home
         </div>
     );
 };
-
-export default HomePage;
