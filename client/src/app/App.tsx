@@ -9,26 +9,20 @@ import {
     ProfilePage, TourPage,
     ToursPage
 } from "@/pages";
-import {useUserContext} from "@/app/providers/context";
 import {UserRole} from "@/shared/types";
+import {RequireAuth} from "@/app/providers/routing";
 
 function App() {
-
-    const {role} = useUserContext()
-
     return (
         <Routes>
-
-            {/* Маршруты достпные только для клитента */}
-
-            {
-                role === UserRole.client ?
-                    <Route path={"/onboarding"} element={<OnBoardingPage/>}/> :
-                    null
-            }
-
-            {/* Общие маршруты */}
-
+            <Route
+                path={"/onboarding"}
+                element={
+                    <RequireAuth role={UserRole.client}>
+                        <OnBoardingPage/>
+                    </RequireAuth>
+                }
+            />
             <Route path={"/"} element={<Layout/>}>
                 <Route path={"main"} element={<HomePage/>}/>
                 <Route path={"locations"} element={<LocationsPage/>}/>
@@ -37,15 +31,14 @@ function App() {
                 <Route path={"contributor/:id"} element={<ContributorInfoPage/>}/>
                 <Route path={"profile"} element={<ProfilePage/>}/>
                 <Route path={"favourites"} element={<FavouritesPage/>}/>
-
-                {/* Маршруты достпные только для контрибьютера */}
-
-                {
-                    role === UserRole.contributor ?
-                        <Route path={"create"} element={<CreateTourPage/>}/> :
-                        null
-                }
-
+                <Route
+                    path={"create"}
+                    element={
+                        <RequireAuth role={UserRole.contributor}>
+                            <CreateTourPage/>
+                        </RequireAuth>
+                    }
+                />
             </Route>
         </Routes>
     );
