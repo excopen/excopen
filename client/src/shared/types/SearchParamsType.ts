@@ -1,6 +1,6 @@
 export type SearchParamsType = {
     location: string
     date: string
-    type: string
+    accessibility: string
     byCity: boolean
 }

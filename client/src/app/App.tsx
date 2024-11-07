@@ -9,14 +9,14 @@ import {
     ProfilePage, TourPage,
     ToursPage
 } from "@/pages";
-import {UserRole} from "@/shared/types";
+import {RouteNames, UserRole} from "@/shared/types";
 import {RequireAuth} from "@/app/providers/routing";
 
 function App() {
     return (
         <Routes>
             <Route
-                path={"/onboarding"}
+                path={`/${RouteNames.ON_BOARDING}`}
                 element={
                     <RequireAuth role={UserRole.client}>
                         <OnBoardingPage/>
@@ -24,15 +24,15 @@ function App() {
                 }
             />
             <Route path={"/"} element={<Layout/>}>
-                <Route path={"main"} element={<HomePage/>}/>
-                <Route path={"locations"} element={<LocationsPage/>}/>
-                <Route path={"tours"} element={<ToursPage/>}/>
-                <Route path={"tour/:id"} element={<TourPage/>}/>
-                <Route path={"contributor/:id"} element={<ContributorInfoPage/>}/>
-                <Route path={"profile"} element={<ProfilePage/>}/>
-                <Route path={"favourites"} element={<FavouritesPage/>}/>
+                <Route path={RouteNames.MAIN} element={<HomePage/>}/>
+                <Route path={RouteNames.LOCATIONS} element={<LocationsPage/>}/>
+                <Route path={RouteNames.TOURS} element={<ToursPage/>}/>
+                <Route path={`${RouteNames.TOUR}/:id`} element={<TourPage/>}/>
+                <Route path={`${RouteNames.CONTRIBUTOR}/:id`} element={<ContributorInfoPage/>}/>
+                <Route path={RouteNames.PROFILE} element={<ProfilePage/>}/>
+                <Route path={RouteNames.FAVOURITES} element={<FavouritesPage/>}/>
                 <Route
-                    path={"create"}
+                    path={RouteNames.CREATE}
                     element={
                         <RequireAuth role={UserRole.contributor}>
                             <CreateTourPage/>

@@ -1,1 +1,1 @@
-export {SearchTourBar} from "./ui/index.tsx"
+export {SearchTourBar} from "./ui"
