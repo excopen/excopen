@@ -1,1 +1,1 @@
-export {RequireAuth} from "./RequireAuth.tsx"
+export {AppRoutes} from "./AppRoutes.tsx"
