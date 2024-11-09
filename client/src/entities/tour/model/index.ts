@@ -1,1 +1,1 @@
-export * from "./hooks"
+export {filterTours} from "./filterTours.ts"

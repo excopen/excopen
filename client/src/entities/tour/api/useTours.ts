@@ -1,7 +1,7 @@
 import {useQuery} from "@tanstack/react-query";
-import {filterTours} from "src/entities/tour/model/utils";
 import {SearchParamsType, ITour} from "@/shared/types";
-import {fetchData} from "src/shared/lib";
+import {fetchData} from "@/shared/lib";
+import {filterTours} from "@/entities/tour/model";
 
 export const useTours = (searchParams: SearchParamsType) => {
 
