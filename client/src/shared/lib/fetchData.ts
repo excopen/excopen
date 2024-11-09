@@ -1,6 +1,6 @@
-import {apiClient} from "@/shared/api/index.ts";
-import {ApiException} from "@/shared/utils";
+import {apiClient} from "@/shared/lib/index.ts";
 import axios from "axios";
+import {ApiException} from "./exceptions.ts";
 
 export const fetchData = async <T>(entity: string): Promise<T[]> => {
     try {

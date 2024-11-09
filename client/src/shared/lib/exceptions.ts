@@ -1,6 +1,7 @@
-import {ITour} from "@/shared/types/models/ITour.ts";
+import {ITour} from "@/shared/types/entities/ITour.ts";
 
 export class ApiException extends Error {
+
     public statusCode?: number;
     public data?: ITour[];
 
@@ -11,4 +12,5 @@ export class ApiException extends Error {
         this.data = data;
         Object.setPrototypeOf(this, ApiException.prototype);
     }
+
 }

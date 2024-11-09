@@ -1,6 +1,6 @@
-import {SearchTourContext} from "@/features/searchTour/model/context/SearchTourContext.tsx";
 import {useContext} from "react";
-import {SearchTourContextType} from "@/features/searchTour/model/context/types.ts";
+import {SearchTourContext} from "./context.ts";
+import {SearchTourContextType} from "./types.ts";
 
 export const useSearchTourContext = (): SearchTourContextType => {
     const context = useContext(SearchTourContext)

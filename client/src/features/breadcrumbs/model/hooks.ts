@@ -1,6 +1,7 @@
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {BreadcrumbType, RouteNames} from "@/shared/types";
+import {RouteNames} from "@/shared/types";
+import {BreadcrumbType} from "./types.ts";
 
 export const useBreadcrumbs = (): BreadcrumbType[] => {
 

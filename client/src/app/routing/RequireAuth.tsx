@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {UserRole} from "@/shared/types";
-import {useAuthContext} from "@/app/providers/context";
 import {Navigate} from "react-router-dom";
+import {useAuthContext} from "@/app/context";
 
 type RequireAuthProps = {
     children: React.ReactNode;

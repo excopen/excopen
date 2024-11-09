@@ -10,7 +10,7 @@ import {
     ToursPage
 } from "@/pages";
 import {RouteNames, UserRole} from "@/shared/types";
-import {RequireAuth} from "@/app/providers/routing";
+import {RequireAuth} from "@/app/routing";
 
 function App() {
     return (
