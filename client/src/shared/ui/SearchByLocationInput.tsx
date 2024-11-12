@@ -7,6 +7,7 @@ type SearchByLocationInputProps = React.InputHTMLAttributes<HTMLInputElement> & 
     onChangeValue: (value: string) => void;
 };
 
+
 const SearchByLocationInput = React.forwardRef<
     HTMLInputElement,
     SearchByLocationInputProps

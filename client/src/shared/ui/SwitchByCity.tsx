@@ -7,6 +7,7 @@ type SwitchByCityProps = React.ComponentPropsWithoutRef<typeof SwitchPrimitives.
     onChangeValue: (byCity: boolean) => void
 }
 
+
 const SwitchByCity = React.forwardRef<
     React.ElementRef<typeof SwitchPrimitives.Root>,
     SwitchByCityProps
