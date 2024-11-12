@@ -7,7 +7,8 @@ import {
     SwitchByCity
 } from "@/shared/ui";
 import {SelectAccessibility} from "./SelectAccessibility.tsx";
-import {RouteNames} from "@/shared/types";
+import {RouteNames, TourAccessibility} from "@/shared/types";
+import {tourAccessibilityArray} from "@/widgets/searchTourBar/utils";
 
 export const SearchTourBar: FC = () => {
 
@@ -27,15 +28,19 @@ export const SearchTourBar: FC = () => {
     return (
         <div>
             <div>
-                <SearchByLocationInput setter={setLocation}/>
+                <SearchByLocationInput onChangeValue={setLocation}/>
                 <Calendar/>
-                <SelectAccessibility setter={setAccessibility}/>
+                <SelectAccessibility
+                    defaultValue={TourAccessibility.WITHOUT_CHILDREN}
+                    options={tourAccessibilityArray}
+                    onChangeValue={setAccessibility}
+                />
                 <SearchButton disabled={disabled} path={RouteNames.TOURS}>
                     Искать
                 </SearchButton>
             </div>
             <div>
-                <SwitchByCity setter={setByCity}/>
+                <SwitchByCity onChangeValue={setByCity}/>
             </div>
         </div>
     );

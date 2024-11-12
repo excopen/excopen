@@ -1,11 +1,9 @@
-import {ITour} from "@/shared/types/entities/ITour.ts";
-
-export class ApiException extends Error {
+export class ApiException<T> extends Error {
 
     public statusCode?: number;
-    public data?: ITour[];
+    public data?: T[];
 
-    constructor(message: string, statusCode?: number, data?: ITour[]) {
+    constructor(message: string, statusCode?: number, data?: T[]) {
         super(message); // Передаем сообщение в базовый класс Error
         this.name = 'ApiError';
         this.statusCode = statusCode;

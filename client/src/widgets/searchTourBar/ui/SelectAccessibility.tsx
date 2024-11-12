@@ -1,25 +1,24 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui";
 import { FC, useEffect, useState } from "react";
-import { useDebounceValue } from "usehooks-ts";
-import {tourAccessibilityArray} from "@/widgets/searchTourBar/utils";
+import {TourAccessibility} from "@/shared/types";
 
 type SelectAccessibilityProps = {
-    setter: (value: string) => void;
+    defaultValue: TourAccessibility
+    onChangeValue: (value: TourAccessibility) => void
+    options: {value: TourAccessibility, label: string}[]
 };
 
-export const SelectAccessibility: FC<SelectAccessibilityProps> = ({ setter }) => {
+export const SelectAccessibility: FC<SelectAccessibilityProps> = ({ defaultValue, onChangeValue, options }) => {
 
-    const [value, setValue] = useState<string>("");
+    const [value, setValue] = useState<TourAccessibility>(defaultValue);
 
-    const clickHandler = (value: string) => {
+    const clickHandler = (value: TourAccessibility) => {
         setValue(value);
     };
 
-    const [debouncedValue] = useDebounceValue<string>(value, 500);
-
     useEffect(() => {
-        setter(debouncedValue);
-    }, [debouncedValue]);
+        onChangeValue(value);
+    }, [value]);
 
     return (
         <Select value={value} onValueChange={clickHandler}>
@@ -27,8 +26,8 @@ export const SelectAccessibility: FC<SelectAccessibilityProps> = ({ setter }) =>
                 <SelectValue placeholder="участники" />
             </SelectTrigger>
             <SelectContent>
-                {tourAccessibilityArray.map(tour =>
-                    <SelectItem value={tour.value}>
+                {options.map((tour, key) =>
+                    <SelectItem key={key} value={tour.value}>
                         {tour.label}
                     </SelectItem>
                 )}

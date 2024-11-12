@@ -1,11 +1,6 @@
 import {FC, ReactNode, useState} from "react";
 import {SearchParamsType, TourAccessibility} from "@/shared/types";
-import {
-    SearchTourContext,
-    setAccessibility,
-    setByCity,
-    setLocation
-} from "@/features";
+import {SearchTourContext} from "@/features";
 
 export const SearchTourProvider: FC<{children: ReactNode}> = ({children}) => {
 
@@ -16,12 +11,33 @@ export const SearchTourProvider: FC<{children: ReactNode}> = ({children}) => {
         byCity: false
     })
 
+    const setLocation = (location: string) => {
+        setSearchParams({
+            ...searchParams,
+            location
+        })
+    }
+
+    const setAccessibility = (accessibility: TourAccessibility) => {
+        setSearchParams({
+            ...searchParams,
+            accessibility
+        })
+    }
+
+    const setByCity = (byCity: boolean) => {
+        setSearchParams({
+            ...searchParams,
+            byCity
+        })
+    }
+
     return (
         <SearchTourContext.Provider value={{
             searchParams,
-            setLocation: (location) => setLocation(location, setSearchParams),
-            setAccessibility: (accessibility) => setAccessibility(accessibility, setSearchParams),
-            setByCity: (byCity) => setByCity(byCity, setSearchParams)
+            setLocation,
+            setAccessibility,
+            setByCity
         }}>
             {children}
         </SearchTourContext.Provider>

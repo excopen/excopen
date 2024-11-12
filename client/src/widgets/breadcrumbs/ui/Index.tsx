@@ -9,7 +9,7 @@ import {
 } from "@/shared/ui";
 import {useBreadcrumbs} from "@/features";
 
-export const BreadcrumbWidget: FC = () => {
+export const Breadcrumbs: FC = () => {
 
     const breadcrumbs = useBreadcrumbs()
 

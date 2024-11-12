@@ -1,1 +1,0 @@
-export {BreadcrumbWidget} from "./Index.tsx"
