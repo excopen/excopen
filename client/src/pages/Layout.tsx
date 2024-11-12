@@ -1,22 +1,16 @@
 import {Outlet} from "react-router-dom"
 import {FC} from "react";
+import {Breadcrumbs, Footer, Header} from "@/widgets";
 
 export const Layout: FC = () => {
     return (
         <div>
-
-            <header>
-                Header
-            </header>
-
+            <Header/>
             <main>
+                <Breadcrumbs/>
                 <Outlet/>
             </main>
-
-            <footer>
-                footer
-            </footer>
-
+            <Footer/>
         </div>
     );
 };
