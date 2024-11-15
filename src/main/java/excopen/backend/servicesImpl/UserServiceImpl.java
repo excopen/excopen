@@ -4,6 +4,7 @@ import excopen.backend.entities.User;
 import excopen.backend.iservices.IUserService;
 import excopen.backend.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,4 +45,20 @@ public class UserServiceImpl implements IUserService {
         return userRepository.save(user);
     }
 
+    // Обработка пользователя OAuth2
+    public User processOAuthPostLogin(OAuth2User oAuth2User) {
+        String googleId = oAuth2User.getAttribute("sub");
+        Optional<User> userOptional = userRepository.findByGoogleId(googleId);
+
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else {
+            User newUser = new User();
+            newUser.setGoogleId(googleId);
+            newUser.setEmail(oAuth2User.getAttribute("email"));
+            newUser.setName(oAuth2User.getAttribute("given_name"));
+            newUser.setSurname(oAuth2User.getAttribute("family_name"));
+            return userRepository.save(newUser);
+        }
+    }
 }
