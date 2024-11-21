@@ -1,4 +1,5 @@
 export * from "./api/SearchParamsType.ts"
 export * from "./auth/UserRole.ts"
 export * from "./entities"
+export * from "./ui"
 export * from "./routing/RouteNames.ts"
