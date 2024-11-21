@@ -1,16 +1,16 @@
 import {FC} from "react";
 import {useSearchTourContext} from "@/features/searchTour";
-import {
-    Calendar,
-    SearchButton,
-    SearchByLocationInput,
-    SwitchByCity
-} from "@/shared/ui";
-import {SelectAccessibility} from "./SelectAccessibility.tsx";
-import {RouteNames, TourAccessibility} from "@/shared/types";
+import {SelectAccessibility} from "./components/SelectAccessibility.tsx";
+import {Orientation, RouteNames, TourAccessibility} from "@/shared/types";
 import {tourAccessibilityArray} from "@/widgets/searchTourBar/utils";
+import {Container, SubContainerBottom, SubContainerTop} from "@/widgets/searchTourBar/ui/containers";
+import {DatePicker, Heading, Input, SearchButton, SwitchByCity} from "@/widgets/searchTourBar/ui/components";
 
-export const SearchTourBar: FC = () => {
+type SearchTourBarProps = {
+    orientation: Orientation
+}
+
+export const SearchTourBar: FC<SearchTourBarProps> = ({orientation}) => {
 
     const {
         setLocation,
@@ -26,22 +26,42 @@ export const SearchTourBar: FC = () => {
         !searchParams.byCity
 
     return (
-        <div>
-            <div>
-                <SearchByLocationInput onChangeValue={setLocation}/>
-                <Calendar/>
+        <Container orientation={orientation}>
+            <SubContainerTop orientation={orientation}>
+                <Heading value={"Куда теперь?"} orientation={orientation}/>
+                <Input
+                    onChangeValue={setLocation}
+                />
+                <DatePicker/>
                 <SelectAccessibility
                     defaultValue={TourAccessibility.WITHOUT_CHILDREN}
                     options={tourAccessibilityArray}
                     onChangeValue={setAccessibility}
                 />
-                <SearchButton disabled={disabled} path={RouteNames.TOURS}>
-                    Искать
-                </SearchButton>
-            </div>
-            <div>
-                <SwitchByCity onChangeValue={setByCity}/>
-            </div>
-        </div>
+                {
+                    orientation === Orientation.VERTICAL
+                        ?
+                        <SubContainerBottom orientation={orientation}>
+                            <SwitchByCity onChangeValue={setByCity} />
+                        </SubContainerBottom>
+                        :
+                        null
+                }
+                <SearchButton
+                    orientation={orientation}
+                    path={RouteNames.TOURS}
+                    disabled={disabled}
+                />
+            </SubContainerTop>
+            {
+                orientation === Orientation.HORIZONTAL
+                    ?
+                    <SubContainerBottom orientation={orientation}>
+                        <SwitchByCity onChangeValue={setByCity} />
+                    </SubContainerBottom>
+                    :
+                    null
+            }
+        </Container>
     );
 };
