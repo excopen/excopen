@@ -5,7 +5,7 @@ import {filterTours} from "@/entities/tour/model";
 
 export const useTours = (searchParams: SearchParamsType) => {
 
-    const {data, isLoading, error} = useQuery<ITour[], null>({
+    const {data, isLoading, error} = useQuery<ITour[]>({
         queryKey: ['tours'],
         queryFn: () => fetchData<ITour>("/tours"),
         staleTime: 60000
