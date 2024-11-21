@@ -1,0 +1,1 @@
+export {LocationsList} from "./Index.tsx"
