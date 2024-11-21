@@ -1,4 +1,5 @@
 import { FC } from "react";
+import {useBreadcrumbs} from "@/features";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -7,7 +8,6 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator
 } from "@/shared/ui";
-import {useBreadcrumbs} from "@/features";
 
 export const Breadcrumbs: FC = () => {
 
