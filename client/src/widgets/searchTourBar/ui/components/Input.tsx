@@ -9,7 +9,6 @@ import {
 } from "@/shared/ui";
 import * as React from "react";
 import {FC, useEffect, useRef, useState} from "react";
-import {useDebounceValue} from "usehooks-ts";
 import {locationsArray} from "@/widgets/searchTourBar/utils";
 
 type InputProps = {
@@ -24,7 +23,7 @@ export const Input: FC<InputProps> = ({ onChangeValue }) => {
     const commandRef = useRef<HTMLDivElement | null>(null);
 
     const clickHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
-    const [debouncedValue] = useDebounceValue<string>(value, 500);
+    //const [debouncedValue] = useDebounceValue<string>(value, 300);
 
     const clickItemHandler = (newValue: string) => {
         setValue(newValue)
@@ -32,8 +31,8 @@ export const Input: FC<InputProps> = ({ onChangeValue }) => {
     }
 
     useEffect(() => {
-        onChangeValue(debouncedValue);
-    }, [debouncedValue, onChangeValue]);
+        onChangeValue(value);
+    }, [value, onChangeValue]);
 
     useEffect(() => {
 

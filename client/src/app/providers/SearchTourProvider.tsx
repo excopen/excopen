@@ -6,7 +6,7 @@ export const SearchTourProvider: FC<{children: ReactNode}> = ({children}) => {
 
     const [searchParams, setSearchParams] = useState<SearchParamsType>({
         location: "",
-        date: "",
+        date: undefined,
         accessibility: TourAccessibility.WITHOUT_CHILDREN,
         byCity: false
     })
@@ -32,12 +32,20 @@ export const SearchTourProvider: FC<{children: ReactNode}> = ({children}) => {
         })
     }
 
+    const setDate = (date: Date | undefined) => {
+        setSearchParams({
+            ...searchParams,
+            date
+        })
+    }
+
     return (
         <SearchTourContext.Provider value={{
             searchParams,
             setLocation,
             setAccessibility,
-            setByCity
+            setByCity,
+            setDate
         }}>
             {children}
         </SearchTourContext.Provider>

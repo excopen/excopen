@@ -11,11 +11,8 @@ type SearchButtonProps = {
 
 export const SearchButton: FC<SearchButtonProps> = ({path, disabled, orientation}) => {
 
-    // TODO подумать как обрабатывать флаг
-    //console.log(disabled)
-
     return (
-        disabled ? (
+        !disabled ? (
             <Button size={orientation === Orientation.HORIZONTAL ? "default" : "lg"} disabled={true}>
                 Искать
             </Button>
