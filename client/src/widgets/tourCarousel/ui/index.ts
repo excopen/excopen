@@ -1,0 +1,1 @@
+export {TourCarousel} from "./Index.tsx"
