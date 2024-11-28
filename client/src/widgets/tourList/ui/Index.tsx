@@ -2,9 +2,9 @@ import {FC, useState} from "react";
 import {Header} from "@/widgets/tourList/ui/Header.tsx";
 import {TourListContainer} from "@/widgets/tourList/ui/TourListContainer.tsx";
 import {TourCard} from "@/widgets";
-import {ToursArray} from "@/widgets/tourList/assets/ToursArray.ts";
 import {Button} from "@/shared/ui";
 import {PaginationContainer} from "@/widgets/tourList/ui/PaginationContainer.tsx";
+import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
 
 export const TourList: FC = () => {
 

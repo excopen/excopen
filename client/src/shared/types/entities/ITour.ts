@@ -8,7 +8,7 @@ export interface ITour {
     id: number;
     title: string;
     shortDescription: string
-    images: string[] // массив избражений (тип временный)
+    images: string[]
     map?: string
     description?: IDescription;
     location?: ILocation;
@@ -20,8 +20,7 @@ export interface ITour {
     format?: string
     duration: string;
     routeLength: number;
-    minAge?: number; // Зачем?
-    maxCapacity?: number; // Зачем?
+    minAge?: number;
     rating: string;
     ratingCount: number
     date?: Date

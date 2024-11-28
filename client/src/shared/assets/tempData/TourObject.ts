@@ -1,12 +1,12 @@
 import {ITour} from "@/shared/types";
-import image from "@/widgets/tourList/assets/img1.png";
-import image2 from "@/widgets/tourList/assets/img2.png";
-import image3 from "@/widgets/tourList/assets/img3.png";
-import image4 from "@/widgets/tourList/assets/img4.png";
-import map from "@/widgets/tourList/assets/map.png";
-import {DescriptionObject} from "@/widgets/tourList/assets/DescriptionObject.ts";
-import {ContributorObject} from "@/widgets/tourList/assets/ContributorObject.ts";
-import {ContactsObject} from "@/widgets/tourList/assets/ContactsObject.tsx";
+import image from "./assets/img1.png";
+import image2 from "./assets/img2.png";
+import image3 from "./assets/img3.png";
+import image4 from "./assets/img4.png";
+import map from "./assets/map.png";
+import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
+import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
+import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 
 export const TourObject: ITour = {
     id: 0,

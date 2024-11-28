@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {locationsArray} from "@/widgets/locationsList/assets/locationsArray.ts";
+import {locationsArray} from "@/shared/assets/tempData/LocationsArray.ts";
 import {LocationCard} from "@/widgets/locationCard";
 import {Button} from "@/shared/ui";
 import {Heading} from "@/widgets/locationsList/ui/Heading.tsx";
@@ -13,6 +13,7 @@ export const LocationsList: FC = () => {
             <ListContainer>
                 {locationsArray.map(location => (
                     <LocationCard
+                        key={location.id}
                         country={location.country}
                         city={location.city}
                         tourCount={location.tourCount}

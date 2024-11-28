@@ -4,7 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority"
 import {cn} from "@/app/lib/utils.ts";
 
 const ButtonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-base transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 " +
+    "whitespace-nowrap rounded-md text-base " +
+    "transition-colors " +
+    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring " +
+    "disabled:pointer-events-none disabled:opacity-50 " +
+    "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -34,9 +39,8 @@ const ButtonVariants = cva(
 )
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof ButtonVariants> {
-  asChild?: boolean
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof ButtonVariants> {
+    asChild?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -51,6 +55,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     )
   }
 )
+
 Button.displayName = "Button"
 
 export { Button, ButtonVariants }
