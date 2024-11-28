@@ -10,6 +10,7 @@ import {
 import * as React from "react";
 import {FC, useEffect, useRef, useState} from "react";
 import {locationsArray} from "@/widgets/searchTourBar/utils";
+import {useOnClickOutside} from "usehooks-ts";
 
 type InputProps = {
     onChangeValue: (value: string) => void;
@@ -20,7 +21,7 @@ export const Input: FC<InputProps> = ({ onChangeValue }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [value, setValue] = useState<string>("");
 
-    const commandRef = useRef<HTMLDivElement | null>(null);
+    const commandRef = useRef<HTMLDivElement>(null);
 
     const clickHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
     //const [debouncedValue] = useDebounceValue<string>(value, 300);
@@ -34,24 +35,7 @@ export const Input: FC<InputProps> = ({ onChangeValue }) => {
         onChangeValue(value);
     }, [value, onChangeValue]);
 
-    useEffect(() => {
-
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                commandRef.current &&
-                !commandRef.current.contains(event.target as Node)
-            ) {
-                setIsOpen(false); // Закрытие CommandList
-            }
-        }
-
-        document.addEventListener("mousedown", handleClickOutside);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-
-    }, []);
+    useOnClickOutside(commandRef, () => setIsOpen(false))
 
     return (
         <Command ref={commandRef}>

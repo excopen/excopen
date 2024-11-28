@@ -1,5 +1,6 @@
 import {FC, ReactNode} from "react";
 import {Orientation} from "@/shared/types";
+import {cn} from "@/app/lib/utils.ts";
 
 type SubContainerTopProps = {
     children: ReactNode
@@ -8,16 +9,11 @@ type SubContainerTopProps = {
 
 export const SubContainerTop: FC<SubContainerTopProps> = ({children, orientation}) => {
     return (
-        <div className={
-            "flex " +
-            (
-                orientation === Orientation.HORIZONTAL
-                    ?
-                    "flex-row justify-between gap-4"
-                    :
-                    "flex-col items-center gap-4"
-            )
-        }>
+        <div className={cn("flex gap-4",
+            orientation === Orientation.HORIZONTAL ?
+                "flex-row justify-between" :
+                "flex-col items-center gap-4"
+        )}>
             {children}
         </div>
     );

@@ -1,16 +1,9 @@
 import {FC} from "react";
-import {Container} from "@/widgets/tourDescription/ui/Container.tsx";
-import {SubContainer} from "@/widgets/tourDescription/ui/SubContainer.tsx";
-import {Heading} from "@/widgets/tourDescription/ui/Heading.tsx";
-import {BoldText} from "@/widgets/tourDescription/ui/BoldText.tsx";
-import {List} from "@/widgets/tourDescription/ui/List.tsx";
-import {ContactContainer} from "@/widgets/tourDescription/ui/ContactContainer.tsx";
-import {ContactButton} from "@/widgets/tourDescription/ui/ContactButton.tsx";
-import {TelegramButton} from "@/widgets/tourDescription/ui/TelegramButton.tsx";
-import {VKButton} from "@/widgets/tourDescription/ui/VKButton.tsx";
-import {ButtonContainer} from "@/widgets/tourDescription/ui/ButtonContainer.tsx";
-import {Details} from "@/widgets/tourDescription/ui/Details.tsx";
 import {ITour} from "@/shared/types";
+import {Details} from "@/widgets/tourDescription/ui/details";
+import {ButtonContainer, ContactContainer, Container, SubContainer} from "@/widgets/tourDescription/ui/containers";
+import {BoldText, Heading, List} from "@/widgets/tourDescription/ui/components";
+import {ContactButton, TelegramButton, VKButton} from "@/widgets/tourDescription/ui/buttons";
 
 type TourDescriptionProps = {
     tour: ITour | undefined

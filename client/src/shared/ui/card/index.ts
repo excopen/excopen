@@ -1,6 +1,3 @@
 export {Card} from "./Card.tsx"
 export {CardContent} from "./CardContent.tsx"
-export {CardDescription} from "./CardDescription.tsx"
-export {CardTitle} from "./CardTitle.tsx"
-export {CardHeader} from "./CardHeader.tsx"
-export {CardFooter} from "./CardFooter.tsx"
+export {CardVariant} from "./CardVariant.ts"

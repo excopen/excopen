@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {Carousel, CarouselContainer, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/shared/ui";
-import {Card, CardContent} from "@/shared/ui/card";
+import {Card, CardContent, CardVariant} from "@/shared/ui/card";
 
 type TourCarouselProps = {
     images: string[]
@@ -17,9 +17,9 @@ export const TourCarousel: FC<TourCarouselProps> = ({images, map}) => {
             <CarouselContainer>
                 <Carousel>
                     <CarouselContent>
-                        {images.map((image, index) => (
-                            <CarouselItem key={index} className="basis-1/3">
-                                <Card>
+                        {images.map(image => (
+                            <CarouselItem key={image} className="basis-1/3">
+                                <Card variant={CardVariant.LARGE}>
                                     <CardContent className={"rounded-2xl bg-cover"} style={{backgroundImage: `url(${image})`}}>
                                     </CardContent>
                                 </Card>

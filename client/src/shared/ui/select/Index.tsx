@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {Select} from "@/shared/ui/select/Select.tsx";
 import {SelectTrigger} from "@/shared/ui/select/SelectTrigger.tsx";
 import {SelectValue} from "@/shared/ui/select/SelectValue.tsx";
@@ -24,15 +24,16 @@ export const SelectParams = <T,>(
     ] = useState<T | undefined>(defaultValue);
 
     const clickHandler = (val: string) => {
-        const selectedOption = options.find(
-            (option) => String(option.value) === val
-        )
-        if (selectedOption) setValue(selectedOption.value);
-    }
 
-    useEffect(() => {
+        const selectedOption = options.find(
+            (option) =>
+                String(option.value) === val
+        )
+
+        if (selectedOption) setValue(selectedOption.value);
         if (value !== undefined) onChangeValue(value);
-    }, [value, onChangeValue]);
+
+    }
 
     return (
         <Select value={String(value)} onValueChange={clickHandler}>

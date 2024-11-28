@@ -15,7 +15,7 @@ export const useBreadcrumbs = (): BreadcrumbType[] => {
         const currentPath: string = `/${path.join('/')}`;
 
         const currentRoute = routesConfig.find(route => route.path === currentPath)
-        const currentLabel = currentRoute ? currentRoute.label : path[path.length - 1] || RouteNames.MAIN
+        const currentLabel = currentRoute?.label ?? path[path.length - 1] ?? RouteNames.MAIN
 
         if (!breadcrumbs.find(breadcrumb => breadcrumb.path === currentPath)) {
             setBreadcrumbs(

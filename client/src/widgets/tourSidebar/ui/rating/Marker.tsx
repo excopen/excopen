@@ -1,4 +1,6 @@
 import {FC} from "react";
+import {cn} from "@/app/lib/utils.ts";
+import marker from "@/widgets/tourSidebar/ui/rating/marker.module.css"
 
 type MarkerProps = {
     value: string
@@ -6,7 +8,12 @@ type MarkerProps = {
 
 export const Marker: FC<MarkerProps> = ({value}) => {
     return (
-        <div className={"flex items-center justify-center w-8 h-6 bg-secondary-green rounded-xl text-grayscale-0 text-sm"}>
+        <div className={cn(
+            marker.layout,
+            marker.bg,
+            marker.sizes,
+            marker.text
+        )}>
             {value}
         </div>
     );

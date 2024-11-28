@@ -1,8 +1,8 @@
 import * as React from "react"
 import { cn } from "@/app/lib/utils.ts"
-import { CarouselButton } from "@/shared/ui/carusel/button.tsx"
+import { CarouselButton } from "@/shared/ui/carousel/button.tsx"
 import { ArrowRightIcon } from "@radix-ui/react-icons"
-import {useCarousel} from "@/shared/ui/carusel/hooks.ts";
+import {useCarousel} from "@/shared/ui/carousel/hooks.ts";
 
 const CarouselNext = React.forwardRef<
   HTMLButtonElement,

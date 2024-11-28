@@ -1,5 +1,5 @@
 import useEmblaCarousel from "embla-carousel-react";
-import {CarouselApi} from "@/shared/ui/carusel/CarouselApi.tsx";
+import {CarouselApi} from "@/shared/ui/carousel/CarouselApi.tsx";
 
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
 type CarouselOptions = UseCarouselParameters[0]

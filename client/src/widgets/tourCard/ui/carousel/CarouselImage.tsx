@@ -11,8 +11,8 @@ export const CarouselImage: FC<CarouselImageProps> = ({images}) => {
         <CarouselContainer>
             <Carousel>
                 <CarouselContent>
-                    {images.map((image, index) => (
-                        <CarouselItem key={index} className="basis-1/3 md:basis-1/4">
+                    {images.map(image => (
+                        <CarouselItem key={image} className="basis-1/3 md:basis-1/4">
                             <Card>
                                 <CardContent className={"bg-cover"} style={{backgroundImage: `url(${image})`}}>
                                 </CardContent>

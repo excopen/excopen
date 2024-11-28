@@ -1,7 +1,7 @@
 import {Outlet} from "react-router-dom"
 import {FC} from "react";
 import {Breadcrumbs, Footer, Header} from "@/widgets";
-import {LayoutContainer, MainContainer} from "@/shared/conponents";
+import {LayoutContainer, MainContainer} from "@/shared/components";
 
 export const Layout: FC = () => {
     return (

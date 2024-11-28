@@ -1,8 +1,8 @@
 import {FC} from "react";
 import {LocationsList, SearchTourBar} from "@/widgets";
-import {HomePageContainer, Title} from "@/shared/conponents";
 import {useOrientation} from "@/shared/hooks";
 import {Orientation} from "@/shared/types";
+import {HomePageContainer, Title} from "@/shared/components";
 
 export const HomePage: FC = () => {
 

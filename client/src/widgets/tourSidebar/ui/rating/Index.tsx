@@ -1,4 +1,3 @@
-import {TourObject} from "@/widgets/tourList/assets/TourObject.ts";
 import {Container} from "@/widgets/tourSidebar/ui/rating/Container.tsx";
 import {FC} from "react";
 import {Option} from "@/widgets/tourSidebar/ui/rating/Option.tsx";

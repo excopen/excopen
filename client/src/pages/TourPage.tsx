@@ -1,8 +1,8 @@
 import {FC} from "react";
 import {TourHeader} from "@/widgets/tourHeader";
 import {TourObject} from "@/widgets/tourList/assets/TourObject.ts";
-import {TourPageContainer, TourPageMain} from "@/shared/conponents";
 import {TourCarousel, TourDescription, TourSidebar} from "@/widgets";
+import {TourPageContainer, TourPageMain} from "@/shared/components";
 
 export const TourPage: FC = () => {
     return (

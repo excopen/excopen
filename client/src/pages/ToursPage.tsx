@@ -2,7 +2,7 @@ import {FC} from "react";
 import {useOrientation} from "@/shared/hooks";
 import {Orientation} from "@/shared/types";
 import {SearchTourBar, TourList} from "@/widgets";
-import {SideBar, ToFavLink, ToursPageContainer} from "@/shared/conponents";
+import {SideBar, ToFavLink, ToursPageContainer} from "@/shared/components";
 
 export const ToursPage: FC = () => {
 

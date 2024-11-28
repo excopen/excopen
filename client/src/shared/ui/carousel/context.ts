@@ -1,6 +1,6 @@
 import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import {CarouselProps} from "@/shared/ui/carusel/types.ts";
+import {CarouselProps} from "@/shared/ui/carousel/types.ts";
 
 type CarouselContextProps = {
     carouselRef: ReturnType<typeof useEmblaCarousel>[0]

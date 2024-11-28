@@ -23,6 +23,7 @@ const ButtonVariants = cva(
           smIcon: "h-10 w-10",
           lgIcon: "h-14 w-14 rounded-xl",
           calendar: "h-14 w-72",
+          roundedIcon: "h-14 w-14 rounded-full"
       },
     },
     defaultVariants: {

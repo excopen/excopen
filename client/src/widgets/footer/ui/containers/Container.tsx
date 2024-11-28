@@ -4,7 +4,7 @@ type FooterContainerProps = {
     children: ReactNode
 }
 
-export const FooterContainer: FC<FooterContainerProps> = ({children}) => {
+export const Container: FC<FooterContainerProps> = ({children}) => {
     return (
         <footer className={"w-full flex flex-col py-4"}>
             {children}
