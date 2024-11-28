@@ -1,17 +1,20 @@
 import {FC} from "react";
-import {Container, InfoContainer} from "@/widgets/footer/ui/containers";
-import {Annotation, Info, Navigation, Separator, Support} from "@/widgets/footer/ui/components";
+import style from "./style.module.css"
+import {Info} from "./info";
+import {Nav} from "./nav";
+import {Annotation} from "./annotation";
+import {SupportButton} from "@/shared/ui";
 
 export const Footer: FC = () => {
     return (
-        <Container>
-            <InfoContainer>
-                <Navigation/>
+        <footer className={style.container}>
+            <div className={style.info}>
+                <Nav/>
                 <Info/>
-            </InfoContainer>
-            <Separator/>
+            </div>
+            <hr className={style.separator}/>
             <Annotation/>
-            <Support/>
-        </Container>
+            <SupportButton/>
+        </footer>
     );
 };

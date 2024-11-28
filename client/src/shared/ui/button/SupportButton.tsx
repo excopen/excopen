@@ -2,7 +2,7 @@ import {FC} from "react";
 import {Button} from "@/shared/ui";
 import chat from "@/shared/assets/icons/comment.svg";
 
-export const Support: FC = () => {
+export const SupportButton: FC = () => {
     return (
         <div className={"flex w-full justify-end px-6"}>
             <Button size={"roundedIcon"}>

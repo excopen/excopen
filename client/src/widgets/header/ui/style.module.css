@@ -1,0 +1,11 @@
+.container {
+    @apply flex justify-between padding w-full h-14 items-center bg-grayscale-0
+}
+
+.profile-item {
+    @apply justify-between
+}
+
+.profile-content {
+    @apply flex flex-row gap-2 items-center
+}
