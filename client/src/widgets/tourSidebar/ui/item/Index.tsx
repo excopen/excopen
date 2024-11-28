@@ -1,18 +1,20 @@
 import {FC} from "react";
-import {Container} from "@/widgets/tourSidebar/ui/item/Container.tsx";
-import {Option} from "@/widgets/tourSidebar/ui/item/Option.tsx";
-import {Value} from "@/widgets/tourSidebar/ui/item/Value.tsx";
+import style from "./style.module.css"
 
 type ItemProps = {
     option: string
     value: string | undefined
 }
 
-export const Item: FC<ItemProps> = ({option, value}) => {
+export const Index: FC<ItemProps> = ({option, value}) => {
     return (
-        <Container>
-            <Option option={option}/>
-            <Value value={value}/>
-        </Container>
+        <div className={style.container}>
+            <p className={style.option}>
+                {option}
+            </p>
+            <p className={style.value}>
+                {value}
+            </p>
+        </div>
     );
 };

@@ -1,1 +1,1 @@
-export {Rating} from "./Index.tsx"
+export {Index as Rating} from "./Index.tsx"

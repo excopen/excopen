@@ -1,0 +1,19 @@
+.container {
+    @apply flex flex-row justify-between
+}
+
+.start-col {
+    @apply flex flex-col w-full md:w-3/5 gap-4
+}
+
+.end-col {
+    @apply flex flex-col gap-4
+}
+
+.buttons {
+    @apply flex flex-row gap-4
+}
+
+.title {
+    @apply font-medium text-4xl text-grayscale-500
+}

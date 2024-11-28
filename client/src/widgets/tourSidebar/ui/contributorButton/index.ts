@@ -1,1 +1,1 @@
-export {ContributorButton} from "./Index.tsx"
+export {Index as ContributorButton} from "./Index.tsx"

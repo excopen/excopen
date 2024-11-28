@@ -1,31 +1,29 @@
 import {FC} from "react";
 import {ITour} from "@/shared/types";
 import {CardButton, FavouriteButton, GroupPrice, Rating, TourParams} from "@/shared/ui";
-import {Title} from "@/widgets/tourHeader/ui/Title.tsx";
-import {Container} from "@/widgets/tourHeader/ui/Container.tsx";
-import {StartCol} from "@/widgets/tourHeader/ui/StartCol.tsx";
-import {EndCol} from "@/widgets/tourHeader/ui/EndCol.tsx";
-import {ButtonGroup} from "@/widgets/tourHeader/ui/ButtonGroup.tsx";
+import style from "./style.module.css"
 
 type TourHeaderProps = {
     tour: ITour
 }
 
-export const TourHeader: FC<TourHeaderProps> = ({tour}) => {
+export const Index: FC<TourHeaderProps> = ({tour}) => {
     return (
-        <Container>
-            <StartCol>
-                <Title value={tour.title} />
+        <div className={style.container}>
+            <div className={style.startCol}>
+                <h2 className={style.title}>
+                    {tour.title}
+                </h2>
                 <TourParams duration={tour.duration} length={tour.routeLength}/>
                 <Rating rating={tour.rating} ratingCount={tour.ratingCount}/>
-            </StartCol>
-            <EndCol>
+            </div>
+            <div className={style.endCol}>
                 <GroupPrice price={tour.price}/>
-                <ButtonGroup>
+                <div className={style.buttons}>
                     <FavouriteButton/>
                     <CardButton/>
-                </ButtonGroup>
-            </EndCol>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 };

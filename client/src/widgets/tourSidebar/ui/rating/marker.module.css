@@ -1,9 +1,5 @@
 .layout {
-    @apply flex items-center justify-center
-}
-
-.sizes {
-    @apply w-8 h-6
+    @apply flex items-center justify-center w-8 h-6
 }
 
 .bg {

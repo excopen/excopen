@@ -1,1 +1,1 @@
-export {TourSidebar} from "./Index.tsx"
+export {Index as TourSidebar} from "./Index.tsx"

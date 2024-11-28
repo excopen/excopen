@@ -1,1 +1,1 @@
-export {TourHeader} from "./Index.tsx"
+export {Index as TourHeader} from "./Index.tsx"

@@ -1,1 +1,1 @@
-export {Price} from "./Index.tsx"
+export {Index as Price} from "./Index.tsx"

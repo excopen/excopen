@@ -1,17 +1,19 @@
 import {FC} from "react";
-import {Container} from "@/widgets/tourSidebar/ui/price/Container.tsx";
-import {Value} from "@/widgets/tourSidebar/ui/price/Value.tsx";
-import {Description} from "@/widgets/tourSidebar/ui/price/Description.tsx";
+import style from "./style.module.css"
 
 type PriceProps = {
     price: number
 }
 
-export const Price: FC<PriceProps> = ({price}) => {
+export const Index: FC<PriceProps> = ({price}) => {
     return (
-        <Container>
-            <Value price={price}/>
-            <Description/>
-        </Container>
+        <div className={style.container}>
+            <span className={style.price}>
+                {price} ₽
+            </span>
+            <span className={style.desc}>
+                за человека
+            </span>
+        </div>
     );
 };
