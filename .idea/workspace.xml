@@ -4,20 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95463dea-f5fe-430c-8a98-ee347247c721" name="Changes" comment="feat(service): add method getTagCount() to retrieve tag count from database">
+    <list default="true" id="95463dea-f5fe-430c-8a98-ee347247c721" name="Changes" comment="feat(security): implement security enhancements with ownership guards and updated controllers&#10;&#10;- Added comprehensive security features using custom ownership guards and user authorization checks.&#10;- Introduced `@RequiresOwnership` annotation to handle access control based on resource ownership.&#10;- Implemented `OwnershipGuard` to verify user ownership of tours and reviews.&#10;- Introduced `@RequiresUserAuthorization` annotation to handle access control for user-specific actions.&#10;- Implemented `UserAuthorizationGuard` to validate user actions against their user ID.&#10;- Refactored controllers to integrate security annotations and remove manual access checks.&#10;- Enhanced error handling for unauthorized access and resource validation.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/AuthController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/FavoriteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/FavoriteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/ReviewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/TourController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/TourController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/iservices/ITagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/iservices/ITagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/iservices/ITourService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/iservices/ITourService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/iservices/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/iservices/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/servicesImpl/TourServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/servicesImpl/TourServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/servicesImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/servicesImpl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/utills/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/excopen/backend/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/excopen/backend/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -295,7 +286,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732484723846</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="feat(security): implement security enhancements with ownership guards and updated controllers&#10;&#10;- Added comprehensive security features using custom ownership guards and user authorization checks.&#10;- Introduced `@RequiresOwnership` annotation to handle access control based on resource ownership.&#10;- Implemented `OwnershipGuard` to verify user ownership of tours and reviews.&#10;- Introduced `@RequiresUserAuthorization` annotation to handle access control for user-specific actions.&#10;- Implemented `UserAuthorizationGuard` to validate user actions against their user ID.&#10;- Refactored controllers to integrate security annotations and remove manual access checks.&#10;- Enhanced error handling for unauthorized access and resource validation.">
+      <option name="closed" value="true" />
+      <created>1732486069679</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1732486069679</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -319,7 +318,8 @@
     <MESSAGE value="chore(main): remove unnecessary database connection setup&#10;&#10;- Cleaned up unused database initialization code in the main application file." />
     <MESSAGE value="feat(constants): add constant for tag count initialized on server startup&#10;&#10;- Introduced a constant to store the count of tags in the database.&#10;- Count is calculated during server startup to avoid redundant queries.&#10;- Updated relevant initialization logic in the application configuration." />
     <MESSAGE value="feat(service): add method getTagCount() to retrieve tag count from database" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(service): add method getTagCount() to retrieve tag count from database" />
+    <MESSAGE value="feat(security): implement security enhancements with ownership guards and updated controllers&#10;&#10;- Added comprehensive security features using custom ownership guards and user authorization checks.&#10;- Introduced `@RequiresOwnership` annotation to handle access control based on resource ownership.&#10;- Implemented `OwnershipGuard` to verify user ownership of tours and reviews.&#10;- Introduced `@RequiresUserAuthorization` annotation to handle access control for user-specific actions.&#10;- Implemented `UserAuthorizationGuard` to validate user actions against their user ID.&#10;- Refactored controllers to integrate security annotations and remove manual access checks.&#10;- Enhanced error handling for unauthorized access and resource validation." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(security): implement security enhancements with ownership guards and updated controllers&#10;&#10;- Added comprehensive security features using custom ownership guards and user authorization checks.&#10;- Introduced `@RequiresOwnership` annotation to handle access control based on resource ownership.&#10;- Implemented `OwnershipGuard` to verify user ownership of tours and reviews.&#10;- Introduced `@RequiresUserAuthorization` annotation to handle access control for user-specific actions.&#10;- Implemented `UserAuthorizationGuard` to validate user actions against their user ID.&#10;- Refactored controllers to integrate security annotations and remove manual access checks.&#10;- Enhanced error handling for unauthorized access and resource validation." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
