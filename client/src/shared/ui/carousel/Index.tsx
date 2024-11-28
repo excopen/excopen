@@ -1,12 +1,17 @@
-import {Carousel, CarouselContainer, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/shared/ui";
 import {Card, CardContent} from "@/shared/ui/card";
 import {FC} from "react";
+import {CarouselContainer} from "@/shared/ui/carousel/CarouselContainer.tsx";
+import {CarouselContent} from "@/shared/ui/carousel/CarouselContent.tsx";
+import {CarouselItem} from "@/shared/ui/carousel/CarouselItem.tsx";
+import {CarouselPrevious} from "@/shared/ui/carousel/CarouselPrevious.tsx";
+import {CarouselNext} from "@/shared/ui/carousel/CarouselNext.tsx";
+import {Carousel} from "@/shared/ui/carousel/Carousel.tsx";
 
-type CarouselImageProps = {
+type CarouselProps = {
     images: string[]
 }
 
-export const CarouselImage: FC<CarouselImageProps> = ({images}) => {
+export const Index: FC<CarouselProps> = ({images}) => {
     return (
         <CarouselContainer>
             <Carousel>
@@ -20,8 +25,6 @@ export const CarouselImage: FC<CarouselImageProps> = ({images}) => {
                         </CarouselItem>
                     ))}
                 </CarouselContent>
-
-                {/* Стрелки навигации */}
                 <CarouselPrevious/>
                 <CarouselNext/>
             </Carousel>

@@ -1,1 +1,1 @@
-export {TourCarousel} from "./Index.tsx"
+export {Index as Carousel} from "./Index.tsx"

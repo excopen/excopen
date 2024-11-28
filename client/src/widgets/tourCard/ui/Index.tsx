@@ -1,10 +1,10 @@
 import { FC } from "react";
 import {Header} from "@/widgets/tourCard/ui/header";
 import {Container, ContentContainer} from "@/widgets/tourCard/ui/containers";
-import {Carousel} from "@/widgets/tourCard/ui/carousel";
 import {Description} from "@/widgets/tourCard/ui/description";
 import {Details} from "@/widgets/tourCard/ui/details";
 import {ITour} from "@/shared/types";
+import {ImagesCarousel} from "@/shared/ui";
 
 type TourCardProps = {
     tour: ITour
@@ -13,7 +13,7 @@ type TourCardProps = {
 export const TourCard: FC<TourCardProps> = ({tour}) => {
     return (
         <Container>
-            <Carousel images={tour.images}/>
+            <ImagesCarousel images={tour.images} />
             <ContentContainer>
                 <Header
                     rating={tour.rating}

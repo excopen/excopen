@@ -1,1 +1,0 @@
-export {CarouselImage as Carousel} from "./CarouselImage.tsx"

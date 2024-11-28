@@ -2,8 +2,8 @@ import * as React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import {cn} from "@/app/lib/utils.ts";
 import {CarouselProps} from "@/shared/ui/carousel/types.ts";
-import {CarouselApi} from "@/shared/ui";
 import {CarouselContext} from "@/shared/ui/carousel/context.ts"
+import {CarouselApi} from "@/shared/ui/carousel/CarouselApi.tsx";
 
 const Carousel = React.forwardRef<
     HTMLDivElement,

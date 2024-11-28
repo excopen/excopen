@@ -1,7 +1,8 @@
 import { FC } from "react";
-import style from "./style.module.css"
-import {Container} from "./container"
 import {cn} from "@/app/lib/utils.ts";
+import container from "./container.module.css"
+import content from "./content.module.css"
+import gradient from "./gradient.module.css"
 
 type LocationCardProps = {
     country: string;
@@ -12,19 +13,25 @@ type LocationCardProps = {
 
 export const Index: FC<LocationCardProps> = ({ country, city, tourCount, image }) => {
     return (
-        <Container image={image}>
-            <div className={cn(style.gradient, style.opacity)}/>
-            <div className={style.content}>
-                <span className={style.country}>
+        <div
+            className={cn(container.layout, container.sizes, container.bg, container.transitions, "group")}
+            style={{ backgroundImage: `url(${image})` }}
+        >
+
+            <div className={cn(gradient.bg, gradient.opacity)}/>
+
+            <div className={content.layout}>
+                <span className={content.country}>
                     {country}
                 </span>
-                <span className={style.city}>
+                <span className={content.city}>
                     {city}
                 </span>
-                <span className={style.count}>
+                <span className={content.count}>
                     {tourCount}+ экскурсий
                 </span>
             </div>
-        </Container>
+
+        </div>
     );
 };
