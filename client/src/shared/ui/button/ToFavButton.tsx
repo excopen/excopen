@@ -5,13 +5,23 @@ import favourite from "@/shared/assets/icons/favourite-secondary.svg";
 import next from "@/shared/assets/icons/next-secondary.svg";
 import {Button} from "@/shared/ui";
 
-export const ToFavLink: FC = () => {
+export const ToFavButton: FC = () => {
     return (
         <Button variant={"secondary"} size={"md"}>
-            <img height={24} width={24} alt={"favourite"} src={favourite}/>
+            <img
+                height={24}
+                width={24}
+                alt={"favourite"}
+                src={favourite}
+            />
             Избранное
             <Link to={`/${RouteNames.FAVOURITES}`}>
-                <img height={20} width={20} alt={"arrow"} src={next}/>
+                <img
+                    height={20}
+                    width={20}
+                    alt={"arrow"}
+                    src={next}
+                />
             </Link>
         </Button>
     );

@@ -1,17 +1,17 @@
 import {Outlet} from "react-router-dom"
 import {FC} from "react";
 import {Breadcrumbs, Footer, Header} from "@/widgets";
-import {LayoutContainer, MainContainer} from "@/shared/components";
+import style from "@/app/styles/pages.module.css"
 
 export const Layout: FC = () => {
     return (
-        <LayoutContainer>
+        <div className={style.layout}>
             <Header/>
-            <MainContainer>
+            <main className={style.main}>
                 <Breadcrumbs/>
                 <Outlet/>
-            </MainContainer>
+            </main>
             <Footer/>
-        </LayoutContainer>
+        </div>
     );
 };

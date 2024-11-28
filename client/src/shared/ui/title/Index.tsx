@@ -1,12 +1,13 @@
 import {FC} from "react";
+import style from "./style.module.css"
 
 export const Title: FC = () => {
     return (
-        <section className={"flex flex-col w-full py-24 items-center text-center gap-4"}>
-            <h1 className={"text-grayscale-500 font-bold text-4xl"}>
+        <section className={style.container}>
+            <h1 className={style.heading}>
                 Найдем Вашу идеальную экскурсию
             </h1>
-            <p className={"text-grayscale-500 font-medium text-sm"}>
+            <p className={style.description}>
                 Интересное со всего мира с Т-Банком
             </p>
         </section>
