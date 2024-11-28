@@ -1,1 +1,1 @@
-export {LocationCard} from "./Index.tsx"
+export {Index as LocationCard} from "./Index.tsx"

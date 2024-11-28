@@ -5,7 +5,7 @@ import {Nav} from "./nav";
 import {Annotation} from "./annotation";
 import {SupportButton} from "@/shared/ui";
 
-export const Footer: FC = () => {
+export const Index: FC = () => {
     return (
         <footer className={style.container}>
             <div className={style.info}>

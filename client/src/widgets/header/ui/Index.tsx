@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 import style from "./style.module.css"
 
-export const Header: FC = () => {
+export const Index: FC = () => {
 
     return (
         <header className={style.container}>

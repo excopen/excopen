@@ -2,15 +2,15 @@ import {FC} from "react";
 import {locationsArray} from "@/shared/assets/tempData/LocationsArray.ts";
 import {LocationCard} from "@/widgets/locationCard";
 import {Button} from "@/shared/ui";
-import {Heading} from "@/widgets/locationsList/ui/Heading.tsx";
-import {ListContainer} from "@/widgets/locationsList/ui/ListContainer.tsx";
-import {Container} from "@/widgets/locationsList/ui/Container.tsx";
+import style from "./style.module.css"
 
 export const LocationsList: FC = () => {
     return (
-        <Container>
-            <Heading>Самые популярные направления</Heading>
-            <ListContainer>
+        <section className={style.container}>
+            <h2 className={style.heading}>
+                Самые популярные направления
+            </h2>
+            <div className={style.list}>
                 {locationsArray.map(location => (
                     <LocationCard
                         key={location.id}
@@ -20,8 +20,10 @@ export const LocationsList: FC = () => {
                         image={location.image}
                     />
                 ))}
-            </ListContainer>
-            <Button variant={"outline"} size={"lg"}>перейти к списку городов</Button>
-        </Container>
+            </div>
+            <Button variant={"outline"} size={"lg"}>
+                перейти к списку городов
+            </Button>
+        </section>
     );
 };

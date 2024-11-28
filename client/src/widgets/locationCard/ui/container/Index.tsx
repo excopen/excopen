@@ -1,5 +1,5 @@
 import {FC, ReactNode} from "react";
-import container from "@/widgets/locationCard/ui/containers/container.module.css"
+import container from "@/widgets/locationCard/ui/container/style.module.css"
 import {cn} from "@/app/lib/utils.ts";
 
 type ContainerProps = {
@@ -7,7 +7,7 @@ type ContainerProps = {
     image: string
 }
 
-export const Container: FC<ContainerProps> = ({children, image}) => {
+export const Index: FC<ContainerProps> = ({children, image}) => {
     return (
         <div
             className={cn(

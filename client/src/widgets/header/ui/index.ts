@@ -1,1 +1,1 @@
-export {Header} from "./Index.tsx"
+export {Index as Header} from "./Index.tsx"
