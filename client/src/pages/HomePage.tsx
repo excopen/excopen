@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {LocationsList, SearchTourBar} from "@/widgets";
+import {Locations, Form} from "@/widgets";
 import {useOrientation} from "@/shared/hooks";
 import {Orientation} from "@/shared/types";
 import style from "@/app/styles/pages.module.css"
@@ -12,8 +12,8 @@ export const HomePage: FC = () => {
     return (
         <div className={style.home}>
             <Title/>
-            <SearchTourBar orientation={orientation}/>
-            <LocationsList/>
+            <Form orientation={orientation}/>
+            <Locations/>
         </div>
     );
 };

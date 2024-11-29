@@ -9,7 +9,7 @@ import {
     BreadcrumbSeparator
 } from "@/shared/ui";
 
-export const Breadcrumbs: FC = () => {
+export const Index: FC = () => {
 
     const breadcrumbs = useBreadcrumbs()
 

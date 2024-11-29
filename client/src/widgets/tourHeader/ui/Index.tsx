@@ -3,17 +3,15 @@ import {ITour} from "@/shared/types";
 import {CardButton, FavouriteButton, GroupPrice, Rating, TourParams} from "@/shared/ui";
 import style from "./style.module.css"
 
-type TourHeaderProps = {
+type HeaderProps = {
     tour: ITour
 }
 
-export const Index: FC<TourHeaderProps> = ({tour}) => {
+export const Index: FC<HeaderProps> = ({tour}) => {
     return (
         <div className={style.container}>
             <div className={style.startCol}>
-                <h2 className={style.title}>
-                    {tour.title}
-                </h2>
+                <h2 className={style.title}>{tour.title}</h2>
                 <TourParams duration={tour.duration} length={tour.routeLength}/>
                 <Rating rating={tour.rating} ratingCount={tour.ratingCount}/>
             </div>

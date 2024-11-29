@@ -1,17 +1,18 @@
 import {FC} from "react";
 import {TourHeader} from "@/widgets/tourHeader";
-import {Carousel, TourDescription, TourSidebar} from "@/widgets";
+import {Carousel, TourDescription, Sidebar} from "@/widgets";
 import {TourObject} from "@/shared/assets/tempData/TourObject.ts";
-import style from "@/app/styles/pages.module.css"
+import pages from "@/app/styles/pages.module.css"
+import containers from "@/app/styles/containers.module.css"
 
 export const TourPage: FC = () => {
     return (
-        <div className={style.tour}>
+        <div className={pages.tour}>
             <TourHeader tour={TourObject}/>
-            <Carousel images={TourObject.images} map={TourObject.map} />
-            <div className={style.tourContent}>
+            <Carousel images={TourObject.images} map={TourObject.map}/>
+            <div className={containers.tourMain}>
                 <TourDescription tour={TourObject}/>
-                <TourSidebar tour={TourObject}/>
+                <Sidebar tour={TourObject}/>
             </div>
         </div>
     );

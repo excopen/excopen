@@ -2,6 +2,6 @@
     @apply flex flex-col gap-4 max-md:items-center
 }
 
-.tour-content {
+.tourMain {
     @apply flex flex-col md:flex-row
 }

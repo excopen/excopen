@@ -1,6 +1,14 @@
 import { FC } from "react";
 import {ITour, PriceContainerVariant} from "@/shared/types";
-import {CardButton, FavouriteButton, GroupPrice, ImagesCarousel, Rating, TourParams} from "@/shared/ui";
+import {
+    CardButton,
+    CarouselVariant,
+    FavouriteButton,
+    GroupPrice,
+    ImagesCarousel,
+    Rating,
+    TourParams
+} from "@/shared/ui";
 import style from "./style.module.css"
 
 type TourCardProps = {
@@ -11,7 +19,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
     return (
         <div className={style.container}>
 
-            <ImagesCarousel images={tour.images}/>
+            <ImagesCarousel variant={CarouselVariant.SMALL} images={tour.images}/>
 
             <div className={style.content}>
 
