@@ -1,0 +1,7 @@
+.container {
+    @apply z-20 w-full h-full px-64 py-24 flex flex-col gap-16 relative
+}
+
+.button {
+    @apply flex justify-end font-medium
+}

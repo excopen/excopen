@@ -17,3 +17,7 @@
 .tours {
     @apply flex flex-col xl:flex-row py-8 xl:py-16 gap-6
 }
+
+.onboarding {
+    @apply w-full
+}
