@@ -21,7 +21,7 @@ export const useBreadcrumbs = (): BreadcrumbType[] => {
             setBreadcrumbs(
                 prev => [
                     ...prev,
-                    {path: currentPath, label: currentLabel}
+                    {path: currentPath, label: decodeURIComponent(currentLabel)}
                 ]
             );
         }

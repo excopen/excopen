@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {ITour} from "@/shared/types";
-import {CardButton, FavouriteButton, GroupPrice, Rating, TourParams} from "@/shared/ui";
+import {Button, FavouriteButton, GroupPrice, Rating, TourParams} from "@/shared/ui";
 import style from "./style.module.css"
 
 type HeaderProps = {
@@ -19,7 +19,7 @@ export const Index: FC<HeaderProps> = ({tour}) => {
                 <GroupPrice price={tour.price}/>
                 <div className={style.buttons}>
                     <FavouriteButton/>
-                    <CardButton/>
+                    <Button>Выбрать</Button>
                 </div>
             </div>
         </div>

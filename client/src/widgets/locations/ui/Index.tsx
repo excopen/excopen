@@ -3,6 +3,8 @@ import {locationsArray} from "@/shared/assets/tempData/LocationsArray.ts";
 import {LocationCard} from "@/widgets/locationCard";
 import {Button} from "@/shared/ui";
 import style from "./style.module.css"
+import {Link} from "react-router-dom";
+import {RouteNames} from "@/shared/types";
 
 export const Index: FC = () => {
     return (
@@ -21,9 +23,11 @@ export const Index: FC = () => {
                     />
                 ))}
             </div>
-            <Button variant={"outline"} size={"lg"}>
-                перейти к списку городов
-            </Button>
+            <Link to={`/${RouteNames.LOCATIONS}`}>
+                <Button variant={"outline"} size={"lg"}>
+                    перейти к списку городов
+                </Button>
+            </Link>
         </section>
     );
 };

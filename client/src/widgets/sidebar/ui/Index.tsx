@@ -3,7 +3,7 @@ import {Item} from "@/widgets/sidebar/ui/item/index.ts";
 import {Rating} from "@/widgets/sidebar/ui/rating/index.ts";
 import {Price} from "@/widgets/sidebar/ui/price/index.ts";
 import {FC} from "react";
-import {ITour} from "@/shared/types";
+import {ITour, RouteNames} from "@/shared/types";
 import style from "./style.module.css"
 import {BookingButton} from "@/shared/ui";
 
@@ -12,11 +12,12 @@ type SidebarProps = {
 }
 
 export const Index: FC<SidebarProps> = ({tour}) => {
+
     return (
         <div className={style.container}>
             <ContributorButton
                 name={tour.contributor?.name}
-                link={"/"}
+                link={`/${RouteNames.MAIN}`}
             />
             <div className={style.subContainer}>
                 <Item option={"Формат:"} value={tour.format}/>
@@ -26,7 +27,7 @@ export const Index: FC<SidebarProps> = ({tour}) => {
                 <Rating option={"Рейтинг:"} rating={tour.rating} ratingCount={tour.ratingCount}/>
                 <hr className={style.separator}/>
                 <Price price={tour.priceForPerson}/>
-                <BookingButton link={"/"}/>
+                <BookingButton link={`/${RouteNames.MAIN}`}/>
             </div>
         </div>
     );

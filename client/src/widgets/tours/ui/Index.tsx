@@ -7,8 +7,6 @@ import {Pagination} from "./pagination";
 
 export const Index: FC = () => {
 
-    //const {data} = useTours({})
-
     const [
         visibleTours,
         setVisibleTours

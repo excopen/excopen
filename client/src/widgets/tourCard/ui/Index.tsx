@@ -1,7 +1,7 @@
 import { FC } from "react";
-import {ITour, PriceContainerVariant} from "@/shared/types";
+import {ITour, PriceContainerVariant, RouteNames} from "@/shared/types";
 import {
-    CardButton,
+    Button,
     CarouselVariant,
     FavouriteButton,
     GroupPrice,
@@ -10,12 +10,20 @@ import {
     TourParams
 } from "@/shared/ui";
 import style from "./style.module.css"
+import {useNavigate} from "react-router-dom";
 
 type TourCardProps = {
     tour: ITour
 };
 
 export const Index: FC<TourCardProps> = ({tour}) => {
+
+    const navigate = useNavigate()
+
+    const clickHandler = () => {
+        navigate(`/${RouteNames.TOUR}/${encodeURIComponent(tour.title)}`)
+    }
+
     return (
         <div className={style.container}>
 
@@ -39,7 +47,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
                 <div className={style.details}>
                     <TourParams duration={tour.duration} length={tour.routeLength}/>
                     <GroupPrice price={tour.price} variant={PriceContainerVariant.MOBILE} />
-                    <CardButton/>
+                    <Button onClick={clickHandler}>Выбрать</Button>
                 </div>
 
             </div>
