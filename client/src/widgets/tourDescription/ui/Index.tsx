@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {ITour} from "@/shared/types";
+import {ITour, RouteNames} from "@/shared/types";
 import {Details} from "@/widgets/tourDescription/ui/details";
 import {ButtonContainer, ContactContainer, Container, SubContainer} from "@/widgets/tourDescription/ui/containers";
 import {BoldText, Heading, List} from "@/widgets/tourDescription/ui/components";
@@ -48,7 +48,7 @@ export const TourDescription: FC<TourDescriptionProps> = ({tour}) => {
             <ContactContainer>
                 <Heading value={"Остались вопросы?"} />
                 <ButtonContainer>
-                    <ContactButton link={"/"}/>
+                    <ContactButton link={`/${RouteNames.MAIN}`}/>
                     <TelegramButton link={tour?.contact?.telegram}/>
                     <VKButton link={tour?.contact?.vk}/>
                 </ButtonContainer>
