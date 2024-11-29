@@ -1,1 +1,0 @@
-export {tourAccessibilityArray} from "./tourAccessibilityArray.ts"

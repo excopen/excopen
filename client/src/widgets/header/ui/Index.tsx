@@ -1,18 +1,18 @@
 import {FC} from 'react';
-import {ProfileButton, SearchByLocationInput} from "@/shared/ui";
-import {useSearchTourContext} from "@/features";
+import {ProfileButton} from "@/widgets/header/ui/ProfileButton.tsx";
+import logo from "@/shared/assets/icons/logo.svg"
+import {Link} from "react-router-dom";
+import {RouteNames} from "@/shared/types";
+import style from "./style.module.css"
 
-export const Header: FC = () => {
-
-    const {setLocation, searchParams} = useSearchTourContext()
-    const disabled = !searchParams.location
+export const Index: FC = () => {
 
     return (
-        <header>
-            <SearchByLocationInput setter={setLocation}/>
-            <ProfileButton disabled={disabled}>
-                Профиль
-            </ProfileButton>
+        <header className={style.container}>
+            <Link to={`/${RouteNames.MAIN}`}>
+                <img alt={"logo"} width={100} height={30} src={logo}/>
+            </Link>
+            <ProfileButton/>
         </header>
     );
 };

@@ -8,7 +8,6 @@ export class ApiException<T> extends Error {
         this.name = 'ApiError';
         this.statusCode = statusCode;
         this.data = data;
-        Object.setPrototypeOf(this, ApiException.prototype);
     }
 
 }

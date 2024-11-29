@@ -1,0 +1,7 @@
+.layout {
+    @apply flex flex-col md:flex-row gap-4
+}
+
+.text {
+    @apply text-grayscale-500 text-[12px]
+}

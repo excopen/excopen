@@ -1,1 +1,0 @@
-export {SearchTourBar} from "./Index.tsx"

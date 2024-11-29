@@ -5,4 +5,5 @@ export type SearchTourContextType = {
     setLocation: (location: string) => void
     setAccessibility: (type: TourAccessibility) => void
     setByCity: (byCity: boolean) => void
+    setDate: (date: Date | undefined) => void
 }

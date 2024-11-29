@@ -1,1 +1,1 @@
-export {Breadcrumbs} from "./Index.tsx"
+export {Index as Breadcrumbs} from "./Index.tsx"

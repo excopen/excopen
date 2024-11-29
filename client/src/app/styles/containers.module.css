@@ -1,0 +1,7 @@
+.sidebar {
+    @apply flex flex-col gap-4 max-md:items-center
+}
+
+.tourMain {
+    @apply flex flex-col md:flex-row
+}

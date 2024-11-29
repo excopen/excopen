@@ -1,0 +1,11 @@
+.layout {
+    @apply flex items-center justify-center
+}
+
+.bg {
+    @apply rounded-xl bg-grayscale-300
+}
+
+.sizes {
+    @apply w-8 h-8
+}

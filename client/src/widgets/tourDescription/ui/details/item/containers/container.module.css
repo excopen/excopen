@@ -1,0 +1,15 @@
+.layout {
+    @apply flex flex-row md:basis-1/3 justify-between
+}
+
+.bg {
+    @apply bg-grayscale-0 rounded-2xl
+}
+
+.sizes {
+    @apply h-fit w-full
+}
+
+.paddings {
+    @apply p-3
+}

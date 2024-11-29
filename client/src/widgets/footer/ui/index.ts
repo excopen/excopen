@@ -1,1 +1,1 @@
-export {Footer} from "./Index.tsx"
+export {Index as Footer} from "./Index.tsx"
