@@ -1,35 +1,41 @@
 import { FC } from "react";
-import {Header} from "@/widgets/tourCard/ui/header";
-import {Container, ContentContainer} from "@/widgets/tourCard/ui/containers";
-import {Description} from "@/widgets/tourCard/ui/description";
-import {Details} from "@/widgets/tourCard/ui/details";
-import {ITour} from "@/shared/types";
-import {ImagesCarousel} from "@/shared/ui";
+import {ITour, PriceContainerVariant} from "@/shared/types";
+import {CardButton, FavouriteButton, GroupPrice, ImagesCarousel, Rating, TourParams} from "@/shared/ui";
+import style from "./style.module.css"
 
 type TourCardProps = {
     tour: ITour
 };
 
-export const TourCard: FC<TourCardProps> = ({tour}) => {
+export const Index: FC<TourCardProps> = ({tour}) => {
     return (
-        <Container>
-            <ImagesCarousel images={tour.images} />
-            <ContentContainer>
-                <Header
-                    rating={tour.rating}
-                    ratingCount={tour.ratingCount}
-                />
-                <Description
-                    title={tour.title}
-                    shortDescription={tour.shortDescription}
-                    price={tour.price}
-                />
-                <Details
-                    duration={tour.duration}
-                    routeLength={tour.routeLength}
-                    price={tour.price}
-                />
-            </ContentContainer>
-        </Container>
+        <div className={style.container}>
+
+            <ImagesCarousel images={tour.images}/>
+
+            <div className={style.content}>
+
+                <div className={style.header}>
+                    <Rating rating={tour.rating} ratingCount={tour.ratingCount}/>
+                    <FavouriteButton/>
+                </div>
+
+                <div className={style.desc}>
+                    <div className={style.descContent}>
+                        <p className={style.title}>{tour.title}</p>
+                        <p className={style.text}>{tour.shortDescription}</p>
+                    </div>
+                    <GroupPrice price={tour.price}/>
+                </div>
+
+                <div className={style.details}>
+                    <TourParams duration={tour.duration} length={tour.routeLength}/>
+                    <GroupPrice price={tour.price} variant={PriceContainerVariant.MOBILE} />
+                    <CardButton/>
+                </div>
+
+            </div>
+
+        </div>
     );
 };
