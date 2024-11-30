@@ -1,28 +1,30 @@
 import {FC} from "react";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Button} from "@/shared/ui";
-import {Orientation} from "@/shared/types";
+import {Orientation, RouteNames} from "@/shared/types";
 
 type SearchButtonProps = {
-    path: string
+    location: string
     disabled: boolean
     orientation: Orientation
 }
 
-export const SearchButton: FC<SearchButtonProps> = ({path, disabled, orientation}) => {
+export const SearchButton: FC<SearchButtonProps> = ({location, disabled, orientation}) => {
+
+    const navigate = useNavigate()
+
+    const clickHandler = () => {
+        if (disabled) navigate(`/${RouteNames.TOURS}/${encodeURIComponent(location)}`)
+    }
 
     return (
-        !disabled ? (
-            <Button size={orientation === Orientation.HORIZONTAL ? "default" : "lg"} disabled={true}>
-                Искать
-            </Button>
-        ) : (
-            <Link to={`/${path}`}>
-                <Button size={orientation === Orientation.HORIZONTAL ? "default" : "lg"}>
-                    Искать
-                </Button>
-            </Link>
-        )
+        <Button
+            onClick={clickHandler}
+            size={orientation === Orientation.HORIZONTAL ? "default" : "lg"}
+            disabled={!disabled}
+        >
+            Искать
+        </Button>
     );
 
 };

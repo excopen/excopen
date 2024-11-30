@@ -27,7 +27,7 @@ export const AppRoutes: FC = () => {
             <Route path={"/"} element={<Layout/>}>
                 <Route path={RouteNames.MAIN} element={<HomePage/>}/>
                 <Route path={RouteNames.LOCATIONS} element={<LocationsPage/>}/>
-                <Route path={RouteNames.TOURS} element={<ToursPage/>}/>
+                <Route path={`${RouteNames.TOURS}/:location`} element={<ToursPage/>}/>
                 <Route path={`${RouteNames.TOUR}/:title`} element={<TourPage/>}/>
                 <Route path={`${RouteNames.CONTRIBUTOR}/:name`} element={<ContributorInfoPage/>}/>
                 <Route path={RouteNames.PROFILE} element={<ProfilePage/>}/>
