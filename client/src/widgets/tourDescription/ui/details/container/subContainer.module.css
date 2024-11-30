@@ -1,5 +1,5 @@
 .layout {
-    @apply flex flex-col md:flex-row gap-4
+    @apply flex flex-col wide:flex-row gap-4
 }
 
 .text {
