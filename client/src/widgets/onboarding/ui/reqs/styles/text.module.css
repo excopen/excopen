@@ -1,9 +1,9 @@
 .largeHeading {
-    @apply text-5xl font-medium text-grayscale-500
+    @apply text-3xl lg:text-5xl font-medium text-grayscale-500
 }
 
 .smallHeading {
-    @apply text-4xl font-medium text-grayscale-500 w-2/3
+    @apply text-2xl lg:text-4xl font-medium text-grayscale-500 lg:w-2/3
 }
 
 .descContainer {

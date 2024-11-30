@@ -4,6 +4,7 @@ import {TagsArray} from "@/shared/assets/tempData/TagsArray.ts";
 import {Tag} from "./Tag.tsx";
 import {Text} from "./Text.tsx";
 import {Buttons} from "./Buttons.tsx";
+import {cn} from "@/app/lib/utils.ts";
 
 export const Index: FC = () => {
 
@@ -15,7 +16,7 @@ export const Index: FC = () => {
     }, [tagsId]);
 
     return (
-        <div className={style.container}>
+        <div className={cn(style.container, style.paddings)}>
             <Text/>
             <div className={style.tags}>
                 {TagsArray.map(tag => (

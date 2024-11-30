@@ -1,5 +1,9 @@
 .container {
-    @apply z-20 w-full h-full px-64 py-24 flex flex-col gap-12 relative
+    @apply z-20 w-full h-full flex flex-col relative gap-4 lg:gap-16
+}
+
+.paddings {
+    @apply px-4 py-8 md:px-24 md:py-12 lg:px-16 xl:px-64 lg:py-24
 }
 
 .tags {
@@ -7,5 +11,5 @@
 }
 
 .buttons {
-    @apply flex justify-end gap-4 mt-36
+    @apply flex justify-end gap-4 mt-8 lg:mt-36
 }
