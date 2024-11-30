@@ -1,1 +1,1 @@
-export {Details} from "./Index.tsx"
+export {Index as Details} from "./Index.tsx"

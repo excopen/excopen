@@ -1,9 +1,8 @@
 import {FC} from "react";
 import {ITour, RouteNames} from "@/shared/types";
-import {Details} from "@/widgets/tourDescription/ui/details";
-import {ButtonContainer, ContactContainer, Container, SubContainer} from "@/widgets/tourDescription/ui/containers";
-import {BoldText, Heading, List} from "@/widgets/tourDescription/ui/components";
-import {ContactButton, TelegramButton, VKButton} from "@/widgets/tourDescription/ui/buttons";
+import {Details} from "./details";
+import {ContactButton, TelegramButton, VKButton} from "./buttons";
+import style from "./style.module.css"
 
 type TourDescriptionProps = {
     tour: ITour | undefined
@@ -11,51 +10,63 @@ type TourDescriptionProps = {
 
 export const TourDescription: FC<TourDescriptionProps> = ({tour}) => {
     return (
-        <Container>
+        <div className={style.container}>
 
-            <SubContainer>
+            <div className={style.subContainer}>
                 <p>{tour?.description?.mainInfo}</p>
-            </SubContainer>
+            </div>
 
-            <Heading value={"Что Вас ождает:"}/>
+            <h2 className={style.heading}>
+                Что Вас ождает:
+            </h2>
 
-            <SubContainer>
+            <div className={style.subContainer}>
                 <p>{tour?.description?.whatToExpect}</p>
-                <BoldText value={"Что вам встретится по пути"}/>
-                <List>
+                <span className={style.bold}>
+                    Что вам встретится по пути
+                </span>
+                <ul className={style.list}>
                     {tour?.description?.locations.map((location, i) => (
                         <li key={i}>{location}</li>
                     ))}
-                </List>
-                <BoldText value={"О чём будем беседовать"}/>
-                <List>
+                </ul>
+                <span className={style.bold}>
+                    О чём будем беседовать
+                </span>
+                <ul className={style.list}>
                     {tour?.description?.topics.map((topic, i) => (
                         <li key={i}>{topic}</li>
                     ))}
-                </List>
-            </SubContainer>
+                </ul>
+            </div>
 
-            <SubContainer>
-                <Heading value={"Организационные детали"}/>
+            <div className={style.subContainer}>
+                <h3 className={style.heading}>
+                    Организационные детали
+                </h3>
                 <p>{tour?.description?.orgDetails}</p>
-            </SubContainer>
+            </div>
 
-            <SubContainer>
-                <Heading value={"Место встречи"}/>
+            <div className={style.subContainer}>
+                <h3 className={style.heading}>
+                    Место встречи
+                </h3>
                 <p>{tour?.description?.meetingPlace}</p>
-            </SubContainer>
+            </div>
 
-            <ContactContainer>
-                <Heading value={"Остались вопросы?"} />
-                <ButtonContainer>
+            <div className={style.contacts}>
+                <h3 className={style.heading}>
+                    Остались вопросы?
+                </h3>
+                <div className={style.buttons}>
                     <ContactButton link={`/${RouteNames.MAIN}`}/>
                     <TelegramButton link={tour?.contact?.telegram}/>
                     <VKButton link={tour?.contact?.vk}/>
-                </ButtonContainer>
-            </ContactContainer>
+                </div>
+            </div>
 
             <Details/>
 
-        </Container>
+        </div>
     );
 };

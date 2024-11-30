@@ -1,5 +1,5 @@
 .container {
-    @apply flex flex-row justify-between
+    @apply flex flex-col gap-4 md:flex-row justify-between
 }
 
 .startCol {

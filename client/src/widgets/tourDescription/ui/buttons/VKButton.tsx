@@ -7,7 +7,7 @@ type VKButtonProps = {
     link?: string
 }
 
-export const VKButton: FC<VKButtonProps> = ({link = "/"}) => {
+export const VKButton: FC<VKButtonProps> = ({link = "/main"}) => {
     return (
         <Link to={link}>
             <Button size={"lgIcon"}>

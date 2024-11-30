@@ -7,7 +7,7 @@ type TelegramButtonProps = {
     link?: string
 }
 
-export const TelegramButton: FC<TelegramButtonProps> = ({link = "/"}) => {
+export const TelegramButton: FC<TelegramButtonProps> = ({link = "/main"}) => {
     return (
         <Link to={link}>
             <Button size={"lgIcon"}>
