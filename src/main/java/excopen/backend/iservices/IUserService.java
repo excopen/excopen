@@ -11,4 +11,6 @@ public interface IUserService {
     List<User> getAllUsers();
     User updateUser(Long userId, User user);
     void deleteUser(Long userId);
+    Optional<User> findByGoogleId(String googleId);
+    User updatePreferencesVector(Long userId, float[] preferencesVector);
 }
