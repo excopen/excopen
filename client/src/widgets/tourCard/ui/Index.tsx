@@ -3,7 +3,6 @@ import {ITour, PriceContainerVariant, RouteNames} from "@/shared/types";
 import {
     Button,
     CarouselVariant,
-    FavouriteButton,
     GroupPrice,
     ImagesCarousel,
     Rating,
@@ -11,6 +10,7 @@ import {
 } from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
+import {ToFavourite} from "@/features";
 
 type TourCardProps = {
     tour: ITour
@@ -33,7 +33,9 @@ export const Index: FC<TourCardProps> = ({tour}) => {
 
                 <div className={style.header}>
                     <Rating rating={tour.rating} ratingCount={tour.ratingCount}/>
-                    <FavouriteButton/>
+
+                    <ToFavourite tourId={tour.id}/>
+
                 </div>
 
                 <div className={style.desc}>
