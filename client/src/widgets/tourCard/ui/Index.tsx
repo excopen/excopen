@@ -10,7 +10,7 @@ import {
 } from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
-import {ToFavourite} from "@/features";
+import {ToFavourite} from "@/entities";
 
 type TourCardProps = {
     tour: ITour
@@ -34,7 +34,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
                 <div className={style.header}>
                     <Rating rating={tour.rating} ratingCount={tour.ratingCount}/>
 
-                    <ToFavourite tourId={tour.id}/>
+                    <ToFavourite tour={tour}/>
 
                 </div>
 
