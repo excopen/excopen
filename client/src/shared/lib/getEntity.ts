@@ -1,10 +1,10 @@
-import {apiClient} from "@/shared/lib/index.ts";
+import {apiClient, ApiException} from "@/shared/lib";
 import axios from "axios";
-import {ApiException} from "./exceptions.ts";
+import {EndpointsType} from "@/shared/types";
 
-export const fetchData = async <T>(endpoint: string): Promise<T[]> => {
+export const getEntity = async <T>(endpoint: EndpointsType, id: number): Promise<T> => {
     try {
-        const response = await apiClient.get<T[]>(`${endpoint}`);
+        const response = await apiClient.get<T>(`/${endpoint}/:${id}`);
         return response.data;
     } catch (e) {
         if (axios.isAxiosError(e)) {

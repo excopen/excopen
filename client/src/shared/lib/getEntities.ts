@@ -1,14 +1,14 @@
 import {apiClient, ApiException} from "@/shared/lib";
 import axios from "axios";
-import {ITour} from "@/shared/types";
+import {EndpointsType} from "@/shared/types/api/EndpointsType.ts";
 
-export const fetchFavourites = async (): Promise<ITour[]> => {
+export const getEntities = async <T>(endpoint: EndpointsType): Promise<T[]> => {
     try {
-        const response = await apiClient.get<ITour[]>("/favourites");
+        const response = await apiClient.get<T[]>(`/${endpoint}`);
         return response.data;
     } catch (e) {
         if (axios.isAxiosError(e)) {
-            throw new ApiException<ITour>(
+            throw new ApiException<T>(
                 e.message,
                 e.response?.status,
                 e.response?.data

@@ -1,4 +1,4 @@
-export * from "./api/SearchParamsType.ts"
+export * from "./api"
 export * from "./auth/UserRole.ts"
 export * from "./entities"
 export * from "./ui"
