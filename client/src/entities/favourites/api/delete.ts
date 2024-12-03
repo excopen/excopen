@@ -1,16 +1,11 @@
 import {useMutation} from "@tanstack/react-query";
-import {ITour} from "@/shared/types";
-import {deleteFromFavourites} from "@/entities";
-import {ApiException} from "@/shared/lib";
+import {ApiException, deleteEntity} from "@/shared/lib";
+import {EndpointsType, ITour} from "@/shared/types";
 
 export const useDeleteFavourite = () => {
     return useMutation<void, ApiException<ITour>, {id: number}>({
-        mutationFn: ({id}) => deleteFromFavourites(id),
-        onSuccess: () => {
-            console.log('Favourites deleted successfully');
-        },
-        onError: (error) => {
-            console.error('Error deleting favourites:', error);
-        },
+        mutationFn: ({id}) => deleteEntity(EndpointsType.FAVOURITES, id),
+        onSuccess: () => console.log('Favourite tour deleted successfully'),
+        onError: (error) => console.error('Error deleting favourite:', error),
     })
 }
