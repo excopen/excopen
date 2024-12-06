@@ -1,3 +1,4 @@
 export * from "./searchTour"
 export * from "./breadcrumbs"
-export * from "./searchLocation"
+export * from "./search"
+export * from "./tourView"
