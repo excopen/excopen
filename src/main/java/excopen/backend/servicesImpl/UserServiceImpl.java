@@ -82,7 +82,7 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
     }
 
     @Override
-    public User updatePreferencesVector(Long userId, float[] preferencesVector) {
+    public User updatePreferencesVector(Long userId, int[] preferencesVector) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
