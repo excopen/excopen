@@ -1,12 +1,12 @@
 package excopen.backend.iservices;
 
-import excopen.backend.entities.Description;
+import excopen.backend.entities.Text;
 import java.util.Optional;
 
 
 public interface IDescriptionService {
-    Description createDescription(Description description);
-    Optional<Description> getDescriptionById(Long descriptionId);
-    Description updateDescription(Description description);
+    Text createDescription(Text description);
+    Optional<Text> getDescriptionById(Long descriptionId);
+    Text updateDescription(Text description);
     void deleteDescription(Long descriptionId);
 }

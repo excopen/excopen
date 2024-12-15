@@ -6,6 +6,7 @@ import image4 from "./assets/img4.png";
 import map from "./assets/map.png";
 import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
+import bg from "@/shared/assets/tempData/assets/cardBg.png";
 
 const TourObject: ITour = {
     priceForPerson: 4000,
@@ -23,7 +24,14 @@ const TourObject: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject
+    contributor: ContributorObject,
+    location: {
+        id: 0,
+        country: "Россия",
+        city: "Новосибирск",
+        tourCount: 100,
+        image: bg,
+    }
 }
 
 const TourObject2: ITour = {
@@ -42,7 +50,14 @@ const TourObject2: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject
+    contributor: ContributorObject,
+    location: {
+        id: 0,
+        country: "Россия",
+        city: "Омск",
+        tourCount: 100,
+        image: bg,
+    }
 }
 
 const TourObject3: ITour = {
@@ -61,7 +76,14 @@ const TourObject3: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject
+    contributor: ContributorObject,
+    location: {
+        id: 0,
+        country: "Россия",
+        city: "Москва",
+        tourCount: 100,
+        image: bg,
+    }
 }
 
 const TourObject4: ITour = {
@@ -80,7 +102,14 @@ const TourObject4: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject
+    contributor: ContributorObject,
+    location: {
+        id: 0,
+        country: "Россия",
+        city: "Омск",
+        tourCount: 100,
+        image: bg,
+    }
 }
 
 export const ToursArray = [

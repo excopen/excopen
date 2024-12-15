@@ -1,6 +1,6 @@
 package excopen.backend.servicesImpl;
 
-import excopen.backend.entities.Description;
+import excopen.backend.entities.Text;
 import excopen.backend.iservices.IDescriptionService;
 import excopen.backend.repositories.DescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +19,17 @@ public class DescriptionServiceImpl implements IDescriptionService {
     }
 
     @Override
-    public Description createDescription(Description description) {
+    public Text createDescription(Text description) {
         return descriptionRepository.save(description);
     }
 
     @Override
-    public Optional<Description> getDescriptionById(Long descriptionId) {
+    public Optional<Text> getDescriptionById(Long descriptionId) {
         return descriptionRepository.findById(descriptionId);
     }
 
     @Override
-    public Description updateDescription(Description description) {
+    public Text updateDescription(Text description) {
         return descriptionRepository.save(description);
     }
 
