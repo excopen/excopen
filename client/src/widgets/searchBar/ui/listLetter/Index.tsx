@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import style from "./style.module.css";
 import { cn } from "@/app/lib/utils.ts";
 import { lettersArray } from "@/widgets/searchBar/utils";
@@ -12,11 +12,10 @@ export const Index: FC<IndexProps> = ({ onChange, isActive }) => {
 
     const [value, setValue] = useState<string>("А");
 
-    const clickHandler = (newValue: string) => setValue(newValue)
-
-    useEffect(() => {
-        onChange(value);
-    }, [onChange, value]);
+    const clickHandler = (newValue: string) => {
+        setValue(newValue)
+        onChange(value)
+    }
 
     return (
         <div className={style.container}>

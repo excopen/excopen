@@ -11,8 +11,8 @@ export const Index: FC<IndexProps> = ({cities}) => {
             {
                 cities.length === 0 && <span className={style.warning}>Город не найден</span>
             }
-            {cities.map((city, key) => (
-                <span key={key} className={style.city}>
+            {cities.map(city => (
+                <span key={city} className={style.city}>
                     {city}
                 </span>
             ))}
