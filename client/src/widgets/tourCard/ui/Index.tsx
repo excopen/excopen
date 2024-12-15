@@ -10,6 +10,7 @@ import {
 } from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
+import {ToFavourite} from "@/entities";
 
 type TourCardProps = {
     tour: ITour
