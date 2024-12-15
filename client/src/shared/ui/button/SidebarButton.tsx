@@ -1,20 +1,24 @@
 import {FC} from "react";
 import {Link} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
-import favourite from "@/shared/assets/icons/favourite-secondary.svg";
 import next from "@/shared/assets/icons/next-secondary.svg";
 import {Button} from "@/shared/ui";
 
-export const ToFavButton: FC = () => {
+type SidebarButtonProps = {
+    label: string,
+    image: string
+}
+
+export const SidebarButton: FC<SidebarButtonProps> = ({label, image}) => {
     return (
         <Button className={"max-lg:hidden"} variant={"secondary"} size={"md"}>
             <img
                 height={24}
                 width={24}
                 alt={"favourite"}
-                src={favourite}
+                src={image}
             />
-            Избранное
+            {label}
             <Link to={`/${RouteNames.FAVOURITES}`}>
                 <img
                     height={20}

@@ -11,6 +11,7 @@ import {
 } from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
+import {useTourViewContext} from "@/features";
 
 type TourCardProps = {
     tour: ITour
@@ -19,9 +20,11 @@ type TourCardProps = {
 export const Index: FC<TourCardProps> = ({tour}) => {
 
     const navigate = useNavigate()
+    const {viewedTours, setViewedTours} = useTourViewContext()
 
     const clickHandler = () => {
         navigate(`/${RouteNames.TOUR}/${encodeURIComponent(tour.title)}`)
+        setViewedTours([...viewedTours, tour])
     }
 
     return (
