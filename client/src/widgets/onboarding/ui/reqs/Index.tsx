@@ -1,4 +1,4 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useState} from "react";
 import style from "./styles/style.module.css"
 import {TagsArray} from "@/shared/assets/tempData/TagsArray.ts";
 import {Tag} from "./Tag.tsx";
@@ -9,11 +9,8 @@ import {cn} from "@/app/lib/utils.ts";
 export const Index: FC = () => {
 
     const [tagsId, setTagsId] = useState<number[]>([])
-    const [disabled, setDisabled] = useState<boolean>(true)
 
-    useEffect(() => {
-        setDisabled(tagsId.length === 0)
-    }, [tagsId]);
+    const disabled = tagsId.length === 0
 
     return (
         <div className={cn(style.container, style.paddings)}>

@@ -9,6 +9,9 @@ type ButtonsProps = {
 }
 
 export const Buttons: FC<ButtonsProps> = ({disabled}) => {
+
+    const searchButton = <Button disabled={disabled} size={"md"}>Искать</Button>
+
     return (
         <div className={style.buttons}>
             <Link to={`/${RouteNames.MAIN}`}>
@@ -16,11 +19,7 @@ export const Buttons: FC<ButtonsProps> = ({disabled}) => {
                     Не интересно
                 </Button>
             </Link>
-            <Link to={`/${RouteNames.MAIN}`}>
-                <Button disabled={disabled} size={"md"}>
-                    Искать
-                </Button>
-            </Link>
+            {!disabled ? <Link to={`/${RouteNames.MAIN}`}>{searchButton}</Link> : searchButton}
         </div>
     );
 };
