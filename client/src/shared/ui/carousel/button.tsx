@@ -41,4 +41,4 @@ const CarouselButton = React.forwardRef<HTMLButtonElement, CarouselButtonProps>(
 
 CarouselButton.displayName = "CarouselButton"
 
-export { CarouselButton, carouselButtonVariants }
+export { CarouselButton }

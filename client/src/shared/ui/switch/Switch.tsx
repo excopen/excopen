@@ -22,7 +22,7 @@ const Switch = React.forwardRef<
 
     useEffect(() => {
         props.onChangeValue(value)
-    }, [value]);
+    }, [value, props.onChangeValue, props]);
 
 
     return (
