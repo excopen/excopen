@@ -5,7 +5,7 @@ import {sortTypesArray} from "@/widgets/tours/utils";
 import style from "./style.module.css"
 
 type HeaderProps = {
-    city: string
+    city: string | undefined
     count: number
 }
 
@@ -19,7 +19,7 @@ export const Index: FC<HeaderProps> = ({city, count}) => {
         <header className={style.container}>
             <div className={style.content}>
                 <h1 className={style.title}>{city}</h1>
-                <span className={style.desc}>{count} варианта от 200 рублей/чел.</span>
+                <span className={style.desc}>{count} найденных экскурсий</span>
             </div>
             <SelectParams
                 defaultValue={SortValues.FOR_POPULAR}

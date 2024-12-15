@@ -7,7 +7,7 @@ import {Button} from "@/shared/ui";
 
 export const ToFavButton: FC = () => {
     return (
-        <Button variant={"secondary"} size={"md"}>
+        <Button className={"max-lg:hidden"} variant={"secondary"} size={"md"}>
             <img
                 height={24}
                 width={24}

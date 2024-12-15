@@ -1,1 +1,1 @@
-export {Item} from "./Index.tsx"
+export {Index as Item} from "./Index.tsx"

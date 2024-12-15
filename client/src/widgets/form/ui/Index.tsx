@@ -1,9 +1,9 @@
 import {FC} from "react";
-import {useSearchTourContext} from "@/features/searchTour";
-import {Orientation, RouteNames, TourAccessibility} from "@/shared/types";
+import {useSearchTourContext} from "@/features";
+import {Orientation, TourAccessibility} from "@/shared/types";
 import {tourAccessibilityArray} from "@/widgets/form/utils";
-import {Container, Header, Bottom} from "@/widgets/form/ui/containers";
-import {DatePicker, Heading, Input, SearchButton, SwitchByCity} from "@/widgets/form/ui/components";
+import {Container, Header, Bottom} from "./containers";
+import {DatePicker, Heading, Input, SearchButton, SwitchByCity} from "./components";
 import {SelectParams, SelectType} from "@/shared/ui";
 
 type FormProps = {
@@ -12,17 +12,9 @@ type FormProps = {
 
 export const Index: FC<FormProps> = ({orientation}) => {
 
-    const {
-        setLocation,
-        setAccessibility,
-        setByCity,
-        setDate,
-        searchParams
-    } = useSearchTourContext()
+    const {setLocation, setAccessibility, setByCity, setDate, searchParams} = useSearchTourContext()
 
-    const disabled =
-        !!searchParams.location &&
-        !!searchParams.date
+    const disabled = !!searchParams.location && !!searchParams.date
 
     return (
         <Container orientation={orientation}>
@@ -47,8 +39,8 @@ export const Index: FC<FormProps> = ({orientation}) => {
                         null
                 }
                 <SearchButton
+                    location={searchParams.location}
                     orientation={orientation}
-                    path={RouteNames.TOURS}
                     disabled={disabled}
                 />
             </Header>
