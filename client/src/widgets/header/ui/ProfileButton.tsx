@@ -24,7 +24,7 @@ export const ProfileButton: FC = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent side={"bottom"} align={"end"}>
                 <DropdownMenuGroup>
-                    <DropdownMenuItem path={"/profile"}>
+                    <DropdownMenuItem path={"/main"}>
                         <img alt={"profile"} src={profile} height={16} width={16}/>
                         Профиль
                     </DropdownMenuItem>
