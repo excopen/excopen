@@ -24,7 +24,7 @@ public class Tour implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "description_id")
-    private Description descriptionId;
+    private Text descriptionId;
 
     @ManyToOne
     @JoinColumn(name = "location_id")

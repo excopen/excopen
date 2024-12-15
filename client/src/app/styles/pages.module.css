@@ -18,6 +18,10 @@
     @apply flex flex-col lg:flex-row py-8 xl:py-16 gap-6
 }
 
+.profile {
+    @apply flex flex-col lg:flex-row py-8 xl:py-16 gap-6
+}
+
 .onboarding {
     @apply w-full
 }

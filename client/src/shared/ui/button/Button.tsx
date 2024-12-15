@@ -15,7 +15,7 @@ const ButtonVariants = cva(
       variant: {
         default: "bg-primary-0 text-grayscale-500 hover:bg-primary-100",
         outline: "border border-grayscale-400 bg-transparent text-grayscale-400 hover:border-grayscale-500 hover:text-grayscale-500",
-        secondary: "bg-grayscale-0 text-grayscale-500 hover:text-grayscale-400 hover:opacity-90 flex justify-between",
+        secondary: "bg-grayscale-300 text-grayscale-500 hover:opacity-90 flex justify-between",
           calendar: "flex justify-start bg-grayscale-200 text-base font-light rounded-xl px-6 py-4 data-[state=open]:bg-grayscale-0 data-[state=open]:border data-[state=open]:border-grayscale-600"
       },
       size: {
