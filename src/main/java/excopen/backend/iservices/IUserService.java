@@ -13,4 +13,5 @@ public interface IUserService {
     User updateUser(Long userId, User user);
     void deleteUser(Long userId);
     User updatePreferencesVector(Long userId, int[] preferencesVector);
+    public int[] getUserPreferenceVector(Long userId);
 }

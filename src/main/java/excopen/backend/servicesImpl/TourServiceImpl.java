@@ -1,5 +1,6 @@
 package excopen.backend.servicesImpl;
 
+import excopen.backend.dto.TourDTO;
 import excopen.backend.entities.Description;
 import excopen.backend.entities.Tour;
 import excopen.backend.entities.User;
@@ -9,9 +10,11 @@ import excopen.backend.repositories.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TourServiceImpl implements ITourService {
@@ -19,11 +22,13 @@ public class TourServiceImpl implements ITourService {
     private final TourRepository tourRepository;
 
     private final UserServiceImpl userService;
+    private final DescriptionServiceImpl descriptionService;
 
     @Autowired
-    public TourServiceImpl(TourRepository tourRepository, DescriptionServiceImpl descriptionService, UserServiceImpl userService) {
+    public TourServiceImpl(TourRepository tourRepository, DescriptionServiceImpl descriptionService, UserServiceImpl userService, DescriptionServiceImpl descriptionService1) {
         this.tourRepository = tourRepository;
         this.userService = userService;
+        this.descriptionService = descriptionService1;
     }
 
     @Override
@@ -127,4 +132,27 @@ public class TourServiceImpl implements ITourService {
     public List<Tour> findToursByDuration(String duration) {
         return tourRepository.findByDuration(duration);
     }
+
+    public List<TourDTO> getRecommendedTours(Long userId) {
+        int[] preferencesVectorArray = userService.getUserPreferenceVector(userId);
+        String preferencesVector = convertArrayToVectorString(preferencesVectorArray);
+        List<Tour> recommendedTours = tourRepository.findRecommendedTours(preferencesVector);
+        return recommendedTours.stream()
+                .map(tour -> {
+                    TourDTO tourDTO = new TourDTO();
+                    tourDTO.setTour(tour);
+                    tourDTO.setDescription(descriptionService.getDescriptionByTourId(tour.getId()));
+                    return tourDTO;
+                })
+                .collect(Collectors.toList());
+    }
+
+    private String convertArrayToVectorString(int[] array) {
+        return "[" + Arrays.stream(array)
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining(", ")) + "]";
+    }
+
+
+
 }

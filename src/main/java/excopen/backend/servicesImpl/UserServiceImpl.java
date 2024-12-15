@@ -95,6 +95,14 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
     }
 
 
+    @Override
+    public int[] getUserPreferenceVector(Long userId) {
+        return userRepository.findById(userId)
+                .map(User::getPreferencesVector)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+
 }
 
 

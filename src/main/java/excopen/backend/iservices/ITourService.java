@@ -1,5 +1,6 @@
 package excopen.backend.iservices;
 
+import excopen.backend.dto.TourDTO;
 import excopen.backend.entities.Description;
 import excopen.backend.entities.Tour;
 
@@ -15,5 +16,6 @@ public interface ITourService {
     List<Tour> getAllTours();
     List<Tour> findToursByLocation(Long locationId);
     List<Tour> findToursByDuration(String duration);
+    public List<TourDTO> getRecommendedTours(Long userId);
 }
 

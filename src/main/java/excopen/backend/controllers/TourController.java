@@ -87,4 +87,10 @@ public class TourController {
     public List<Tour> findToursByDuration(@PathVariable String duration) {
         return tourService.findToursByDuration(duration);
     }
+
+    @GetMapping("/recommendations/{userId}")
+    public List<TourDTO> getRecommendedTours(@PathVariable Long userId) {
+        return tourService.getRecommendedTours(userId);
+    }
+
 }
