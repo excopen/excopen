@@ -1,1 +1,2 @@
-export {filterTours} from "./filterTours.ts"
+export {fetchFilteredTours} from "./fetchFilteredTours.ts"
+export {fetchSortedTours} from "./fetchSortedTours.ts"
