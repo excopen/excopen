@@ -1,10 +1,13 @@
 import * as React from "react";
 import {Command as CommandPrimitive} from "cmdk";
 
-const CommandEmpty = React.forwardRef<
+export const CommandEmpty = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive.Empty>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => (
+>((
+    props,
+    ref
+) => (
     <CommandPrimitive.Empty
         ref={ref}
         className="py-4 text-center text-md"
@@ -13,5 +16,3 @@ const CommandEmpty = React.forwardRef<
 ))
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
-
-export {CommandEmpty}

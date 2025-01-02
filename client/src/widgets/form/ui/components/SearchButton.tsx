@@ -17,6 +17,8 @@ export const SearchButton: FC<SearchButtonProps> = ({location, disabled, orienta
         if (disabled) navigate(`/${RouteNames.TOURS}/${encodeURIComponent(location)}`)
     }
 
+    console.log(encodeURIComponent(location))
+
     return (
         <Button
             onClick={clickHandler}

@@ -3,8 +3,9 @@ import {useSearchTourContext} from "@/features";
 import {Orientation, TourAccessibility} from "@/shared/types";
 import {tourAccessibilityArray} from "@/widgets/form/utils";
 import {Container, Header, Bottom} from "./containers";
-import {DatePicker, Heading, Input, SearchButton, SwitchByCity} from "./components";
+import {DatePicker, Heading, SearchButton, SwitchByCity} from "./components";
 import {SelectParams, SelectType} from "@/shared/ui";
+import {Input} from "./input"
 
 type FormProps = {
     orientation: Orientation
@@ -12,7 +13,7 @@ type FormProps = {
 
 export const Index: FC<FormProps> = ({orientation}) => {
 
-    const {setLocation, setAccessibility, setByCity, setDate, searchParams} = useSearchTourContext()
+    const {setAccessibility, setByCity, setDate, searchParams} = useSearchTourContext()
 
     const disabled = !!searchParams.location && !!searchParams.date
 
@@ -20,7 +21,7 @@ export const Index: FC<FormProps> = ({orientation}) => {
         <Container orientation={orientation}>
             <Header orientation={orientation}>
                 <Heading value={"Куда теперь?"} orientation={orientation}/>
-                <Input onChangeValue={setLocation}/>
+                <Input/>
                 <DatePicker onChange={setDate}/>
                 <SelectParams
                     defaultValue={TourAccessibility.WITHOUT_CHILDREN}

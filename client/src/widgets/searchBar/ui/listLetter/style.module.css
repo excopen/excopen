@@ -3,7 +3,7 @@
 }
 
 .letter {
-    @apply text-base text-grayscale-400 hover:text-grayscale-500 hover:font-medium transition-colors px-4 cursor-pointer
+    @apply text-base text-grayscale-400 hover:text-grayscale-500 hover:font-medium transition-colors px-3.5 cursor-pointer
 }
 
 .active {

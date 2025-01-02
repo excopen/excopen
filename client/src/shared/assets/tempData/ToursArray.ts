@@ -28,7 +28,7 @@ const TourObject: ITour = {
     location: {
         id: 0,
         country: "Россия",
-        city: "Новосибирск",
+        city: "Омск",
         tourCount: 100,
         image: bg,
     }
@@ -80,7 +80,7 @@ const TourObject3: ITour = {
     location: {
         id: 0,
         country: "Россия",
-        city: "Москва",
+        city: "Омск",
         tourCount: 100,
         image: bg,
     }

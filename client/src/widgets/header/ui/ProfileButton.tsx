@@ -12,6 +12,7 @@ import create from "@/shared/assets/icons/wallet.svg";
 import star from "@/shared/assets/icons/star-gray.svg";
 import next from "@/shared/assets/icons/next-secondary.svg";
 import {FC} from "react";
+import {RouteNames} from "@/shared/types";
 
 export const ProfileButton: FC = () => {
     return (
@@ -24,16 +25,16 @@ export const ProfileButton: FC = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent side={"bottom"} align={"end"}>
                 <DropdownMenuGroup>
-                    <DropdownMenuItem path={"/main"}>
+                    <DropdownMenuItem path={`/${RouteNames.PROFILE}`}>
                         <img alt={"profile"} src={profile} height={16} width={16}/>
                         Профиль
                     </DropdownMenuItem>
-                    <DropdownMenuItem path={"/favourites"}>
+                    <DropdownMenuItem path={`/${RouteNames.FAVOURITES}`}>
                         <img alt={"star"} src={star} height={16} width={16}/>
                         Избранное
                     </DropdownMenuItem>
                     <DropdownMenuSeparator/>
-                    <DropdownMenuItem className={"justify-between"} path={"/create"}>
+                    <DropdownMenuItem className={"justify-between"} path={`/${RouteNames.CREATE}`}>
                         <div className={"flex flex-row gap-2 items-center"}>
                             <img alt={"create"} src={create} height={16} width={16}/>
                             Предложить эк-ю
