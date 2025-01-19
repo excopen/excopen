@@ -1,9 +1,11 @@
-import {SearchParamsType, TourAccessibility} from "@/shared/types";
+import {RangeType, SearchParamsType} from "@/shared/types";
 
-export type SearchTourContextType = {
+export type SearchContextType = {
     searchParams: SearchParamsType
+    isSearch: boolean
     setLocation: (location: string) => void
-    setAccessibility: (type: TourAccessibility) => void
+    setAccessibility: (accessibility: string) => void
     setByCity: (byCity: boolean) => void
-    setDate: (date: Date | undefined) => void
+    setDate: (date: RangeType) => void
+    setIsSearch: (isSearch: boolean) => void
 }

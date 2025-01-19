@@ -21,7 +21,7 @@ export interface ITour {
     duration: string;
     routeLength: number;
     minAge?: number;
-    rating: string;
+    rating: number;
     ratingCount: number
     date?: Date
     accessibility?: TourAccessibility

@@ -1,9 +1,9 @@
 import {useContext} from "react";
-import {SearchTourContext} from "./context.ts";
-import {SearchTourContextType} from "./types.ts";
+import {SearchContextType} from "./types.ts";
+import {SearchContext} from "./context.ts";
 
-export const useSearchTourContext = (): SearchTourContextType => {
-    const context = useContext(SearchTourContext)
+export const useSearchContext = (): SearchContextType => {
+    const context = useContext(SearchContext)
     if (!context) throw new Error("Context error!")
     return context
 }

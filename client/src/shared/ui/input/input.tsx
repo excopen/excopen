@@ -36,9 +36,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     onChange={clickHandler}
                     type={type}
                     className={cn(
-                        "flex h-12 w-full rounded-xl bg-grayscale-0 px-12 py-3 text-base text-grayscale-500 " +
-                        "placeholder:text-base placeholder:text-grayscale-400 " +
-                        "focus:bg-white focus:ring-1 focus:ring-black focus:outline-none " +
+                        "flex h-12 w-full rounded-xl bg-grayscale-0",
+                        "px-12 py-3 text-base text-grayscale-500",
+                        "placeholder:text-base placeholder:text-grayscale-400 ring-1 ring-white",
+                        "focus:ring-1 focus:ring-black focus:outline-none",
                         "transition-all duration-300 ease-in-out",
                         className
                     )}

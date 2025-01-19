@@ -1,7 +1,7 @@
 import {apiClient, ApiException} from "@/shared/lib";
 import axios from "axios";
 import {ITour, SearchParamsType} from "@/shared/types";
-import {serializeSearchParams} from "@/entities/tour/utils";
+import {serializeSearchParams} from "src/entities/tour/lib";
 
 export const fetchFilteredTours = async (params: SearchParamsType): Promise<ITour[]> => {
     try {
