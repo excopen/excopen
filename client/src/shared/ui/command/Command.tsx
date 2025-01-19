@@ -5,18 +5,8 @@ import {cn} from "@/app/lib/utils.ts";
 export const Command = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive>,
     React.ComponentPropsWithoutRef<typeof CommandPrimitive>
->((
-    {
-        className,
-        ...props
-    },
-    ref
-) => (
-    <CommandPrimitive
-        ref={ref}
-        className={cn("z-50", className)}
-        {...props}
-    />
+>(({className, ...props}, ref) => (
+    <CommandPrimitive ref={ref} className={cn(className)} {...props}/>
 ))
 
 Command.displayName = CommandPrimitive.displayName

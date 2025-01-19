@@ -3,7 +3,8 @@ import {Heart} from "lucide-react";
 import favourite from "@/shared/assets/icons/favourite.svg"
 import style from "./style.module.css"
 import {ITour} from "@/shared/types";
-import {useDeleteFavourite, useGetFavourites, usePostFavourite} from "@/entities/favourites/api";
+import {useDeleteFavourite, usePostFavourite} from "@/entities/favourites/api";
+import {useTourTrackingContext} from "@/features";
 
 type ToFavProps = {
     tour: ITour
@@ -11,7 +12,8 @@ type ToFavProps = {
 
 export const Index: FC<ToFavProps> = ({tour}) => {
 
-    const favourites = useGetFavourites()
+    const {favourites, setFavourites} = useTourTrackingContext()
+
     const postMutation = usePostFavourite()
     const deleteMutation = useDeleteFavourite()
 
@@ -23,6 +25,7 @@ export const Index: FC<ToFavProps> = ({tour}) => {
         if (isActive) postMutation.mutate({id: tour.id})
         if (!isActive && defaultValue) deleteMutation.mutate({id: tour.id})
         setIsActive(!isActive)
+        setFavourites([...favourites, tour])
     };
 
     return (

@@ -5,13 +5,7 @@ import { cn } from "@/app/lib/utils.ts"
 export const CommandGroup = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Group>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>
->((
-    {
-        className,
-        ...props
-    },
-    ref
-) => {
+>(({className, ...props}, ref) => {
 
     const baseStyle: string = [
         "overflow-hidden text-md",
@@ -19,11 +13,7 @@ export const CommandGroup = React.forwardRef<
     ].join(" ")
 
     return (
-        <CommandPrimitive.Group
-            ref={ref}
-            className={cn(baseStyle, className)}
-            {...props}
-        />
+        <CommandPrimitive.Group ref={ref} className={cn(baseStyle, className)} {...props}/>
     )
 })
 

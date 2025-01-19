@@ -1,4 +1,4 @@
 import {createContext} from "react";
-import {SearchTourContextType} from "@/features/searchTour/model/types.ts";
+import {SearchContextType} from "./types.ts";
 
-export const SearchTourContext = createContext<SearchTourContextType>(null!)
+export const SearchContext = createContext<SearchContextType>(null!)
