@@ -1,10 +1,12 @@
-import {describe, expect} from "vitest";
+import {afterEach, describe, expect} from "vitest";
 import {useBreadcrumbs} from "./hooks.ts";
 import {MemoryRouter} from "react-router-dom";
 import {renderHook} from "@testing-library/react";
 import {RouteNames} from "@/shared/types";
 
 describe("breadcrumbs", () => {
+
+    afterEach(() => localStorage.clear())
 
     it("Возвращаем маршрут для главной страницы", () => {
 
