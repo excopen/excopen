@@ -1,4 +1,4 @@
-import {RangeType} from "@/widgets/form/config";
+import {RangeType} from "@/shared/types";
 
 export type SearchParamsType = {
     location: string

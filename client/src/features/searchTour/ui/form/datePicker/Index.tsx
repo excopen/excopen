@@ -1,8 +1,8 @@
 import {FC, useEffect, useState} from "react";
 import { Calendar, Popover, PopoverContent, PopoverTrigger } from "@/shared/ui";
 import { CalendarButton } from "./CalendarButton.tsx";
-import {DateRange} from "react-day-picker";
 import {useSearchContext} from "@/features";
+import {RangeType} from "@/shared/types";
 
 export const Index: FC = () => {
 
@@ -15,9 +15,9 @@ export const Index: FC = () => {
     useEffect(() => {
         setDate(range)
     }, [range, setDate]);
-    
-    const selectRangeHandler = (selectedRange: DateRange | undefined) => {
-        setRange(selectedRange)
+
+    const selectRangeHandler = (selectedRange: RangeType | undefined) => {
+        if (selectedRange) setRange(selectedRange)
         if (selectedRange && selectedRange.to) setIsPopoverOpen(false);
     };
 

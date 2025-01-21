@@ -13,7 +13,14 @@ export const Index: FC = () => {
     return (
         <div className={style.container}>
             <Header onChangeHandler={setLocation}/>
-            {tours.map(tour => <TourCard key={tour.id} tour={tour}/>)}
+            {tours.length === 0
+                ?
+                <div className={"w-full text-center text-xl"}>
+                    <span>Экскурсии не найдены :(</span>
+                </div>
+                :
+                tours.map(tour => <TourCard key={tour.id} tour={tour}/>)
+            }
         </div>
     );
 };

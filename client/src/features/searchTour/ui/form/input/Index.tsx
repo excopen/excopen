@@ -10,9 +10,9 @@ import {
     CommandList,
     CommandLocation,
 } from "@/shared/ui";
-import {locationsArray} from "@/shared/assets/tempData/LocationsArray.ts";
 import {validateByCity} from "@/features/searchTour/lib";
 import {useSearchContext} from "@/features";
+import {locationsArray} from "@/shared/assets/tempData/locationsArray.ts";
 
 export const Index: FC = () => {
 
@@ -63,7 +63,7 @@ export const Index: FC = () => {
 
     useEffect(() => {
         if (searchParams.location !== value) setValue(searchParams.location)
-    }, [searchParams.location, value]);
+    }, [searchParams.location]);
 
     useOnClickOutside(commandRef, () => {
         setField(prev => (

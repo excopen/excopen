@@ -11,7 +11,7 @@
 }
 
 .header {
-    @apply flex gap-4
+    @apply flex justify-between gap-4
 }
 
 .headerHorMode {

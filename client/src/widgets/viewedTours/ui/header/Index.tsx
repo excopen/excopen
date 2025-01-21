@@ -13,7 +13,7 @@ export const Index: FC<IndexProps> = ({onChangeHandler}) => {
             <Input
                 className={"max-md:w-full"}
                 onChangeHandler={onChangeHandler}
-                placeholder={"Искать"}
+                placeholder={"Искать по городу"}
             />
             <div className={style.subContainer}>
                 <span>

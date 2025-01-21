@@ -20,12 +20,13 @@ type TourCardProps = {
 export const Index: FC<TourCardProps> = ({tour}) => {
 
     const navigate = useNavigate()
-    const {viewed, setViewed} = useTourTrackingContext()
+    const {addToViewed} = useTourTrackingContext()
 
     const clickHandler = () => {
         navigate(`/${RouteNames.TOUR}/${encodeURIComponent(tour.title)}`)
-        setViewed([...viewed, tour])
+        addToViewed(tour)
     }
+
 
     return (
         <div className={style.container}>

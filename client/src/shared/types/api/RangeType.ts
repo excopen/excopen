@@ -1,4 +1,4 @@
 export type RangeType = {
-    from?: Date | undefined
+    from: Date | undefined
     to?: Date | undefined
 }
