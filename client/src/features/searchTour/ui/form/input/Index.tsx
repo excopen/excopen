@@ -1,6 +1,6 @@
 import * as React from "react";
-import { FC, useEffect, useRef, useState } from "react";
-import {useOnClickOutside} from "usehooks-ts";
+import { FC, useRef, useState } from "react";
+import { useOnClickOutside } from "usehooks-ts";
 import {
     Command,
     CommandContainer,
@@ -10,27 +10,29 @@ import {
     CommandList,
     CommandLocation,
 } from "@/shared/ui";
-import {validateByCity} from "@/features/searchTour/lib";
-import {useSearchContext} from "@/features";
-import {locationsArray} from "@/shared/assets/tempData/locationsArray.ts";
+import { validateByCity } from "@/features/searchTour/lib";
+import { useSearchContext } from "@/features";
+import { locationsArray } from "@/shared/assets/tempData/locationsArray.ts";
 
 export const Index: FC = () => {
 
-    const { searchParams, setLocation, isSearch } = useSearchContext()
-
-    const [value, setValue] = useState<string>(searchParams.location)
+    const { searchParams, setLocation, isSearch } = useSearchContext();
 
     const [field, setField] = useState({
         isOpen: false,
         isTouched: false,
-        isCorrectedField: true
-    })
+        isCorrectedField: true,
+    });
 
     const commandRef = useRef<HTMLDivElement>(null);
 
     const updateField = (newValue: string) => {
-        setValue(newValue);
-        setField({isTouched: true, isOpen: true, isCorrectedField: validateByCity(newValue)})
+        setLocation(newValue);
+        setField({
+            isTouched: true,
+            isOpen: true,
+            isCorrectedField: validateByCity(newValue),
+        });
     };
 
     const clickInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,35 +42,29 @@ export const Index: FC = () => {
 
     const clickCommandItemHandler = (city: string) => {
         updateField(city);
-        setField(prev => ({ ...prev, isOpen: false }));
+        setField((prev) => ({ ...prev, isOpen: false }));
     };
 
     const focusHandler = () => {
-        setField(prev => ({ ...prev, isOpen: true }))
-    }
-
-    const blurHandler = () => {
-        if (!field.isOpen && value === "") {
-            setField(prev => ({ ...prev, isTouched: true }));
-        }
-    }
-
-    const clearValue = () => {
-        setValue("")
+        setField((prev) => ({ ...prev, isOpen: true }));
     };
 
-    useEffect(() => {
-        setLocation(value)
-    }, [value, setLocation]);
+    const blurHandler = () => {
+        if (!field.isOpen && searchParams.location === "") {
+            setField((prev) => ({ ...prev, isTouched: true }));
+        }
+    };
 
-    useEffect(() => {
-        if (searchParams.location !== value) setValue(searchParams.location)
-    }, [searchParams.location]);
+    const clearValue = () => {
+        setLocation("");
+    };
 
     useOnClickOutside(commandRef, () => {
-        setField(prev => (
-            {...prev, isOpen: false, isTouched: value === "" ? false : prev.isTouched}
-        ))
+        setField((prev) => ({
+            ...prev,
+            isOpen: false,
+            isTouched: searchParams.location === "" ? false : prev.isTouched,
+        }));
     });
 
     return (
@@ -76,7 +72,7 @@ export const Index: FC = () => {
             <CommandInput
                 isSearch={isSearch}
                 field={field}
-                value={value}
+                value={searchParams.location}
                 label={"Где искать"}
                 onClear={clearValue}
                 onChangeCapture={clickInputHandler}
@@ -85,11 +81,9 @@ export const Index: FC = () => {
             />
             <CommandContainer isOpen={field.isOpen}>
                 <CommandList>
-                    <CommandEmpty>
-                        Направления не найдены
-                    </CommandEmpty>
+                    <CommandEmpty>Направления не найдены</CommandEmpty>
                     <CommandGroup heading={"Направления"}>
-                        {locationsArray.map(location => (
+                        {locationsArray.map((location) => (
                             <CommandLocation
                                 key={location.city}
                                 onClick={() => clickCommandItemHandler(location.city)}
