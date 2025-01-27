@@ -1,5 +1,5 @@
 .container {
-    @apply flex flex-col py-8 gap-8 w-full
+    @apply flex flex-col py-8 gap-8 w-full huge:w-[1400px]
 }
 
 .heading {

@@ -6,7 +6,7 @@ export const Breadcrumb = React.forwardRef<
         separator?: React.ReactNode
     }
 >(({ ...props }, ref) =>
-    <nav ref={ref} aria-label="breadcrumb" {...props} />
+    <nav className={"w-full huge:w-[1440px]"} ref={ref} aria-label="breadcrumb" {...props} />
 )
 
 Breadcrumb.displayName = "Breadcrumb"

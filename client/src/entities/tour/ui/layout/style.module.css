@@ -1,5 +1,5 @@
 .container {
-    @apply flex flex-col justify-between py-12
+    @apply flex flex-col justify-between py-12 huge:w-[1440px]
 }
 
 .subContainer {

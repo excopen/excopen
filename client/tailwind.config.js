@@ -43,7 +43,8 @@ export default {
 			}
   		},
 		screens: {
-			  wide: "1440px"
+			wide: "1440px",
+			huge: "1600px"
 		}
   	}
   },
