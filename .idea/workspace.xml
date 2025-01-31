@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95463dea-f5fe-430c-8a98-ee347247c721" name="Changes" comment="Add tests for Form">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="95463dea-f5fe-430c-8a98-ee347247c721" name="Changes" comment="&#10;Add xml files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -301,7 +298,7 @@
       <workItem from="1737979111977" duration="303000" />
       <workItem from="1737987444531" duration="3595000" />
       <workItem from="1738064388277" duration="8000" />
-      <workItem from="1738309215959" duration="12436000" />
+      <workItem from="1738309215959" duration="12824000" />
     </task>
     <task id="LOCAL-00001" summary=".gitignore commit">
       <option name="closed" value="true" />
@@ -639,7 +636,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738339046578</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="&#10;Add xml files">
+      <option name="closed" value="true" />
+      <created>1738339424431</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1738339424431</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -657,9 +662,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update favourite entity" />
-    <MESSAGE value="Update tour entity" />
-    <MESSAGE value="Update tour entity with new functions" />
     <MESSAGE value="Add feature search locations" />
     <MESSAGE value="Add widget search location bar" />
     <MESSAGE value="Add tour view feature" />
@@ -682,6 +684,9 @@
     <MESSAGE value="push unversioned files" />
     <MESSAGE value="Update UI components in form" />
     <MESSAGE value="Add tests for Form" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add tests for Form" />
+    <MESSAGE value="Update index" />
+    <MESSAGE value="&#10;Update index file in form again" />
+    <MESSAGE value="&#10;Add xml files" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;Add xml files" />
   </component>
 </project>
