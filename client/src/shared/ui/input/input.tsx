@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {useDebounceValue} from "usehooks-ts";
 
 type InputProps = React.ComponentProps<"input"> & {
+    isSearch?: boolean
     placeholder?: string
     onChangeHandler: (value: string) => void
 };
@@ -15,6 +16,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             className,
             type,
             placeholder,
+            isSearch,
             onChangeHandler,
             ...props
         },
@@ -31,13 +33,17 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         return (
             <div className="relative flex flex-row items-center">
-                <Search className="absolute left-4 h-5 w-5 text-grayscale-400" />
+                {
+                    isSearch &&
+                    <Search className="absolute left-4 h-5 w-5 text-grayscale-400" />
+                }
                 <input
                     onChange={clickHandler}
                     type={type}
                     className={cn(
                         "flex h-12 w-full rounded-xl bg-grayscale-0",
-                        "px-12 py-3 text-base text-grayscale-500",
+                        isSearch ? "px-4" : "px-12",
+                        "py-3 text-base text-grayscale-500",
                         "placeholder:text-base placeholder:text-grayscale-400 ring-1 ring-white",
                         "focus:ring-1 focus:ring-black focus:outline-none",
                         "transition-all duration-300 ease-in-out",
