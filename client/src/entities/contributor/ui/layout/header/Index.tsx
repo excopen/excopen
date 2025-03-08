@@ -1,0 +1,36 @@
+import {FC} from 'react';
+import {IContacts} from "@/shared/types";
+import style from "./style.module.css";
+import {Contacts, Rating} from "@/shared/ui";
+
+type HeaderProps = {
+    name: string
+    avatar: string
+    contacts: IContacts
+    rating: number
+    ratingCount: number
+}
+
+export const Index: FC<HeaderProps> = ({name, rating, ratingCount, avatar, contacts}) => {
+    return (
+        <div className={style.container}>
+            <div className={style.startCol}>
+                <div className={style.contributor}>
+                    <img width={64} height={64} alt={"contributor"} src={avatar}/>
+                    <div className={style.desc}>
+                        <span className={style.name}>{name}</span>
+                        <span>Представитель команды гидов</span>
+                    </div>
+                </div>
+                <Rating rating={rating} ratingCount={ratingCount}/>
+            </div>
+            <div>
+                <Contacts
+                    link={contacts.link}
+                    vk={contacts.vk as string}
+                    telegram={contacts.telegram as string}
+                />
+            </div>
+        </div>
+    );
+};

@@ -1,15 +1,15 @@
 import {FC} from "react";
 import style from "./style.module.css"
-import contributor from "@/shared/assets/icons/contributor.svg";
 import next from "@/shared/assets/icons/next-secondary.svg";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 
 type ContributorButtonProps = {
+    avatar: string
     name: string
 }
 
-export const Index: FC<ContributorButtonProps> = ({name}) => {
+export const Index: FC<ContributorButtonProps> = ({name, avatar}) => {
 
     const navigate = useNavigate()
 
@@ -20,7 +20,7 @@ export const Index: FC<ContributorButtonProps> = ({name}) => {
     return (
         <div onClick={clickHandler} className={style.container}>
 
-            <img width={32} height={32} alt={"contributor"} src={contributor}/>
+            <img width={32} height={32} alt={"contributor"} src={avatar}/>
 
             <div className={style.desc}>
                 <span className={style.name}>

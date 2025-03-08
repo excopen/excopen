@@ -11,7 +11,7 @@ type SidebarButtonProps = {
 
 export const SidebarButton: FC<SidebarButtonProps> = ({label, image}) => {
     return (
-        <Button className={"w-64"} variant={"secondary"} size={"md"}>
+        <Button className={"w-full lg:w-72"} variant={"profile"} size={"md"}>
             <img
                 height={24}
                 width={24}

@@ -1,32 +1,46 @@
-import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
-import { setupServer } from "msw/node";
-import { HttpResponse, http } from "msw";
-import { getTours } from "@/entities/tour/api"; // Путь к вашей функции
-import { ITour, SearchParamsType } from "@/shared/types";
-import { apiClient, ApiException } from "@/shared/lib";
+import {afterAll, beforeAll, describe, expect, it, vi} from "vitest";
+import {setupServer} from "msw/node";
+import {http, HttpResponse} from "msw";
+import {getTours} from "@/entities/tour/api";
+import {ITour, SearchParamsType, TourAccessibility} from "@/shared/types";
+import {apiClient, ApiException} from "@/shared/lib";
 
-describe("Get tours", () => {
+describe("Get viewed", () => {
 
     const PATH: string = "https://excopent.ru/api/tours"
 
     const mockTours: ITour[] = [
         {
             id: 1,
-            name: "Экскурсия по Москве",
-            description: "Исторический маршрут по столице",
-            duration: 3,
+            title: "Экскурсия по Москве",
+            duration: "3 часа",
             price: 1500,
-            availableSeats: 10,
-            location: "Москва",
+            groupCapacity: 10,
+            shortDescription: "",
+            images: [],
+            contributorId: 0,
+            priceForPerson: 0,
+            routeLength: 0,
+            rating: 0,
+            ratingCount: 0,
+            reviews: [],
+            accessibility: TourAccessibility.WITH_CHILDREN
         },
         {
             id: 2,
-            name: "Поездка в Петергоф",
-            description: "Посещение дворцово-паркового ансамбля",
-            duration: 5,
+            title: "Поездка в Петергоф",
+            duration: "3 часа",
             price: 2000,
-            availableSeats: 15,
-            location: "Санкт-Петербург",
+            groupCapacity: 15,
+            shortDescription: "",
+            images: [],
+            contributorId: 0,
+            priceForPerson: 0,
+            routeLength: 0,
+            rating: 0,
+            ratingCount: 0,
+            reviews: [],
+            accessibility: TourAccessibility.WITH_CHILDREN
         },
     ];
 
@@ -37,7 +51,10 @@ describe("Get tours", () => {
             const location = url.searchParams.get("location")
 
             if (location === "Москва") {
-                return HttpResponse.json(mockTours.filter(t => t.location === "Москва"), { status: 200 });
+                return HttpResponse.json(
+                    mockTours.filter(t => t.accessibility === TourAccessibility.WITH_CHILDREN),
+                    { status: 200 }
+                )
             }
             return HttpResponse.json(mockTours, { status: 200 })
 
@@ -58,9 +75,19 @@ describe("Get tours", () => {
     })
 
     it("Получение туров с фильтрацией по локации", async () => {
-        const searchParams: SearchParamsType = { location: "Москва" }
+        const searchParams: SearchParamsType = {
+            location: "",
+            date: {
+                from: undefined,
+                to: undefined
+            },
+            byCity: false,
+            accessibility: TourAccessibility.WITH_CHILDREN
+        }
         const filteredTours = await getTours(searchParams)
-        expect(filteredTours).toEqual(mockTours.filter(t => t.location === "Москва"))
+        expect(filteredTours).toEqual(
+            mockTours.filter(t => t.accessibility === TourAccessibility.WITH_CHILDREN)
+        )
     })
 
     it("Выбрасывает ApiException при ошибке сервера", async () => {

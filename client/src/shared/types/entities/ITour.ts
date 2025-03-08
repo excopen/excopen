@@ -1,7 +1,6 @@
 import {IDescription} from "@/shared/types/entities/IDescription.ts";
 import {ILocation} from "./ILocation.ts"
 import {TourAccessibility} from "@/shared/types/entities/TourAccessibility.ts";
-import {IContributor} from "@/shared/types/entities/IContributor.ts";
 import {IContacts} from "@/shared/types/entities/IContacts.ts";
 import {IReview} from "@/shared/types/entities/IReview.ts";
 
@@ -13,7 +12,7 @@ export interface ITour {
     map?: string
     description?: IDescription
     location?: ILocation
-    contributor: IContributor
+    contributorId: number
     price: number
     priceForPerson: number
     groupCapacity?: number

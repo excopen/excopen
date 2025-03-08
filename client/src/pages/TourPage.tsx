@@ -10,7 +10,7 @@ export const TourPage: FC = () => {
         title || ""
     ));
 
-    if (!tour) return <div>Экскурсия не найдена</div>;
+    if (!tour) return <div>Экскурсия не найдена</div>
     return <TourLayout tour={tour}/>
 
 };

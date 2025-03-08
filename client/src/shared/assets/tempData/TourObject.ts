@@ -4,7 +4,6 @@ import image2 from "./assets/img2.png";
 import image3 from "./assets/img3.png";
 import image4 from "./assets/img4.png";
 import map from "./assets/map.png";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 
@@ -19,7 +18,7 @@ export const TourObject: ITour = {
     format: "Групповой",
     formatBehavior: "Пешком",
     groupCapacity: 10,
-    contributor: ContributorObject,
+    contributorId: 1,
     contact: ContactsObject,
     duration: "2 часа",
     routeLength: 2,

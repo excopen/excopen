@@ -2,41 +2,34 @@ import { describe, it, expect, beforeAll, afterAll, vi } from "vitest";
 import { setupServer } from "msw/node";
 import { HttpResponse, http } from "msw";
 import { apiClient, ApiException } from "@/shared/lib";
-import {ITour} from "@/shared/types";
-import image from "@/shared/assets/tempData/assets/img1.png";
-import image2 from "@/shared/assets/tempData/assets/img2.png";
-import image3 from "@/shared/assets/tempData/assets/img3.png";
-import image4 from "@/shared/assets/tempData/assets/img4.png";
-import map from "@/shared/assets/tempData/assets/map.png";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
-import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 import {getTourById} from "@/entities/tour/api";
+import {ITour} from "@/shared/types";
 
 describe("Get tour by id", () => {
 
     const PATH = "https://excopent.ru/api/tours/tour"
 
     const mockTour: ITour = {
-        id: 1,
+        ratingCount: 0,
+        reviews: [],
+        id: 0,
         title: "«Привокзалка»: место встречи изменить нельзя",
         shortDescription: "Изучить необычные достопримечательности микрорайона за ж/д вокзалом Омска!",
-        images: [image, image2, image3, image4, image3],
-        map: map,
+        images: [],
+        map: "",
         price: 12800,
         priceForPerson: 4000,
         format: "Групповой",
         formatBehavior: "Пешком",
         groupCapacity: 10,
-        contributor: ContributorObject,
+        contributorId: 1,
         contact: ContactsObject,
         duration: "2 часа",
         routeLength: 2,
-        rating: 5.0,
-        ratingCount: 10,
-        description: DescriptionObject,
-        reviews: []
+        rating: 5.0
     }
+
 
     const server = setupServer(
         http.get(PATH, async ({ request }) => {
