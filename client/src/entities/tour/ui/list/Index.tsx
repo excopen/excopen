@@ -1,13 +1,12 @@
 import {FC, useState} from "react";
 import {Header} from "./header";
 import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
-import style from "./style.module.css"
 import {useParams} from "react-router-dom";
 import {TourCard} from "@/entities";
 import {SortValues} from "@/shared/types/features";
 import {ITour} from "@/shared/types";
 import {sortByPrice, SortByPriceType, sortByRating} from "@/features";
-import {Pagination} from "./pagination";
+import {TourPagination} from "@/shared/ui";
 
 export const Index: FC = () => {
 
@@ -26,16 +25,12 @@ export const Index: FC = () => {
     else if (sortType === SortValues.FOR_RATING) sortedTours = sortByRating(ToursArray)
 
     return (
-        <div className={style.container}>
+        <div className={"w-full flex flex-col gap-8"}>
             <Header city={location} count={888} sortType={sortType} setSortType={setSortType}/>
             {sortedTours.slice(0,visibleTours).map(tour => (
                 <TourCard key={tour.id} tour={tour}/>
             ))}
-            <Pagination
-                visibleTours={visibleTours}
-                setVisibleTours={setVisibleTours}
-                tours={ToursArray}
-            />
+            <TourPagination visiable={visibleTours} setVisible={setVisibleTours} maxLength={ToursArray.length}/>
         </div>
     );
 };

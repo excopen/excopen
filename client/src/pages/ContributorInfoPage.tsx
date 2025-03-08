@@ -1,9 +1,7 @@
 import {FC} from "react";
+import {ContributorLayout} from "@/entities";
+import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 
 export const ContributorInfoPage: FC = () => {
-    return (
-        <div>
-            Contributor
-        </div>
-    );
+    return <ContributorLayout contributor={ContributorObject}/>
 };

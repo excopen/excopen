@@ -1,5 +1,5 @@
 .container {
-    @apply flex flex-row px-4 justify-between items-center mb-4 w-64
+    @apply flex flex-row justify-between items-center mb-4 w-full lg:w-72
 }
 
 .name {

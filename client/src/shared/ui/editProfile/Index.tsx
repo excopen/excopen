@@ -1,15 +1,19 @@
 import {FC} from "react";
 import style from "./style.module.css"
-import avatar from "@/shared/assets/icons/avatar.svg"
 import edit from "@/shared/assets/icons/edit.svg"
 
-export const Index: FC = () => {
+type EditProfileProps = {
+    name: string
+    avatar: string
+}
+
+export const Index: FC<EditProfileProps> = ({name, avatar}) => {
     return (
         <div className={style.container}>
-            <img alt={"avatar"} width={40} height={40} src={avatar}/>
-            <span className={style.name}>
-                Андрей Ш.
-            </span>
+            <div className={"flex flex-row gap-4 items-center"}>
+                <img alt={"avatar"} width={40} height={40} src={avatar}/>
+                <span className={style.name}>{name}</span>
+            </div>
             <button>
                 <img alt={"edit"} width={24} height={24} src={edit}/>
             </button>

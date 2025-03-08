@@ -16,10 +16,6 @@
     @apply flex flex-col lg:flex-row py-8 xl:py-16 gap-6
 }
 
-.profile {
-    @apply min-h-screen flex flex-col lg:flex-row py-8 xl:py-16 gap-6
-}
-
 .favorites {
     @apply flex flex-col py-8 xl:py-16 gap-10 w-full huge:w-[1440px]
 }

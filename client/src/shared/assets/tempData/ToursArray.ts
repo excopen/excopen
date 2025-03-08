@@ -5,7 +5,6 @@ import image3 from "./assets/img3.png";
 import image4 from "./assets/img4.png";
 import map from "./assets/map.png";
 import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 import bg from "@/shared/assets/tempData/assets/cardBg.png";
 import {reviewsArray} from "@/shared/assets/tempData/ReviewsArray.ts";
 
@@ -25,7 +24,7 @@ const TourObject: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject,
+    contributorId: 1,
     location: {
         id: 0,
         country: "Россия",
@@ -52,7 +51,7 @@ const TourObject2: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject,
+    contributorId: 1,
     location: {
         id: 0,
         country: "Россия",
@@ -79,7 +78,7 @@ const TourObject3: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject,
+    contributorId: 1,
     location: {
         id: 0,
         country: "Россия",
@@ -106,7 +105,7 @@ const TourObject4: ITour = {
     groupCapacity: 10,
     formatBehavior: "Пешком",
     description: DescriptionObject,
-    contributor: ContributorObject,
+    contributorId: 1,
     location: {
         id: 0,
         country: "Россия",
@@ -117,7 +116,7 @@ const TourObject4: ITour = {
     reviews: reviewsArray
 }
 
-export const ToursArray = [
+export const ToursArray: ITour[] = [
     TourObject,
     TourObject2,
     TourObject3,

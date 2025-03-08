@@ -1,10 +1,11 @@
 import {FC} from "react";
-import {ITour, RouteNames} from "@/shared/types";
+import {ITour} from "@/shared/types";
 import {Details} from "./details";
 import {Contributor} from "./contributor";
-import {ContactButton, TelegramButton, VKButton} from "./buttons";
 import style from "./style.module.css"
 import {Reviews} from "@/entities/review";
+import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
+import {Contacts} from "@/shared/ui";
 
 type DescriptionProps = {
     tour: ITour
@@ -60,11 +61,11 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                 <h3 className={style.heading}>
                     Остались вопросы?
                 </h3>
-                <div className={style.buttons}>
-                    <ContactButton link={`/${RouteNames.MAIN}`}/>
-                    <TelegramButton link={tour?.contact?.telegram}/>
-                    <VKButton link={tour?.contact?.vk}/>
-                </div>
+                <Contacts
+                    link={ContributorObject.contacts.link}
+                    vk={ContributorObject.contacts.vk as string}
+                    telegram={ContributorObject.contacts.telegram as string}
+                />
             </div>
 
             <Details/>
@@ -76,9 +77,9 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
             />
 
             <Contributor
-                name={tour.contributor.name}
-                description={tour.contributor.description}
-                rating={tour.contributor.rating}
+                name={ContributorObject.name}
+                description={ContributorObject.description}
+                rating={ContributorObject.rating}
             />
 
         </div>

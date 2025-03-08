@@ -3,5 +3,6 @@ export enum EndpointsType {
     FAVOURITES = "favorites",
     LOCATIONS = "locations",
     USERS = "users",
-    REVIEWS = "reviews"
+    REVIEWS = "reviews",
+    CONTRIBUTOR = "contributor"
 }
