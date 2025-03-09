@@ -5,7 +5,7 @@ import {AuthContext} from "@/app/context";
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return (
         <AuthContext.Provider value={{
-            role: UserRole.contributor,
+            role: UserRole.client,
             isAuth: true
         }}>
             {children}
