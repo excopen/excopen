@@ -2,6 +2,7 @@ import {FC} from 'react';
 import {IContacts} from "@/shared/types";
 import style from "./style.module.css";
 import {Contacts, Rating} from "@/shared/ui";
+import {formatName} from "@/shared/utills";
 
 type HeaderProps = {
     name: string
@@ -18,7 +19,7 @@ export const Index: FC<HeaderProps> = ({name, rating, ratingCount, avatar, conta
                 <div className={style.contributor}>
                     <img width={64} height={64} alt={"contributor"} src={avatar}/>
                     <div className={style.desc}>
-                        <span className={style.name}>{name}</span>
+                        <span className={style.name}>{formatName(name)}</span>
                         <span>Представитель команды гидов</span>
                     </div>
                 </div>

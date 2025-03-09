@@ -3,11 +3,19 @@
 }
 
 .header {
-    @apply flex flex-col md:flex-row justify-between
+    @apply flex flex-row justify-between items-start
+}
+
+.tourInfo {
+    @apply flex flex-col gap-2 max-lg:w-4/5
+}
+
+.title {
+    @apply text-2xl text-grayscale-500 font-medium
 }
 
 .heading {
-    @apply text-xl text-grayscale-500 font-medium
+    @apply text-xl text-grayscale-500 font-light
 }
 
 .reviews {

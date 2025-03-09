@@ -1,14 +1,10 @@
 import {FC, useState} from "react";
 import style from "./style.module.css";
-import {useAuthContext} from "@/app/context";
-import {UserRole} from "@/shared/types";
 import {Header} from "./header";
 import {Accordion} from "./accordion"
 import {Viewed} from "./viewed";
 
 export const Index: FC = () => {
-
-    const {role} = useAuthContext()
 
     const [city, setCity] = useState<string>("")
     const [byCity, setByCity] = useState<boolean>(false)
@@ -19,7 +15,7 @@ export const Index: FC = () => {
                 setCity={setCity}
                 setByCity={setByCity}
             />
-            {role === UserRole.contributor && <Accordion/>}
+            <Accordion/>
             <Viewed
                 city={city}
                 byCity={byCity}

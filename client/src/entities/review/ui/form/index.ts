@@ -1,1 +1,1 @@
-export {Index as Form} from "./Index.tsx"
+export {Index as ReviewForm} from "./Index.tsx"

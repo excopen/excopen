@@ -1,9 +1,16 @@
-import {Button, ReviewInput} from "@/shared/ui";
+import {Button, Rating, ReviewInput} from "@/shared/ui";
 import {FC, useEffect, useState} from "react";
 import {Stars} from "./components";
 import style from "./style.module.css"
+import {ITour, RouteNames} from "@/shared/types";
+import {useNavigate} from "react-router-dom";
+import {SquareArrowOutUpRight} from "lucide-react";
 
-export const Index: FC = () => {
+type FormProps = {
+    tour: ITour
+}
+
+export const Index: FC<FormProps> = ({tour}) => {
 
     const [positive, setPositive] = useState<string>("")
     const [negative, setNegative] = useState<string>("")
@@ -17,18 +24,29 @@ export const Index: FC = () => {
     }, [negative, positive, rating]);
 
     const saveReview = () => {
-        // сохрамения данных
+        // TODO сохрамения данных
         console.log(positive + " | " + negative + " | " + rating)
     }
+
+    const navigate = useNavigate()
+    const clickHandler = () => navigate(`/${RouteNames.TOUR}/${encodeURIComponent(tour.title)}`)
 
     return (
         <div className={style.container}>
             <div className={style.header}>
-                <span className={style.heading}>
-                    Расскажите о ваших впечатлениях
-                </span>
-                <Stars rating={rating} setRating={setRating}/>
+                <div className={style.tourInfo}>
+                    <p className={style.title}>{tour.title}</p>
+                    <Rating rating={tour.rating} ratingCount={tour.ratingCount}/>
+                </div>
+                <button onClick={clickHandler}>
+                    <SquareArrowOutUpRight
+                        className={"text-grayscale-350 hover:opacity-50 transition"}
+                        width={20}
+                        height={20}
+                    />
+                </button>
             </div>
+            <Stars rating={rating} setRating={setRating}/>
             <div className={style.reviews}>
                 <ReviewInput
                     className={"bg-grayscale-200"}
