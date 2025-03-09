@@ -5,7 +5,7 @@ import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 
 export const ContributorObject: IContributor = {
     id: 1,
-    name: "Ирина Д.",
+    name: "Ирина Дмитриева",
     avatar: avator,
     description: "Мы живем в Омске: любим этот город, " +
         "много знаем о нём и готовы поделиться с вами знаниями. " +

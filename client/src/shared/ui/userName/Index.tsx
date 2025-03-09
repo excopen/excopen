@@ -1,6 +1,7 @@
 import {FC, useState} from "react";
 import style from "./style.module.css"
 import edit from "@/shared/assets/icons/edit.svg"
+import {formatName} from "@/shared/utills";
 
 type EditProfileProps = {
     name: string
@@ -31,7 +32,7 @@ export const Index: FC<EditProfileProps> = ({name, avatar, setIsEdit}) => {
                         className="hidden"
                     />
                 </label>
-                <span className={style.name}>{name}</span>
+                <span className={style.name}>{formatName(name)}</span>
             </div>
             <button onClick={() => setIsEdit(true)}>
                 <img
