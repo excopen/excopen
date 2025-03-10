@@ -2,12 +2,10 @@ import {FC} from "react";
 import {CommandItem} from "@/shared/ui";
 import {MapPin} from "lucide-react";
 import style from "./commandLocation.module.css"
+import {ILocation} from "@/shared/types";
 
 type CommandLocationProps = {
-    location: {
-        city: string,
-        region: string
-    }
+    location: ILocation
     onClick?: () => void
 }
 

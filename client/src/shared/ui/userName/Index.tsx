@@ -2,6 +2,8 @@ import {FC, useState} from "react";
 import style from "./style.module.css"
 import edit from "@/shared/assets/icons/edit.svg"
 import {formatName} from "@/shared/utills";
+import {useAuthContext} from "@/app/context";
+import {useUpdateUser, useUser} from "@/entities/user/model";
 
 type EditProfileProps = {
     name: string
@@ -11,14 +13,20 @@ type EditProfileProps = {
 
 export const Index: FC<EditProfileProps> = ({name, avatar, setIsEdit}) => {
 
+    const {userId} = useAuthContext()
+    const {data: user} = useUser(userId)
+    const {mutate} = useUpdateUser()
+
     const [selectedAvatar, setSelectedAvatar] = useState(avatar)
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
-        if (file) setSelectedAvatar(URL.createObjectURL(file))
+        if (file) {
+            const updatedAvatar = URL.createObjectURL(file)
+            setSelectedAvatar(updatedAvatar)
+            mutate({...user, avatar: updatedAvatar})
+        }
     }
-
-    // TODO обновление аватара в профиле через хук
 
     return (
         <div className={style.container}>

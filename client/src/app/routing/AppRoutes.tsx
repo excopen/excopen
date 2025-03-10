@@ -28,8 +28,8 @@ export const AppRoutes: FC = () => {
                 <Route path={RouteNames.MAIN} element={<HomePage/>}/>
                 <Route path={RouteNames.LOCATIONS} element={<LocationsPage/>}/>
                 <Route path={`${RouteNames.TOURS}/:location`} element={<ToursPage/>}/>
-                <Route path={`${RouteNames.TOUR}/:title`} element={<TourPage/>}/>
-                <Route path={`${RouteNames.CONTRIBUTOR}/:name`} element={<ContributorInfoPage/>}/>
+                <Route path={`${RouteNames.TOUR}/:id/:title`} element={<TourPage/>}/>
+                <Route path={`${RouteNames.CONTRIBUTOR}/:id/:name`} element={<ContributorInfoPage/>}/>
                 <Route path={RouteNames.PROFILE} element={<ProfilePage/>}/>
                 <Route path={RouteNames.FAVOURITES} element={<FavouritesPage/>}/>
                 <Route
