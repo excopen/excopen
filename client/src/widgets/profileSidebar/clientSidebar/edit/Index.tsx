@@ -1,5 +1,7 @@
 import {FC, useState} from "react";
 import {Button, ProfileInput} from "@/shared/ui";
+import {useAuthContext} from "@/app/context";
+import {useUpdateUser, useUser} from "@/entities/user/model";
 
 type EditClientProps = {
     name: string
@@ -9,10 +11,14 @@ type EditClientProps = {
 
 export const Index: FC<EditClientProps> = ({name, isEdit, setIsEdit}) => {
 
+    const {userId} = useAuthContext()
+    const {data: user} = useUser(userId)
+
     const [newName, setNewName] = useState<string>(name)
+    const {mutate} = useUpdateUser()
 
     const updateData = () => {
-        // TODO обновление полей newName и newDesc через хуки
+        mutate({...user, name: newName})
         setIsEdit(false)
     }
 

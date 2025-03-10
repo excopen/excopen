@@ -1,10 +1,11 @@
 import {FC, useEffect, useState} from 'react';
 import {Select, SelectContent, SelectItem, SelectSortTrigger} from "@/shared/ui";
 import {sortTypesArray} from "@/features/sortTour/config";
+import {SortValues} from "@/shared/types/features";
 
 type SelectProps = {
-    sortValue: string
-    setSortValue: (value: string) => void
+    sortValue: SortValues
+    setSortValue: (value: SortValues) => void
 }
 
 export const Index: FC<SelectProps> = ({sortValue, setSortValue}) => {
@@ -16,7 +17,7 @@ export const Index: FC<SelectProps> = ({sortValue, setSortValue}) => {
     )?.label
 
     useEffect(() => {
-        setSortValue(value)
+        setSortValue(value as SortValues)
     }, [setSortValue, value]);
 
     return (

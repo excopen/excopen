@@ -1,17 +1,16 @@
 import {FC, useState} from "react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger, TourPagination} from "@/shared/ui";
-import {ReviewForm, TourCard} from "@/entities";
-import {UserObject} from "@/shared/assets/tempData/UserObject.ts";
+import {ReviewForm, TourCard, useContributorTours} from "@/entities";
 import {useAuthContext} from "@/app/context";
 import {UserRole} from "@/shared/types";
-import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
+import {useUser} from "@/entities/user/model";
 
 export const Index: FC = () => {
 
-    const {role} = useAuthContext()
+    const {role, userId} = useAuthContext()
 
-    // TODO получение списка экскурсий пользователя
-    // TODO добавить эндпойнт для получения списка экскурсий определенного контрибьютера
+    const {data: user} = useUser(userId)
+    const {data: myTour} = useContributorTours(userId)
 
     const [visibleTours, setVisibleTours] = useState<number>(
         3
@@ -24,11 +23,11 @@ export const Index: FC = () => {
                 <AccordionItem value={"value 1"}>
                     <AccordionTrigger>Ваши популярные экскурсии</AccordionTrigger>
                     <AccordionContent className={"flex flex-col gap-4"}>
-                        {ToursArray.slice(0, visibleTours).map(tour => <TourCard key={tour.id} tour={tour}/>)}
+                        {myTour.slice(0, visibleTours).map(tour => <TourCard key={tour.id} tour={tour}/>)}
                         <TourPagination
                             visiable={visibleTours}
                             setVisible={setVisibleTours}
-                            maxLength={ToursArray.length}
+                            maxLength={myTour.length}
                         />
                     </AccordionContent>
                 </AccordionItem>
@@ -37,7 +36,7 @@ export const Index: FC = () => {
                 <AccordionTrigger>Оцените экскурсии</AccordionTrigger>
                 <AccordionContent className={"flex flex-col gap-4"}>
                     {
-                        UserObject.visitedTours
+                        user.visitedTours
                             .slice(0, visibleTours)
                             .map(tour => <ReviewForm key={tour.id} tour={tour}/>)
                     }

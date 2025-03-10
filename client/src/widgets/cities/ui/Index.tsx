@@ -3,18 +3,22 @@ import style from "./style.module.css"
 import {SearchInput} from "@/shared/ui";
 import {ListLetter} from "./listLetter";
 import {ListCities} from "./listCities";
-import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
 import {searchCity} from "@/features";
+import {useLocations} from "@/entities/location/model";
+
+//TODO ВОПРОС
 
 export const Index: FC = () => {
+
+    const {data: locations, isError, isLoading} = useLocations()
 
     const [location, setLocation] = useState<string>("")
     const [isActive, setIsActive] = useState<boolean>(false)
     const [cities, setCities] = useState<string[]>([])
 
     useEffect(() => {
-        if (location.length === 0) setCities(searchCity("А", LocationsArrayForFeature))
-        else setCities(searchCity(location, LocationsArrayForFeature))
+        if (location.length === 0) setCities(searchCity("А", locations))
+        else setCities(searchCity(location, locations))
     }, [location]);
     
     const focusHandler = () => {
@@ -24,8 +28,11 @@ export const Index: FC = () => {
 
     const blurHandler = () => {
         setIsActive(false)
-        setCities(searchCity(location, LocationsArrayForFeature))
+        setCities(searchCity(location, locations))
     }
+
+    if (isLoading) return <div>Данные загружаются...</div>
+    if (isError) return <div>Возникла ошибка</div>
 
     return (
         <div className={style.container}>
