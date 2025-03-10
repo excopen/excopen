@@ -23,7 +23,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
     const {addToViewed} = useTourTrackingContext()
 
     const clickHandler = () => {
-        navigate(`/${RouteNames.TOUR}/${encodeURIComponent(tour.title)}`)
+        navigate(`/${RouteNames.TOUR}/${tour.id}/${encodeURIComponent(tour.title)}`)
         addToViewed(tour)
     }
 

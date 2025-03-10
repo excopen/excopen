@@ -1,17 +1,17 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {IFavourite} from "@/shared/types";
+import {ITour} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
-import {addToFav} from "@/entities";
+import {addToFav} from "@/entities/favourites/api";
 
 export const useAddToFav = () => {
 
     const queryClient = useQueryClient()
 
-    return useMutation<void, ApiException<IFavourite>, number>({
+    return useMutation<void, ApiException<ITour>, number>({
         mutationFn: addToFav,
         onSuccess: () => queryClient.invalidateQueries({queryKey: ["fav"]}),
-        onError: (e: ApiException<IFavourite>) => {
-            throw new ApiException<IFavourite>(e.message, e.statusCode, e.data)
+        onError: (e: ApiException<ITour>) => {
+            throw new ApiException<ITour>(e.message, e.statusCode, e.data)
         }
     })
 

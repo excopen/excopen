@@ -7,16 +7,17 @@ import {RouteNames} from "@/shared/types";
 import {Marker} from "@/shared/ui/rating/Marker.tsx";
 
 type ContributorProps = {
+    contributorId: number
     name: string
     description: string
     rating: number
 }
 
-export const Index: FC<ContributorProps> = ({name, description, rating}) => {
+export const Index: FC<ContributorProps> = ({name, description, rating, contributorId}) => {
 
     const navigate = useNavigate()
 
-    const clickHandler = () => navigate(`/${RouteNames.CONTRIBUTOR}/${encodeURIComponent(name)}`)
+    const clickHandler = () => navigate(`/${RouteNames.CONTRIBUTOR}/${contributorId}/${encodeURIComponent(name)}`)
 
     return (
         <div className={style.container}>

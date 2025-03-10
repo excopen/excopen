@@ -2,12 +2,13 @@ import {FC} from "react";
 import style from "./style.module.css";
 import {Select} from "@/features";
 import {Drawer} from "./drawer/index.ts";
+import {SortValues} from "@/shared/types/features";
 
 type HeaderProps = {
     city: string | undefined
     count: number
-    sortType: string
-    setSortType: (sortType: string) => void
+    sortType: SortValues
+    setSortType: (sortType: SortValues) => void
 }
 
 export const Index: FC<HeaderProps> = (

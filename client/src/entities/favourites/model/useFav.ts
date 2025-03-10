@@ -1,14 +1,14 @@
 import {useQuery} from "@tanstack/react-query";
-import {IFavourite} from "@/shared/types";
+import {ITour} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
-import {getFav} from "@/entities";
+import {getFav} from "@/entities/favourites/api";
 
 export const useFav = (userId: number) => {
-    return useQuery<IFavourite[], ApiException<IFavourite>>({
-        queryKey: ["fav"],
+    return useQuery<ITour[], ApiException<ITour>>({
+        queryKey: ["fav", userId],
         queryFn: () => getFav(userId),
         staleTime: 60_000,
-        initialData: [],
+        initialData: JSON.parse(localStorage.getItem('viewed') || "[]"),
         enabled: !!userId
     })
 }

@@ -3,12 +3,12 @@ import {Button} from "@/shared/ui";
 import style from "./style.module.css"
 import {Link, useLocation} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
-import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
-import {LocationCard} from "@/entities";
+import {LocationCard, useLocations} from "@/entities";
 
 export const Index: FC = () => {
 
     const location = useLocation()
+    const {data} = useLocations()
 
     return (
         <section className={style.container}>
@@ -16,7 +16,7 @@ export const Index: FC = () => {
                 Самые популярные направления
             </h2>
             <div className={style.list}>
-                {LocationsArrayForFeature.slice(0,4).map(location => (
+                {data.slice(0,4).map(location => (
                     <LocationCard
                         key={location.id}
                         country={location.country}

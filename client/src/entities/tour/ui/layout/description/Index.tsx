@@ -4,14 +4,17 @@ import {Details} from "./details";
 import {Contributor} from "./contributor";
 import style from "./style.module.css"
 import {Reviews} from "@/entities/review";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 import {Contacts} from "@/shared/ui";
+import {useContributor} from "@/entities";
 
 type DescriptionProps = {
     tour: ITour
 }
 
 export const Index: FC<DescriptionProps> = ({tour}) => {
+
+    const {data: contributor} = useContributor(tour.contributorId)
+
     return (
         <div className={style.container}>
 
@@ -62,24 +65,25 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                     Остались вопросы?
                 </h3>
                 <Contacts
-                    link={ContributorObject.contacts.link}
-                    vk={ContributorObject.contacts.vk as string}
-                    telegram={ContributorObject.contacts.telegram as string}
+                    link={contributor.contacts.link}
+                    vk={contributor.contacts.vk as string}
+                    telegram={contributor.contacts.telegram as string}
                 />
             </div>
 
             <Details/>
 
             <Reviews
+                tourId={tour.id}
                 rating={tour.rating}
                 ratingCount={tour.ratingCount}
-                reviews={tour.reviews}
             />
 
             <Contributor
-                name={ContributorObject.name}
-                description={ContributorObject.description}
-                rating={ContributorObject.rating}
+                contributorId={contributor.id}
+                name={contributor.name}
+                description={contributor.description}
+                rating={contributor.rating}
             />
 
         </div>

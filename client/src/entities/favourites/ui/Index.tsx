@@ -15,8 +15,8 @@ export const Index: FC<ToFavProps> = ({ tour }) => {
     const [isActive, setIsActive] = useState<boolean>(false)
 
     useEffect(() => {
-        setIsActive(context.favourites.some(fav => fav.id === tour.id))
-    }, [context.favourites, tour.id]);
+        setIsActive(context.localFav.some(fav => fav.id === tour.id))
+    }, [context.localFav, tour.id]);
 
     const clickHandler = () => {
         if (!isActive) addToFav(tour)

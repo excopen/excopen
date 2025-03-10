@@ -5,16 +5,17 @@ import {useNavigate} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 
 type ContributorButtonProps = {
+    contributorId: number
     avatar: string
     name: string
 }
 
-export const Index: FC<ContributorButtonProps> = ({name, avatar}) => {
+export const Index: FC<ContributorButtonProps> = ({name, avatar, contributorId}) => {
 
     const navigate = useNavigate()
 
     const clickHandler = () => {
-        navigate(`/${RouteNames.CONTRIBUTOR}/${encodeURIComponent(name)}`)
+        navigate(`/${RouteNames.CONTRIBUTOR}/${contributorId}/${encodeURIComponent(name)}`)
     }
 
     return (
