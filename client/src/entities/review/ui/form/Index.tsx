@@ -1,16 +1,24 @@
 import {Button, Rating, ReviewInput} from "@/shared/ui";
-import {FC, useEffect, useState} from "react";
+import {FC, useCallback, useEffect, useState} from "react";
 import {Stars} from "./components";
 import style from "./style.module.css"
-import {ITour, RouteNames} from "@/shared/types";
+import {ITour, RouteNames, TourAccessibility} from "@/shared/types";
 import {useNavigate} from "react-router-dom";
 import {SquareArrowOutUpRight} from "lucide-react";
+import {useCreateReview} from "@/entities";
+import {useAuthContext} from "@/app/context";
+import {useUser} from "@/entities/user/model";
 
 type FormProps = {
     tour: ITour
 }
 
 export const Index: FC<FormProps> = ({tour}) => {
+
+    const {userId} = useAuthContext()
+    const {data: user} = useUser(userId)
+
+    const {mutate: createReview} = useCreateReview()
 
     const [positive, setPositive] = useState<string>("")
     const [negative, setNegative] = useState<string>("")
@@ -19,17 +27,24 @@ export const Index: FC<FormProps> = ({tour}) => {
     const [completed, setCompleted] = useState<boolean>(false)
 
     useEffect(() => {
-        if (negative.length !== 0 && positive.length !== 0 && rating !== 0) setCompleted(true)
+        if (Boolean(negative) && Boolean(positive) && rating !== 0) setCompleted(true)
         else setCompleted(false)
     }, [negative, positive, rating]);
 
-    const saveReview = () => {
-        // TODO сохрамения данных
-        console.log(positive + " | " + negative + " | " + rating)
-    }
+    const saveReview = () => createReview({
+        id: Date.now(),
+        name: user.name,
+        rating: rating,
+        negativeText: negative,
+        positiveText: positive,
+        withChildren: tour.accessibility === TourAccessibility.WITH_CHILDREN,
+        personCount: user?.orders?.find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
+    })
 
     const navigate = useNavigate()
-    const clickHandler = () => navigate(`/${RouteNames.TOUR}/${encodeURIComponent(tour.title)}`)
+    const clickHandler = useCallback(() => {
+        navigate(`/${RouteNames.TOUR}/${tour.id}/${encodeURIComponent(tour.title)}`)
+    }, [navigate, tour.id, tour.title])
 
     return (
         <div className={style.container}>
@@ -59,8 +74,8 @@ export const Index: FC<FormProps> = ({tour}) => {
                     placeholder={"Что не понравилось"}
                 />
             </div>
-            <div className={style.button}>
-                <Button disabled={!completed} onClick={saveReview}>
+            <div>
+                <Button className={"mt-4"} disabled={!completed} onClick={saveReview}>
                     Добавить
                 </Button>
             </div>

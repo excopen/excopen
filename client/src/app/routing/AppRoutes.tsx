@@ -7,7 +7,7 @@ import {
     Layout,
     LocationsPage,
     OnBoardingPage,
-    ProfilePage,
+    ProfilePage, SettingsPage,
     TourPage,
     ToursPage
 } from "@/pages";
@@ -31,6 +31,7 @@ export const AppRoutes: FC = () => {
                 <Route path={`${RouteNames.TOUR}/:id/:title`} element={<TourPage/>}/>
                 <Route path={`${RouteNames.CONTRIBUTOR}/:id/:name`} element={<ContributorInfoPage/>}/>
                 <Route path={RouteNames.PROFILE} element={<ProfilePage/>}/>
+                <Route path={RouteNames.SETTINGS} element={<SettingsPage/>}/>
                 <Route path={RouteNames.FAVOURITES} element={<FavouritesPage/>}/>
                 <Route
                     path={RouteNames.CREATE}

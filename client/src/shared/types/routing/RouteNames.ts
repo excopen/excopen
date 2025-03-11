@@ -7,5 +7,6 @@ export enum RouteNames {
     CONTRIBUTOR = "contributor",
     PROFILE = "profile",
     FAVOURITES = "favourites",
-    CREATE = "create"
+    CREATE = "create",
+    SETTINGS = "settings"
 }

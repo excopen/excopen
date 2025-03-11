@@ -21,7 +21,3 @@
 .reviews {
     @apply flex flex-col gap-2
 }
-
-.button {
-    @apply flex justify-end
-}

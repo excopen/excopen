@@ -30,11 +30,11 @@ export const Index: FC<EditClientProps> = ({name, isEdit, setIsEdit}) => {
                 onChangeHandler={setNewName}
                 placeholder={"Введите имя"}
             />
-            <div className={"flex flex-row gap-2"}>
-                <Button size={"md"} onClick={updateData}>
+            <div className={"flex flex-col gap-2 pb-4"}>
+                <Button onClick={updateData}>
                     Добавить
                 </Button>
-                <Button size={"md"} variant={"secondary"} onClick={() => setIsEdit(false)}>
+                <Button className={"flex justify-center"} variant={"secondary"} onClick={() => setIsEdit(false)}>
                     Отменить
                 </Button>
             </div>
