@@ -4,11 +4,11 @@ import {AuthContext} from "@/app/context";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    // TODO подумать над регистрацией и как добавить id в контекст
+    // TODO подумать над регистрацией и как добавить id в контекст и доавить в избранное данные из local storage
 
     return (
         <AuthContext.Provider value={{
-            role: UserRole.contributor,
+            role: UserRole.client,
             userId: 1,
             isAuth: true
         }}>

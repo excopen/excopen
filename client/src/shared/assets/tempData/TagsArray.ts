@@ -1,22 +1,24 @@
-export const TagsArray = [
+import {ITag} from "@/shared/types";
+
+export const TagsArray: ITag[] = [
     {
-        value: 0,
-        label: "экстрим"
+        id: 0,
+        name: "экстрим"
     },
     {
-        value: 1,
-        label: "культурные ценности"
+        id: 1,
+        name: "культурные ценности"
     },
     {
-        value: 2,
-        label: "достопримечательности"
+        id: 2,
+        name: "достопримечательности"
     },
     {
-        value: 3,
-        label: "что-то ещё"
+        id: 3,
+        name: "что-то ещё"
     },
     {
-        value: 4,
-        label: "что-то"
+        id: 4,
+        name: "что-то"
     }
 ]
