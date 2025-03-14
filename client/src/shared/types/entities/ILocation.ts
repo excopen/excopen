@@ -3,6 +3,6 @@ export interface ILocation {
     city: string
     country: string
     tourCount : number
-    region?: string
+    region: string
     image: string
 }

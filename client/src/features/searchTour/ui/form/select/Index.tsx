@@ -1,4 +1,3 @@
-import users from "@/shared/assets/icons/users.svg";
 import {Select, SelectAccessibilityTrigger, SelectContent, SelectItem} from "@/shared/ui";
 import {tourAccessibilityArray} from "@/features/searchTour/config";
 import {useSearchContext} from "@/features";
@@ -18,7 +17,6 @@ export const Index = () => {
     return (
         <Select value={context.searchParams.accessibility} onValueChange={setAccessibility}>
             <SelectAccessibilityTrigger
-                icon={users}
                 isSearch={context.isSearch}
                 value={label}
                 placeholder={"Участники"}

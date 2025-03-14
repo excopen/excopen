@@ -64,7 +64,7 @@ export const Index: FC = () => {
         setField((prev) => ({
             ...prev,
             isOpen: false,
-            isTouched: prev.isTouched || context.searchParams.location === "",
+            isTouched: prev.isTouched && context.searchParams.location === "",
         }))
     })
 

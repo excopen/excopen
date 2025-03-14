@@ -12,18 +12,14 @@ export const Index: FC = () => {
     const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
     const [isTouched, setIsTouched] = useState<boolean>(false);
 
-    useEffect(() => {
-        setDate(range)
-    }, [range, setDate]);
+    useEffect(() => setDate(range), [range, setDate]);
 
     const selectRangeHandler = (selectedRange: RangeType | undefined) => {
         if (selectedRange) setRange(selectedRange)
         if (selectedRange && selectedRange.to) setIsPopoverOpen(false)
     }
 
-    const clearValue = () => {
-        setRange({ from: undefined, to: undefined });
-    }
+    const clearValue = () => setRange({ from: undefined, to: undefined })
 
     const clickHandler = () => {
         setIsTouched(true)
@@ -34,6 +30,7 @@ export const Index: FC = () => {
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
             <PopoverTrigger role={"form-datePicker"} asChild>
                 <CalendarButton
+                    isPopoverOpen={isPopoverOpen}
                     isSearch={context.isSearch}
                     range={range}
                     isTouched={isTouched}

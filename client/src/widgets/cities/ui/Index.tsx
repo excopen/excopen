@@ -6,11 +6,9 @@ import {ListCities} from "./listCities";
 import {searchCity} from "@/features";
 import {useLocations} from "@/entities/location/model";
 
-//TODO ВОПРОС
-
 export const Index: FC = () => {
 
-    const {data: locations, isError, isLoading} = useLocations()
+    const {data: locations, isLoading} = useLocations()
 
     const [location, setLocation] = useState<string>("")
     const [isActive, setIsActive] = useState<boolean>(false)
@@ -32,7 +30,6 @@ export const Index: FC = () => {
     }
 
     if (isLoading) return <div>Данные загружаются...</div>
-    if (isError) return <div>Возникла ошибка</div>
 
     return (
         <div className={style.container}>

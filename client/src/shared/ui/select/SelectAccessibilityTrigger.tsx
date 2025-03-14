@@ -3,11 +3,11 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import {cn} from "@/app/lib/utils.ts";
 import {SelectLabel} from "./SelectLabel.tsx";
 import {SelectGroup} from "./SelectGroup.tsx";
+import {Users} from "lucide-react";
 
 export const SelectAccessibilityTrigger = React.forwardRef<
     React.ElementRef<typeof SelectPrimitive.Trigger>,
     React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
-        icon: string;
         placeholder: string;
         isSearch: boolean;
         isTouched?: boolean;
@@ -16,7 +16,6 @@ export const SelectAccessibilityTrigger = React.forwardRef<
     {
         className,
         placeholder,
-        icon,
         isSearch,
         isTouched,
         value,
@@ -28,11 +27,14 @@ export const SelectAccessibilityTrigger = React.forwardRef<
     const containerStyles: string = [
         "flex flex-col relative rounded-xl overflow-hidden"
     ].join(" ")
-    const iconStyles: string = "h-5 w-5 mr-3"
+    const iconStyles: string = [
+        "h-5 w-5 mr-3",
+        isTouched && !value || !value && isSearch ? "text-secondary-red" : "text-grayscale-400"
+    ].join(" ")
     const placeholderStyles: string = [
-        "absolute left-12 transition-all duration-300",
-        "text-base text-grayscale-400 cursor-pointer",
-        value ? "top-2" : "top-4"
+        "absolute left-12 transition-all duration-300 text-base cursor-pointer",
+        value ? "top-2" : "top-4",
+        isTouched && !value || !value && isSearch ? "text-secondary-red" : "text-grayscale-400"
     ].join(" ")
     const triggerStyles: string = [
         "flex items-center data-[state=open]:bg-grayscale-0",
@@ -42,7 +44,7 @@ export const SelectAccessibilityTrigger = React.forwardRef<
         !value && isSearch
             ? "bg-red-100 border data-[state=open]:border-secondary-red border-secondary-red"
             : "bg-grayscale-200 hover:bg-grayscale-300",
-        isTouched && !value && "bg-red-100 border border-secondary-red data-[state=open]:border-secondary-red"
+        isTouched && !value && "bg-red-100 hover:bg-red-100 border border-secondary-red data-[state=open]:border-secondary-red"
     ].join(" ")
 
     return (
@@ -53,7 +55,7 @@ export const SelectAccessibilityTrigger = React.forwardRef<
                 </SelectLabel>
             </SelectGroup>
             <SelectPrimitive.Trigger ref={ref} className={cn(triggerStyles, className)} {...props}>
-                <img alt={"icon"} src={icon} className={iconStyles}/>
+                <Users className={iconStyles}/>
                 <SelectGroup>
                     <SelectLabel className={"mt-3"}>
                         {value as string}

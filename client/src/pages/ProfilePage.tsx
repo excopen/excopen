@@ -3,7 +3,7 @@ import {ProfileSidebar, ViewedTours} from "@/widgets";
 
 export const ProfilePage: FC = () => {
     return (
-        <div>
+        <div className={"huge:w-[1440px]"}>
             <h1 className={"text-3xl font-medium text-grayscale-500 pt-8"}>
                 Ваши данные
             </h1>

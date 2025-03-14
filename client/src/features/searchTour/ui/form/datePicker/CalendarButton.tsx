@@ -29,6 +29,7 @@ export interface ButtonProps
     range: RangeType
     onClear?: () => void;
     isTouched: boolean;
+    isPopoverOpen: boolean;
     isSearch: boolean;
 }
 
@@ -45,6 +46,7 @@ export const CalendarButton = React.forwardRef<
             onClear,
             isTouched,
             isSearch,
+            isPopoverOpen,
             range,
             ...props
         }, ref
@@ -53,15 +55,29 @@ export const CalendarButton = React.forwardRef<
         const Comp = asChild ? Slot : "button";
 
         const wrapperStyles: string = "flex flex-row gap-3 items-center w-full";
-        const iconCalendarStyles: string = "h-5 w-5 text-gray-500";
-        const iconXStyles: string = "h-5 w-5 text-gray-500 cursor-pointer ml-auto";
+        const iconCalendarStyles: string = [
+            "h-5 w-5",
+            !range.from && !range.to && isTouched && !isPopoverOpen ||
+            !range.from && !range.to && isSearch && !isPopoverOpen
+                ? "text-secondary-red"
+                : "text-gray-500"
+        ].join(" ");
+        const iconXStyles: string = "h-5 w-5 cursor-pointer ml-auto text-grayscale-400";
 
-        const labelStyles: string = "text-grayscale-400 inline-block";
+        const labelStyles: string = [
+            "text-grayscale-400 inline-block"
+        ].join(" ");
         const dateStyles: string = "inline-block";
-        const placeholderStyles: string = "text-grayscale-400 text-base";
+        const placeholderStyles: string = [
+            "text-base",
+            !range.from && !range.to && isTouched && !isPopoverOpen ||
+            !range.from && !range.to && isSearch && !isPopoverOpen
+                ? "text-secondary-red"
+                : "text-grayscale-400"
+        ].join(" ");
 
         const borderStyle: string = !range.from && !range.to && isTouched || !range.from && !range.to && isSearch
-            ? "border border-secondary-red bg-red-100"
+            ? "border border-secondary-red bg-red-100 hover:bg-red-100"
             : "border border-transparent";
 
         return (
