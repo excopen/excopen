@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from "react";
-import {searchByCity, searchByRegion, useTourTrackingContext} from "@/features";
+import {searchByCity, searchByRegion} from "@/features";
 import style from "@/widgets/viewedTours/ui/style.module.css";
-import {TourCard} from "@/entities";
+import {TourCard, useGetViewed} from "@/entities";
 import {TourPagination} from "@/shared/ui";
 import {ITour} from "@/shared/types";
 
@@ -12,22 +12,21 @@ type ToursProps = {
 
 export const Index: FC<ToursProps> = ({city, byCity}) => {
 
-    const {context} = useTourTrackingContext()
-    const [tours, setTours] = useState<ITour[]>(context.viewed)
-    const [visible, setVisible] = useState<number>(
-        3
-    )
+    const viewed: ITour[] = useGetViewed()
+
+    const [tours, setTours] = useState<ITour[]>([])
+    const [visible, setVisible] = useState<number>(3)
 
     useEffect(() => {
 
-        let filteredTours: ITour[] = context.viewed
+        let filteredTours: ITour[] = viewed
 
         if (byCity) filteredTours = searchByRegion(filteredTours, byCity)
         if (city) filteredTours = searchByCity(filteredTours, city)
 
         setTours(filteredTours)
 
-    }, [context.viewed, city, byCity]);
+    }, [viewed, city, byCity]);
 
     return (
         <div className={style.viewed}>

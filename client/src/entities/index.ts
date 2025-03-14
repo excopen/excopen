@@ -1,5 +1,6 @@
 export * from "./tour"
 export * from "./favourites"
+export * from "./viewed"
 export * from "./location"
 export * from "./review"
 export * from "./user"

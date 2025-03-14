@@ -34,12 +34,6 @@ export const ProfileButton: FC = () => {
             </DropdownMenuItem>
         </>
 
-    const profileItem: JSX.Element =
-        <DropdownMenuItem path={`/${RouteNames.PROFILE}`}>
-            <img alt={"profile"} src={profile} height={16} width={16}/>
-            Профиль
-        </DropdownMenuItem>
-
     /*
     * const settingItem: JSX.Element =
         <DropdownMenuItem path={`/${RouteNames.SETTINGS}`}>
@@ -74,7 +68,10 @@ export const ProfileButton: FC = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent side={"bottom"} align={"end"}>
                 <DropdownMenuGroup>
-                    {isAuth && profileItem}
+                    <DropdownMenuItem path={`/${RouteNames.PROFILE}`}>
+                        <img alt={"profile"} src={profile} height={16} width={16}/>
+                        Профиль
+                    </DropdownMenuItem>
                     {
                         /*isAuth && settingItem*/
                     }

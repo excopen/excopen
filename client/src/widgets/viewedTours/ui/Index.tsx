@@ -3,8 +3,11 @@ import style from "./style.module.css";
 import {Header} from "./header";
 import {Accordion} from "./accordion"
 import {Viewed} from "./viewed";
+import {useAuthContext} from "@/app/context";
 
 export const Index: FC = () => {
+
+    const {isAuth} = useAuthContext()
 
     const [city, setCity] = useState<string>("")
     const [byCity, setByCity] = useState<boolean>(false)
@@ -15,7 +18,7 @@ export const Index: FC = () => {
                 setCity={setCity}
                 setByCity={setByCity}
             />
-            <Accordion/>
+            {isAuth && <Accordion/>}
             <Viewed
                 city={city}
                 byCity={byCity}
