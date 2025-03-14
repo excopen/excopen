@@ -14,12 +14,15 @@ import next from "@/shared/assets/icons/next-secondary.svg";
 import {FC, JSX} from "react";
 import {RouteNames, UserRole} from "@/shared/types";
 import {useAuthContext} from "@/app/context";
+import {useNavigate} from "react-router-dom";
 
 export const ProfileButton: FC = () => {
 
-    const {role} = useAuthContext()
+    const {role, isAuth} = useAuthContext()
 
-    const createTourLink: JSX.Element =
+    const navigate = useNavigate()
+
+    const createItem: JSX.Element =
         <>
             <DropdownMenuSeparator/>
             <DropdownMenuItem className={"justify-between"} path={`/${RouteNames.CREATE}`}>
@@ -28,6 +31,30 @@ export const ProfileButton: FC = () => {
                     Предложить эк-ю
                 </div>
                 <img alt={"next"} src={next} height={16} width={16}/>
+            </DropdownMenuItem>
+        </>
+
+    /*
+    * const settingItem: JSX.Element =
+        <DropdownMenuItem path={`/${RouteNames.SETTINGS}`}>
+            <Settings className={"text-grayscale-350"} height={16} width={16}/>
+            Настройки
+        </DropdownMenuItem>
+    * */
+
+    const logOutButton: JSX.Element =
+        <>
+            <DropdownMenuSeparator/>
+            <DropdownMenuItem onClick={() => navigate(`/${RouteNames.MAIN}`)} className={"text-secondary-red font-normal"} path={`/${RouteNames.CREATE}`}>
+                Выйти
+            </DropdownMenuItem>
+        </>
+
+    const logInButton: JSX.Element =
+        <>
+            <DropdownMenuSeparator/>
+            <DropdownMenuItem className={"font-normal text-grayscale-500"} path={`/${RouteNames.CREATE}`}>
+                Войти в профиль
             </DropdownMenuItem>
         </>
 
@@ -45,11 +72,16 @@ export const ProfileButton: FC = () => {
                         <img alt={"profile"} src={profile} height={16} width={16}/>
                         Профиль
                     </DropdownMenuItem>
+                    {
+                        /*isAuth && settingItem*/
+                    }
                     <DropdownMenuItem path={`/${RouteNames.FAVOURITES}`}>
                         <img alt={"star"} src={star} height={16} width={16}/>
                         Избранное
                     </DropdownMenuItem>
-                    {role === UserRole.contributor ? createTourLink : null}
+                    {role === UserRole.contributor && isAuth && createItem}
+                    {isAuth && logOutButton}
+                    {!isAuth && logInButton}
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>

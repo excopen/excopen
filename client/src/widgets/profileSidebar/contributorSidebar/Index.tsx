@@ -1,19 +1,16 @@
 import {FC, useState} from "react";
 import style from "./style.module.css";
-import {Button, UserName, SidebarButton} from "@/shared/ui";
-import {Link} from "react-router-dom";
-import {RouteNames} from "@/shared/types";
-import favourite from "@/shared/assets/icons/favourite-secondary.svg";
+import {UserName, SidebarButton} from "@/shared/ui";
 import users from "@/shared/assets/icons/users.svg";
 import {Edit} from "./edit"
+import {ProfileButtons} from "@/widgets/profileSidebar/buttons";
+import {useAuthContext} from "@/app/context";
+import {useUser} from "@/entities/user/model";
 
-type SidebarProps = {
-    name: string
-    avatar: string
-    description: string
-}
+export const Index: FC = () => {
 
-export const Index: FC<SidebarProps> = ({name, description, avatar}) => {
+    const {userId} = useAuthContext()
+    const {data: user} = useUser(userId)
 
     const [isEdit, setIsEdit] = useState<boolean>(false)
 
@@ -22,25 +19,23 @@ export const Index: FC<SidebarProps> = ({name, description, avatar}) => {
 
             <div className={!isEdit ? "block" : "hidden"}>
                 <UserName
-                    name={name}
-                    avatar={avatar}
+                    name={user.name}
+                    avatar={user.avatar}
                     setIsEdit={setIsEdit}
                 />
-                <div className={style.desc}>{description}</div>
+                <div className={style.desc}>{user.description}</div>
             </div>
 
             <Edit
                 isEdit={isEdit}
                 setIsEdit={setIsEdit}
-                name={name}
-                description={description}
+                name={user.name}
+                description={user.description as string}
             />
 
-            <Link className={"w-full lg:w-72"} to={`/${RouteNames.FAVOURITES}`}>
-                <SidebarButton image={favourite} label={"Избранное"}/>
-            </Link>
             <SidebarButton label={"Предложенные"} image={users}/>
-            <Button className={"w-full lg:w-72"}>Предложить экскурсию</Button>
+            <ProfileButtons/>
+
         </div>
     );
 };

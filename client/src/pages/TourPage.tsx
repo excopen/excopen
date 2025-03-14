@@ -1,16 +1,14 @@
 import {FC} from "react";
+import {TourLayout, useTour} from "@/entities";
 import {useParams} from "react-router-dom";
-import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
-import {TourLayout} from "@/entities";
 
 export const TourPage: FC = () => {
 
-    const { title } = useParams<{ title: string }>();
-    const tour = ToursArray.find(tour => tour.title === decodeURIComponent(
-        title || ""
-    ));
+    const {id } = useParams<{ id: string, title: string }>()
+    const {data: tour, isLoading, isError} = useTour(Number(id))
 
-    if (!tour) return <div>Экскурсия не найдена</div>
+    if (!tour || isError) return <div>Экскурсия не найдена</div>
+    if (isLoading) return <div>Данные загружаются...</div>
     return <TourLayout tour={tour}/>
 
-};
+}

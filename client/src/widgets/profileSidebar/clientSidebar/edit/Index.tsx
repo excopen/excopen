@@ -1,5 +1,7 @@
 import {FC, useState} from "react";
 import {Button, ProfileInput} from "@/shared/ui";
+import {useAuthContext} from "@/app/context";
+import {useUpdateUser, useUser} from "@/entities/user/model";
 
 type EditClientProps = {
     name: string
@@ -9,10 +11,14 @@ type EditClientProps = {
 
 export const Index: FC<EditClientProps> = ({name, isEdit, setIsEdit}) => {
 
+    const {userId} = useAuthContext()
+    const {data: user} = useUser(userId)
+
     const [newName, setNewName] = useState<string>(name)
+    const {mutate} = useUpdateUser()
 
     const updateData = () => {
-        // TODO обновление полей newName и newDesc через хуки
+        mutate({...user, name: newName})
         setIsEdit(false)
     }
 
@@ -24,11 +30,11 @@ export const Index: FC<EditClientProps> = ({name, isEdit, setIsEdit}) => {
                 onChangeHandler={setNewName}
                 placeholder={"Введите имя"}
             />
-            <div className={"flex flex-row gap-2"}>
-                <Button size={"md"} onClick={updateData}>
+            <div className={"flex flex-col gap-2 pb-4"}>
+                <Button onClick={updateData}>
                     Добавить
                 </Button>
-                <Button size={"md"} variant={"secondary"} onClick={() => setIsEdit(false)}>
+                <Button className={"flex justify-center"} variant={"secondary"} onClick={() => setIsEdit(false)}>
                     Отменить
                 </Button>
             </div>

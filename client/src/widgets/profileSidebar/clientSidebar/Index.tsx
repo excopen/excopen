@@ -1,17 +1,15 @@
 import {FC, useState} from "react";
 import style from "./style.module.css";
-import {Button, UserName, SidebarButton} from "@/shared/ui";
-import {Link} from "react-router-dom";
-import {RouteNames} from "@/shared/types";
-import favourite from "@/shared/assets/icons/favourite-secondary.svg";
+import {UserName} from "@/shared/ui";
 import {Edit} from "./edit"
+import {ProfileButtons} from "@/widgets/profileSidebar/buttons";
+import {useAuthContext} from "@/app/context";
+import {useUser} from "@/entities/user/model";
 
-type SidebarProps = {
-    name: string
-    avatar: string
-}
+export const Index: FC = () => {
 
-export const Index: FC<SidebarProps> = ({name, avatar}) => {
+    const {userId} = useAuthContext()
+    const {data: user} = useUser(userId)
 
     const [isEdit, setIsEdit] = useState<boolean>(false)
 
@@ -20,8 +18,8 @@ export const Index: FC<SidebarProps> = ({name, avatar}) => {
 
             <div className={!isEdit ? "block" : "hidden"}>
                 <UserName
-                    name={name}
-                    avatar={avatar}
+                    name={user.name}
+                    avatar={user.avatar}
                     setIsEdit={setIsEdit}
                 />
             </div>
@@ -29,13 +27,10 @@ export const Index: FC<SidebarProps> = ({name, avatar}) => {
             <Edit
                 isEdit={isEdit}
                 setIsEdit={setIsEdit}
-                name={name}
+                name={user.name}
             />
 
-            <Link className={"w-full lg:w-72"} to={`/${RouteNames.FAVOURITES}`}>
-                <SidebarButton image={favourite} label={"Избранное"}/>
-            </Link>
-            <Button className={"w-full lg:w-72"}>Предложить экскурсию</Button>
+            <ProfileButtons/>
         </div>
     );
 };

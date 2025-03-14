@@ -5,7 +5,6 @@ import { TourTrackingContext } from "@/features";
 import { ITour } from "@/shared/types";
 import { ReactElement } from "react";
 import userEvent from "@testing-library/user-event";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 
@@ -29,7 +28,7 @@ describe("TourTrackingContext", () => {
         format: "Групповой",
         formatBehavior: "Пешком",
         groupCapacity: 10,
-        contributor: ContributorObject,
+        contributorId: 1,
         contact: ContactsObject,
         duration: "2 часа",
         routeLength: 2,

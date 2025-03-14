@@ -10,8 +10,7 @@ import {
 } from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
-import {ToFavourite} from "@/entities";
-import {useTourTrackingContext} from "@/features";
+import {ToFavourite, useViewed} from "@/entities";
 
 type TourCardProps = {
     tour: ITour
@@ -20,11 +19,11 @@ type TourCardProps = {
 export const Index: FC<TourCardProps> = ({tour}) => {
 
     const navigate = useNavigate()
-    const {addToViewed} = useTourTrackingContext()
+    const addViewed = useViewed()
 
     const clickHandler = () => {
-        navigate(`/${RouteNames.TOUR}/${encodeURIComponent(tour.title)}`)
-        addToViewed(tour)
+        navigate(`/${RouteNames.TOUR}/${tour.id}/${encodeURIComponent(tour.title)}`)
+        addViewed(tour)
     }
 
     return (

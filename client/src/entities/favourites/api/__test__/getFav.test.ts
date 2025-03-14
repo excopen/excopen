@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
-import { getFav } from "@/entities";
 import { apiClient, ApiException } from "@/shared/lib";
 import {IFavourite} from "@/shared/types";
+import {getFav} from "@/entities/favourites/api";
 
 describe("Get favourites", () => {
 

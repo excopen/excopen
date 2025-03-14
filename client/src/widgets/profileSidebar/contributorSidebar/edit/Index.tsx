@@ -1,5 +1,7 @@
 import {FC, useState} from "react";
 import {Button, ProfileInput} from "@/shared/ui";
+import {useAuthContext} from "@/app/context";
+import {useUpdateUser, useUser} from "@/entities/user/model";
 
 type EditContributorProps = {
     name: string
@@ -10,11 +12,15 @@ type EditContributorProps = {
 
 export const Index: FC<EditContributorProps> = ({name, description, isEdit, setIsEdit}) => {
 
+    const {userId} = useAuthContext()
+    const {data: user} = useUser(userId)
+    const {mutate} = useUpdateUser()
+
     const [newName, setNewName] = useState<string>(name)
     const [newDesc, setNewDesc] = useState<string>(description)
 
     const updateData = () => {
-        // TODO обновление полей newName и newDesc через хуки
+        mutate({...user, name: newName, description: newDesc})
         setIsEdit(false)
     }
 
@@ -32,11 +38,11 @@ export const Index: FC<EditContributorProps> = ({name, description, isEdit, setI
                 onChangeHandler={setNewDesc}
                 placeholder={"Введите описание"}
             />
-            <div className={"flex flex-row gap-2"}>
-                <Button size={"md"} onClick={updateData}>
+            <div className={"flex flex-col gap-2 pb-4"}>
+                <Button onClick={updateData}>
                     Добавить
                 </Button>
-                <Button size={"md"} variant={"secondary"} onClick={() => setIsEdit(false)}>
+                <Button className={"flex justify-center"} variant={"secondary"} onClick={() => setIsEdit(false)}>
                     Отменить
                 </Button>
             </div>

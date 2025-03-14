@@ -12,11 +12,12 @@ import {
 } from "@/shared/ui";
 import { validateByCity } from "@/features/searchTour/lib";
 import { useSearchContext } from "@/features";
-import { locationsArray } from "@/shared/assets/tempData/locationsArray.ts";
+import {useLocations} from "@/entities/location/model";
 
 export const Index: FC = () => {
 
     const { context, setLocation } = useSearchContext();
+    const {data: locations} = useLocations()
 
     const [field, setField] = useState({
         isOpen: false,
@@ -31,7 +32,7 @@ export const Index: FC = () => {
         setField({
             isTouched: true,
             isOpen: true,
-            isCorrectedField: validateByCity(newValue),
+            isCorrectedField: validateByCity(newValue, locations),
         })
     }
 
@@ -84,7 +85,7 @@ export const Index: FC = () => {
                 <CommandList>
                     <CommandEmpty>Направления не найдены</CommandEmpty>
                     <CommandGroup heading={"Направления"}>
-                        {locationsArray.map((location) => (
+                        {locations.map((location) => (
                             <CommandLocation
                                 key={location.city}
                                 onClick={() => clickCommandItemHandler(location.city)}

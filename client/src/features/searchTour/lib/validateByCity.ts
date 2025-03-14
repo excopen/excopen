@@ -1,7 +1,5 @@
-import {locationsArray} from "@/shared/assets/tempData/locationsArray.ts";
+import {ILocation} from "@/shared/types";
 
-export const validateByCity = (value: string): boolean => {
-    return locationsArray.some(
-        location => location.city.toLowerCase() === value.toLowerCase()
-    )
+export const validateByCity = (value: string, locations: ILocation[]): boolean => {
+    return locations.some(location => location.city.toLowerCase() === value.toLowerCase())
 }

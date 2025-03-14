@@ -5,20 +5,15 @@ import {TourTrackingContext} from "@/features";
 export const TourTrackingProvider: FC<{children: ReactNode}> = ({children}) => {
 
     const [viewed, setViewed] = useState<ITour[]>([])
-    const [favourites, setFavourites] = useState<ITour[]>([])
+    const [fav, setFav] = useState<ITour[]>([])
 
     useEffect(() => {
-
-        const savedFav = localStorage.getItem('favourites')
-        if (savedFav) setFavourites(JSON.parse(savedFav))
-
-        const savedViewed = localStorage.getItem('viewed')
-        if (savedViewed) setViewed(JSON.parse(savedViewed))
-
+        setFav(JSON.parse(localStorage.getItem('favourites') || "[]"))
+        setViewed(JSON.parse(localStorage.getItem('viewed') || "[]"))
     }, []);
 
     const addToFav = useCallback((tour: ITour) => {
-        setFavourites(prev => {
+        setFav(prev => {
             if (!prev.some(favTour => favTour.id === tour.id)) {
                 const updated = [...prev, tour]
                 localStorage.setItem('favourites', JSON.stringify(updated))
@@ -29,7 +24,7 @@ export const TourTrackingProvider: FC<{children: ReactNode}> = ({children}) => {
     }, [])
 
     const deleteFromFav = useCallback((tour: ITour) => {
-        setFavourites(prev => {
+        setFav(prev => {
             const updated = prev.filter(favTour => favTour.id!== tour.id)
             localStorage.setItem('favourites', JSON.stringify(updated))
             return updated
@@ -48,8 +43,8 @@ export const TourTrackingProvider: FC<{children: ReactNode}> = ({children}) => {
     }, [])
     
     const context = useMemo(() => ({
-        viewed, favourites
-    }), [favourites, viewed])
+        viewed, fav
+    }), [fav, viewed])
     
     return (
         <TourTrackingContext.Provider value={{context, addToFav, deleteFromFav, addToViewed}}>

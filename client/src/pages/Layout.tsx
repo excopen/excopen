@@ -1,4 +1,4 @@
-import {Outlet, useNavigate} from "react-router-dom"
+import {Outlet, useLocation, useNavigate} from "react-router-dom"
 import {FC, useEffect} from "react";
 import {Footer, Header} from "@/widgets";
 import style from "@/app/styles/pages.module.css"
@@ -8,10 +8,12 @@ import {Breadcrumbs} from "@/features";
 export const Layout: FC = () => {
 
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
-        if (window.location.pathname === "/") navigate(RouteNames.MAIN)
-    }, [navigate]);
+        window.scrollTo({ top: 0, behavior: "smooth" })
+        if (location.pathname === "/") navigate(RouteNames.MAIN)
+    }, [location.pathname, navigate]);
 
     return (
         <div className={style.layout}>

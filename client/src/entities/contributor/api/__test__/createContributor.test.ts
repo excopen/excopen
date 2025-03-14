@@ -4,29 +4,22 @@ import { http, HttpResponse } from "msw";
 import { apiClient, ApiException } from "@/shared/lib";
 import {IContributor} from "@/shared/types";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
-import avator from "@/shared/assets/icons/contributor.svg";
-import {TourObject} from "@/shared/assets/tempData/TourObject.ts";
 import {addContributor} from "@/entities/contributor/api";
 
-describe("Add contributorSidebar", () => {
+describe("Add contributor sidebar", () => {
 
     const PATH: string = "https://excopent.ru/api/contributor"
 
     const mockContributor: IContributor = {
         id: 1,
         name: "Ирина Д.",
-        avatar: avator,
+        avatar: "",
         description: "Мы живем в Омске: любим этот город, " +
             "много знаем о нём и готовы поделиться с вами знаниями. " +
             "С удовольствием поможем убедиться в том, что здесь каждому найдётся " +
             "что посмотреть и куда сходить.",
         rating: 8.8,
         ratingCount: 10,
-        tours: [
-            TourObject,
-            TourObject,
-            TourObject
-        ],
         contacts: ContactsObject
     }
 

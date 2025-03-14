@@ -5,8 +5,7 @@ import {BookingButton} from "@/shared/ui";
 import {Item} from "./item";
 import {Rating} from "./rating";
 import {Price} from "./price";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
-import {ContributorButton} from "@/entities";
+import {ContributorButton, useContributor} from "@/entities";
 
 type SidebarProps = {
     tour: ITour
@@ -14,13 +13,14 @@ type SidebarProps = {
 
 export const Index: FC<SidebarProps> = ({tour}) => {
 
-    // TODO вызов хука для получения контрибьютера
+    const {data: contributor} = useContributor(tour.contributorId)
 
     return (
         <div className={style.container}>
             <ContributorButton
-                name={ContributorObject.name}
-                avatar={ContributorObject.avatar}
+                contributorId={contributor.id}
+                name={contributor.name}
+                avatar={contributor.avatar}
             />
             <div className={style.subContainer}>
                 <Item option={"Формат:"} value={tour.format}/>

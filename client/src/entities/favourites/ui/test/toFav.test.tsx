@@ -3,12 +3,6 @@ import {describe, it, expect, vi, MockedFunction} from "vitest";
 import {TourTrackingContextType, useTourTrackingContext} from "@/features";
 import {ToFavourite} from "@/entities/favourites"
 import { ITour } from "@/shared/types";
-import image from "@/shared/assets/tempData/assets/img1.png";
-import image2 from "@/shared/assets/tempData/assets/img2.png";
-import image3 from "@/shared/assets/tempData/assets/img3.png";
-import image4 from "@/shared/assets/tempData/assets/img4.png";
-import map from "@/shared/assets/tempData/assets/map.png";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 import {userEvent} from "@testing-library/user-event";
@@ -26,14 +20,14 @@ describe("To favourite button", () => {
         id: 0,
         title: "«Привокзалка»: место встречи изменить нельзя",
         shortDescription: "Изучить необычные достопримечательности микрорайона за ж/д вокзалом Омска!",
-        images: [image, image2, image3, image4, image3],
-        map: map,
+        images: [],
+        map: "",
         price: 12800,
         priceForPerson: 4000,
         format: "Групповой",
         formatBehavior: "Пешком",
         groupCapacity: 10,
-        contributor: ContributorObject,
+        contributorId: 1,
         contact: ContactsObject,
         duration: "2 часа",
         routeLength: 2,

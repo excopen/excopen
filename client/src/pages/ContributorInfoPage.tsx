@@ -1,7 +1,12 @@
 import {FC} from "react";
-import {ContributorLayout} from "@/entities";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
+import {ContributorLayout, useContributor} from "@/entities";
+import {useParams} from "react-router-dom";
 
 export const ContributorInfoPage: FC = () => {
-    return <ContributorLayout contributor={ContributorObject}/>
+
+    const {id } = useParams<{ id: string, title: string; }>()
+    const {data: contributor} = useContributor(Number(id))
+
+    return <ContributorLayout contributor={contributor}/>
+
 };
