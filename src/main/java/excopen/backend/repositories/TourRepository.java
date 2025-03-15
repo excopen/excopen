@@ -1,15 +1,22 @@
 package excopen.backend.repositories;
 
+import com.querydsl.core.types.Predicate;
 import excopen.backend.entities.Tour;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificationExecutor<Tour> {
+@Repository
+public interface TourRepository extends JpaRepository<Tour, Long>, QuerydslPredicateExecutor<Tour> {
+
+    Page<Tour> findAll(Predicate predicate, Pageable pageable);
 
     List<Tour> findByLocationId(Long locationId);
 
@@ -23,4 +30,5 @@ public interface TourRepository extends JpaRepository<Tour, Long>, JpaSpecificat
             "ORDER BY vector_representation <-> CAST(:vector AS vector) " +
             "LIMIT 10", nativeQuery = true)
     List<Tour> findSimilarTours(@Param("tourId") Long tourId, @Param("vector") String vector);
+
 }

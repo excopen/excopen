@@ -15,10 +15,14 @@ import excopen.backend.mapper.TourMapper;
 import excopen.backend.security.RequiresOwnership;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -66,12 +70,28 @@ public class TourController {
         return tourMapper.toResponseDTO(newTour, description);
     }
 
-    @PostMapping("/search")
-    public List<TourResponseDTO> searchTours(@Validated @RequestBody FilterToursDTO filter) {
-        List<Tour> tours = tourService.filterTours(filter);
-        List<TourResponseDTO> response = tourMapper.toResponseDTOList(tours, descriptionService);
-        return response;
+    @GetMapping("/search")
+    public ResponseEntity<Page<TourResponseDTO>> searchTours(
+            @ModelAttribute FilterToursDTO filter,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder) {
+
+        Sort.Direction direction = sortOrder.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Tour> tours = tourService.filterTours(filter, pageable);
+
+        Page<TourResponseDTO> response = tours.map(tour -> {
+            Description description = descriptionService.getDescriptionByTourId(tour.getId());
+            return tourMapper.toResponseDTO(tour, description);
+        });
+
+        return ResponseEntity.ok(response);
     }
+
+
 
     @RequiresOwnership(entityClass = Tour.class)
     @PutMapping("/{tourId}")

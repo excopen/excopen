@@ -1,14 +1,17 @@
 package excopen.backend.servicesImpl;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import excopen.backend.dto.FilterToursDTO;
+import excopen.backend.entities.QTour;
 import excopen.backend.entities.Tour;
 import excopen.backend.iservices.ITourService;
 import excopen.backend.repositories.TourRepository;
-import excopen.backend.specifications.TourSpecifications;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -86,18 +89,54 @@ public class TourServiceImpl implements ITourService {
         return tourRepository.findSimilarTours(tourId, vectorString);
     }
 
-    @Override
-    public List<Tour> filterTours(FilterToursDTO filter) {
-        var spec = TourSpecifications.buildFilterSpec(filter);
+    public Page<Tour> filterTours(FilterToursDTO filter, Pageable pageable) {
+        QTour tour = QTour.tour;
+        BooleanBuilder predicate = new BooleanBuilder();
 
-        Sort sort = Sort.unsorted();
-        if (filter.getSortBy() != null && !filter.getSortBy().trim().isEmpty()) {
-            Sort.Direction direction = "DESC".equalsIgnoreCase(filter.getSortOrder())
-                    ? Sort.Direction.DESC
-                    : Sort.Direction.ASC;
-            sort = Sort.by(direction, filter.getSortBy());
+        if (filter.getTitle() != null) {
+            predicate.and(tour.title.containsIgnoreCase(filter.getTitle()));
         }
-        return tourRepository.findAll(spec, sort);
+        if (filter.getLocationId() != null) {
+            predicate.and(tour.locationId.eq(filter.getLocationId()));
+        }
+        if (filter.getPriceFrom() != null) {
+            predicate.and(tour.price.goe(filter.getPriceFrom()));
+        }
+        if (filter.getPriceTo() != null) {
+            predicate.and(tour.price.loe(filter.getPriceTo()));
+        }
+        if (filter.getDurationFrom() != null) {
+            predicate.and(tour.duration.goe(filter.getDurationFrom()));
+        }
+        if (filter.getDurationTo() != null) {
+            predicate.and(tour.duration.loe(filter.getDurationTo()));
+        }
+        if (filter.getRouteLengthFrom() != null) {
+            predicate.and(tour.routeLength.goe(filter.getRouteLengthFrom()));
+        }
+        if (filter.getRouteLengthTo() != null) {
+            predicate.and(tour.routeLength.loe(filter.getRouteLengthTo()));
+        }
+        if (filter.getRatingFrom() != null) {
+            predicate.and(tour.rating.goe(filter.getRatingFrom()));
+        }
+        if (filter.getRatingTo() != null) {
+            predicate.and(tour.rating.loe(filter.getRatingTo()));
+        }
+        if (filter.getTourType() != null) {
+            predicate.and(tour.tourType.eq(filter.getTourType()));
+        }
+        if (filter.getTransportType() != null) {
+            predicate.and(tour.transportType.eq(filter.getTransportType()));
+        }
+        if (filter.getMinAge() != null) {
+            predicate.and(tour.minAge.loe(filter.getMinAge()));
+        }
+        if (filter.getCapacity() != null) {
+            predicate.and(tour.maxCapacity.goe(filter.getCapacity()));
+        }
+
+        return tourRepository.findAll(predicate, pageable);
     }
 
     private String convertArrayToVectorString(int[] array) {
