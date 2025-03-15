@@ -21,13 +21,11 @@ export const SearchInput = React.forwardRef<HTMLInputElement, InputProps>(
         ref
     ) => {
 
-        const [value, setValue] = useState<string>("");
-        const clickHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
-        const [debouncedValue] = useDebounceValue<string>(value, 300);
+        const [value, setValue] = useState<string>("")
+        const clickHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)
+        const [debouncedValue] = useDebounceValue<string>(value, 300)
 
-        useEffect(() => {
-            onChangeHandler(debouncedValue)
-        }, [debouncedValue, onChangeHandler]);
+        useEffect(() => onChangeHandler(debouncedValue), [debouncedValue, onChangeHandler]);
 
         return (
             <div className="relative flex flex-row items-center">

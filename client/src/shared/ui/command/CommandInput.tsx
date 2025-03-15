@@ -3,18 +3,15 @@ import {Command as CommandPrimitive} from "cmdk";
 import {cn} from "@/app/lib/utils.ts";
 import {ComponentPropsWithoutRef, ElementRef} from "react";
 import {SearchIcon, X} from "lucide-react";
+import {FieldState} from "@/features/searchTour/lib";
 
 export const CommandInput = React.forwardRef<
     ElementRef<'div'>,
     ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
     label: string;
-    isSearch?: boolean;
-    field: {
-        isOpen: boolean;
-        isTouched: boolean;
-        isCorrectedField: boolean;
-    },
-    onClear: () => void
+    isSearch: boolean;
+    field: FieldState;
+    onClear: () => void;
 }
 >((
         {
@@ -32,7 +29,7 @@ export const CommandInput = React.forwardRef<
     const inputRef = React.useRef<HTMLInputElement>(null)
     const handleDivClick = () => inputRef.current?.focus()
 
-    const isValidField = (field.isTouched && !value) || !field.isCorrectedField || (isSearch && !value)
+    const isValidField = (field.isTouched && !value) || !field.isCorrected || (isSearch && !value)
 
     const containerStyles: string = "relative flex flex-col w-full wide:w-72 cursor-pointer";
     const wrapperStyles: string = "flex items-center";
@@ -45,7 +42,7 @@ export const CommandInput = React.forwardRef<
         "h-14 w-full bg-grayscale-200 hover:bg-grayscale-300 rounded-xl px-6 pt-4 text-base flex items-center",
         "placeholder-transparent transition duration-300",
         "focus:bg-white focus:outline-none pr-8 peer pl-12 cursor-pointer",
-        field.isOpen ? "focus:border-1 focus:border-black" : "border-transparent",
+        value || field.isOpen ? "focus:border focus:border-black" : "border-transparent",
         isValidField ? "border border-secondary-red focus:border-secondary-red bg-red-100 hover:bg-red-100" : "",
         "flex items-center justify-center"
     ].join(" ")

@@ -5,7 +5,7 @@ import { cn } from "@/app/lib/utils.ts";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { Calendar, X } from "lucide-react";
-import {RangeType} from "@/shared/types";
+import {CalendarButtonState} from "@/features/searchTour/lib";
 
 export const CalendarButtonVariants = cva(
     "flex items-center rounded-xl text-sm transition-colors ",
@@ -26,11 +26,9 @@ export interface ButtonProps
     extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "value">,
         VariantProps<typeof CalendarButtonVariants> {
     asChild?: boolean;
-    range: RangeType
-    onClear?: () => void;
-    isTouched: boolean;
-    isPopoverOpen: boolean;
     isSearch: boolean;
+    state: CalendarButtonState;
+    onClear: () => void;
 }
 
 export const CalendarButton = React.forwardRef<
@@ -44,23 +42,26 @@ export const CalendarButton = React.forwardRef<
             size,
             asChild = false,
             onClear,
-            isTouched,
+            state,
             isSearch,
-            isPopoverOpen,
-            range,
             ...props
         }, ref
     ) => {
+
+        const isCorrect: boolean =
+            !state.range.from && !state.range.to && state.isTouched && !state.isOpen ||
+            !state.range.from && !state.range.to && isSearch && !state.isOpen
+
+        const isBorderCorrect: boolean =
+            !state.range.from && !state.range.to && state.isTouched ||
+            !state.range.from && !state.range.to && isSearch
 
         const Comp = asChild ? Slot : "button";
 
         const wrapperStyles: string = "flex flex-row gap-3 items-center w-full";
         const iconCalendarStyles: string = [
             "h-5 w-5",
-            !range.from && !range.to && isTouched && !isPopoverOpen ||
-            !range.from && !range.to && isSearch && !isPopoverOpen
-                ? "text-secondary-red"
-                : "text-gray-500"
+            isCorrect ? "text-secondary-red" : "text-gray-500"
         ].join(" ");
         const iconXStyles: string = "h-5 w-5 cursor-pointer ml-auto text-grayscale-400";
 
@@ -70,20 +71,17 @@ export const CalendarButton = React.forwardRef<
         const dateStyles: string = "inline-block";
         const placeholderStyles: string = [
             "text-base",
-            !range.from && !range.to && isTouched && !isPopoverOpen ||
-            !range.from && !range.to && isSearch && !isPopoverOpen
-                ? "text-secondary-red"
-                : "text-grayscale-400"
+            isCorrect ? "text-secondary-red" : "text-grayscale-400"
         ].join(" ");
 
-        const borderStyle: string = !range.from && !range.to && isTouched || !range.from && !range.to && isSearch
+        const borderStyle: string = isBorderCorrect
             ? "border border-secondary-red bg-red-100 hover:bg-red-100"
-            : "border border-transparent";
+            : "border border-transparent"
 
         return (
             <Comp
                 className={cn(
-                    !range.from && !range.to && isSearch
+                    !state.range.from && !state.range.to && isSearch
                         ? "data-[state=open]:border-secondary-red"
                         : "data-[state=open]:border-grayscale-600",
                     CalendarButtonVariants({ variant, size, className }),
@@ -94,7 +92,7 @@ export const CalendarButton = React.forwardRef<
             >
                 <div className={wrapperStyles}>
                     <Calendar className={iconCalendarStyles} />
-                    {range.from && range.to ? (
+                    {state.range.from && state.range.to ? (
                         <div className={"flex flex-row items-center w-full relative"}>
                             <div className={"flex flex-col items-start"}>
                                 <label
@@ -108,13 +106,13 @@ export const CalendarButton = React.forwardRef<
                                     style={{ lineHeight: '1', marginTop: 0, marginBottom: 0 }}
                                 >
                                     {
-                                        format(range.from, "dd.MM.yy", { locale: ru })
+                                        format(state.range.from, "dd.MM.yy", { locale: ru })
                                         + " - " +
-                                        format(range.to, "dd.MM.yy", { locale: ru })
+                                        format(state.range.to, "dd.MM.yy", { locale: ru })
                                     }
                                 </label>
                             </div>
-                            {range.from && range.to && <X onClick={onClear} className={iconXStyles} />}
+                            {state.range.from && state.range.to && <X onClick={onClear} className={iconXStyles} />}
                         </div>
                     ) : (
                         <label className={placeholderStyles}>

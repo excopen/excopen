@@ -2,7 +2,7 @@ import {FC} from "react";
 import {Orientation} from "@/shared/types";
 import {Switch} from "@/shared/ui";
 import style from "./style.module.css"
-import {useSearchContext} from "@/features";
+import {useSwitchState} from "@/features/searchTour/lib";
 
 type SwitchProps = {
     orientation: Orientation
@@ -10,12 +10,12 @@ type SwitchProps = {
 
 export const Index: FC<SwitchProps> = ({orientation}) => {
 
-    const {context, setByCity} = useSearchContext()
+    const {state, update} = useSwitchState()
 
     return (
         <div className={orientation === Orientation.HORIZONTAL ? style.horMode : style.verMode}>
             <div className={style.switch}>
-                <Switch defaultValueBol={context.searchParams.byCity} onChangeValue={setByCity}/>
+                <Switch defaultValueBol={state} onChangeValue={update}/>
                 <span>Поиск в городе</span>
             </div>
         </div>

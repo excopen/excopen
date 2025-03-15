@@ -18,7 +18,7 @@ export const Index: FC = () => {
         if (location.length === 0) setCities(searchCity("А", locations))
         else setCities(searchCity(location, locations))
     }, [location]);
-    
+
     const focusHandler = () => {
         setIsActive(true)
         setCities([])
