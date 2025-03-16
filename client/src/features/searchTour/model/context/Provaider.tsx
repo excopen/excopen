@@ -1,5 +1,5 @@
 import {FC, ReactNode, useCallback, useEffect, useMemo, useState} from "react";
-import {RangeType, SearchParamsType} from "@/shared/types";
+import {RangeType, SearchParamsType, SortValues} from "@/shared/types";
 import {SearchContext} from "./context.ts";
 
 export const Provider: FC<{children: ReactNode}> = ({children}) => {
@@ -15,6 +15,8 @@ export const Provider: FC<{children: ReactNode}> = ({children}) => {
         accessibility: "",
         byCity: false
     })
+    
+    const [sort, setSort] = useState<SortValues>(SortValues.FOR_CHEAP)
 
     useEffect(() => {
         const saved = localStorage.getItem("searchParams")
@@ -28,19 +30,21 @@ export const Provider: FC<{children: ReactNode}> = ({children}) => {
             return updated
         })
     }
-
+    
+    const updateSort = useCallback((sort: SortValues) => setSort(sort), [])
     const setLocation = useCallback((location: string) => updateParams({location}), [])
     const setAccessibility = useCallback((accessibility: string) => updateParams({accessibility}), [])
     const setByCity = useCallback((byCity: boolean) => updateParams({byCity}), [])
     const setDate = useCallback((date: RangeType) => updateParams({date}), [])
 
     const context = useMemo(() => ({
-        searchParams, isSearch
-    }), [isSearch, searchParams])
+        searchParams, isSearch, sort
+    }), [isSearch, searchParams, sort])
     
     return (
         <SearchContext.Provider value={{
             context,
+            updateSort,
             setLocation,
             setAccessibility,
             setByCity,

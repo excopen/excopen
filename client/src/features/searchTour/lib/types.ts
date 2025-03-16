@@ -9,6 +9,7 @@ export type FieldState = {
 
 export type InputState = {
     isSearch: boolean
+    value: string
     state: FieldState
     clickInput: (e: React.ChangeEvent<HTMLInputElement>) => void
     selectCity: (city: string) => void

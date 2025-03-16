@@ -55,6 +55,16 @@ export const useInputState = (): InputState => {
         isTouched: prev.isTouched && context.searchParams.location === "",
     }))
 
-    return { isSearch: context.isSearch, state, clickInput, selectCity, focus, blur, clear, close }
+    return {
+        isSearch: context.isSearch,
+        value: context.searchParams.location,
+        state,
+        clickInput,
+        selectCity,
+        focus,
+        blur,
+        clear,
+        close
+    }
 
 }

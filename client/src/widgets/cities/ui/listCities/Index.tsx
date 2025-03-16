@@ -1,25 +1,21 @@
 import {FC} from "react";
 import style from "./style.module.css"
-import {useSearchContext} from "@/features";
+import {useWidgetContext} from "@/widgets/cities/model";
 
-type IndexProps = {
-    cities: string[]
-}
+export const Index: FC = () => {
 
-export const Index: FC<IndexProps> = ({cities}) => {
-
-    const {setLocation} = useSearchContext()
-
-    const clickHandler = (newCity: string) => {
-        window.scroll(0,0)
-        setLocation(newCity)
-    }
+    const {context, selectCity} = useWidgetContext()
 
     return (
         <div className={style.container}>
-            {cities.length === 0 && <span className={style.warning}>Город не найден</span>}
-            {cities.map(city => (
-                <span key={city} className={style.city} onClick={() => clickHandler(city)}>
+            {
+                context.cities.length === 0 &&
+                <span className={style.warning}>
+                    Город не найден
+                </span>
+            }
+            {context.cities.map(city => (
+                <span key={city} className={style.city} onClick={() => selectCity(city)}>
                     {city}
                 </span>
             ))}

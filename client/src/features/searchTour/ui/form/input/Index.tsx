@@ -10,17 +10,20 @@ import {
     CommandLocation,
 } from "@/shared/ui";
 import {useInputState} from "@/features/searchTour/lib";
-import {useSearchContext} from "@/features";
 import {useLocations} from "@/entities";
 
 export const Index: FC = () => {
 
-    const { context } = useSearchContext()
     const {data: locations} = useLocations()
-    const {isSearch, state, clickInput, selectCity, focus, blur, clear, close} = useInputState()
+
+    const {
+        isSearch,
+        state,
+        value,
+        clickInput, selectCity, focus, blur, clear, close
+    } = useInputState()
 
     const commandRef = useRef<HTMLDivElement>(null)
-
     useOnClickOutside(commandRef,close)
 
     return (
@@ -28,7 +31,7 @@ export const Index: FC = () => {
             <CommandInput
                 isSearch={isSearch}
                 field={state}
-                value={context.searchParams.location}
+                value={value}
                 label={"Где искать"}
                 onClear={clear}
                 onChangeCapture={clickInput}

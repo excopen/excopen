@@ -1,29 +1,24 @@
 import {FC} from "react";
 import style from "./style.module.css";
-import {Select} from "@/features";
 import {Drawer} from "./drawer/index.ts";
-import {SortValues} from "@/shared/types/features";
+import {useParams} from "react-router-dom";
+import {useTours} from "@/entities";
+import {Select} from "./select";
 
-type HeaderProps = {
-    city: string | undefined
-    count: number
-    sortType: SortValues
-    setSortType: (sortType: SortValues) => void
-}
+export const Index: FC = () => {
 
-export const Index: FC<HeaderProps> = (
-    {city, count, sortType, setSortType}
-) => {
+    const {location} = useParams<{location: string}>()
+    const {data: tours} = useTours()
 
     return (
         <header className={style.container}>
             <div className={style.content}>
-                <h1 className={style.title}>{city}</h1>
-                <span className={style.desc}>{count} найденных экскурсий</span>
+                <h1 className={style.title}>{location}</h1>
+                <span className={style.desc}>{tours.length} найденных экскурсий</span>
             </div>
             <div className={style.options}>
                 <Drawer/>
-                <Select sortValue={sortType} setSortValue={setSortType}/>
+                <Select/>
             </div>
         </header>
     );

@@ -1,55 +1,31 @@
-import {FC, useEffect, useState} from "react";
-import style from "./style.module.css"
+import {FC} from "react";
+
 import {SearchInput} from "@/shared/ui";
+import {useLocations} from "@/entities";
+
+import {useWidgetContext} from "@/widgets/cities/model";
 import {ListLetter} from "./listLetter";
 import {ListCities} from "./listCities";
-import {searchCity} from "@/features";
-import {useLocations} from "@/entities/location/model";
+import style from "./style.module.css"
 
 export const Index: FC = () => {
 
-    const {data: locations, isLoading} = useLocations()
+    const { update, blur, focus } = useWidgetContext()
 
-    const [location, setLocation] = useState<string>("")
-    const [isActive, setIsActive] = useState<boolean>(false)
-    const [cities, setCities] = useState<string[]>([])
-
-    useEffect(() => {
-        if (location.length === 0) setCities(searchCity("А", locations))
-        else setCities(searchCity(location, locations))
-    }, [location]);
-
-    const focusHandler = () => {
-        setIsActive(true)
-        setCities([])
-    }
-
-    const blurHandler = () => {
-        setIsActive(false)
-        setCities(searchCity(location, locations))
-    }
-
+    const { isLoading } = useLocations()
     if (isLoading) return <div>Данные загружаются...</div>
 
     return (
         <div className={style.container}>
-            <h2 className={style.heading}>
-                Список городов
-            </h2>
+            <h2 className={style.heading}>Список городов</h2>
             <SearchInput
-                onFocus={focusHandler}
-                onBlur={blurHandler}
-                onChangeHandler={setLocation}
                 placeholder={"Искать"}
+                onChangeHandler={update}
+                onFocus={focus}
+                onBlur={blur}
             />
-            <ListLetter
-                location={location}
-                setLocation={setLocation}
-                isActive={isActive}
-            />
-            <ListCities
-                cities={cities}
-            />
+            <ListLetter/>
+            <ListCities/>
         </div>
     );
 };

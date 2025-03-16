@@ -1,10 +1,14 @@
-import {EndpointsType, ITour, SearchParamsType} from "@/shared/types";
+import {EndpointsType, ITour, SearchParamsType, SortValues} from "@/shared/types";
+import {AxiosResponse} from "axios";
 import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 
-export const getTours = async (searchParams: SearchParamsType | null): Promise<ITour[]> => {
+export const getTours = async (sort: SortValues, searchParams: SearchParamsType): Promise<ITour[]> => {
     try {
-        const response = await apiClient.get<ITour[]>(EndpointsType.TOURS, {
-            params: searchParams
+        const response: AxiosResponse<ITour[]> = await apiClient.get<ITour[]>(EndpointsType.TOURS, {
+            params: {
+                sort: sort,
+                searchParams: searchParams
+            }
         })
         return response.data
     } catch (e) {

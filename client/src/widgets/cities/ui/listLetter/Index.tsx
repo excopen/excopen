@@ -1,31 +1,21 @@
-import {FC, useEffect} from "react";
+import {FC} from "react";
 import style from "./style.module.css";
 import { cn } from "@/app/lib/utils.ts";
 import {lettersArray} from "@/widgets/cities/utils";
+import {useWidgetContext} from "@/widgets/cities/model";
 
-type IndexProps = {
-    defaultValue?: string
-    location: string
-    setLocation: (value: string) => void
-    isActive: boolean
-};
+export const Index: FC = () => {
 
-export const Index: FC<IndexProps> = ({ defaultValue= "А", location, setLocation, isActive }) => {
-
-    useEffect(() => {
-        if (defaultValue && !location) setLocation(defaultValue)
-    }, [defaultValue, location, setLocation]);
-
-    const clickHandler = (newValue: string) => setLocation(newValue)
+    const {context, update} = useWidgetContext()
 
     return (
         <div className={style.container}>
             {lettersArray.map((letter) => (
                 <span
                     key={letter}
-                    onClick={() => clickHandler(letter)}
+                    onClick={() => update(letter)}
                     className={cn(
-                        location === letter && !isActive ? style.active : style.letter,
+                        context.city === letter && !context.isActive ? style.active : style.letter,
                         letter !== "Я" && style.border
                     )}
                 >
