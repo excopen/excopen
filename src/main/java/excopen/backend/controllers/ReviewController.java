@@ -70,7 +70,8 @@ public class ReviewController {
     @RequiresOwnership(entityClass = Review.class)
     @PutMapping("/{reviewId}")
     public ReviewResponseDTO updateReview(@Valid @PathVariable Long reviewId,
-                                          @RequestBody ReviewUpdateDTO reviewDTO) {
+                                          @RequestBody ReviewUpdateDTO reviewDTO,
+                                          @AuthenticationPrincipal OAuth2User principal) {
         Review existingReview = reviewService.getReviewById(reviewId);
 
         reviewMapper.updateReviewFromDTO(reviewDTO, existingReview);
@@ -80,7 +81,8 @@ public class ReviewController {
 
     @RequiresOwnership(entityClass = Review.class)
     @DeleteMapping("/{reviewId}")
-    public void deleteReview(@PathVariable Long reviewId) {
+    public void deleteReview(@PathVariable Long reviewId,
+                             @AuthenticationPrincipal OAuth2User principal) {
         reviewService.deleteReview(reviewId);
     }
 
