@@ -18,6 +18,7 @@ public class TourResponseDTO {
     private Integer minAge;
     private Integer maxCapacity;
     private BigDecimal rating;
+    private Integer reviewCount;
     private Long creatorId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

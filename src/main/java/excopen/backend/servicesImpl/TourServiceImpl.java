@@ -1,23 +1,26 @@
 package excopen.backend.servicesImpl;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import excopen.backend.dto.FilterToursDTO;
 import excopen.backend.entities.QTour;
+import excopen.backend.entities.Review;
 import excopen.backend.entities.Tour;
 import excopen.backend.iservices.ITourService;
+import excopen.backend.repositories.ReviewRepository;
 import excopen.backend.repositories.TourRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,12 +28,14 @@ import java.util.stream.Collectors;
 public class TourServiceImpl implements ITourService {
 
     private final TourRepository tourRepository;
+    private final ReviewRepository reviewRepository;
     private final UserServiceImpl userService;
 
     @Autowired
-    public TourServiceImpl(TourRepository tourRepository,
+    public TourServiceImpl(TourRepository tourRepository, ReviewRepository reviewRepository,
                            UserServiceImpl userService) {
         this.tourRepository = tourRepository;
+        this.reviewRepository = reviewRepository;
         this.userService = userService;
     }
 
@@ -89,6 +94,7 @@ public class TourServiceImpl implements ITourService {
         return tourRepository.findSimilarTours(tourId, vectorString);
     }
 
+    @Override
     public Page<Tour> filterTours(FilterToursDTO filter, Pageable pageable) {
         QTour tour = QTour.tour;
         BooleanBuilder predicate = new BooleanBuilder();
@@ -137,6 +143,25 @@ public class TourServiceImpl implements ITourService {
         }
 
         return tourRepository.findAll(predicate, pageable);
+    }
+
+    @Transactional
+    public void updateTourStats(Long tourId) {
+        List<Review> reviews = reviewRepository.findByTourId(tourId);
+
+        BigDecimal newRating = reviews.stream()
+                .map(Review::getRating)
+                .filter(Objects::nonNull)
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(BigDecimal.valueOf(reviews.size()), 1, RoundingMode.HALF_UP);
+
+        int reviewCount = reviews.size();
+
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new EntityNotFoundException("Tour not found"));
+        tour.setRating(newRating);
+        tour.setReviewCount(reviewCount);
+        tourRepository.save(tour);
     }
 
     private String convertArrayToVectorString(int[] array) {

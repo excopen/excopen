@@ -49,6 +49,8 @@ public class Tour implements Serializable {
     @Digits(integer = 2, fraction = 1)
     private BigDecimal rating;
 
+    private Integer reviewCount = 0;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tour_type")
     private TourType tourType;

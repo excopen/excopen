@@ -20,6 +20,7 @@ public interface TourMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "rating", ignore = true)
+    @Mapping(target = "reviewCount", ignore = true)
     @Mapping(target = "vectorRepresentation", source = "vectorRepresentation")
     Tour toEntity(TourCreateDTO dto);
 

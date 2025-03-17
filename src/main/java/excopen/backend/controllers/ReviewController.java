@@ -13,9 +13,13 @@ import excopen.backend.mapper.ReviewMapper;
 import excopen.backend.security.RequiresOwnership;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,19 +42,24 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ReviewResponseDTO createReview(@Valid @RequestBody ReviewCreateDTO reviewDTO,
-                                          @AuthenticationPrincipal OAuth2User principal) {
+    public ResponseEntity<ReviewResponseDTO> createReview(@Valid @RequestBody ReviewCreateDTO reviewDTO,
+                                                          @AuthenticationPrincipal OAuth2User principal) {
+        if (principal == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Пользователь не аутентифицирован");
+        }
+
         String googleId = principal.getAttribute("sub");
         User user = userService.getUserByGoogleId(googleId);
-
         Tour tour = tourService.getTourById(reviewDTO.getTourId());
 
         Review review = reviewMapper.toEntity(reviewDTO);
         review.setUserId(user.getId());
         review.setTourId(tour.getId());
 
-        return reviewMapper.toResponseDTO(reviewService.createReview(review));
+        ReviewResponseDTO response = reviewMapper.toResponseDTO(reviewService.createReview(review));
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{reviewId}")
     public ReviewResponseDTO getReviewById(@PathVariable Long reviewId) {
@@ -85,8 +94,8 @@ public class ReviewController {
         return reviewMapper.toResponseDTOList(reviewService.getReviewsByUser(userId));
     }
 
-    @GetMapping("/tour/{tourId}/average-rating")
-    public double getAverageRatingForTour(@PathVariable Long tourId) {
-        return reviewService.getAverageRatingForTour(tourId);
-    }
+//    @GetMapping("/tour/{tourId}/average-rating")
+//    public double getAverageRatingForTour(@PathVariable Long tourId) {
+//        return reviewService.getAverageRatingForTour(tourId);
+//    }
 }

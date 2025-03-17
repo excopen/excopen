@@ -1,9 +1,11 @@
 package excopen.backend.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -22,7 +24,8 @@ public class Review implements Serializable {
     @JoinColumn(name = "user_id")
     private Long userId;
 
-    private Integer rating;
+    @Digits(integer = 2, fraction = 1)
+    private BigDecimal rating;
 
     private String reviewText;
 
