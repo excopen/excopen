@@ -19,12 +19,8 @@ export const Index: FC<LayoutProps> = ({contributor}) => {
                 rating={contributor.rating}
                 ratingCount={contributor.ratingCount}
             />
-            <Description
-                desc={contributor.description}
-            />
-            <Tours
-                tours={contributor.tours as ITour[]}
-            />
+            <Description desc={contributor.description}/>
+            <Tours tours={contributor.tours as ITour[]}/>
         </div>
     );
 };

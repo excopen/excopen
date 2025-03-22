@@ -11,7 +11,7 @@ export const Layout: FC = () => {
     const location = useLocation()
 
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" })
+        window.scrollTo({ top: 0 })
         if (location.pathname === "/") navigate(RouteNames.MAIN)
     }, [location.pathname, navigate]);
 

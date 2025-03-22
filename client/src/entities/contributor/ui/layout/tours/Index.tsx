@@ -10,7 +10,7 @@ type ToursProps = {
 export const Index: FC<ToursProps> = ({tours}) => {
     return (
         <div className={style.container}>
-            <span className={style.heading}>Мои предложения</span>
+            <span className={style.heading}>Другие предложения</span>
             <div className={style.list}>
                 {tours.map(tour => <TourCard tour={tour}/>)}
             </div>

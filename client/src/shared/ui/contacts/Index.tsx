@@ -1,19 +1,18 @@
 import {FC} from "react";
 import style from "./style.module.css"
 import {ContactButton, TelegramButton, VKButton} from "./buttons";
+import {IContacts} from "@/shared/types";
 
 type ContactsProps = {
-    link: string
-    vk: string
-    telegram: string
+    contacts: IContacts
 }
 
-export const Index: FC<ContactsProps> = ({link, vk, telegram}) => {
+export const Index: FC<ContactsProps> = ({contacts}) => {
     return (
         <div className={style.container}>
-            <ContactButton link={link}/>
-            <TelegramButton link={telegram}/>
-            <VKButton link={vk}/>
+            <ContactButton phone={contacts.phone}/>
+            <TelegramButton id={contacts.telegram as string}/>
+            <VKButton id={contacts.vk as string}/>
         </div>
     );
 };

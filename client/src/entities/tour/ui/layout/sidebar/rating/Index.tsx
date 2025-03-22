@@ -1,6 +1,7 @@
 import {FC} from "react";
 import style from "./style.module.css"
 import {Marker} from "@/shared/ui/rating/Marker.tsx";
+import {formatRatingCount} from "@/shared/utills";
 
 type RatingProps = {
     option: string
@@ -19,7 +20,7 @@ export const Index: FC<RatingProps> = ({option, rating, ratingCount}) => {
             <div className={style.rating}>
                 <Marker value={rating}/>
                 <p className={style.count}>
-                    {ratingCount} оценок
+                    {formatRatingCount(ratingCount)}
                 </p>
             </div>
 

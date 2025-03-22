@@ -11,22 +11,22 @@ type SidebarButtonProps = {
 
 export const SidebarButton: FC<SidebarButtonProps> = ({label, image}) => {
     return (
-        <Button className={"w-full lg:w-72"} variant={"profile"} size={"md"}>
-            <img
-                height={24}
-                width={24}
-                alt={"favourite"}
-                src={image}
-            />
-            {label}
-            <Link to={`/${RouteNames.FAVOURITES}`}>
+        <Link className={"w-full"} to={`/${RouteNames.FAVOURITES}`}>
+            <Button className={"w-full"} variant={"profile"} size={"md"}>
+                <img
+                    height={24}
+                    width={24}
+                    alt={"favourite"}
+                    src={image}
+                />
+                {label}
                 <img
                     height={20}
                     width={20}
                     alt={"arrow"}
                     src={next}
                 />
-            </Link>
-        </Button>
+            </Button>
+        </Link>
     );
 };

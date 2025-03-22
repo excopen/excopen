@@ -1,5 +1,5 @@
 import { FC } from "react";
-import {ITour, PriceContainerVariant, RouteNames} from "@/shared/types";
+import {ITour, RouteNames} from "@/shared/types";
 import {
     Button,
     CarouselVariant,
@@ -11,6 +11,7 @@ import {
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
 import {ToFavourite, useViewed} from "@/entities";
+import {useWindowSize} from "usehooks-ts";
 
 type TourCardProps = {
     tour: ITour
@@ -18,6 +19,7 @@ type TourCardProps = {
 
 export const Index: FC<TourCardProps> = ({tour}) => {
 
+    const {width} = useWindowSize()
     const navigate = useNavigate()
     const addViewed = useViewed()
 
@@ -43,12 +45,16 @@ export const Index: FC<TourCardProps> = ({tour}) => {
                         <p className={style.title}>{tour.title}</p>
                         <p className={style.text}>{tour.shortDescription}</p>
                     </div>
-                    <GroupPrice price={tour.price}/>
+                    {width >= 768 && <GroupPrice price={tour.price}/>}
                 </div>
 
                 <div className={style.details}>
-                    <TourParams duration={tour.duration} length={tour.routeLength}/>
-                    <GroupPrice price={tour.price} variant={PriceContainerVariant.MOBILE} />
+                    <TourParams
+                        duration={tour.duration}
+                        length={tour.routeLength}
+                        formatBehavior={tour.formatBehavior}
+                    />
+                    {width < 768 && <GroupPrice price={tour.price}/>}
                     <Button onClick={clickHandler}>Выбрать</Button>
                 </div>
 

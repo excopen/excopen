@@ -9,7 +9,7 @@ import {
     OnBoardingPage,
     ProfilePage, SettingsPage,
     TourPage,
-    ToursPage
+    ToursPage, WipPage
 } from "@/pages";
 import {FC} from "react";
 
@@ -31,12 +31,20 @@ export const AppRoutes: FC = () => {
                 <Route path={`${RouteNames.TOUR}/:id/:title`} element={<TourPage/>}/>
                 <Route path={`${RouteNames.CONTRIBUTOR}/:id/:name`} element={<ContributorInfoPage/>}/>
                 <Route path={RouteNames.PROFILE} element={<ProfilePage/>}/>
-                <Route path={RouteNames.SETTINGS} element={<SettingsPage/>}/>
+                <Route path={RouteNames.WIP} element={<WipPage/>}/>
                 <Route path={RouteNames.FAVOURITES} element={<FavouritesPage/>}/>
+                <Route
+                    path={RouteNames.SETTINGS}
+                    element={
+                        <RequireAuth>
+                            <SettingsPage/>
+                        </RequireAuth>
+                    }
+                />
                 <Route
                     path={RouteNames.CREATE}
                     element={
-                        <RequireAuth role={UserRole.contributor}>
+                        <RequireAuth>
                             <CreateTourPage/>
                         </RequireAuth>
                     }

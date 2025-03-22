@@ -10,5 +10,7 @@ export const routesConfig = new Map<string, BreadcrumbType>([
     [RouteNames.CONTRIBUTOR, { path: `/${RouteNames.CONTRIBUTOR}`, label: "Контрибьютор" }],
     [RouteNames.PROFILE, { path: `/${RouteNames.PROFILE}`, label: "Профиль" }],
     [RouteNames.FAVOURITES, { path: `/${RouteNames.FAVOURITES}`, label: "Избранное" }],
-    [RouteNames.CREATE, { path: `/${RouteNames.CREATE}`, label: "Создать" }]
+    [RouteNames.CREATE, { path: `/${RouteNames.CREATE}`, label: "Создать" }],
+    [RouteNames.SETTINGS, { path: `/${RouteNames.SETTINGS}`, label: "Настройки" }],
+    [RouteNames.WIP, { path: `/${RouteNames.WIP}`, label: "Страница в разработке" }],
 ]);

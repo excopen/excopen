@@ -3,7 +3,7 @@ import style from "./style.module.css"
 
 type ItemProps = {
     option: string
-    value: string | undefined
+    value: string
 }
 
 export const Index: FC<ItemProps> = ({option, value}) => {

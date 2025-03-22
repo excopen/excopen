@@ -10,7 +10,11 @@ export const Index: FC = () => {
             <Link to={`/${RouteNames.FAVOURITES}`}>
                 <SidebarButton image={favourite} label={"Избранное"}/>
             </Link>
-            <Button>Предложить экскурсию</Button>
+            <Link className={"w-full"} to={`/${RouteNames.CREATE}`}>
+                <Button className={"w-full"}>
+                    Предложить экскурсию
+                </Button>
+            </Link>
         </>
     );
 };

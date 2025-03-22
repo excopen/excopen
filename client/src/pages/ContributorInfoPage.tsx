@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 
 export const ContributorInfoPage: FC = () => {
 
-    const {id } = useParams<{ id: string, title: string; }>()
+    const {id} = useParams<{ id: string, title: string; }>()
     const {data: contributor} = useContributor(Number(id))
 
     return <ContributorLayout contributor={contributor}/>

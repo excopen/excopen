@@ -26,11 +26,7 @@ export const Index: FC<HeaderProps> = ({name, rating, ratingCount, avatar, conta
                 <Rating rating={rating} ratingCount={ratingCount}/>
             </div>
             <div>
-                <Contacts
-                    link={contacts.link}
-                    vk={contacts.vk as string}
-                    telegram={contacts.telegram as string}
-                />
+                <Contacts contacts={contacts}/>
             </div>
         </div>
     );

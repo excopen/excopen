@@ -1,18 +1,43 @@
-import {Link} from "react-router-dom";
-import {FC} from "react";
+import {FC, useState} from "react";
 import telegram from "@/shared/assets/icons/telegram.svg";
-import {Button} from "@/shared/ui";
+import {Alert, AlertDescription, Button} from "@/shared/ui";
+import {Info} from "lucide-react";
 
 type TelegramButtonProps = {
-    link?: string
+    id: string
 }
 
-export const TelegramButton: FC<TelegramButtonProps> = ({link = "/main"}) => {
+export const TelegramButton: FC<TelegramButtonProps> = ({id}) => {
+
+    const [visiableAlert, setVisiableAlert] = useState<boolean>(false)
+
+    const copyOnClipboard = async () => {
+        try {
+
+            await navigator.clipboard.writeText(id)
+
+            setVisiableAlert(true)
+            setTimeout(() => setVisiableAlert(false), 3000)
+
+        } catch (e) {
+            console.log("Ошибка копирования номера телефона", e)
+        }
+    }
+
     return (
-        <Link to={link}>
-            <Button size={"contactIcon"}>
+        <>
+            {
+                visiableAlert &&
+                <Alert>
+                    <Info width={24} height={24}/>
+                    <AlertDescription>
+                        ID Telegram успешно скопирован
+                    </AlertDescription>
+                </Alert>
+            }
+            <Button size={"contactIcon"} onClick={copyOnClipboard}>
                 <img width={32} height={32} alt={"telegram"} src={telegram}/>
             </Button>
-        </Link>
+        </>
     );
 };

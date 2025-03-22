@@ -21,7 +21,7 @@ const ButtonVariants = cva(
       size: {
           default: "h-12 px-10 rounded-xl",
           hg: "h-14 px-8",
-          contact: "h-12 w-52 rounded-lg",
+          contact: "h-12 w-52 rounded-lg transition",
           lg: "h-14 w-72 rounded-xl",
           normal: "h-12 px-4",
           md: "h-12 px-8 rounded-xl",

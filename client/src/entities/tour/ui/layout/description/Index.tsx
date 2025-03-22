@@ -19,7 +19,7 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
         <div className={style.container}>
 
             <div className={style.subContainer}>
-                <p>{tour?.description?.mainInfo}</p>
+                <p>{tour.description?.mainInfo}</p>
             </div>
 
             <h2 className={style.heading}>
@@ -27,12 +27,12 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
             </h2>
 
             <div className={style.subContainer}>
-                <p>{tour?.description?.whatToExpect}</p>
+                <p>{tour.description?.whatToExpect}</p>
                 <span className={style.bold}>
                     Что вам встретится по пути
                 </span>
                 <ul className={style.list}>
-                    {tour?.description?.locations.map((location, i) => (
+                    {tour.description?.locations.map((location, i) => (
                         <li key={i}>{location}</li>
                     ))}
                 </ul>
@@ -40,7 +40,7 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                     О чём будем беседовать
                 </span>
                 <ul className={style.list}>
-                    {tour?.description?.topics.map((topic, i) => (
+                    {tour.description?.topics.map((topic, i) => (
                         <li key={i}>{topic}</li>
                     ))}
                 </ul>
@@ -50,28 +50,27 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                 <h3 className={style.heading}>
                     Организационные детали
                 </h3>
-                <p>{tour?.description?.orgDetails}</p>
+                <p>{tour.description?.orgDetails}</p>
             </div>
 
             <div className={style.subContainer}>
                 <h3 className={style.heading}>
                     Место встречи
                 </h3>
-                <p>{tour?.description?.meetingPlace}</p>
+                <p>{tour.description?.meetingPlace}</p>
             </div>
 
             <div className={style.contacts}>
                 <h3 className={style.heading}>
                     Остались вопросы?
                 </h3>
-                <Contacts
-                    link={contributor.contacts.link}
-                    vk={contributor.contacts.vk as string}
-                    telegram={contributor.contacts.telegram as string}
-                />
+                <Contacts contacts={tour.contacts}/>
             </div>
 
-            <Details/>
+            <Details
+                format={tour.format}
+                groupCapacity={tour.groupCapacity}
+            />
 
             <Reviews
                 tourId={tour.id}

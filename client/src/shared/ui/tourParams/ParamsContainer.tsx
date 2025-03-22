@@ -6,7 +6,7 @@ type ParamsContainerProps = {
 
 export const ParamsContainer: FC<ParamsContainerProps> = ({children}) => {
     return (
-        <div className={"flex flex-row items-center gap-4"}>
+        <div className={"flex flex-col md:flex-row md:items-center gap-1 md:gap-4"}>
             {children}
         </div>
     );

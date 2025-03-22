@@ -1,6 +1,7 @@
 import {FC} from "react";
 import style from "./style.module.css"
 import {Rating} from "@/shared/ui"
+import {formatReviews} from "@/shared/utills";
 
 type ReviewHeaderProps = {
     rating: number
@@ -10,9 +11,7 @@ type ReviewHeaderProps = {
 export const Index: FC<ReviewHeaderProps> = ({rating, ratingCount}) => {
     return (
         <div className={style.container}>
-            <div className={style.heading}>
-                {ratingCount} отзыва путешественников
-            </div>
+            <div className={style.heading}>{formatReviews(ratingCount)}</div>
             <Rating rating={rating} ratingCount={ratingCount}/>
         </div>
     );
