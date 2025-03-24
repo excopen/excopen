@@ -1,5 +1,6 @@
 package excopen.backend.controllers;
 
+import excopen.backend.constants.Role;
 import excopen.backend.dto.FilterToursDTO;
 import excopen.backend.dto.TourCreateDTO;
 import excopen.backend.dto.TourResponseDTO;
@@ -23,8 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -62,6 +63,10 @@ public class TourController {
         String googleId = principal.getAttribute("sub");
         User creator = userService.getUserByGoogleId(googleId);
 
+        if (!creator.getRole().equals(Role.GUIDE)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Только гид может создавать тур");
+        }
+
         Tour newTour = tourMapper.toEntity(request);
         tourService.createTour(newTour, creator.getId());
 
@@ -70,6 +75,7 @@ public class TourController {
 
         return tourMapper.toResponseDTO(newTour, description);
     }
+
 
     @GetMapping("/search")
     public ResponseEntity<Page<TourResponseDTO>> searchTours(

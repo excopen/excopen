@@ -1,5 +1,6 @@
 package excopen.backend.entities;
 
+import excopen.backend.constants.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,11 +40,17 @@ public class User implements Serializable {
     @JdbcTypeCode(SqlTypes.VECTOR)
     private int[] secondVector;
 
+    private String phoneNumber;
+    private String description;
+    private String city;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-
+        role = Role.USER;
 
         this.preferencesVector = new int[tagCount];
         this.secondVector = new int[tagCount];
