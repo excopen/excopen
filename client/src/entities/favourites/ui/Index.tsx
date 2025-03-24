@@ -3,7 +3,7 @@ import { Heart } from "lucide-react";
 import favourite from "@/shared/assets/icons/favourite.svg";
 import style from "./style.module.css";
 import { ITour } from "@/shared/types";
-import {useFavourite} from "@/entities";
+import {useAddFavFactory} from "@/features";
 
 type ToFavProps = {
     tour: ITour
@@ -11,7 +11,7 @@ type ToFavProps = {
 
 export const Index: FC<ToFavProps> = ({ tour }) => {
 
-    const {isActive, clickHandler} = useFavourite(tour)
+    const {isActive, clickHandler} = useAddFavFactory(tour)
 
     return (
         <button onClick={clickHandler}>

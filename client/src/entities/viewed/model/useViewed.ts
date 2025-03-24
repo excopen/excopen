@@ -1,17 +1,14 @@
+import {useQuery} from "@tanstack/react-query";
 import {ITour} from "@/shared/types";
-import {useAuthContext} from "@/app/context";
-import {useTourTrackingContext} from "@/features";
-import {useAddViewed} from "./_privat";
+import {ApiException} from "@/shared/lib";
+import {getViewed} from "@/entities/viewed/api";
 
-export const useViewed = (): (tour: ITour) => void => {
-
-    const { addToViewed: addLocalViewed } = useTourTrackingContext()
-    const { isAuth } = useAuthContext()
-    const { mutate: addViewed } = useAddViewed()
-
-    return (tour: ITour) => {
-        if (!isAuth) addLocalViewed(tour)
-        else addViewed(tour.id)
-    }
-
+export const useViewed = (userId: number) => {
+    return useQuery<ITour[], ApiException<ITour>>({
+        queryKey: ["viewed", userId],
+        queryFn: () => getViewed(userId),
+        staleTime: 60_000,
+        initialData: [],
+        enabled: !!userId
+    })
 }

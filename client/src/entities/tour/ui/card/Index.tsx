@@ -10,8 +10,9 @@ import {
 } from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
-import {ToFavourite, useViewed} from "@/entities";
+import {ToFavourite} from "@/entities";
 import {useWindowSize} from "usehooks-ts";
+import {useAddViewFactory} from "@/features";
 
 type TourCardProps = {
     tour: ITour
@@ -21,7 +22,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
 
     const {width} = useWindowSize()
     const navigate = useNavigate()
-    const addViewed = useViewed()
+    const addViewed = useAddViewFactory()
 
     const clickHandler = () => {
         navigate(`/${RouteNames.TOUR}/${tour.id}/${encodeURIComponent(tour.title)}`)

@@ -1,6 +1,6 @@
 import {UserRole} from "@/shared/types";
 import {ReactNode} from "react";
-import {AuthContext} from "@/app/context";
+import {AuthContext} from "@/features";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 

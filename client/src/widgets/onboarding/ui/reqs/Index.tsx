@@ -4,9 +4,9 @@ import {Text} from "./Text.tsx";
 import {cn} from "@/app/lib/utils.ts";
 import {Tag, useAddTags, useTags} from "@/entities";
 import {ITag, RouteNames} from "@/shared/types";
-import {useAuthContext} from "@/app/context";
 import {Link} from "react-router-dom";
 import {Button} from "@/shared/ui";
+import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 

@@ -3,8 +3,8 @@ import style from "./style.module.css";
 import {UserName} from "@/shared/ui";
 import {Edit} from "./edit"
 import {ProfileButtons} from "@/widgets/profileSidebar/buttons";
-import {useAuthContext} from "@/app/context";
 import {useUser} from "@/entities/user/model";
+import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 
@@ -31,6 +31,7 @@ export const Index: FC = () => {
             />
 
             <ProfileButtons/>
+
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import {FC} from 'react';
 import {Select, SelectContent, SelectItem, SelectSortTrigger} from "@/shared/ui";
-import {useSelectState} from "@/entities/tour/lib";
+import {useSelectState} from "@/entities/tour/hooks";
 import {sortTypesArray} from "@/entities/tour/config";
 
 export const Index: FC = () => {

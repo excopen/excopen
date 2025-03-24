@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {RouteNames, UserRole} from "@/shared/types";
 import {Navigate} from "react-router-dom";
-import {useAuthContext} from "@/app/context";
+import {useAuthContext} from "@/features";
 
 type RequireAuthProps = {
     children: React.ReactNode;
@@ -10,7 +10,7 @@ type RequireAuthProps = {
 
 export const RequireAuth: FC<RequireAuthProps> = (props) => {
 
-    const {isAuth} = useAuthContext();
+    const {isAuth} = useAuthContext()
 
     /*
     if (!isAuth || (props.role !== null && props.role !== role)) {

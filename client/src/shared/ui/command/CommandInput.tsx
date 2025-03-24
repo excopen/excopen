@@ -3,7 +3,7 @@ import {Command as CommandPrimitive} from "cmdk";
 import {cn} from "@/app/lib/utils.ts";
 import {ComponentPropsWithoutRef, ElementRef} from "react";
 import {SearchIcon, X} from "lucide-react";
-import {FieldState} from "@/features/searchTour/lib";
+import {FieldState} from "src/features/searchTour/hooks";
 
 export const CommandInput = React.forwardRef<
     ElementRef<'div'>,
@@ -14,17 +14,17 @@ export const CommandInput = React.forwardRef<
     onClear: () => void;
 }
 >((
-        {
-            className,
-            label,
-            isSearch,
-            field,
-            onClear,
-            value,
-            ...props
-        },
-        ref
-    ) => {
+    {
+        className,
+        label,
+        isSearch,
+        field,
+        onClear,
+        value,
+        ...props
+    },
+    ref
+) => {
 
     const inputRef = React.useRef<HTMLInputElement>(null)
     const handleDivClick = () => inputRef.current?.focus()

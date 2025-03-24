@@ -1,7 +1,7 @@
 import {FC, useState} from "react";
 import {Button, ProfileInput} from "@/shared/ui";
-import {useAuthContext} from "@/app/context";
 import {useUpdateUser, useUser} from "@/entities/user/model";
+import {useAuthContext} from "@/features";
 
 type EditContributorProps = {
     name: string

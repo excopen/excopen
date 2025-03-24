@@ -2,8 +2,8 @@ import {FC, useState} from "react";
 import style from "./style.module.css"
 import edit from "@/shared/assets/icons/edit.svg"
 import {formatName} from "@/shared/utills";
-import {useAuthContext} from "@/app/context";
 import {useUpdateUser, useUser} from "@/entities/user/model";
+import {useAuthContext} from "@/features";
 
 type EditProfileProps = {
     name: string

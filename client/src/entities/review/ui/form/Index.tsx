@@ -6,8 +6,8 @@ import {ITour, RouteNames, TourAccessibility} from "@/shared/types";
 import {useNavigate} from "react-router-dom";
 import {SquareArrowOutUpRight} from "lucide-react";
 import {useCreateReview} from "@/entities";
-import {useAuthContext} from "@/app/context";
 import {useUser} from "@/entities/user/model";
+import {useAuthContext} from "@/features";
 
 type FormProps = {
     tour: ITour

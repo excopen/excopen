@@ -1,9 +1,9 @@
 import {FC, useState} from "react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger, TourPagination} from "@/shared/ui";
 import {ReviewForm, TourCard, useContributorTours} from "@/entities";
-import {useAuthContext} from "@/app/context";
 import {UserRole} from "@/shared/types";
 import {useUser} from "@/entities/user/model";
+import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 

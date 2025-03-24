@@ -1,11 +1,12 @@
 import {FC} from "react";
 import pages from "@/app/styles/pages.module.css";
-import {TourCard, useGetFavourites} from "@/entities";
+import {TourCard} from "@/entities";
 import {ITour} from "@/shared/types";
+import {useFavFactory} from "@/features";
 
 export const FavouritesPage: FC = () => {
 
-    const favourites: ITour[] = useGetFavourites()
+    const favourites: ITour[] = useFavFactory()
 
     return (
         <div className={pages.favorites}>

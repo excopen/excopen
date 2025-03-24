@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from "react";
-import {searchByCity, searchByRegion} from "@/features";
+import {searchByCity, searchByRegion, useViewFactory} from "@/features";
 import style from "@/widgets/viewedTours/ui/style.module.css";
-import {TourCard, useGetViewed} from "@/entities";
+import {TourCard} from "@/entities";
 import {TourPagination} from "@/shared/ui";
 import {ITour} from "@/shared/types";
 
@@ -12,7 +12,7 @@ type ToursProps = {
 
 export const Index: FC<ToursProps> = ({city, byCity}) => {
 
-    const viewed: ITour[] = useGetViewed()
+    const viewed: ITour[] = useViewFactory()
 
     const [tours, setTours] = useState<ITour[]>([])
     const [visible, setVisible] = useState<number>(3)

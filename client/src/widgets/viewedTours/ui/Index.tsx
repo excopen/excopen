@@ -3,7 +3,7 @@ import style from "./style.module.css";
 import {Header} from "./header";
 import {Accordion} from "./accordion"
 import {Viewed} from "./viewed";
-import {useAuthContext} from "@/app/context";
+import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 

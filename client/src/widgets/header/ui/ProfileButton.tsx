@@ -13,8 +13,8 @@ import star from "@/shared/assets/icons/star-gray.svg";
 import next from "@/shared/assets/icons/next-secondary.svg";
 import {FC, JSX} from "react";
 import {RouteNames, UserRole} from "@/shared/types";
-import {useAuthContext} from "@/app/context";
 import {useNavigate} from "react-router-dom";
+import {useAuthContext} from "@/features";
 
 export const ProfileButton: FC = () => {
 

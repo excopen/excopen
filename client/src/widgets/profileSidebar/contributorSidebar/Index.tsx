@@ -4,8 +4,8 @@ import {UserName, SidebarButton} from "@/shared/ui";
 import users from "@/shared/assets/icons/users.svg";
 import {Edit} from "./edit"
 import {ProfileButtons} from "@/widgets/profileSidebar/buttons";
-import {useAuthContext} from "@/app/context";
 import {useUser} from "@/entities/user/model";
+import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 

@@ -1,3 +1,3 @@
-export * from "./searchTour"
+export * from "./search"
 export * from "./breadcrumbs"
-export * from "./tourTracking"
+export * from "./auth"
