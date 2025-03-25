@@ -1,0 +1,7 @@
+.container {
+    @apply w-full
+}
+
+.heading {
+    @apply text-3xl text-grayscale-500 font-semibold
+}

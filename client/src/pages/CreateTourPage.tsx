@@ -1,9 +1,12 @@
 import {FC} from "react";
+import style from "@/app/styles/pages.module.css"
+import {Main, Sidebar} from "@/features";
 
 export const CreateTourPage: FC = () => {
     return (
-        <div>
-            Create Tour
+        <div className={style.createTour}>
+            <Sidebar/>
+            <Main/>
         </div>
     );
 };

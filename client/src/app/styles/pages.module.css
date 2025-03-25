@@ -23,3 +23,7 @@
 .onboarding {
     @apply w-full
 }
+
+.createTour {
+    @apply huge:w-[1440px] min-h-screen flex flex-col lg:flex-row gap-8 py-8
+}
