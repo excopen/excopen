@@ -15,14 +15,12 @@ public class DescriptionServiceImpl implements IDescriptionService {
 
     private final DescriptionRepository descriptionRepository;
     @Autowired
-    public DescriptionServiceImpl(DescriptionRepository descriptionRepository, UserServiceImpl userService) {
+    public DescriptionServiceImpl(DescriptionRepository descriptionRepository) {
         this.descriptionRepository = descriptionRepository;
-        this.userService = userService;
     }
 
     public Description createDescription(Description description, Long tourId) {
         description.setTourId(tourId);
-
         return descriptionRepository.save(description);
     }
 

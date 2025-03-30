@@ -161,19 +161,6 @@ public class TourController {
         return tourMapper.toResponseDTOList(similarTours, descriptionService);
     }
 
-    @GetMapping("/location/{locationId}")
-    public List<Tour> findToursByLocation(@PathVariable Long locationId) {
-        return tourService.findToursByLocation(locationId);
-    }
 
-    @GetMapping("/duration/{duration}")
-    public List<Tour> findToursByDuration(@PathVariable String duration) {
-        return tourService.findToursByDuration(duration);
-    }
-
-    @GetMapping("/recommendations/{userId}")
-    public List<TourDTO> getRecommendedTours(@PathVariable Long userId) {
-        return tourService.getRecommendedTours(userId);
-    }
 
 }
