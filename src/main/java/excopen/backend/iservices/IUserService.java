@@ -10,6 +10,7 @@ public interface IUserService {
     User createUser(User user);
     User getUserById(Long userId);
     User getUserByGoogleId(String googleId);
+
     List<User> getAllUsers();
     User updateUser(Long userId, User user);
     void deleteUser(Long userId);
@@ -18,4 +19,5 @@ public interface IUserService {
     public void requestGuideRole(Long userId, GuideRequestDto guideRequestDto);
     public boolean confirmGuideRole(Long userId, String phoneNumber, String code);
     public boolean isGuide(Long userId);
+
 }

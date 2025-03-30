@@ -1,14 +1,17 @@
-import {ITour} from "@/shared/types";
+import {ITour, TourAccessibility, TourFormat, TourFormatBehavior} from "@/shared/types";
 import image from "./assets/img1.png";
 import image2 from "./assets/img2.png";
 import image3 from "./assets/img3.png";
 import image4 from "./assets/img4.png";
 import map from "./assets/map.png";
 import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
-import bg from "@/shared/assets/tempData/assets/cardBg.png";
+import {ReviewsArray} from "@/shared/assets/tempData/ReviewsArray.ts";
+import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
+import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 
 const TourObject: ITour = {
+    contacts: ContactsObject,
+    accessibility: TourAccessibility.WITHOUT_CHILDREN,
     priceForPerson: 4000,
     id: 0,
     title: "«Привокзалка»: место встречи изменить нельзя",
@@ -16,103 +19,89 @@ const TourObject: ITour = {
     images: [image, image2, image3, image4, image3],
     map: map,
     price: 12800,
-    duration: "2 часа",
+    duration: 2,
     routeLength: 2,
-    rating: "8,1",
+    rating: 4.8,
     ratingCount: 10,
-    format: "Групповой",
+    format: TourFormat.GROUP,
     groupCapacity: 10,
-    formatBehavior: "Пешком",
+    formatBehavior: TourFormatBehavior.WALK,
     description: DescriptionObject,
-    contributor: ContributorObject,
-    location: {
-        id: 0,
-        country: "Россия",
-        city: "Новосибирск",
-        tourCount: 100,
-        image: bg,
-    }
+    contributorId: 1,
+    location: LocationsArrayForFeature[0],
+    reviews: ReviewsArray
 }
 
 const TourObject2: ITour = {
+    contacts: ContactsObject,
+    accessibility: TourAccessibility.WITHOUT_CHILDREN,
     priceForPerson: 1000,
     id: 1,
     title: "«Привокзалка 2»: место встречи изменить нельзя",
     shortDescription: "Изучить необычные достопримечательности микрорайона за ж/д вокзалом Омска!",
     images: [image, image2, image3, image4, image3],
     map: map,
-    price: 12800,
-    duration: "2 часа",
+    price: 1200,
+    duration: 3,
     routeLength: 2,
-    rating: "8,1",
+    rating: 3.3,
     ratingCount: 10,
-    format: "Групповой",
+    format: TourFormat.INDIVIDUAL,
     groupCapacity: 10,
-    formatBehavior: "Пешком",
+    formatBehavior: TourFormatBehavior.BUS,
     description: DescriptionObject,
-    contributor: ContributorObject,
-    location: {
-        id: 0,
-        country: "Россия",
-        city: "Омск",
-        tourCount: 100,
-        image: bg,
-    }
+    contributorId: 1,
+    location: LocationsArrayForFeature[1],
+    reviews: ReviewsArray
 }
 
 const TourObject3: ITour = {
+    contacts: ContactsObject,
     priceForPerson: 4000,
     id: 2,
     title: "«Привокзалка 3»: место встречи изменить нельзя",
     shortDescription: "Изучить необычные достопримечательности микрорайона за ж/д вокзалом Омска!",
     images: [image, image2, image3, image4, image3],
     map: map,
-    price: 12800,
-    duration: "2 часа",
+    price: 17400,
+    duration: 4,
     routeLength: 2,
-    rating: "8,1",
+    rating: 1.5,
     ratingCount: 10,
-    format: "Групповой",
+    format: TourFormat.GROUP,
     groupCapacity: 10,
-    formatBehavior: "Пешком",
+    formatBehavior: TourFormatBehavior.BALLOON,
     description: DescriptionObject,
-    contributor: ContributorObject,
-    location: {
-        id: 0,
-        country: "Россия",
-        city: "Москва",
-        tourCount: 100,
-        image: bg,
-    }
+    contributorId: 1,
+    location: LocationsArrayForFeature[2],
+    reviews: ReviewsArray,
+    accessibility: TourAccessibility.WITH_CHILDREN
 }
 
 const TourObject4: ITour = {
+    contacts: ContactsObject,
+    accessibility: TourAccessibility.WITH_CHILDREN,
     priceForPerson: 2000,
     id: 3,
     title: "«Опять Привокзалка»: место встречи изменить нельзя",
     shortDescription: "Изучить необычные достопримечательности микрорайона за ж/д вокзалом Омска!",
     images: [image, image2, image3, image4, image3],
     map: map,
-    price: 99999,
-    duration: "2 часа",
+    price: 52000,
+    duration: 1,
     routeLength: 2,
-    rating: "8,1",
+    rating: 4.1,
     ratingCount: 10,
-    format: "Групповой",
+    format: TourFormat.GROUP,
     groupCapacity: 10,
-    formatBehavior: "Пешком",
+    formatBehavior: TourFormatBehavior.CAR,
     description: DescriptionObject,
-    contributor: ContributorObject,
-    location: {
-        id: 0,
-        country: "Россия",
-        city: "Омск",
-        tourCount: 100,
-        image: bg,
-    }
+    contributorId: 1,
+    location: LocationsArrayForFeature[0],
+    reviews: ReviewsArray
 }
 
-export const ToursArray = [
+export const ToursArray: ITour[] = [
     TourObject,
     TourObject2,
     TourObject3,

@@ -1,32 +1,57 @@
 import {FC, useState} from "react";
 import style from "./styles/style.module.css"
-import {TagsArray} from "@/shared/assets/tempData/TagsArray.ts";
-import {Tag} from "./Tag.tsx";
 import {Text} from "./Text.tsx";
-import {Buttons} from "./Buttons.tsx";
 import {cn} from "@/app/lib/utils.ts";
+import {Tag, useAddTags, useTags} from "@/entities";
+import {ITag, RouteNames} from "@/shared/types";
+import {Link} from "react-router-dom";
+import {Button} from "@/shared/ui";
+import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 
-    const [tagsId, setTagsId] = useState<number[]>([])
+    const {userId}  = useAuthContext()
+    const {data: tags} = useTags()
+    const {mutate: addTags} = useAddTags()
 
-    const disabled = tagsId.length === 0
+    const [selectedTags, setSelectedTags] = useState<ITag[]>([])
+
+    const disabled: boolean = selectedTags.length === 0
+
+    const clickHandler = () => addTags({userId: userId, tags: selectedTags})
 
     return (
         <div className={cn(style.container, style.paddings)}>
             <Text/>
             <div className={style.tags}>
-                {TagsArray.map(tag => (
+                {tags.map(tag => (
                     <Tag
-                        key={tag.value}
-                        tagsId={tagsId}
-                        setTagsId={setTagsId}
-                        value={tag.value}
-                        label={tag.label}
+                        key={tag.id}
+                        id={tag.id}
+                        name={tag.name}
+                        selectedTags={selectedTags}
+                        setSelectedTags={setSelectedTags}
                     />
                 ))}
             </div>
-            <Buttons disabled={disabled}/>
+            <div className={style.buttons}>
+                <Link to={`/${RouteNames.MAIN}`}>
+                    <Button variant={"secondary"} size={"md"}>
+                        Не интересно
+                    </Button>
+                </Link>
+                {
+                    !disabled ?
+                        <Link to={`/${RouteNames.MAIN}`}>
+                            <Button onClick={clickHandler} disabled={disabled} size={"md"}>
+                                Искать
+                            </Button>
+                        </Link> :
+                        <Button disabled={disabled} size={"md"}>
+                            Искать
+                        </Button>
+                }
+            </div>
         </div>
     );
 };

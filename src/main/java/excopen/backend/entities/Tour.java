@@ -25,6 +25,7 @@ public class Tour implements Serializable {
 
     private String title;
 
+
     @JoinColumn(name = "location_id")
     private Long locationId;
 
@@ -41,7 +42,7 @@ public class Tour implements Serializable {
     @JdbcTypeCode(SqlTypes.VECTOR)
     private int[] vectorRepresentation;
 
-    @Column(updatable = false)
+
     @JoinColumn(name = "creator_id")
     private Long creatorId;
 
@@ -60,7 +61,6 @@ public class Tour implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "transport_type")
     private TransportType transportType;
-
 
     @PrePersist
     protected void onCreate() {

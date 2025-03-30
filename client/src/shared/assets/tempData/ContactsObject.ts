@@ -1,7 +1,7 @@
 import {IContacts} from "@/shared/types/entities/IContacts.ts";
 
 export const ContactsObject: IContacts = {
-    id: 0,
-    vk: "/",
-    telegram: "/"
+    vk: "@excopenVK",
+    telegram: "@excopenTg",
+    phone: 88005553535
 }

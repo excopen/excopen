@@ -5,6 +5,7 @@ import excopen.backend.dto.FilterToursDTO;
 import excopen.backend.entities.QTour;
 import excopen.backend.entities.Review;
 import excopen.backend.entities.Tour;
+import excopen.backend.entities.User;
 import excopen.backend.iservices.ITourService;
 import excopen.backend.repositories.ReviewRepository;
 import excopen.backend.repositories.TourRepository;
@@ -31,6 +32,9 @@ public class TourServiceImpl implements ITourService {
     private final ReviewRepository reviewRepository;
     private final UserServiceImpl userService;
 
+    private final UserServiceImpl userService;
+    private final DescriptionServiceImpl descriptionService;
+
     @Autowired
     public TourServiceImpl(TourRepository tourRepository, ReviewRepository reviewRepository,
                            UserServiceImpl userService) {
@@ -55,9 +59,40 @@ public class TourServiceImpl implements ITourService {
 
 
     @Override
-    public Tour updateTour(Tour tour) {
-        return tourRepository.save(tour);
+    public Tour updateTour(Long tourId, Tour updatedTour, Description updatedDesc) {
+        Tour existingTour = getTourById(tourId);
+
+        if (updatedTour.getTitle() != null) {
+            existingTour.setTitle(updatedTour.getTitle());
+        }
+        if (updatedTour.getLocationId() != null) {
+            existingTour.setLocationId(updatedTour.getLocationId());
+        }
+        if (updatedTour.getPrice() != null) {
+            existingTour.setPrice(updatedTour.getPrice());
+        }
+        if (updatedTour.getDuration() != null) {
+            existingTour.setDuration(updatedTour.getDuration());
+        }
+        if (updatedTour.getRouteLength() != null) {
+            existingTour.setRouteLength(updatedTour.getRouteLength());
+        }
+        if (updatedTour.getMinAge() != null) {
+            existingTour.setMinAge(updatedTour.getMinAge());
+        }
+        if (updatedTour.getMaxCapacity() != null) {
+            existingTour.setMaxCapacity(updatedTour.getMaxCapacity());
+        }
+        if (updatedTour.getRating() != null) {
+            existingTour.setRating(updatedTour.getRating());
+        }
+
+
+
+        return tourRepository.save(existingTour);
     }
+
+
 
     @Override
     public void deleteTour(Long tourId) {
@@ -162,6 +197,7 @@ public class TourServiceImpl implements ITourService {
         tour.setRating(newRating);
         tour.setReviewCount(reviewCount);
         tourRepository.save(tour);
+
     }
 
     private String convertArrayToVectorString(int[] array) {

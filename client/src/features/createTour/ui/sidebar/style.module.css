@@ -1,0 +1,7 @@
+.container {
+    @apply flex flex-col gap-4 w-full md:w-96 py-8 px-4 rounded-2xl bg-grayscale-0 h-fit
+}
+
+.heading {
+    @apply font-medium text-xl text-grayscale-500
+}

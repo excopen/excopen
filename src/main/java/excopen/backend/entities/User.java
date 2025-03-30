@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import static excopen.backend.constants.Constants.tagCount;
+
 
 @Data
 @NoArgsConstructor
@@ -39,12 +41,12 @@ public class User implements Serializable {
 
     @JdbcTypeCode(SqlTypes.VECTOR)
     private int[] secondVector;
-
     private String phoneNumber;
     private String description;
     private String city;
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     @PrePersist
     protected void onCreate() {

@@ -26,7 +26,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -118,7 +117,6 @@ public class TourController {
         return tourMapper.toResponseDTO(updatedTour, updatedDescription);
     }
 
-
     @RequiresOwnership(entityClass = Tour.class)
     @DeleteMapping("/{tourId}")
     public void deleteTour(@PathVariable Long tourId,
@@ -162,4 +160,20 @@ public class TourController {
         List<Tour> similarTours = tourService.getSimilarTours(tourId);
         return tourMapper.toResponseDTOList(similarTours, descriptionService);
     }
+
+    @GetMapping("/location/{locationId}")
+    public List<Tour> findToursByLocation(@PathVariable Long locationId) {
+        return tourService.findToursByLocation(locationId);
+    }
+
+    @GetMapping("/duration/{duration}")
+    public List<Tour> findToursByDuration(@PathVariable String duration) {
+        return tourService.findToursByDuration(duration);
+    }
+
+    @GetMapping("/recommendations/{userId}")
+    public List<TourDTO> getRecommendedTours(@PathVariable Long userId) {
+        return tourService.getRecommendedTours(userId);
+    }
+
 }

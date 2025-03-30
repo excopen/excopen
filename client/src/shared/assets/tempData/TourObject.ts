@@ -4,9 +4,10 @@ import image2 from "./assets/img2.png";
 import image3 from "./assets/img3.png";
 import image4 from "./assets/img4.png";
 import map from "./assets/map.png";
-import {ContributorObject} from "@/shared/assets/tempData/ContributorObject.ts";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
+import {TourAccessibility, TourFormat, TourFormatBehavior} from "@/shared/types/utills";
+import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
 
 export const TourObject: ITour = {
     id: 0,
@@ -16,14 +17,17 @@ export const TourObject: ITour = {
     map: map,
     price: 12800,
     priceForPerson: 4000,
-    format: "Групповой",
-    formatBehavior: "Пешком",
+    format: TourFormat.GROUP,
+    formatBehavior: TourFormatBehavior.WALK,
+    accessibility: TourAccessibility.WITH_CHILDREN,
     groupCapacity: 10,
-    contributor: ContributorObject,
-    contact: ContactsObject,
-    duration: "2 часа",
+    contributorId: 1,
+    contacts: ContactsObject,
+    duration: 2,
     routeLength: 2,
-    rating: "8,1",
+    rating: 5.0,
     ratingCount: 10,
-    description: DescriptionObject
+    description: DescriptionObject,
+    location: LocationsArrayForFeature[0],
+    reviews: []
 }

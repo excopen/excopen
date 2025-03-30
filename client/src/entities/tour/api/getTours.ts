@@ -1,18 +1,20 @@
-import {useQuery} from "@tanstack/react-query";
-import {ApiException, getEntities} from "@/shared/lib";
-import {EndpointsType, ITour} from "@/shared/types";
+import {EndpointsType, ITour, SearchParamsType, SortValues} from "@/shared/types";
+import {AxiosResponse} from "axios";
+import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 
-export const useGetTours = () => {
-
-    const {data, isLoading, error, isError} = useQuery<ITour[], ApiException<ITour>>({
-        queryKey: ['tours'],
-        queryFn: () => getEntities<ITour>(EndpointsType.TOURS),
-        staleTime: 60000
-    })
-
-    if (isLoading) return {isLoading: true, data: [], error: null}
-    if (isError) return {isLoading: false, data: [], error: error}
-
-    return {data, isLoading, error: null}
-
+export const getTours = async (sort: SortValues, searchParams: SearchParamsType): Promise<ITour[]> => {
+    try {
+        const response: AxiosResponse<ITour[]> = await apiClient.get<ITour[]>(EndpointsType.TOURS, {
+            params: {
+                sort: sort,
+                searchParams: searchParams
+            }
+        })
+        return response.data
+    } catch (e) {
+        if (isAxiosError(e)) {
+            throw new ApiException<ITour>(e.message, e.response?.status, e.response?.data as ITour[] | undefined)
+        }
+        throw e
+    }
 }

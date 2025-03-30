@@ -83,6 +83,7 @@ public class ReviewController {
     @DeleteMapping("/{reviewId}")
     public void deleteReview(@PathVariable Long reviewId,
                              @AuthenticationPrincipal OAuth2User principal) {
+
         reviewService.deleteReview(reviewId);
     }
 

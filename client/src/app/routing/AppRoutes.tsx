@@ -1,4 +1,4 @@
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import {RouteNames, UserRole} from "@/shared/types";
 import {RequireAuth} from "./RequireAuth.tsx";
 import {
@@ -7,9 +7,9 @@ import {
     Layout,
     LocationsPage,
     OnBoardingPage,
-    ProfilePage,
+    ProfilePage, SettingsPage,
     TourPage,
-    ToursPage
+    ToursPage, WipPage
 } from "@/pages";
 import {FC} from "react";
 
@@ -28,18 +28,28 @@ export const AppRoutes: FC = () => {
                 <Route path={RouteNames.MAIN} element={<HomePage/>}/>
                 <Route path={RouteNames.LOCATIONS} element={<LocationsPage/>}/>
                 <Route path={`${RouteNames.TOURS}/:location`} element={<ToursPage/>}/>
-                <Route path={`${RouteNames.TOUR}/:title`} element={<TourPage/>}/>
-                <Route path={`${RouteNames.CONTRIBUTOR}/:name`} element={<ContributorInfoPage/>}/>
+                <Route path={`${RouteNames.TOUR}/:id/:title`} element={<TourPage/>}/>
+                <Route path={`${RouteNames.CONTRIBUTOR}/:id/:name`} element={<ContributorInfoPage/>}/>
                 <Route path={RouteNames.PROFILE} element={<ProfilePage/>}/>
+                <Route path={RouteNames.WIP} element={<WipPage/>}/>
                 <Route path={RouteNames.FAVOURITES} element={<FavouritesPage/>}/>
+                <Route
+                    path={RouteNames.SETTINGS}
+                    element={
+                        <RequireAuth>
+                            <SettingsPage/>
+                        </RequireAuth>
+                    }
+                />
                 <Route
                     path={RouteNames.CREATE}
                     element={
-                        <RequireAuth role={UserRole.contributor}>
+                        <RequireAuth>
                             <CreateTourPage/>
                         </RequireAuth>
                     }
                 />
+                <Route path="*" element={<Navigate to={RouteNames.MAIN} replace />} />
             </Route>
         </Routes>
     );
