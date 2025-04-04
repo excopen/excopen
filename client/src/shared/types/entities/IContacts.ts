@@ -1,5 +1,5 @@
 export interface IContacts {
     vk?: string
     telegram?: string
-    phone: number
+    phone: string
 }

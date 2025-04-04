@@ -1,13 +1,14 @@
-import {FC, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import style from "./style.module.css"
 import edit from "@/shared/assets/icons/edit.svg"
 import {formatName} from "@/shared/utills";
 import {useUpdateUser, useUser} from "@/entities/user/model";
 import {useAuthContext} from "@/features";
+import defaultAvatar from "@/shared/assets/icons/avatar.svg"
 
 type EditProfileProps = {
     name: string
-    avatar: string
+    avatar: File
     setIsEdit: (value: boolean) => void
 }
 
@@ -17,22 +18,34 @@ export const Index: FC<EditProfileProps> = ({name, avatar, setIsEdit}) => {
     const {data: user} = useUser(userId)
     const {mutate} = useUpdateUser()
 
-    const [selectedAvatar, setSelectedAvatar] = useState(avatar)
+    const [selectedAvatar, setSelectedAvatar] = useState<File>(avatar)
+
+    const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+
+    useEffect(() => {
+        if (selectedAvatar instanceof File) {
+            const url = URL.createObjectURL(selectedAvatar);
+            setAvatarUrl(url);
+
+            return () => URL.revokeObjectURL(url); // Чистим URL при размонтировании
+        } else {
+            setAvatarUrl(defaultAvatar); // Если аватар не выбран, используем заглушку
+        }
+    }, [selectedAvatar])
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
         if (file) {
-            const updatedAvatar = URL.createObjectURL(file)
-            setSelectedAvatar(updatedAvatar)
-            mutate({...user, avatar: updatedAvatar})
+            setSelectedAvatar(file)
+            mutate({...user, avatar: file})
         }
     }
 
     return (
         <div className={style.container}>
             <div className={"flex flex-row gap-4 items-center"}>
-                <label className="cursor-pointer rounded-full transition hover:opacity-80">
-                    <img alt="avatar" width={40} height={40} src={selectedAvatar}/>
+                <label className="cursor-pointer rounded-full bg-cover bg-center transition hover:opacity-80">
+                    <img alt="avatar" width={40} height={40} src={avatarUrl || defaultAvatar}/>
                     <input
                         type="file"
                         accept="image/*"

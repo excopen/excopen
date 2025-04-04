@@ -1,14 +1,14 @@
-import {EndpointsType, ITag} from "@/shared/types";
+import {EndpointsType} from "@/shared/types";
 import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 import {AxiosResponse} from "axios";
 
-export const getTagsByUser = async (userId: number): Promise<ITag[]> => {
+export const getTagsByUser = async (userId: number): Promise<string[]> => {
     try {
-        const response: AxiosResponse<ITag[]> = await apiClient.get<ITag[]>(`/${EndpointsType.TAGS}/${userId}`)
+        const response: AxiosResponse<string[]> = await apiClient.get<string[]>(`/${EndpointsType.TAGS}/${userId}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {
-            throw new ApiException<ITag[]>(e.message, e.response?.status, e.response?.data as ITag[] | undefined)
+            throw new ApiException<string[]>(e.message, e.response?.status, e.response?.data as string[] | undefined)
         }
         throw e
     }

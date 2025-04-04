@@ -10,9 +10,10 @@ import {
 } from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
-import {ToFavourite} from "@/entities";
+import {ToFavourite} from "@/features";
 import {useWindowSize} from "usehooks-ts";
 import {useAddViewFactory} from "@/features";
+import {truncateText} from "@/shared/utills";
 
 type TourCardProps = {
     tour: ITour
@@ -32,7 +33,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
     return (
         <div className={style.container}>
 
-            <ImagesCarousel variant={CarouselVariant.SMALL} images={tour.images}/>
+            <ImagesCarousel variant={CarouselVariant.SMALL} images={tour.images as string[]}/>
 
             <div className={style.content}>
 
@@ -44,7 +45,9 @@ export const Index: FC<TourCardProps> = ({tour}) => {
                 <div className={style.desc}>
                     <div className={style.descContent}>
                         <p className={style.title}>{tour.title}</p>
-                        <p className={style.text}>{tour.shortDescription}</p>
+                        <p className={style.text}>
+                            {truncateText(tour.description.info)}
+                        </p>
                     </div>
                     {width >= 768 && <GroupPrice price={tour.price}/>}
                 </div>

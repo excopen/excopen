@@ -1,21 +1,18 @@
 import {FC} from "react";
-import {ImagesCarousel} from "@/shared/ui";
-import {Card, CardContent} from "@/shared/ui/card";
+import {ImagesCarousel, MapView} from "@/shared/ui";
+import {Card} from "@/shared/ui/card";
+import {YandexMapCoordinates} from "@/shared/types";
 
 type CarouselProps = {
     images: string[]
-    map: string | undefined
+    coordinates: YandexMapCoordinates
 }
 
-export const Index: FC<CarouselProps> = ({images, map}) => {
+export const Index: FC<CarouselProps> = ({images, coordinates}) => {
     return (
-        <div className={"flex flex-col gap-4 lg:flex-row my-8"}>
-            <Card>
-                <CardContent
-                    className={"w-full lg:w-[180px] wide:w-[260px] bg-cover mr-1 rounded-2xl"}
-                    style={{backgroundImage: `url(${map})`}}
-                >
-                </CardContent>
+        <div className={"flex flex-col max-lg:items-center gap-4 lg:flex-row my-8"}>
+            <Card className={"h-full"}>
+                <MapView value={coordinates}/>
             </Card>
             <ImagesCarousel images={images}/>
         </div>

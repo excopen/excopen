@@ -2,8 +2,8 @@ import {FC} from "react";
 import {ITour, RouteNames} from "@/shared/types";
 import {BookingButton, GroupPrice, Rating, TourParams} from "@/shared/ui";
 import style from "./style.module.css"
-import {ToFavourite} from "@/entities";
 import {useWindowSize} from "usehooks-ts";
+import {ToFavourite} from "@/features";
 
 type HeaderProps = {
     tour: ITour
