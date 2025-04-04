@@ -1,4 +1,4 @@
-export type YandexMapPoint = {
+export type YandexMapCoordinates = {
     point: {
         latitude: number,
         longitude: number

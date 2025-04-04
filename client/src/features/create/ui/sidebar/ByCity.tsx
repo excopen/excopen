@@ -2,11 +2,11 @@ import {FC} from "react";
 import {Switch} from "@/shared/ui";
 import {observer} from "mobx-react-lite";
 import {useSwitch} from "@/shared/hooks";
-import {createTourStore} from "@/features/createTour/store";
+import {createTourStore as store} from "@/features/create/model";
 
 export const ByCity: FC = observer(() => {
 
-    const {state, update} = useSwitch(createTourStore)
+    const {state, update} = useSwitch(store.location)
 
     return (
         <div className={"w-full flex items-start"}>

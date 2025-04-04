@@ -26,7 +26,7 @@ export interface CarouselButtonProps
   asChild?: boolean
 }
 
-const CarouselButton = React.forwardRef<HTMLButtonElement, CarouselButtonProps>(
+export const CarouselButton = React.forwardRef<HTMLButtonElement, CarouselButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
@@ -40,5 +40,3 @@ const CarouselButton = React.forwardRef<HTMLButtonElement, CarouselButtonProps>(
 )
 
 CarouselButton.displayName = "CarouselButton"
-
-export { CarouselButton }

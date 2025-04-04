@@ -1,16 +1,14 @@
 import {Select, SelectContent, SelectItem, SelectTourFormatTrigger} from "@/shared/ui";
 import {tourFormatValues as values} from "@/shared/config";
-import {useSelect} from "@/shared/hooks";
-import {createTourStore} from "@/features/createTour/store";
+import {useSubmitted} from "@/shared/hooks";
+import {createTourStore as store} from "@/features/create/model";
 import {observer} from "mobx-react-lite";
+import {useSelect} from "@/features/create/hooks";
 
 export const Format = observer(() => {
 
-    const {
-        isSubmitted,
-        state,
-        focus, setValue
-    } = useSelect(createTourStore, "format", values)
+    const {state, focus, setValue} = useSelect(store.selectOptions, "format", values)
+    const {isSubmitted} = useSubmitted(store)
 
     return (
         <Select value={state.value} onValueChange={setValue}>

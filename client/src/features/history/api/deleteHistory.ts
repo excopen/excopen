@@ -1,9 +1,10 @@
 import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
-import {EndpointsType, ITour} from "@/shared/types";
+import {ITour} from "@/shared/types";
+import {HistoryEndpoint} from "@/features/history/types";
 
-export const deleteFromFav = async (tourId: number): Promise<void> => {
+export const deleteHistory = async (tourId: number, endpoint: HistoryEndpoint): Promise<void> => {
     try {
-        await apiClient.delete(EndpointsType.FAVOURITES, { params: {tourId} })
+        await apiClient.delete(endpoint, { params: {tourId} })
     } catch (e) {
         if (isAxiosError(e)) {
             throw new ApiException<ITour>(e.message, e.response?.status, e.response?.data as ITour | undefined)

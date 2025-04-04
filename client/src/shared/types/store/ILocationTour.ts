@@ -1,4 +1,6 @@
-export interface ILocationState {
-    get location(): string
-    set location(value: string)
+import {ILocation} from "@/shared/types";
+
+export interface ILocationTour {
+    get location(): ILocation
+    set location(value: ILocation)
 }

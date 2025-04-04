@@ -4,7 +4,7 @@ import {Info} from "lucide-react";
 import {formatPhone} from "@/shared/utills";
 
 type ContactButtonProps = {
-    phone: number
+    phone: string
 }
 
 export const ContactButton: FC<ContactButtonProps> = ({phone}) => {

@@ -1,16 +1,25 @@
 import {FC} from "react";
 import {Slider} from "@/shared/ui";
-import {useSlider} from "@/shared/hooks";
-import {createTourStore} from "@/features/createTour/store";
+import {useSubmitted} from "@/shared/hooks";
+import {createTourStore as store} from "@/features/create/model";
 import {formatRouteLength} from "@/shared/utills";
+import {cn} from "@/app/lib";
+import {observer} from "mobx-react-lite";
+import {useRouteLength} from "@/features/create/hooks";
 
-export const RouteLength: FC = () => {
+export const RouteLength: FC = observer(() => {
 
-    const {state, update} = useSlider(createTourStore, "routeLength")
+    const {state, isError, update} = useRouteLength(store.location)
+    const {isSubmitted} = useSubmitted(store)
 
     return (
         <div className={"flex flex-col gap-2 py-2"}>
-            <div className={"flex flex-row gap-1 text-sm text-grayscale-500"}>
+            <div
+                className={cn(
+                    "flex flex-row gap-1 text-sm",
+                    isError && isSubmitted ? "text-secondary-red" : "text-grayscale-500"
+                )}
+            >
                 <span>Длина маршрута</span>
                 <span className={"font-medium"}>{formatRouteLength(state)}</span>
             </div>
@@ -23,4 +32,4 @@ export const RouteLength: FC = () => {
             />
         </div>
     );
-};
+})

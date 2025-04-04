@@ -1,19 +1,24 @@
 import {FC} from "react";
-import { Calendar, Popover, PopoverContent, PopoverTrigger } from "@/shared/ui";
-import { CalendarButton } from "./CalendarButton.tsx";
+import {Calendar, CalendarButton, Popover, PopoverContent, PopoverTrigger} from "@/shared/ui";
 import {observer} from "mobx-react-lite";
-import {useDatePickerState} from "@/features/search/hooks";
+import {useDate, useSubmitted} from "@/shared/hooks";
+import {searchTourStore as store} from "@/features";
 
-export const Index: FC = observer(() => {
+export const DatePicker: FC = observer(() => {
 
-    const {isSearch, state, setIsOpen, select, click, clear} = useDatePickerState()
+    const {
+        state,
+        setIsOpen, select, click, clear
+    } = useDate(store.searchParams)
+
+    const {isSubmitted} = useSubmitted(store)
 
     return (
         <Popover open={state.isOpen} onOpenChange={setIsOpen}>
             <PopoverTrigger role={"form-datePicker"} asChild>
                 <CalendarButton
+                    isSubmitted={isSubmitted}
                     state={state}
-                    isSearch={isSearch}
                     onClick={click}
                     onClear={clear}
                 />

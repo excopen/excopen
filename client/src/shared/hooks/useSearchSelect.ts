@@ -1,12 +1,9 @@
-import {
-    IAccessibility,
-    ISubmitted
-} from "@/shared/types";
 import {useState} from "react";
-import {accessibilityValues} from "@/shared/config";
+import {IAccessibility, ISort, SelectValuesType} from "@/shared/types";
+
+interface IStore extends IAccessibility, ISort {}
 
 type ReturnType = {
-    isSubmitted: boolean
     state: {
         value: string
         isTouched: boolean
@@ -15,16 +12,15 @@ type ReturnType = {
     focus: () => void
 }
 
-export const useAccessibility = (store: IAccessibility & ISubmitted): ReturnType => {
+export const useSearchSelect = (store: IStore, key: keyof IStore, values: SelectValuesType[]): ReturnType => {
 
     const [isTouched, setIsTouched] = useState<boolean>(false)
-    const value: string = accessibilityValues.find(opt => opt.value === store.accessibility)?.label || ""
+    const value: string = values.find(opt => opt.value === store[key])?.label || ""
 
-    const setValue = (value: string) => store.accessibility = value
+    const setValue = (value: string) => store[key] = value
     const focus = () => setIsTouched(true)
 
     return {
-        isSubmitted: store.isSubmitted,
         state: { value, isTouched },
         focus, setValue
     }

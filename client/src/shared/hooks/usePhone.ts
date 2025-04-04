@@ -1,14 +1,28 @@
 import * as React from "react";
 import {useState} from "react";
-
-import {IContact, ISubmitted, SocialState} from "@/shared/types";
-import {SocialStateInput} from "@/shared/types/ui/SocialStateInput.ts";
-import {phoneMask} from "@/shared/config";
+import {IContact} from "@/shared/types";
 import {validatePhoneLen} from "@/shared/validate";
+import {phoneMask} from "@/shared/utills";
 
-export const usePhoneState = (store: IContact & ISubmitted): SocialStateInput => {
+type StateType = {
+    isOpen: boolean,
+    isTouched: boolean,
+    isCorrected: boolean
+}
 
-    const [state, setState] = useState<SocialState>({
+type ReturnType = {
+    value: string
+    state: StateType
+    click: (e: React.ChangeEvent<HTMLInputElement>) => void
+    focus: () => void
+    blur: () => void
+    clear: () => void
+    close: () => void
+}
+
+export const usePhone = (store: IContact): ReturnType => {
+
+    const [state, setState] = useState<StateType>({
         isOpen: false,
         isTouched: false,
         isCorrected: true
@@ -23,7 +37,7 @@ export const usePhoneState = (store: IContact & ISubmitted): SocialStateInput =>
         })
     }
 
-    const clickInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const click = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value
         updateField(phoneMask(inputValue))
     }
@@ -49,14 +63,13 @@ export const usePhoneState = (store: IContact & ISubmitted): SocialStateInput =>
         ...prev,
         isOpen: false,
         isTouched: prev.isTouched && store.phone === "",
-        isCorrected: !validatePhoneLen(store.phone)
+        isCorrected: prev.isTouched ? !validatePhoneLen(store.phone): true
     }))
 
     return {
-        isSubmitted: store.isSubmitted,
         value: store.phone,
         state,
-        clickInput, focus, blur, clear, close
+        click, focus, blur, clear, close
     }
 
 }

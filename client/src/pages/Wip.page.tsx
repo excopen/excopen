@@ -11,7 +11,7 @@ export const WipPage: FC = () => {
             <h1 className={"text-2xl text-grayscale-500 font-semibold"}>
                 Страница в разработке
             </h1>
-            <p className={"text-xl text-grayscale-400 w-1/3 text-center"}>
+            <p className={"text-xl text-grayscale-400 lg:w-1/3 text-center"}>
                 На данный момент страница недоступна, вернитесь на Главную
             </p>
             <Link to={`/${RouteNames.MAIN}`}>

@@ -1,7 +1,7 @@
-import {RangeType} from "@/shared/types";
+import {ILocation, RangeType} from "@/shared/types";
 
 export type SearchParamsType = {
-    location: string
+    location: ILocation
     date: RangeType
     accessibility: string
     byCity: boolean

@@ -1,6 +1,6 @@
 import {ILocation} from "@/shared/types";
 
-export const searchByLocation = (location: string, array: ILocation[]): string[] => {
+export const searchLocation = (location: string, array: ILocation[]): string[] => {
     return location.length === 0
         ? []
         : array

@@ -1,31 +1,31 @@
 import {FC} from "react";
 import {Button} from "@/shared/ui";
-import {ITag} from "@/shared/types";
 
 type TagProps = {
-    id: number
-    name: string
-    selectedTags: ITag[]
-    setSelectedTags: (value: ITag[]) => void
+    value: string[]
+    tag: string
+    add: (value: string) =>  void
+    remove: (value: string) => void
+    variant: "outline" | "secondary"
 }
 
-export const Index: FC<TagProps> = ({id, name, selectedTags, setSelectedTags}) => {
+export const Index: FC<TagProps> = ({value, tag, add, remove, variant = "secondary"}) => {
 
-    const isSelected: boolean = selectedTags.some(tag => tag.id === id)
+    const isSelected = value.includes(tag)
 
     const clickHandler = () => {
-        if (!isSelected) setSelectedTags([...selectedTags, {id, name}])
-        else setSelectedTags(selectedTags.filter(tag => tag.id !== id))
+        if (!isSelected) add(tag)
+        else remove(tag)
     }
 
     return (
         <Button
             onClick={clickHandler}
-            className={isSelected ? "bg-primary-0" : "bg-grayscale-300"}
-            variant={"secondary"}
-            size={"md"}
+            className={isSelected ? "bg-primary-0 border-0" : ""}
+            variant={variant}
+            size={variant === "secondary" ? "md": "tag"}
         >
-            {name}
+            {tag}
         </Button>
     );
-};
+}

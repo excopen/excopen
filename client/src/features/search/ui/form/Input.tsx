@@ -11,18 +11,20 @@ import {
 } from "@/shared/ui";
 import {useLocations} from "@/entities";
 import {observer} from "mobx-react-lite";
-import {useInputState} from "@/features/search/hooks";
+import {useLocation, useSubmitted} from "@/shared/hooks";
+import {searchTourStore as store} from "@/features";
 
-export const Index: FC = observer(() => {
+export const Input: FC = observer(() => {
 
     const {data: locations} = useLocations()
 
     const {
-        isSearch,
         state,
         value,
-        clickInput, selectCity, focus, blur, clear, close
-    } = useInputState()
+        click, select, focus, blur, clear, close
+    } = useLocation(store.searchParams)
+
+    const {isSubmitted} = useSubmitted(store)
 
     const commandRef = useRef<HTMLDivElement>(null)
     useOnClickOutside(commandRef,close)
@@ -30,12 +32,12 @@ export const Index: FC = observer(() => {
     return (
         <Command role={"form-command"} ref={commandRef}>
             <CommandInput
-                isSubmitted={isSearch}
+                isSubmitted={isSubmitted}
                 field={state}
                 value={value}
                 label={"Где искать"}
                 onClear={clear}
-                onChangeCapture={clickInput}
+                onChangeCapture={click}
                 onFocus={focus}
                 onBlur={blur}
                 data-is-corrected={state.isCorrected}
@@ -47,7 +49,7 @@ export const Index: FC = observer(() => {
                         {locations.map((location) => (
                             <CommandLocation
                                 key={location.city}
-                                onClick={() => selectCity(location.city)}
+                                onClick={() => select(location.city)}
                                 location={location}
                             />
                         ))}

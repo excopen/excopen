@@ -14,9 +14,9 @@ const ButtonVariants = cva(
     variants: {
       variant: {
           default: "bg-primary-0 text-grayscale-500 hover:bg-primary-100",
-          outline: "border border-grayscale-400 bg-transparent text-grayscale-400 hover:border-grayscale-500 hover:text-grayscale-500",
+          outline: "border border-grayscale-300 bg-transparent text-grayscale-400 hover:border-grayscale-500 hover:text-grayscale-500",
           secondary: "bg-grayscale-300 text-grayscale-500 hover:opacity-90 flex justify-between",
-          profile: "bg-grayscale-0 text-grayscale-500 hover:bg-grayscale-100 duration-300 flex justify-between"
+          profile: "bg-grayscale-0 text-grayscale-500 hover:bg-grayscale-100 duration-300 flex justify-between",
       },
       size: {
           default: "h-12 px-10 rounded-xl",
@@ -26,6 +26,7 @@ const ButtonVariants = cva(
           normal: "h-12 px-4",
           md: "h-12 px-8 rounded-xl",
           sm: "h-8 px-2",
+          tag: "p-2 rounded-xl",
           smIcon: "h-10 w-10",
           contactIcon: "h-12 w-12 rounded-xl",
           lgIcon: "h-14 w-14 rounded-xl",

@@ -1,16 +1,17 @@
 import {Select, SelectAccessibilityTrigger, SelectContent, SelectItem} from "@/shared/ui";
 import {observer} from "mobx-react-lite";
 import {accessibilityValues as values} from "@/shared/config";
-import {searchTourStore} from "@/entities";
-import {useAccessibility} from "@/shared/hooks";
+import {useSearchSelect, useSubmitted} from "@/shared/hooks";
+import {searchTourStore as store} from "@/features";
 
 export const SelectAccessibility = observer(() => {
 
     const {
-        isSubmitted,
         state,
         focus, setValue
-    } = useAccessibility(searchTourStore)
+    } = useSearchSelect(store.searchParams, "accessibility", values)
+
+    const {isSubmitted} = useSubmitted(store)
 
     return (
         <Select value={state.value} onValueChange={setValue}>

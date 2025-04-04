@@ -1,162 +1,71 @@
-import {makeAutoObservable} from "mobx";
-import {IContacts, RangeType} from "@/shared/types";
-import {TourStoreType} from "./types.ts";
+import {BaseStore} from "@/shared/lib";
+import {ITour, TourAccessibility, TourFormat, TourFormatBehavior} from "@/shared/types";
 
-class CreateTourStore implements TourStoreType {
+import {ContactsStore} from "./ContactsStore.ts";
+import {DescriptionStore} from "./DescriptionStore.ts";
+import {PriceStore} from "./PriceStore.ts";
+import {CoordinatesStore} from "./CoordinatesStore.ts";
+import {TagsStore} from "./TagsStore.ts";
+import {ImagesStore} from "./ImagesStore.ts";
+import {LocationStore} from "./LocationStore.ts";
+import {TimeStore} from "./TimeStore.ts";
+import {ParamsStore} from "./ParamsStore.ts";
+import {SelectOptionsStore} from "@/features/create/model/SelectOptionsStore.ts";
 
-    private _isSubmitted: boolean = false
+class CreateTourStore extends BaseStore {
 
-    private _location: string = ""
-    private _date: RangeType = { from: undefined, to: undefined }
-    private _duration: number = 0
-    private _accessibility: string = ""
-    private _byCity: boolean = false
-    private _format: string = ""
-    private _formatBehavior: string = ""
-    private _price: number = 0
-    private _priceForPerson: number = 0
-    private _groupCapacity: number = 0
-    private _routeLength: number = 0
-    private _contacts: IContacts = {
-        vk: "",
-        telegram: "",
-        phone: ""
-    }
-
-    get contacts(): IContacts {
-        return this._contacts;
-    }
-
-    set contacts(value: IContacts) {
-        this._contacts = value;
-    }
-
-    private updateContactParams(contacts: Partial<IContacts>) {
-        this._contacts = { ...this._contacts, ...contacts }
-    }
-
-    get vk(): string {
-        return this._contacts.vk || ""
-    }
-
-    set vk(vk: string) {
-        this.updateContactParams({vk})
-    }
-
-    get telegram(): string {
-        return this._contacts.telegram || ""
-    }
-
-    set telegram(telegram: string) {
-        this.updateContactParams({telegram})
-    }
-
-    get phone(): string {
-        return this._contacts.phone
-    }
-
-    set phone(phone: string) {
-        this.updateContactParams({phone})
-    }
+    contacts = new ContactsStore()
+    description = new DescriptionStore()
+    price = new PriceStore()
+    coordinates = new CoordinatesStore()
+    tags = new TagsStore()
+    images = new ImagesStore()
+    location = new LocationStore()
+    time = new TimeStore()
+    params = new ParamsStore()
+    selectOptions = new SelectOptionsStore()
 
     constructor() {
-        makeAutoObservable(this)
+        super();
     }
 
-    get isSubmitted(): boolean {
-        return this._isSubmitted;
+    get tour(): ITour {
+        return {
+            id: Date.now(),
+            title: this.params.title,
+            description: this.description,
+            images: this.images.images,
+            coordinates: this.coordinates.coordinates,
+            tags: this.tags.tags,
+            location: this.location.location,
+            routeLength: this.location.routeLength,
+            byCity: this.location.byCity,
+            price: this.price.price,
+            priceForPerson: this.price.priceForPerson,
+            groupCapacity: this.params.groupCapacity,
+            formatBehavior: this.selectOptions.formatBehavior as TourFormatBehavior,
+            format: this.selectOptions.format as TourFormat,
+            accessibility: this.selectOptions.accessibility as TourAccessibility,
+            contacts: this.contacts,
+            date: this.time.date,
+            duration: this.time.duration,
+            contributorId: this.params.contributorId,
+            rating: 0,
+            ratingCount: 0,
+        }
     }
 
-    set isSubmitted(value: boolean) {
-        this._isSubmitted = value;
-    }
-
-    get location(): string {
-        return this._location;
-    }
-
-    set location(value: string) {
-        this._location = value;
-    }
-
-    get date(): RangeType {
-        return this._date;
-    }
-
-    set date(value: RangeType) {
-        this._date = value;
-    }
-
-    get accessibility(): string {
-        return this._accessibility;
-    }
-
-    set accessibility(value: string) {
-        this._accessibility = value;
-    }
-
-    get byCity(): boolean {
-        return this._byCity;
-    }
-
-    set byCity(value: boolean) {
-        this._byCity = value;
-    }
-
-    get format(): string {
-        return this._format;
-    }
-
-    set format(value: string) {
-        this._format = value;
-    }
-
-    get formatBehavior(): string {
-        return this._formatBehavior;
-    }
-
-    set formatBehavior(value: string) {
-        this._formatBehavior = value;
-    }
-
-    get price(): number {
-        return this._price;
-    }
-
-    set price(value: number) {
-        this._price = value;
-    }
-
-    get priceForPerson(): number {
-        return this._priceForPerson;
-    }
-
-    set priceForPerson(value: number) {
-        this._priceForPerson = value;
-    }
-
-    get duration(): number {
-        return this._duration;
-    }
-
-    set duration(value: number) {
-        this._duration = value;
-    }
-
-    get groupCapacity(): number {
-        return this._groupCapacity;
-    }
-
-    set groupCapacity(value: number) {
-        this._groupCapacity = value;
-    }
-
-    get routeLength(): number {
-        return this._routeLength;
-    }
-
-    set routeLength(value: number) {
-        this._routeLength = value;
+    get isDisabled(): boolean {
+        return [
+            this.params,
+            this.description,
+            this.time,
+            this.images,
+            this.tags,
+            this.price,
+            this.location,
+            this.coordinates,
+        ].every(store => store.isDisabled)
     }
 
 }

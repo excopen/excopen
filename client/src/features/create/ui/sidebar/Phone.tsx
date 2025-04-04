@@ -1,18 +1,20 @@
 import {FC, useRef} from "react";
 import {observer} from "mobx-react-lite";
-import {usePhone} from "@/shared/hooks";
-import {createTourStore} from "@/features/createTour/store";
+import {usePhone, useSubmitted} from "@/shared/hooks";
+import {createTourStore as store} from "@/features/create/model";
 import {useOnClickOutside} from "usehooks-ts";
 import {PhoneInput} from "@/shared/ui";
 
 export const Phone: FC = observer(() => {
 
     const {
-        isSubmitted,
         value,
         state,
         click, clear, close, focus, blur
-    } = usePhone(createTourStore)
+    } = usePhone(store.contacts)
+
+    const {isSubmitted} = useSubmitted(store)
+
 
     const inputRef = useRef<HTMLInputElement>(null)
     useOnClickOutside(inputRef,close)

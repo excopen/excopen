@@ -1,3 +1,6 @@
 import {EndpointsType} from "@/shared/types";
 
-export type Endpoint = EndpointsType.FAVOURITES | EndpointsType.VIEWED
+export enum HistoryEndpoint {
+    FAVOURITES = EndpointsType.FAVOURITES,
+    VIEWED = EndpointsType.VIEWED
+}

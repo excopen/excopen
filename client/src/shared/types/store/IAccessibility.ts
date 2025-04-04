@@ -1,4 +1,4 @@
-export interface IAccessibilityState {
+export interface IAccessibility {
     get accessibility(): string
     set accessibility(accessibility: string)
 }

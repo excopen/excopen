@@ -1,7 +1,19 @@
 import {useEffect, useState} from "react";
-import {DatePickerState, IDate, ISubmitted, RangeType} from "@/shared/types";
+import {IDate, RangeType} from "@/shared/types";
 
-export const useDateState = (store: IDate & ISubmitted): DatePickerState => {
+type ReturnType = {
+    state: {
+        range: RangeType
+        isOpen: boolean
+        isTouched: boolean
+    }
+    select: (selectedRange: RangeType | undefined) => void
+    setIsOpen: (isOpen: boolean) => void
+    click: () => void
+    clear: () => void
+}
+
+export const useDate = (store: IDate): ReturnType => {
 
     const [range, setRange] = useState<RangeType>(store.date)
 
@@ -10,7 +22,7 @@ export const useDateState = (store: IDate & ISubmitted): DatePickerState => {
 
     useEffect(() => {
         store.date = range
-    }, [range])
+    }, [range, store])
 
     const select = (selectedRange: RangeType | undefined) => {
         if (selectedRange) setRange(selectedRange)
@@ -25,7 +37,6 @@ export const useDateState = (store: IDate & ISubmitted): DatePickerState => {
     }
 
     return {
-        isSubmitted: store.isSubmitted,
         state: { isOpen, range, isTouched },
         setIsOpen, select, click, clear
     }

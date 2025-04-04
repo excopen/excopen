@@ -1,11 +1,7 @@
 import {SortValues} from "@/shared/types/features";
+import {SelectValuesType} from "@/shared/types";
 
-type SortTypesArrayType = {
-    value: string
-    label: string
-}
-
-export const sortTypesArray: SortTypesArrayType[] = [
+export const sortTypesArray: SelectValuesType[] = [
     {value: SortValues.FOR_POPULAR, label: "По популярности"},
     {value: SortValues.FOR_CHEAP, label: "Сначала дешевые"},
     {value: SortValues.FOR_EXPENSIVE, label: "Сначала дорогие"},

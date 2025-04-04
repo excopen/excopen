@@ -1,9 +1,10 @@
 import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
-import {EndpointsType, ITour} from "@/shared/types";
+import {ITour} from "@/shared/types";
+import {HistoryEndpoint} from "@/features";
 
-export const getFav = async (userId: number): Promise<ITour[]> => {
+export const getHistory = async (userId: number, endpoint: HistoryEndpoint): Promise<ITour[]> => {
     try {
-        const response = await apiClient.get<ITour[]>(EndpointsType.FAVOURITES, {
+        const response = await apiClient.get<ITour[]>(endpoint, {
             params: {userId}
         })
         return response.data

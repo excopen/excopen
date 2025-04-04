@@ -1,16 +1,17 @@
 import {FC} from "react";
-import {Orientation} from "@/shared/types";
 import {Switch} from "@/shared/ui";
-import {useSwitchState} from "@/features/search/hooks";
 import {observer} from "mobx-react-lite";
+import {useSwitch} from "@/shared/hooks";
+import {searchTourStore as store} from "@/features";
+import {Orientation} from "@/features/search/types";
 
 type SwitchProps = {
     orientation: Orientation
 }
 
-export const Switch: FC<SwitchProps> = observer(({orientation}) => {
+export const SwitchByCity: FC<SwitchProps> = observer(({orientation}) => {
 
-    const {state, update} = useSwitchState()
+    const {state, update} = useSwitch(store.searchParams)
 
     return (
         <div

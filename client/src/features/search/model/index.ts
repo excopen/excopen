@@ -1,3 +1,5 @@
-export {searchByLocation} from "./searchByLocation.ts"
-export {searchByCity} from "./searchByCity.ts"
-export {searchByRegion} from "./searchByRegion.ts"
+export {searchLocation} from "./searchLocation.ts"
+export {searchTourByCity} from "./searchTourByCity.ts"
+export {searchTourByRegion} from "./searchTourByRegion.ts"
+
+export {searchTourStore} from "./store.ts"

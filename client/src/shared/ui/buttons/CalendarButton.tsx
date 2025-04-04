@@ -5,7 +5,7 @@ import { cn } from "@/app/lib/utils.ts";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 import { Calendar, X } from "lucide-react";
-import {CalendarButtonState} from "src/features/searchTour/hooks";
+import {RangeType} from "@/shared/types";
 
 export const CalendarButtonVariants = cva(
     "flex items-center rounded-xl text-sm transition-colors ",
@@ -26,8 +26,12 @@ export interface ButtonProps
     extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "value">,
         VariantProps<typeof CalendarButtonVariants> {
     asChild?: boolean;
-    isSearch: boolean;
-    state: CalendarButtonState;
+    isSubmitted: boolean;
+    state: {
+        range: RangeType
+        isOpen: boolean
+        isTouched: boolean
+    };
     onClear: () => void;
 }
 
@@ -43,18 +47,18 @@ export const CalendarButton = React.forwardRef<
             asChild = false,
             onClear,
             state,
-            isSearch,
+            isSubmitted,
             ...props
         }, ref
     ) => {
 
         const isCorrect: boolean =
             !state.range.from && !state.range.to && state.isTouched && !state.isOpen ||
-            !state.range.from && !state.range.to && isSearch && !state.isOpen
+            !state.range.from && !state.range.to && isSubmitted && !state.isOpen
 
         const isBorderCorrect: boolean =
             !state.range.from && !state.range.to && state.isTouched ||
-            !state.range.from && !state.range.to && isSearch
+            !state.range.from && !state.range.to && isSubmitted
 
         const Comp = asChild ? Slot : "button";
 
@@ -81,7 +85,7 @@ export const CalendarButton = React.forwardRef<
         return (
             <Comp
                 className={cn(
-                    !state.range.from && !state.range.to && isSearch
+                    !state.range.from && !state.range.to && isSubmitted
                         ? "data-[state=open]:border-secondary-red"
                         : "data-[state=open]:border-grayscale-600",
                     CalendarButtonVariants({ variant, size, className }),

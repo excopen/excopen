@@ -1,18 +1,20 @@
 import {FC, useRef} from "react";
 import {PriceInput} from "@/shared/ui";
-import {usePrice} from "@/shared/hooks";
-import {createTourStore} from "@/features/createTour/store";
+import {useSubmitted} from "@/shared/hooks";
+import {createTourStore as store} from "@/features/create/model";
 import {useOnClickOutside} from "usehooks-ts";
 import {observer} from "mobx-react-lite";
+import {usePrice} from "@/features/create/hooks";
 
 export const Price: FC = observer(() => {
 
     const {
-        isSubmitted,
         value,
         state,
         clear, focus, blur, click, close
-    } = usePrice(createTourStore, "price")
+    } = usePrice(store.price, "price")
+
+    const {isSubmitted} = useSubmitted(store)
 
     const inputRef = useRef<HTMLInputElement>(null)
     useOnClickOutside(inputRef,close)

@@ -1,11 +1,13 @@
 import {FC} from "react";
 import style from "./style.module.css"
+import {useWindowSize} from "usehooks-ts";
+import {Orientation} from "@/features";
+import {SubmitButton} from "@/features/create/ui/buttons";
 
 import {Location} from "./Location.tsx";
 import {DatePicker} from "./DatePicker.tsx";
 import {Duration} from "./Duration.tsx";
 import {ByCity} from "./ByCity.tsx";
-import {SubmitButton} from "./SubmitButton.tsx";
 
 import {Accessibility} from "./Accessibility.tsx";
 import {Format} from "./Format.tsx";
@@ -21,6 +23,9 @@ import {GroupCapacity} from "./GroupCapacity.tsx";
 import {RouteLength} from "./RouteLength.tsx";
 
 export const Index: FC = () => {
+
+    const {width} = useWindowSize()
+
     return (
         <div className={style.container}>
             <div className={style.subContainer}>
@@ -52,7 +57,7 @@ export const Index: FC = () => {
                 <Telegram/>
                 <Phone/>
             </div>
-            <SubmitButton/>
+            {width >= 1024 && <SubmitButton orientation={Orientation.HORIZONTAL}/>}
         </div>
     );
 };

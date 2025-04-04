@@ -1,4 +1,4 @@
-export interface IContactState {
+export interface IContact {
     get vk(): string
     set vk(vk: string)
 

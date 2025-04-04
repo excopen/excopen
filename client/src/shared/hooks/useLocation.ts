@@ -1,35 +1,51 @@
 import * as React from "react";
 import {useState} from "react";
-
 import {useLocations} from "@/entities";
-import {ILocationTour, InputFieldState, InputState, ISubmitted} from "@/shared/types";
+import {ILocation, ILocationTour} from "@/shared/types";
 import {validateByCity} from "@/shared/validate";
 
-export const useLocationInputState = (store: ILocationTour & ISubmitted): InputState => {
+type StateType = {
+    isOpen: boolean
+    isTouched: boolean
+    isCorrected: boolean
+}
+
+type ReturnType = {
+    value: string
+    state: StateType
+    click: (e: React.ChangeEvent<HTMLInputElement>) => void
+    select: (city: string) => void
+    focus: () => void
+    blur: () => void
+    clear: () => void
+    close: () => void
+}
+
+export const useLocation = (store: ILocationTour): ReturnType => {
 
     const {data: locations} = useLocations()
 
-    const [state, setState] = useState<InputFieldState>({
+    const [state, setState] = useState<StateType>({
         isOpen: false,
         isTouched: false,
         isCorrected: true,
     })
 
     const updateField = (newValue: string) => {
-        store.location = newValue
         setState({
             isTouched: true,
             isOpen: true,
             isCorrected: validateByCity(newValue, locations),
         })
+        if (state.isCorrected) store.location = locations.find(i => i.city === newValue) as ILocation
     }
 
-    const clickInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const click = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value
         updateField(inputValue)
     }
 
-    const selectCity = (city: string) => {
+    const select = (city: string) => {
         updateField(city)
         setState((prev) => ({ ...prev, isOpen: false }))
     }
@@ -39,31 +55,25 @@ export const useLocationInputState = (store: ILocationTour & ISubmitted): InputS
     }
 
     const blur = () => {
-        if (!state.isOpen && store.location === "") {
+        if (!state.isOpen && store.location.city === "") {
             setState((prev) => ({ ...prev, isTouched: true }))
         }
     }
 
     const clear = () => {
-        store.location = ""
+        store.location.city = ""
     }
 
     const close = () => setState((prev) => ({
         ...prev,
         isOpen: false,
-        isTouched: prev.isTouched && store.location === "",
+        isTouched: prev.isTouched && store.location.city === "",
     }))
 
     return {
-        isSubmitted: store.isSubmitted,
-        value: store.location,
+        value: store.location.city,
         state,
-        clickInput,
-        selectCity,
-        focus,
-        blur,
-        clear,
-        close
+        click, select, focus, blur, clear, close
     }
 
 }

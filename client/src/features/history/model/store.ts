@@ -1,7 +1,7 @@
 import {ITour} from "@/shared/types";
 import {makeAutoObservable} from "mobx";
 
-class TourHistoryStore {
+class TourLocalHistoryStore {
 
     private _favourites: ITour[] = []
     private _viewed: ITour[] = []
@@ -53,4 +53,4 @@ class TourHistoryStore {
 
 }
 
-export const tourHistoryStore = new TourHistoryStore()
+export const tourLocalHistoryStore = new TourLocalHistoryStore()

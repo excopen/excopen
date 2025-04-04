@@ -1,9 +1,8 @@
 import {FC} from "react";
-import {Orientation} from "@/shared/types";
 import pages from "@/app/styles/pages.module.css";
 import {SidebarButton} from "@/shared/ui";
 import favourite from "@/shared/assets/icons/favourite-secondary.svg";
-import {Form} from "@/features";
+import {Form, Orientation} from "@/features";
 import {Tours} from "@/entities";
 
 export const ToursPage: FC = () => {

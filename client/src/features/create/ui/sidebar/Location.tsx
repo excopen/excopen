@@ -10,8 +10,8 @@ import {
 } from "@/shared/ui";
 import {useLocations} from "@/entities";
 import {useOnClickOutside} from "usehooks-ts";
-import {useLocation} from "@/shared/hooks";
-import {createTourStore} from "@/features/createTour/store";
+import {useLocation, useSubmitted} from "@/shared/hooks";
+import {createTourStore as store} from "@/features/create/model";
 import {observer} from "mobx-react-lite";
 
 export const Location: FC = observer(() => {
@@ -19,11 +19,12 @@ export const Location: FC = observer(() => {
     const {data: locations} = useLocations()
 
     const {
-        isSubmitted,
         state,
         value,
         click, select, focus, blur, clear, close
-    } = useLocation(createTourStore)
+    } = useLocation(store.location)
+
+    const {isSubmitted} = useSubmitted(store)
 
     const inputRef = useRef<HTMLDivElement>(null)
     useOnClickOutside(inputRef,close)
