@@ -2,12 +2,12 @@ import {makeAutoObservable} from "mobx";
 import {
     IAccessibility,
     IByCity,
-    IDate, ILocation,
+    ILocation,
     ILocationTour,
     ISort,
     RangeType,
     SearchParamsType,
-    SortValues
+    SortValues, IDate
 } from "@/shared/types";
 
 export class SearchParamsStore implements ILocationTour, IDate, IAccessibility, IByCity, ISort {

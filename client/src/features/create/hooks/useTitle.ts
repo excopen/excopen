@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ITitle} from "@/shared/types";
 
 type ReturnType = {
@@ -36,6 +36,10 @@ export const useTitle = (store: ITitle): ReturnType => {
     const blur = () => {
         if (store.title === "") setIsOpen(true)
     }
+
+    useEffect(() => {
+        console.log(store.title)
+    }, [store.title]);
 
     return {
         value: store.title,

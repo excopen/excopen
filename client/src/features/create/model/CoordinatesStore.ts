@@ -1,22 +1,27 @@
 import {ICoordinates, IIsDisabled, YandexMapCoordinates} from "@/shared/types";
-import {makeObservable} from "mobx";
+import {makeAutoObservable} from "mobx";
 
 export class CoordinatesStore implements ICoordinates, IIsDisabled {
 
-    private _coordinates: YandexMapCoordinates = {
-        point: {
-            latitude: 0,
-            longitude: 0
-        },
-        zoom: 0.5
+    private _coordinates: YandexMapCoordinates
+
+    constructor(initial?: Partial<YandexMapCoordinates>) {
+
+        this._coordinates = {
+            point: {
+                latitude: 0,
+                longitude: 0
+            },
+            zoom: 0.5,
+            ...initial
+        }
+
+        makeAutoObservable(this)
+
     }
 
     get isDisabled(): boolean {
         return this._coordinates.point.longitude > 0 && this._coordinates.point.latitude > 0
-    }
-
-    constructor() {
-        makeObservable(this)
     }
 
     get coordinates(): YandexMapCoordinates {

@@ -29,6 +29,7 @@ export const Title: FC = observer(() => {
                 Будет здорово, если удастся отразить в нём особенность предложения.
             </p>
             <TextInput
+                defaultValue={value}
                 isOpen={state.isOpen}
                 isSubmitted={isSubmitted}
                 value={value}

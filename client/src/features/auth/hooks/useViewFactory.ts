@@ -8,9 +8,11 @@ export const useViewFactory = () : ITour[] => {
     const {data} = useHistory(userId, HistoryEndpoint.VIEWED)
     const local = store.viewed
 
+    //isAuth ? data : local
+
     return useMemo(
-        () => isAuth ? data : local,
-        [local, data, isAuth]
+        () => local,
+        [local]
     )
 
 }

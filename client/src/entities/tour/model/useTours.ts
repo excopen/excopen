@@ -9,9 +9,9 @@ import {searchTourStore as store} from "@/features";
 
 export const useTours = () => {
     return useQuery<ITour[], ApiException<ITour>>({
-        queryKey: ["tours", store.searchParams, store.sort],
+        queryKey: ["tours", store.searchParams, store.searchParams.sort],
         queryFn: async (): Promise<ITour[]> => {
-            const tours = await getTours(store.sort, store.searchParams)
+            const tours = await getTours(store.searchParams.sort, store.searchParams)
             return tours.length > 0 ? tours : ToursArray
         },
         staleTime: 60_000,

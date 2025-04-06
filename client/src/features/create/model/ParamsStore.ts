@@ -1,18 +1,24 @@
 import {makeAutoObservable} from "mobx";
-import {IContributorId, IGroupCapacity, IIsDisabled, ITitle} from "@/shared/types";
+import {IContributorId, IIsDisabled, ITitle} from "@/shared/types";
 
-export class ParamsStore implements IContributorId, IGroupCapacity, ITitle, IIsDisabled {
+export class ParamsStore implements IContributorId, ITitle, IIsDisabled {
 
-    private _groupCapacity: number = 0
-    private _title: string = ""
-    private _contributorId: number = 0
+    private _title: string
+    private _contributorId: number
 
-    constructor() {
+    constructor(title: string = "", contributorId: number = 0) {
+
+        this._title = title
+        this._contributorId = contributorId
+
+        console.log(title)
+
         makeAutoObservable(this)
+
     }
 
     get isDisabled(): boolean {
-        return !!(this._title.trim() && this._groupCapacity > 0)
+        return !!this._title.trim()
     }
 
     get contributorId(): number {
@@ -21,14 +27,6 @@ export class ParamsStore implements IContributorId, IGroupCapacity, ITitle, IIsD
 
     set contributorId(value: number) {
         this._contributorId = value;
-    }
-
-    get groupCapacity(): number {
-        return this._groupCapacity;
-    }
-
-    set groupCapacity(value: number) {
-        this._groupCapacity = value;
     }
 
     get title(): string {

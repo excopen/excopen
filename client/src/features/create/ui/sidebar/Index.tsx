@@ -21,6 +21,7 @@ import {Telegram} from "./Telegram.tsx";
 import {Phone} from "./Phone.tsx";
 import {GroupCapacity} from "./GroupCapacity.tsx";
 import {RouteLength} from "./RouteLength.tsx";
+import {Time} from "@/features/create/ui/sidebar/Time.tsx";
 
 export const Index: FC = () => {
 
@@ -42,6 +43,7 @@ export const Index: FC = () => {
             <div className={style.subContainer}>
                 <span className={style.heading}>Дата и время</span>
                 <DatePicker/>
+                <Time/>
                 <Duration/>
             </div>
             <div className={style.subContainer}>
@@ -60,4 +62,4 @@ export const Index: FC = () => {
             {width >= 1024 && <SubmitButton orientation={Orientation.HORIZONTAL}/>}
         </div>
     );
-};
+}

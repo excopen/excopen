@@ -7,8 +7,10 @@ import img1 from "@/shared/assets/tempData/assets/img1.png";
 import img2 from "@/shared/assets/tempData/assets/img2.png";
 import img3 from "@/shared/assets/tempData/assets/img3.png";
 import img4 from "@/shared/assets/tempData/assets/img4.png";
+import {usersArray} from "@/shared/assets/tempData/UsersArray.ts";
 
 const TourObject: ITour = {
+    time: "14:00",
     byCity: false,
     coordinates: {
         point: {
@@ -17,10 +19,7 @@ const TourObject: ITour = {
         },
         zoom: 12
     },
-    date: {
-        from: new Date("2025-04-04T10:00:00"),
-        to: new Date("2025-04-05T18:00:00")
-    },
+    date: new Date("2025-04-04T10:00:00"),
     tags: [
         "гастрономический туризм",
         "активный отдых",
@@ -32,18 +31,19 @@ const TourObject: ITour = {
     priceForPerson: 4000,
     id: 0,
     title: "«Привокзалка»: место встречи изменить нельзя",
-    images: [img1, img2, img3, img4],
+    images: [img1, img2, img3, img4, img1],
     price: 12800,
     duration: 2,
     routeLength: 2,
     rating: 4.8,
     ratingCount: 10,
     format: TourFormat.GROUP,
-    groupCapacity: 10,
+    groupCapacity: 11,
     formatBehavior: TourFormatBehavior.WALK,
     description: DescriptionObject,
     contributorId: 1,
     location: LocationsArrayForFeature[0],
+    registered: usersArray.slice(0,1),
     reviews: ReviewsArray
 }
 
@@ -56,10 +56,8 @@ const TourObject2: ITour = {
         },
         zoom: 10
     },
-    date: {
-        from: new Date("2025-04-04T10:00:00"),
-        to: new Date("2025-04-05T18:00:00")
-    },
+    date: new Date("2025-04-04T10:00:00"),
+    time: "12:30",
     tags: [
         "гастрономический туризм",
         "активный отдых",
@@ -71,18 +69,19 @@ const TourObject2: ITour = {
     priceForPerson: 1000,
     id: 1,
     title: "«Привокзалка 2»: место встречи изменить нельзя",
-    images: [img1, img2, img3, img4],
+    images: [img1, img2, img3, img4, img3],
     price: 1200,
     duration: 3,
     routeLength: 2,
     rating: 3.3,
     ratingCount: 10,
     format: TourFormat.INDIVIDUAL,
-    groupCapacity: 10,
+    groupCapacity: 13,
     formatBehavior: TourFormatBehavior.BUS,
     description: DescriptionObject,
     contributorId: 1,
     location: LocationsArrayForFeature[1],
+    registered: usersArray,
     reviews: ReviewsArray
 }
 
@@ -95,10 +94,8 @@ const TourObject3: ITour = {
         },
         zoom: 5
     },
-    date: {
-        from: new Date("2025-04-04T10:00:00"),
-        to: new Date("2025-04-05T18:00:00")
-    },
+    date: new Date("2025-04-04T10:00:00"),
+    time: "16:06",
     tags: [
         "гастрономический туризм",
         "походы и кемпинг",
@@ -107,7 +104,7 @@ const TourObject3: ITour = {
     priceForPerson: 4000,
     id: 2,
     title: "«Привокзалка 3»: место встречи изменить нельзя",
-    images: [img1, img2, img3, img4],
+    images: [img1, img2, img3, img4, img3],
     price: 17400,
     duration: 4,
     routeLength: 2,
@@ -120,6 +117,7 @@ const TourObject3: ITour = {
     contributorId: 1,
     location: LocationsArrayForFeature[2],
     reviews: ReviewsArray,
+    registered: usersArray,
     accessibility: TourAccessibility.WITH_CHILDREN
 }
 
@@ -132,10 +130,8 @@ const TourObject4: ITour = {
         },
         zoom: 20
     },
-    date: {
-        from: new Date("2025-04-04T10:00:00"),
-        to: new Date("2025-04-05T18:00:00")
-    },
+    date: new Date("2025-04-04T10:00:00"),
+    time: "00:00",
     tags: [
         "активный отдых"
     ],
@@ -144,7 +140,7 @@ const TourObject4: ITour = {
     priceForPerson: 2000,
     id: 3,
     title: "«Опять Привокзалка»: место встречи изменить нельзя",
-    images: [img1, img2, img3, img4],
+    images: [img1, img2, img3, img4, img3],
     price: 52000,
     duration: 1,
     routeLength: 2,
@@ -156,6 +152,7 @@ const TourObject4: ITour = {
     description: DescriptionObject,
     contributorId: 1,
     location: LocationsArrayForFeature[0],
+    registered: usersArray,
     reviews: ReviewsArray
 }
 

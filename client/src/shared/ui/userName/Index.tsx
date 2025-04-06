@@ -8,7 +8,7 @@ import defaultAvatar from "@/shared/assets/icons/avatar.svg"
 
 type EditProfileProps = {
     name: string
-    avatar: File
+    avatar: string
     setIsEdit: (value: boolean) => void
 }
 
@@ -18,26 +18,19 @@ export const Index: FC<EditProfileProps> = ({name, avatar, setIsEdit}) => {
     const {data: user} = useUser(userId)
     const {mutate} = useUpdateUser()
 
-    const [selectedAvatar, setSelectedAvatar] = useState<File>(avatar)
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(avatar)
 
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
 
     useEffect(() => {
-        if (selectedAvatar instanceof File) {
-            const url = URL.createObjectURL(selectedAvatar);
-            setAvatarUrl(url);
-
-            return () => URL.revokeObjectURL(url); // Чистим URL при размонтировании
-        } else {
-            setAvatarUrl(defaultAvatar); // Если аватар не выбран, используем заглушку
-        }
+        setAvatarUrl(selectedAvatar)
     }, [selectedAvatar])
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
         if (file) {
-            setSelectedAvatar(file)
-            mutate({...user, avatar: file})
+            setSelectedAvatar(URL.createObjectURL(file))
+            mutate({...user, avatar: URL.createObjectURL(file)})
         }
     }
 

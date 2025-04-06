@@ -3,15 +3,19 @@ import {action, makeObservable, observable} from "mobx";
 
 export class TagsStore implements ITags, IIsDisabled {
 
-    tags: string[] = []
+    tags: string[]
 
-    constructor() {
+    constructor(tags: string[] = []) {
+
+        this.tags = tags
+
         makeObservable(this, {
             tags: observable,
             add: action,
             remove: action,
             clear: action
         })
+
     }
 
     get isDisabled(): boolean {

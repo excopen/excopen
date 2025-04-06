@@ -3,11 +3,16 @@ import {makeAutoObservable} from "mobx";
 
 export class PriceStore implements IPrice, IIsDisabled {
 
-    private _price: number = 0
-    private _priceForPerson: number = 0
+    private _price: number
+    private _priceForPerson: number
 
-    constructor() {
+    constructor(price: number = 0, priceForPerson: number = 0) {
+
+        this._price = price
+        this._priceForPerson = priceForPerson
+
         makeAutoObservable(this)
+
     }
 
     get isDisabled(): boolean {

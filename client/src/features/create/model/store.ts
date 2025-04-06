@@ -29,6 +29,36 @@ class CreateTourStore extends BaseStore {
         super();
     }
 
+    init() {
+
+        this.isSubmitted = false
+
+        this.contacts = new ContactsStore()
+        this.description = new DescriptionStore()
+        this.price = new PriceStore()
+        this.coordinates = new CoordinatesStore()
+        this.tags = new TagsStore()
+        this.images = new ImagesStore()
+        this.location = new LocationStore()
+        this.time = new TimeStore()
+        this.params = new ParamsStore()
+        this.selectOptions = new SelectOptionsStore()
+
+    }
+
+    set tour(value: ITour) {
+        this.contacts = new ContactsStore(value.contacts)
+        this.description = new DescriptionStore(value.description)
+        this.price = new PriceStore(value.price, value.priceForPerson)
+        this.coordinates = new CoordinatesStore(value.coordinates)
+        this.tags = new TagsStore(value.tags)
+        this.images = new ImagesStore(value.images)
+        this.location = new LocationStore(value.location, value.routeLength, value.byCity)
+        this.time = new TimeStore(value.date, value.duration, value.time)
+        this.params = new ParamsStore(value.title, value.contributorId)
+        this.selectOptions = new SelectOptionsStore(value.accessibility, value.format, value.formatBehavior, value.groupCapacity)
+    }
+
     get tour(): ITour {
         return {
             id: Date.now(),
@@ -42,12 +72,13 @@ class CreateTourStore extends BaseStore {
             byCity: this.location.byCity,
             price: this.price.price,
             priceForPerson: this.price.priceForPerson,
-            groupCapacity: this.params.groupCapacity,
+            groupCapacity: this.selectOptions.groupCapacity,
             formatBehavior: this.selectOptions.formatBehavior as TourFormatBehavior,
             format: this.selectOptions.format as TourFormat,
             accessibility: this.selectOptions.accessibility as TourAccessibility,
             contacts: this.contacts,
             date: this.time.date,
+            time: this.time.time,
             duration: this.time.duration,
             contributorId: this.params.contributorId,
             rating: 0,

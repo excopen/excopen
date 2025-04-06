@@ -30,6 +30,7 @@ export const Info: FC = observer(() => {
                 которые получат путешественники.
             </p>
             <Textarea
+                defaultValue={value}
                 isOpen={state.isOpen}
                 isSubmitted={isSubmitted}
                 value={value}

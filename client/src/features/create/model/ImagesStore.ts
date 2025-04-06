@@ -3,10 +3,14 @@ import {makeAutoObservable} from "mobx";
 
 export class ImagesStore implements IImages, IIsDisabled {
 
-    private _images: ImagesType = Array(5).fill(null)
+    private _images: ImagesType
 
-    constructor() {
+    constructor(images: ImagesType = Array(5).fill(null)) {
+
+        this._images = images
+
         makeAutoObservable(this)
+
     }
 
     get isDisabled(): boolean {
@@ -14,6 +18,10 @@ export class ImagesStore implements IImages, IIsDisabled {
             this._images.length > 0 &&
             this._images.every((img) => img !== null && img !== undefined)
         )
+    }
+
+    get count(): number {
+        return this._images.filter(img => img !== null).length
     }
 
 

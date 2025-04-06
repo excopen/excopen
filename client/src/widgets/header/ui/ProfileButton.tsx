@@ -18,9 +18,19 @@ import {useAuthContext} from "@/features";
 
 export const ProfileButton: FC = () => {
 
-    const {role, isAuth} = useAuthContext()
-
     const navigate = useNavigate()
+
+    const {role, isAuth, setIsAuth} = useAuthContext()
+
+    const logIn = () => {
+        setIsAuth(true)
+        navigate(`/${RouteNames.MAIN}`)
+    }
+
+    const logOut = () => {
+        setIsAuth(false)
+        navigate(`/${RouteNames.MAIN}`)
+    }
 
     const createItem: JSX.Element =
         <>
@@ -45,7 +55,7 @@ export const ProfileButton: FC = () => {
     const logOutButton: JSX.Element =
         <>
             <DropdownMenuSeparator/>
-            <DropdownMenuItem onClick={() => navigate(`/${RouteNames.MAIN}`)} className={"text-secondary-red font-normal"} path={`/${RouteNames.CREATE}`}>
+            <DropdownMenuItem onClick={logOut} className={"text-secondary-red font-normal"} path={`/${RouteNames.CREATE}`}>
                 Выйти
             </DropdownMenuItem>
         </>
@@ -53,7 +63,7 @@ export const ProfileButton: FC = () => {
     const logInButton: JSX.Element =
         <>
             <DropdownMenuSeparator/>
-            <DropdownMenuItem className={"font-normal text-grayscale-500"} path={`/${RouteNames.CREATE}`}>
+            <DropdownMenuItem onClick={logIn} className={"font-normal text-grayscale-500"} path={`/${RouteNames.CREATE}`}>
                 Войти в профиль
             </DropdownMenuItem>
         </>

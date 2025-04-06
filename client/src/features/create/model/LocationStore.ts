@@ -3,19 +3,29 @@ import {IByCity, IIsDisabled, ILocation, ILocationTour, IRouteLength} from "@/sh
 
 export class LocationStore implements ILocationTour, IRouteLength, IByCity, IIsDisabled {
 
-    private _location: ILocation = {
-        id: 0,
-        city: "",
-        country: "",
-        tourCount: 0,
-        region: "",
-        image: ""
-    }
-    private _routeLength: number = 0
-    private _byCity: boolean = false
+    private _location: ILocation
+    private _routeLength: number
+    private _byCity: boolean
 
-    constructor() {
+    constructor(
+        location: ILocation = {
+            id: 0,
+            city: "",
+            country: "",
+            tourCount: 0,
+            region: "",
+            image: ""
+        },
+        routeLength: number = 0,
+        byCity: boolean = false
+    ) {
+
+        this._location = location
+        this._routeLength = routeLength
+        this._byCity = byCity
+
         makeAutoObservable(this)
+
     }
 
     get isDisabled(): boolean {

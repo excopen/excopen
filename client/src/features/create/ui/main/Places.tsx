@@ -33,12 +33,13 @@ export const Places: FC = observer(() => {
                 Это может быть конкретный адрес, известная достопримечательность или удобное место для сбора группы.
             </p>
             <div className={style.fields}>
-                {value.map((topic, index) => (
+                {value.map((place, index) => (
                     <TextInput
+                        defaultValue={place}
                         key={index}
                         isOpen={state.isOpen}
                         isSubmitted={isSubmitted}
-                        value={topic}
+                        value={place}
                         onChange={(e) => updateItem(index, e.target.value)}
                         onFocus={focus}
                         onBlur={() => blur(index)}

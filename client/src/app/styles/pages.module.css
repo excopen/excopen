@@ -27,3 +27,19 @@
 .createTour {
     @apply huge:w-[1440px] min-h-screen flex flex-col lg:flex-row gap-8 py-8
 }
+
+.booking {
+    @apply flex flex-col h-screen pt-10 lg:pt-24 gap-4 items-center
+}
+
+.success {
+    @apply flex flex-col h-screen pt-44 gap-4 items-center
+}
+
+.successHeading {
+    @apply text-2xl text-grayscale-500 font-semibold
+}
+
+.successText {
+    @apply text-xl text-grayscale-400 lg:w-2/5 text-center
+}

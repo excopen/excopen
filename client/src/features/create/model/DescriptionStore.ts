@@ -14,17 +14,22 @@ interface IStore extends ITopics, IInfo, IWhatToExpect, IOrgDetails, IMeetingPla
 
 export class DescriptionStore implements IStore {
 
-    private _description: IDescription = {
-        info: "",
-        whatToExpect: "",
-        places: [""],
-        topics: [""],
-        orgDetails: "",
-        meetingPlace: ""
-    }
+    private _description: IDescription
 
-    constructor() {
+    constructor(initial?: Partial<IDescription>) {
+
+        this._description = {
+            info: "",
+            whatToExpect: "",
+            places: [""],
+            topics: [""],
+            orgDetails: "",
+            meetingPlace: "",
+            ...initial
+        }
+
         makeAutoObservable(this)
+
     }
 
     get isDisabled(): boolean {

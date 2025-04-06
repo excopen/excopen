@@ -1,1 +1,1 @@
-export type ImagesType = (File | null)[]
+export type ImagesType = (File | string | null)[]

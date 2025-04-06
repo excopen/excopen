@@ -12,7 +12,7 @@ type ReturnType = {
 export const useImagesLoader = (store: IImages, isSubmitted: boolean): ReturnType => {
 
     const [isError, setIsError] = useState<boolean>(false)
-    const [count, setCount] = useState<number>(0)
+    const [count, setCount] = useState<number>(store.count)
 
     useEffect(() => {
         if (isSubmitted) setIsError(store.images.includes(null))

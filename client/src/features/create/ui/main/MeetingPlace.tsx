@@ -31,6 +31,7 @@ export const MeetingPlace: FC = observer(() => {
                 известная достопримечательность или удобное место для сбора группы.
             </p>
             <TextInput
+                defaultValue={value}
                 isOpen={state.isOpen}
                 isSubmitted={isSubmitted}
                 value={value}

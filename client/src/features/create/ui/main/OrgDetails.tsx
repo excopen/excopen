@@ -30,6 +30,7 @@ export const OrgDetails: FC = observer(() => {
                 возможны ли дополнительные расходы, есть ли ограничения.
             </p>
             <TextInput
+                defaultValue={value}
                 isOpen={state.isOpen}
                 isSubmitted={isSubmitted}
                 value={value}

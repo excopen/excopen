@@ -35,7 +35,7 @@ export const Index: FC<HeaderProps> = ({tour}) => {
                     <ToFavourite tour={tour}/>
                     <BookingButton
                         size={width < 768 ? "lg" : "md"}
-                        link={`/${RouteNames.WIP}`}
+                        link={`/${RouteNames.BOOKING}/${tour.id}`}
                         text={"Выбрать"}
                     />
                 </div>

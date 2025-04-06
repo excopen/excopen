@@ -3,14 +3,19 @@ import {makeAutoObservable} from "mobx";
 
 export class ContactsStore implements IContact {
 
-    private _contacts: IContacts = {
-        vk: "",
-        telegram: "",
-        phone: ""
-    }
+    private _contacts: IContacts
 
-    constructor() {
+    constructor(initial?: Partial<IContacts>) {
+
+        this._contacts = {
+            vk: "",
+            telegram: "",
+            phone: "",
+            ...initial
+        }
+
         makeAutoObservable(this)
+
     }
 
     private updateContactParams(contacts: Partial<IContacts>) {

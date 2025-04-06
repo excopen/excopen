@@ -4,7 +4,7 @@ import {IDescription} from "./IDescription.ts";
 import {ILocation} from "./ILocation.ts"
 import {IContacts} from "./IContacts.ts";
 import {IReview} from "./IReview.ts";
-import {RangeType} from "@/shared/types";
+import {IUser} from "@/shared/types";
 
 export interface ITour {
     id: number
@@ -23,11 +23,12 @@ export interface ITour {
     format: TourFormat
     accessibility: TourAccessibility
     contacts: IContacts
-    date: RangeType
+    date: Date | undefined
+    time: string
     duration: number
     contributorId: number
     rating: number
     ratingCount: number
-
     reviews?: IReview[]
+    registered?: IUser[]
 }

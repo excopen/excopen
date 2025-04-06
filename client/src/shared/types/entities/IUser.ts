@@ -4,7 +4,7 @@ import {ITour, UserRole} from "@/shared/types";
 export interface IUser {
     id: number
     role: UserRole
-    avatar: File
+    avatar: string
     name: string
     surname: string
     email: string

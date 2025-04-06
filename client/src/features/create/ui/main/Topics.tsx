@@ -35,6 +35,7 @@ export const Topics: FC = observer(() => {
             <div className={style.fields}>
                 {value.map((topic, index) => (
                     <TextInput
+                        defaultValue={topic}
                         key={index}
                         isOpen={state.isOpen}
                         isSubmitted={isSubmitted}

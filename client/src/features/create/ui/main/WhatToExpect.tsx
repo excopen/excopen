@@ -30,6 +30,7 @@ export const WhatToExpect: FC = observer(() => {
                 Будет ли это неспешная прогулка, насыщенный маршрут или интерактивное приключение?
             </p>
             <TextInput
+                defaultValue={value}
                 isOpen={state.isOpen}
                 isSubmitted={isSubmitted}
                 value={value}

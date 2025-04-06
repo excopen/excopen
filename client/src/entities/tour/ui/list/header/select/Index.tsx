@@ -4,13 +4,14 @@ import {sortTypesArray as values} from "@/shared/config";
 import {useSearchSelect} from "@/shared/hooks";
 import {searchTourStore} from "@/features";
 import {formatSelectValue} from "@/shared/utills";
+import {observer} from "mobx-react-lite";
 
-export const Index: FC = () => {
+export const Index: FC = observer(() => {
 
     const {
         state,
         setValue
-    } = useSearchSelect(searchTourStore, "sort", values)
+    } = useSearchSelect(searchTourStore.searchParams, "sort", values)
 
     return (
         <Select value={state.value} onValueChange={setValue}>
@@ -29,4 +30,4 @@ export const Index: FC = () => {
         </Select>
     );
 
-};
+})

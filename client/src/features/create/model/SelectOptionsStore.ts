@@ -1,21 +1,37 @@
-import {IAccessibility, IIsDisabled, ITourFormat, ITourFormatBehavior} from "@/shared/types";
+import {
+    IAccessibility,
+    IGroupCapacity,
+    IIsDisabled,
+    ITourFormat,
+    ITourFormatBehavior,
+    TourFormat
+} from "@/shared/types";
 import {makeAutoObservable} from "mobx";
 
-export class SelectOptionsStore implements IAccessibility, ITourFormat, ITourFormatBehavior, IIsDisabled {
+export class SelectOptionsStore implements IAccessibility, IGroupCapacity, ITourFormat, ITourFormatBehavior, IIsDisabled {
 
-    private _accessibility: string = ""
-    private _format: string = ""
-    private _formatBehavior: string = ""
+    private _accessibility: string
+    private _format: string
+    private _formatBehavior: string
+    private _groupCapacity: number
 
-    constructor() {
+    constructor(accessibility: string = "", format: string = "", formatBehavior: string = "", groupCapacity: number = 0) {
+
+        this._accessibility = accessibility
+        this._format = format
+        this._formatBehavior = formatBehavior
+        this._groupCapacity = groupCapacity
+
         makeAutoObservable(this)
+
     }
 
     get isDisabled(): boolean {
         return !!(
             this._accessibility.trim() &&
             this._format.trim() &&
-            this._formatBehavior.trim()
+            this._formatBehavior.trim() &&
+            this._groupCapacity > 0
         )
     }
 
@@ -32,6 +48,7 @@ export class SelectOptionsStore implements IAccessibility, ITourFormat, ITourFor
     }
 
     set format(value: string) {
+        if (value === TourFormat.INDIVIDUAL) this.groupCapacity = 1
         this._format = value;
     }
 
@@ -41,6 +58,14 @@ export class SelectOptionsStore implements IAccessibility, ITourFormat, ITourFor
 
     set formatBehavior(value: string) {
         this._formatBehavior = value;
+    }
+
+    get groupCapacity(): number {
+        return this._groupCapacity;
+    }
+
+    set groupCapacity(value: number) {
+        this._groupCapacity = value;
     }
 
 }

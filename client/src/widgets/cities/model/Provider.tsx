@@ -2,6 +2,7 @@ import {FC, ReactNode, useCallback, useEffect, useMemo, useState} from "react";
 import {WidgetContext} from "./context.ts"
 import {useLocations} from "@/entities";
 import {searchLocation, searchTourStore as store} from "@/features";
+import {ILocation} from "@/shared/types";
 
 export const Provider: FC<{children: ReactNode}> = ({children}) => {
 
@@ -28,7 +29,7 @@ export const Provider: FC<{children: ReactNode}> = ({children}) => {
 
     const selectCity = useCallback((city: string) => {
         window.scroll(0,0)
-        store.location = city
+        store.searchParams.location = locations.find(i => i.city === city) as ILocation
     }, [])
     
     const context = useMemo(() => ({
