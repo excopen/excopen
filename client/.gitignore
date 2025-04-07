@@ -7,7 +7,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-src/app/config.ts
+client/src/app/config.ts
 
 node_modules
 dist
