@@ -1,6 +1,9 @@
 package excopen.backend.entities;
 
+import excopen.backend.constants.TourType;
+import excopen.backend.constants.TransportType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -21,13 +24,17 @@ public class Tour implements Serializable {
     private Long id;
 
     private String title;
+  
     @JoinColumn(name = "location_id")
     private Long locationId;
 
-    private BigDecimal price;
-    private String duration;
+    private int price;
+    @Digits(integer = 2, fraction = 1)
+    private BigDecimal duration;
+    @Digits(integer = 2, fraction = 1)
     private BigDecimal routeLength;
 
+    @Column(updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -40,9 +47,18 @@ public class Tour implements Serializable {
     private Integer minAge;
     private Integer maxCapacity;
 
-    @Column(precision = 2, scale = 1)
+    @Digits(integer = 2, fraction = 1)
     private BigDecimal rating;
 
+    private Integer reviewCount = 0;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tour_type")
+    private TourType tourType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transport_type")
+    private TransportType transportType;
 
     @PrePersist
     protected void onCreate() {

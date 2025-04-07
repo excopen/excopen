@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const Card = React.forwardRef<
+export const Card = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({...props }, ref) => (
@@ -8,5 +8,3 @@ const Card = React.forwardRef<
 ))
 
 Card.displayName = "Card"
-
-export {Card}

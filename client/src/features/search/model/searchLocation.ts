@@ -1,9 +1,9 @@
-import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
+import {ILocation} from "@/shared/types";
 
-export const searchLocation = (location: string): string[] => {
+export const searchLocation = (location: string, array: ILocation[]): string[] => {
     return location.length === 0
         ? []
-        : LocationsArrayForFeature
+        : array
             .filter(i => i.city.toUpperCase().startsWith(location.toUpperCase()))
             .map(i => i.city)
 }

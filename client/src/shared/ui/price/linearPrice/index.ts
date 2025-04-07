@@ -1,0 +1,1 @@
+export {Index as LinearPrice} from "./Index.tsx"

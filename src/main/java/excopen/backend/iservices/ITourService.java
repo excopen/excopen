@@ -1,19 +1,28 @@
 package excopen.backend.iservices;
 
+import excopen.backend.dto.FilterToursDTO;
+import excopen.backend.dto.TourCreateDTO;
+import excopen.backend.dto.TourResponseDTO;
 import excopen.backend.entities.Description;
 import excopen.backend.entities.Tour;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 
 public interface ITourService {
-    Tour createTour(Tour tour, String googleId);
+    Tour createTour(Tour tour, Long creatorId);
     Tour getTourById(Long tourId);
-    Tour updateTour(Long tourId, Tour updatedTour, Description description);
+    public Tour updateTour(Tour tour);
     void deleteTour(Long tourId);
     List<Tour> getAllTours();
     List<Tour> findToursByLocation(Long locationId);
-    List<Tour> findToursByDuration(String duration);
+    List<Tour> findToursByDuration(BigDecimal duration);
+    public List<Tour> getRecommendedTours(Long userId);
+    List<Tour> getSimilarTours(Long tourId);
+    public Page<Tour> filterTours(FilterToursDTO filter, Pageable pageable);
 }
 
