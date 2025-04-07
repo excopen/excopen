@@ -1,28 +1,39 @@
 package excopen.backend.servicesImpl;
 
+import excopen.backend.constants.Role;
+import excopen.backend.dto.GuideRequestDto;
 import excopen.backend.entities.User;
 import excopen.backend.iservices.IUserService;
 import excopen.backend.repositories.UserRepository;
+import excopen.backend.util.PhoneNumberValidator;
+import excopen.backend.util.VerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @Service
-public class UserServiceImpl extends DefaultOAuth2UserService implements IUserService  {
+public class UserServiceImpl extends DefaultOAuth2UserService implements IUserService {
 
     private final UserRepository userRepository;
+    private final VerificationService verificationService;
+    private final PhoneNumberValidator phoneNumberValidator;
+    private final ConcurrentMap<Long, GuideRequestDto> pendingGuideRequests = new ConcurrentHashMap<>();
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, VerificationService verificationService, PhoneNumberValidator phoneNumberValidator) {
         this.userRepository = userRepository;
+        this.verificationService = verificationService;
+        this.phoneNumberValidator = phoneNumberValidator;
     }
 
     @Override
@@ -31,8 +42,14 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
     }
 
     @Override
-    public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    public User getUserByGoogleId(String googleId) {
+        return userRepository.findByGoogleId(googleId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
     @Override
@@ -54,42 +71,27 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
-        // Получение данных пользователя из Google
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String googleId = (String) attributes.get("sub");
-        String name = (String) attributes.get("given_name");
-        String surname = (String) attributes.get("family_name");
-        String email = (String) attributes.get("email");
-
-        // Проверка пользователя в базе данных
-        User user = this.findByGoogleId(googleId).orElseGet(() -> {
-            // Создание нового пользователя
-            User newUser = new User();
-            newUser.setGoogleId(googleId);
-            newUser.setName(name);
-            newUser.setSurname(surname);
-            newUser.setEmail(email);
-            return this.createUser(newUser);
-        });
-
+        try {
+            getUserByGoogleId(googleId);
+        } catch (IllegalArgumentException e) {
+            createUser(User.builder()
+                    .googleId(googleId)
+                    .name((String) attributes.get("given_name"))
+                    .surname((String) attributes.get("family_name"))
+                    .email((String) attributes.get("email"))
+                    .build());
+        }
         return new DefaultOAuth2User(oAuth2User.getAuthorities(), attributes, "sub");
-    }
-
-
-    public Optional<User> findByGoogleId(String googleId) {
-        return userRepository.findByGoogleId(googleId);
     }
 
     @Override
     public User updatePreferencesVector(Long userId, int[] preferencesVector) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
+        User user = getUserById(userId);
         if (preferencesVector.length != user.getPreferencesVector().length) {
             throw new IllegalArgumentException("Vector length mismatch");
         }
-
         user.setPreferencesVector(preferencesVector);
         return userRepository.save(user);
     }
@@ -101,6 +103,54 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
                 .map(User::getPreferencesVector)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
+
+
+    @Transactional
+    public void requestGuideRole(Long userId, GuideRequestDto guideRequestDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        if (user.getRole() == Role.GUIDE) {
+            throw new IllegalArgumentException("Вы уже являетесь гидом");
+        }
+
+        String normalizedPhone = phoneNumberValidator.normalizePhoneNumber(guideRequestDto.getPhoneNumber());
+
+        verificationService.sendVerificationCode(normalizedPhone);
+
+        pendingGuideRequests.put(userId, guideRequestDto);
+    }
+
+    @Transactional
+    public boolean confirmGuideRole(Long userId, String phoneNumber, String code) {
+        String normalizedPhone = phoneNumberValidator.normalizePhoneNumber(phoneNumber);
+
+        if (!verificationService.verifyCode(normalizedPhone, code)) {
+            return false;
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        GuideRequestDto guideRequestDto = pendingGuideRequests.remove(userId);
+        if (guideRequestDto != null) {
+            user.setPhoneNumber(normalizedPhone);
+            user.setDescription(guideRequestDto.getDescription());
+            user.setCity(guideRequestDto.getCity());
+        }
+
+        user.setRole(Role.GUIDE);
+        userRepository.save(user);
+
+        return true;
+    }
+
+    public boolean isGuide(Long userId) {
+        return getUserById(userId).getRole().equals(Role.GUIDE);
+    }
+
+
+
 
 
 }
