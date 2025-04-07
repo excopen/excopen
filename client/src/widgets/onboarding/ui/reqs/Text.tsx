@@ -1,5 +1,5 @@
 import {FC} from "react";
-import style from "./styles/text.module.css"
+import style from "./text.module.css"
 
 export const Text: FC = () => {
     return (

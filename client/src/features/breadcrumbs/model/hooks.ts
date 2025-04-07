@@ -1,46 +1,51 @@
-import {useLocation} from "react-router-dom";
-import {useEffect, useMemo, useState} from "react";
+import { useLocation } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 import { RouteNames } from "@/shared/types";
 import { BreadcrumbType } from "./types.ts";
-import {routesConfig} from "@/features/breadcrumbs/config";
+import { routesConfig } from "@/features/breadcrumbs/config";
 
 export const useBreadcrumbs = (): BreadcrumbType[] => {
+
+    const location = useLocation()
 
     const initialState: BreadcrumbType[] = useMemo(() => {
         return [routesConfig.get(RouteNames.MAIN)!]
     }, [])
 
-    const location = useLocation()
-    const [breadcrumbs, setBreadcrumbs] = useState<
-        BreadcrumbType[]
-    >(() => {
-        const savedBreadcrumbs = localStorage.getItem('breadcrumbs');
-        return savedBreadcrumbs ? JSON.parse(savedBreadcrumbs) : initialState;
+    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbType[]>(() => {
+        const savedBreadcrumbs = localStorage.getItem("breadcrumbs")
+        return savedBreadcrumbs ? JSON.parse(savedBreadcrumbs) : initialState
     })
 
     useEffect(() => {
 
-        const path: string[] = location.pathname.split('/').filter(Boolean);
-        
-        const currentPath: string = `/${path.join('/')}`
-        const currentRoute: BreadcrumbType = routesConfig.get(path[path.length - 1])!
+        const pathParts: string[] = location.pathname.split("/").filter(Boolean)
+        const isLastZero = pathParts[pathParts.length - 1] === "0"
 
-        const currentLabel: string = currentRoute?.label ?? path[path.length - 1] ?? RouteNames.MAIN
+        const labelKey = isLastZero
+            ? pathParts[pathParts.length - 2]
+            : pathParts[pathParts.length - 1]
 
-        setBreadcrumbs(prev => {
+        const cleanPathParts = isLastZero ? pathParts.slice(0, -1) : pathParts
+        const currentPath = `/${cleanPathParts.join("/")}`
+
+        const currentRoute: BreadcrumbType | undefined = routesConfig.get(labelKey)
+        const currentLabel: string = currentRoute?.label ?? labelKey ?? RouteNames.MAIN
+
+        setBreadcrumbs((prev) => {
 
             const filteredBreadcrumbs = prev.filter(
-                crumb => crumb.path !== currentPath
+                (crumb) => crumb.path !== currentPath
             )
 
             if (currentPath === `/${RouteNames.MAIN}`) return initialState
 
             const updatedBreadcrumbs = [
                 ...filteredBreadcrumbs,
-                { path: currentPath, label: decodeURIComponent(currentLabel) }
+                { path: currentPath, label: decodeURIComponent(currentLabel) },
             ]
 
-            localStorage.setItem('breadcrumbs', JSON.stringify(updatedBreadcrumbs))
+            localStorage.setItem("breadcrumbs", JSON.stringify(updatedBreadcrumbs))
 
             return updatedBreadcrumbs
 
@@ -48,6 +53,6 @@ export const useBreadcrumbs = (): BreadcrumbType[] => {
 
     }, [initialState, location])
 
-    return breadcrumbs;
-    
+    return breadcrumbs
+
 }

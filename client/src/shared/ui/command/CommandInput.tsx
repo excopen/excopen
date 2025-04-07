@@ -3,21 +3,24 @@ import {Command as CommandPrimitive} from "cmdk";
 import {cn} from "@/app/lib/utils.ts";
 import {ComponentPropsWithoutRef, ElementRef} from "react";
 import {SearchIcon, X} from "lucide-react";
-import {FieldState} from "src/features/searchTour/hooks";
 
 export const CommandInput = React.forwardRef<
     ElementRef<'div'>,
     ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
     label: string;
-    isSearch: boolean;
-    field: FieldState;
+    isSubmitted?: boolean;
+    field: {
+        isOpen: boolean
+        isTouched: boolean
+        isCorrected: boolean
+    };
     onClear: () => void;
 }
 >((
     {
         className,
         label,
-        isSearch,
+        isSubmitted,
         field,
         onClear,
         value,
@@ -29,7 +32,7 @@ export const CommandInput = React.forwardRef<
     const inputRef = React.useRef<HTMLInputElement>(null)
     const handleDivClick = () => inputRef.current?.focus()
 
-    const isValidField = (field.isTouched && !value) || !field.isCorrected || (isSearch && !value)
+    const isValidField = (field.isTouched && !value) || !field.isCorrected || (isSubmitted && !value)
 
     const containerStyles: string = "relative flex flex-col w-full wide:w-72 cursor-pointer";
     const wrapperStyles: string = "flex items-center";
@@ -50,7 +53,7 @@ export const CommandInput = React.forwardRef<
         "absolute cursor-pointer left-12 text-base text-grayscale-400 transition-all duration-300",
         value || field.isOpen ? "top-2 text-black" : "top-4 text-base",
         isValidField ? "text-secondary-red" : "text-grayscale-400"
-    ].join(" ");
+    ].join(" ")
 
     return (
         <div

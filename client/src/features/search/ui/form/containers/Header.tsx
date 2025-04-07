@@ -1,7 +1,7 @@
 import {FC, ReactNode} from "react";
 import style from "./style.module.css"
-import {Orientation} from "@/shared/types";
 import {cn} from "@/app/lib/utils.ts";
+import {Orientation} from "@/features/search/types";
 
 type HeaderProps = {
     children: ReactNode

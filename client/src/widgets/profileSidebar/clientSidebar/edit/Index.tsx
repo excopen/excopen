@@ -34,7 +34,11 @@ export const Index: FC<EditClientProps> = ({name, isEdit, setIsEdit}) => {
                 <Button onClick={updateData}>
                     Добавить
                 </Button>
-                <Button className={"flex justify-center"} variant={"secondary"} onClick={() => setIsEdit(false)}>
+                <Button
+                    className={"flex justify-center"}
+                    variant={"secondary"}
+                    onClick={() => setIsEdit(false)}
+                >
                     Отменить
                 </Button>
             </div>

@@ -1,7 +1,6 @@
 import {FC} from "react";
 import style from "./style.module.css"
-import {Form} from "@/features";
-import {Orientation} from "@/shared/types";
+import {Form, Orientation} from "@/features";
 import {Locations} from "@/entities";
 import {Title} from "./title";
 

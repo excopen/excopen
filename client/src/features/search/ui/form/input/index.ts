@@ -1,1 +1,0 @@
-export {Index as Input} from "./Index.tsx"

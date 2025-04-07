@@ -1,16 +1,17 @@
 import {FC, useState} from "react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger, TourPagination} from "@/shared/ui";
 import {ReviewForm, TourCard, useContributorTours} from "@/entities";
-import {UserRole} from "@/shared/types";
+import {IUser, UserRole} from "@/shared/types";
 import {useUser} from "@/entities/user/model";
 import {useAuthContext} from "@/features";
+import {TourMetrics} from "@/widgets";
 
 export const Index: FC = () => {
 
     const {role, userId} = useAuthContext()
 
     const {data: user} = useUser(userId)
-    const {data: myTour} = useContributorTours(userId)
+    const {data: myTours} = useContributorTours(userId)
 
     const [visibleTours, setVisibleTours] = useState<number>(
         3
@@ -23,11 +24,18 @@ export const Index: FC = () => {
                 <AccordionItem value={"value 1"}>
                     <AccordionTrigger>Ваши популярные экскурсии</AccordionTrigger>
                     <AccordionContent className={"flex flex-col gap-4"}>
-                        {myTour.slice(0, visibleTours).map(tour => <TourCard key={tour.id} tour={tour}/>)}
+                        {myTours.slice(0, visibleTours).map(
+                            tour => (
+                                <div key={tour.id} className={"flex flex-col lg:flex-row gap-4"}>
+                                    <TourCard tour={tour}/>
+                                    <TourMetrics tour={tour} users={tour.registered as IUser[]} capacity={tour.groupCapacity}/>
+                                </div>
+                            )
+                        )}
                         <TourPagination
                             visiable={visibleTours}
                             setVisible={setVisibleTours}
-                            maxLength={myTour.length}
+                            maxLength={myTours.length}
                         />
                     </AccordionContent>
                 </AccordionItem>

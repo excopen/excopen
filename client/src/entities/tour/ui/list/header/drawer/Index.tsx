@@ -1,8 +1,7 @@
 import {FC} from 'react';
 import {Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle, DrawerTrigger} from "@/shared/ui";
 import {Filter} from "lucide-react";
-import {Orientation} from "@/shared/types";
-import {Form} from "@/features";
+import {Form, Orientation} from "@/features";
 
 export const Index: FC = () => {
     return (

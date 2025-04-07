@@ -1,7 +1,6 @@
 import {FC, useState} from "react";
 import style from "./style.module.css";
-import {UserName, SidebarButton} from "@/shared/ui";
-import users from "@/shared/assets/icons/users.svg";
+import {UserName} from "@/shared/ui";
 import {Edit} from "./edit"
 import {ProfileButtons} from "@/widgets/profileSidebar/buttons";
 import {useUser} from "@/entities/user/model";
@@ -33,7 +32,6 @@ export const Index: FC = () => {
                 description={user.description as string}
             />
 
-            <SidebarButton label={"Предложенные"} image={users}/>
             <ProfileButtons/>
 
         </div>

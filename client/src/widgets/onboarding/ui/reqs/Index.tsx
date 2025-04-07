@@ -1,56 +1,49 @@
-import {FC, useState} from "react";
-import style from "./styles/style.module.css"
-import {Text} from "./Text.tsx";
+import {FC} from "react";
+import {useNavigate} from "react-router-dom";
 import {cn} from "@/app/lib/utils.ts";
-import {Tag, useAddTags, useTags} from "@/entities";
-import {ITag, RouteNames} from "@/shared/types";
-import {Link} from "react-router-dom";
+
+import {Tag, useReqs} from "@/entities";
+import {RouteNames} from "@/shared/types";
 import {Button} from "@/shared/ui";
-import {useAuthContext} from "@/features";
+
+import {Text} from "./Text.tsx";
+import style from "./style.module.css"
 
 export const Index: FC = () => {
 
-    const {userId}  = useAuthContext()
-    const {data: tags} = useTags()
-    const {mutate: addTags} = useAddTags()
-
-    const [selectedTags, setSelectedTags] = useState<ITag[]>([])
-
-    const disabled: boolean = selectedTags.length === 0
-
-    const clickHandler = () => addTags({userId: userId, tags: selectedTags})
+    const navigate = useNavigate()
+    const {tags, selected, disabled, add, remove, click} = useReqs()
 
     return (
         <div className={cn(style.container, style.paddings)}>
             <Text/>
             <div className={style.tags}>
-                {tags.map(tag => (
+                {tags.map((tag, index) => (
                     <Tag
-                        key={tag.id}
-                        id={tag.id}
-                        name={tag.name}
-                        selectedTags={selectedTags}
-                        setSelectedTags={setSelectedTags}
+                        key={index}
+                        value={selected}
+                        tag={tag}
+                        add={add}
+                        remove={remove}
+                        variant={"secondary"}
                     />
                 ))}
             </div>
             <div className={style.buttons}>
-                <Link to={`/${RouteNames.MAIN}`}>
-                    <Button variant={"secondary"} size={"md"}>
-                        Не интересно
-                    </Button>
-                </Link>
-                {
-                    !disabled ?
-                        <Link to={`/${RouteNames.MAIN}`}>
-                            <Button onClick={clickHandler} disabled={disabled} size={"md"}>
-                                Искать
-                            </Button>
-                        </Link> :
-                        <Button disabled={disabled} size={"md"}>
-                            Искать
-                        </Button>
-                }
+                <Button
+                    onClick={() => navigate(`/${RouteNames.MAIN}`)}
+                    variant={"secondary"}
+                    size={"md"}
+                >
+                    Не интересно
+                </Button>
+                <Button
+                    onClick={click}
+                    disabled={disabled}
+                    size={"md"}
+                >
+                    Искать
+                </Button>
             </div>
         </div>
     );

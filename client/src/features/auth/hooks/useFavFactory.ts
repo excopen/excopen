@@ -1,14 +1,13 @@
 import {useMemo} from "react";
 import {ITour} from "@/shared/types";
-import {tourHistoryStore, useFav} from "@/entities";
-import {useAuthContext} from "@/features";
+import {HistoryEndpoint, tourLocalHistoryStore as store, useAuthContext, useHistory} from "@/features";
 
 export const useFavFactory = () : ITour[] => {
 
     const {isAuth, userId} = useAuthContext()
-    const {data} = useFav(userId)
+    const {data} = useHistory(userId, HistoryEndpoint.FAVOURITES)
 
-    const local = tourHistoryStore.favourites
+    const local = store.favourites
 
     return useMemo(
         () => isAuth ? data : local,

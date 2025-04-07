@@ -3,18 +3,20 @@ import {Link} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 import {Button, SidebarButton} from "@/shared/ui";
 import favourite from "@/shared/assets/icons/favourite-secondary.svg";
+import {useCreateTour} from "@/shared/hooks";
 
 export const Index: FC = () => {
+
+    const {click} = useCreateTour()
+
     return (
         <>
-            <Link to={`/${RouteNames.FAVOURITES}`}>
+            <Link className={"w-full"} to={`/${RouteNames.FAVOURITES}`}>
                 <SidebarButton image={favourite} label={"Избранное"}/>
             </Link>
-            <Link className={"w-full"} to={`/${RouteNames.CREATE}`}>
-                <Button className={"w-full"}>
-                    Предложить экскурсию
-                </Button>
-            </Link>
+            <Button className={"w-full"} onClick={click}>
+                Предложить экскурсию
+            </Button>
         </>
     );
 };
