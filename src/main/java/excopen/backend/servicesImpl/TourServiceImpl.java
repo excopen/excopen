@@ -5,6 +5,7 @@ import excopen.backend.dto.FilterToursDTO;
 import excopen.backend.entities.QTour;
 import excopen.backend.entities.Review;
 import excopen.backend.entities.Tour;
+import excopen.backend.entities.User;
 import excopen.backend.iservices.ITourService;
 import excopen.backend.repositories.ReviewRepository;
 import excopen.backend.repositories.TourRepository;
@@ -31,6 +32,9 @@ public class TourServiceImpl implements ITourService {
     private final ReviewRepository reviewRepository;
     private final UserServiceImpl userService;
 
+    private final UserServiceImpl userService;
+    private final DescriptionServiceImpl descriptionService;
+
     @Autowired
     public TourServiceImpl(TourRepository tourRepository, ReviewRepository reviewRepository,
                            UserServiceImpl userService) {
@@ -44,6 +48,7 @@ public class TourServiceImpl implements ITourService {
         Tour savedTour = tourRepository.save(tour);
         savedTour.setCreatorId(creatorId);
         return savedTour;
+
     }
 
 
@@ -58,6 +63,8 @@ public class TourServiceImpl implements ITourService {
     public Tour updateTour(Tour tour) {
         return tourRepository.save(tour);
     }
+
+
 
     @Override
     public void deleteTour(Long tourId) {

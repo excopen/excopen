@@ -65,6 +65,7 @@ public class ReviewController {
     public ReviewResponseDTO getReviewById(@PathVariable Long reviewId) {
         Review review = reviewService.getReviewById(reviewId);
         return reviewMapper.toResponseDTO(review);
+
     }
 
     @RequiresOwnership(entityClass = Review.class)
