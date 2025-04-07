@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import excopen.backend.dto.FilterToursDTO;
 import excopen.backend.entities.QTour;
 import excopen.backend.entities.Tour;
+import excopen.backend.entities.User;
 import excopen.backend.iservices.ITourService;
 import excopen.backend.repositories.TourRepository;
 import jakarta.transaction.Transactional;
@@ -27,6 +28,9 @@ public class TourServiceImpl implements ITourService {
     private final TourRepository tourRepository;
     private final UserServiceImpl userService;
 
+    private final UserServiceImpl userService;
+    private final DescriptionServiceImpl descriptionService;
+
     @Autowired
     public TourServiceImpl(TourRepository tourRepository,
                            UserServiceImpl userService) {
@@ -39,6 +43,7 @@ public class TourServiceImpl implements ITourService {
         Tour savedTour = tourRepository.save(tour);
         savedTour.setCreatorId(creatorId);
         return savedTour;
+
     }
 
 
@@ -53,6 +58,8 @@ public class TourServiceImpl implements ITourService {
     public Tour updateTour(Tour tour) {
         return tourRepository.save(tour);
     }
+
+
 
     @Override
     public void deleteTour(Long tourId) {

@@ -1,30 +1,34 @@
-import {IDescription} from "@/shared/types/entities/IDescription.ts";
+import {TourAccessibility, TourFormat, TourFormatBehavior} from "@/shared/types/utills";
+import {YandexMapCoordinates} from "@/shared/types/lib";
+import {IDescription} from "./IDescription.ts";
 import {ILocation} from "./ILocation.ts"
-import {TourAccessibility} from "@/shared/types/entities/TourAccessibility.ts";
-import {IContributor} from "@/shared/types/entities/IContributor.ts";
-import {IContacts} from "@/shared/types/entities/IContacts.ts";
+import {IContacts} from "./IContacts.ts";
+import {IReview} from "./IReview.ts";
+import {IUser} from "@/shared/types";
 
 export interface ITour {
-    id: number;
-    title: string;
-    shortDescription: string
-    images: string[]
-    map?: string
-    description?: IDescription;
-    location?: ILocation;
-    contributor?: IContributor
-    price: number;
-    priceForPerson: number;
-    groupCapacity?: number
-    formatBehavior?: string
-    format?: string
-    duration: string;
-    routeLength: number;
-    minAge?: number;
-    rating: string;
+    id: number
+    title: string
+    description: IDescription
+    images: (File | null | string)[]
+    coordinates: YandexMapCoordinates
+    tags: string[]
+    location: ILocation
+    routeLength: number
+    byCity: boolean
+    price: number
+    priceForPerson: number
+    groupCapacity: number
+    formatBehavior: TourFormatBehavior
+    format: TourFormat
+    accessibility: TourAccessibility
+    contacts: IContacts
+    date: Date | undefined
+    time: string
+    duration: number
+    contributorId: number
+    rating: number
     ratingCount: number
-    date?: Date
-    accessibility?: TourAccessibility
-    byCity?: boolean
-    contact?: IContacts
+    reviews?: IReview[]
+    registered?: IUser[]
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {cn} from "@/app/lib/utils.ts";
 
-const CardContent = React.forwardRef<
+export const CardContent = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
@@ -9,5 +9,3 @@ const CardContent = React.forwardRef<
 ))
 
 CardContent.displayName = "CardContent"
-
-export {CardContent}

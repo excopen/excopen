@@ -1,9 +1,8 @@
 export interface IDescription {
-    id: number;
-    mainInfo: string;
-    whatToExpect: string;
-    locations: string[]
+    info: string
+    whatToExpect: string
+    places: string[]
     topics: string[]
-    orgDetails: string;
-    meetingPlace: string;
+    orgDetails: string
+    meetingPlace: string
 }

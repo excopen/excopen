@@ -1,6 +1,6 @@
 package excopen.backend.controllers;
 
-import excopen.backend.dto.FilterToursDTO;
+
 import excopen.backend.dto.TourCreateDTO;
 import excopen.backend.dto.TourResponseDTO;
 import excopen.backend.dto.TourUpdateDTO;
