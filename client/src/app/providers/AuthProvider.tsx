@@ -5,7 +5,7 @@ import {AuthContext} from "@/features";
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     // заглушка
-    const [isAuth, setIsAuth] = useState<boolean>(true)
+    const [isAuth, setIsAuth] = useState<boolean>(false)
 
     return (
         <AuthContext.Provider value={{

@@ -1,6 +1,7 @@
 import {FC} from "react";
 import {Link} from "react-router-dom";
 import {Button} from "@/shared/ui";
+import {useAuthContext} from "@/features";
 
 type BookingButtonProps = {
     size: "lg" | "md"
@@ -9,9 +10,12 @@ type BookingButtonProps = {
 }
 
 export const BookingButton: FC<BookingButtonProps> = ({link, size, text}) => {
+
+    const {isAuth} = useAuthContext()
+
     return (
         <Link to={link}>
-            <Button size={size}>
+            <Button disabled={!isAuth} size={size}>
                 {text}
             </Button>
         </Link>

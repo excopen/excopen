@@ -1,5 +1,5 @@
 import {Navigate, Route, Routes} from "react-router-dom";
-import {RouteNames, UserRole} from "@/shared/types";
+import {RouteNames} from "@/shared/types";
 import {RequireAuth} from "./RequireAuth.tsx";
 import {
     BookingPage,
@@ -19,11 +19,7 @@ export const AppRoutes: FC = () => {
         <Routes>
             <Route
                 path={`/${RouteNames.ON_BOARDING}`}
-                element={
-                    <RequireAuth role={UserRole.client}>
-                        <OnBoardingPage/>
-                    </RequireAuth>
-                }
+                element={<OnBoardingPage/>}
             />
             <Route path={"/"} element={<Layout/>}>
                 <Route path={RouteNames.MAIN} element={<HomePage/>}/>

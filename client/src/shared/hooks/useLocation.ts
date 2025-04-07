@@ -71,7 +71,7 @@ export const useLocation = (store: ILocationTour): ReturnType => {
     }))
 
     return {
-        value: store.location.city,
+        value: store.location?.city,
         state,
         click, select, focus, blur, clear, close
     }
