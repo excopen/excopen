@@ -1,18 +1,35 @@
-import {UserRole} from "@/shared/types";
-import {ReactNode, useState} from "react";
-import {AuthContext} from "@/features";
+import {ReactNode, useEffect, useState} from "react";
+import {AuthContext, useGoogleSingIn, useGoogleSignOut} from "@/features";
+import {IUser} from "@/shared/types";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    // заглушка
     const [isAuth, setIsAuth] = useState<boolean>(false)
+    const [user, setUser] = useState<IUser | null>(null)
+
+    const {data, isSuccess, isError, login} = useGoogleSingIn()
+    const {signOut} = useGoogleSignOut()
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            setIsAuth(true)
+            setUser(data)
+        }
+        if (isError) console.error("Ошибка при авторизации")
+    }, [data, isError, isSuccess]);
+
+    const logout = () => {
+        signOut()
+        setIsAuth(false)
+        setUser(null)
+    }
 
     return (
         <AuthContext.Provider value={{
-            role: UserRole.contributor,
-            userId: 1,
+            user,
             isAuth,
-            setIsAuth
+            login,
+            logout
         }}>
             {children}
         </AuthContext.Provider>

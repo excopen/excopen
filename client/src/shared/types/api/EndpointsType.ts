@@ -7,5 +7,6 @@ export enum EndpointsType {
     CONTRIBUTOR = "contributor",
     TAGS = "tags",
     VIEWED = "viewed",
-    ORDER = "order"
+    ORDER = "order",
+    AUTH = "auth"
 }

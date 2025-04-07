@@ -16,7 +16,7 @@ export const useBookingForm = (tourId: number): ReturnType => {
 
     const navigate = useNavigate()
 
-    const {userId} = useAuthContext()
+    const {user} = useAuthContext()
     const {data: tour} = useTour(tourId)
     const {mutate: booking} = useOrder()
 
@@ -34,7 +34,7 @@ export const useBookingForm = (tourId: number): ReturnType => {
         booking({
             id: Date.now(),
             tourId,
-            userId,
+            userId: user?.id as number,
             groupCapacity: capacity
         })
         navigate(`/${RouteNames.SUCCESS}`)

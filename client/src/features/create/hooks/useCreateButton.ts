@@ -11,13 +11,13 @@ export const useCreateButton = (): ReturnType => {
 
     const navigate = useNavigate()
 
-    const {userId} = useAuthContext()
+    const {user} = useAuthContext()
     const {mutate: createTour} = useCreateTour()
 
     const create = () => {
         store.isSubmitted = true
         if (store.isDisabled) {
-            store.params.contributorId = userId
+            store.params.contributorId = user?.id as number
             createTour(store.tour)
             navigate(`/${RouteNames.SUCCESS}`)
         }

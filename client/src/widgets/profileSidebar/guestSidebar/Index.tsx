@@ -4,17 +4,13 @@ import {Button} from "@/shared/ui";
 import {LogIn} from "lucide-react";
 import {RouteNames} from "@/shared/types";
 import {useNavigate} from "react-router-dom";
-import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 
     const navigate = useNavigate()
 
-    const {setIsAuth} = useAuthContext()
-
     const logIn = () => {
-        setIsAuth(true)
-        navigate(`/${RouteNames.MAIN}`)
+        navigate(`/${RouteNames.AUTH}`)
     }
 
     return (

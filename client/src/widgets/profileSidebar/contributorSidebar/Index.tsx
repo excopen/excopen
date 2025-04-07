@@ -8,8 +8,8 @@ import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 
-    const {userId} = useAuthContext()
-    const {data: user} = useUser(userId)
+    const {user: userAuth} = useAuthContext()
+    const {data: user} = useUser(userAuth?.id as number)
 
     const [isEdit, setIsEdit] = useState<boolean>(false)
 

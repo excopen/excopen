@@ -43,3 +43,7 @@
 .successText {
     @apply text-xl text-grayscale-400 lg:w-2/5 text-center
 }
+
+.auth {
+    @apply flex flex-col h-screen pt-44 gap-4 items-center
+}

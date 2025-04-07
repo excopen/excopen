@@ -12,8 +12,8 @@ type EditContributorProps = {
 
 export const Index: FC<EditContributorProps> = ({name, description, isEdit, setIsEdit}) => {
 
-    const {userId} = useAuthContext()
-    const {data: user} = useUser(userId)
+    const {user: userAuth} = useAuthContext()
+    const {data: user} = useUser(userAuth?.id as number)
     const {mutate} = useUpdateUser()
 
     const [newName, setNewName] = useState<string>(name)

@@ -18,7 +18,7 @@ export const useReqs = (): ReturnType => {
 
     const navigate = useNavigate()
 
-    const {userId}  = useAuthContext()
+    const {user}  = useAuthContext()
     const {data: tags} = useTags()
     const {mutate: addTags} = useAddTags()
 
@@ -33,7 +33,7 @@ export const useReqs = (): ReturnType => {
     }
 
     const click = () => {
-        addTags({userId: userId, tags: selected})
+        addTags({userId: user?.id as number, tags: selected})
         navigate(`/${RouteNames.MAIN}`)
     }
 

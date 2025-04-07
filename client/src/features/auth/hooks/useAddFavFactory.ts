@@ -16,10 +16,10 @@ type ResultType = {
 
 export const useAddFavFactory = (tour: ITour): ResultType => {
 
-    const { userId, isAuth } = useAuthContext()
+    const { user, isAuth } = useAuthContext()
 
     const local = store.favourites
-    const { data } = useHistory(userId, HistoryEndpoint.FAVOURITES)
+    const { data } = useHistory(user?.id as number, HistoryEndpoint.FAVOURITES)
 
     const { mutate: addFav } = useAddHistory()
     const { mutate: deleteFav } = useDeleteHistory()

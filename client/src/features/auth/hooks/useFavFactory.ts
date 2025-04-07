@@ -4,8 +4,8 @@ import {HistoryEndpoint, tourLocalHistoryStore as store, useAuthContext, useHist
 
 export const useFavFactory = () : ITour[] => {
 
-    const {isAuth, userId} = useAuthContext()
-    const {data} = useHistory(userId, HistoryEndpoint.FAVOURITES)
+    const {isAuth, user} = useAuthContext()
+    const {data} = useHistory(user?.id as number, HistoryEndpoint.FAVOURITES)
 
     const local = store.favourites
 

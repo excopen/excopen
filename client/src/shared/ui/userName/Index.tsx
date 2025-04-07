@@ -14,8 +14,8 @@ type EditProfileProps = {
 
 export const Index: FC<EditProfileProps> = ({name, avatar, setIsEdit}) => {
 
-    const {userId} = useAuthContext()
-    const {data: user} = useUser(userId)
+    const {user: userAuth} = useAuthContext()
+    const {data: user} = useUser(userAuth?.id as number)
     const {mutate} = useUpdateUser()
 
     const [selectedAvatar, setSelectedAvatar] = useState<string>(avatar)

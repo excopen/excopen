@@ -2,16 +2,14 @@ import {FC, useState} from "react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger, TourPagination} from "@/shared/ui";
 import {ReviewForm, TourCard, useContributorTours} from "@/entities";
 import {IUser, UserRole} from "@/shared/types";
-import {useUser} from "@/entities/user/model";
-import {useAuthContext} from "@/features";
+import {useAuthContext, useViewFactory} from "@/features";
 import {TourMetrics} from "@/widgets";
 
 export const Index: FC = () => {
 
-    const {role, userId} = useAuthContext()
-
-    const {data: user} = useUser(userId)
-    const {data: myTours} = useContributorTours(userId)
+    const {user} = useAuthContext()
+    const {data: myTours} = useContributorTours(user?.id as number)
+    const visited = useViewFactory()
 
     const [visibleTours, setVisibleTours] = useState<number>(
         3
@@ -20,7 +18,7 @@ export const Index: FC = () => {
     return (
         <Accordion type={"single"} collapsible>
             {
-                role === UserRole.contributor &&
+                user?.role === UserRole.contributor &&
                 <AccordionItem value={"value 1"}>
                     <AccordionTrigger>Ваши популярные экскурсии</AccordionTrigger>
                     <AccordionContent className={"flex flex-col gap-4"}>
@@ -44,7 +42,7 @@ export const Index: FC = () => {
                 <AccordionTrigger>Оцените экскурсии</AccordionTrigger>
                 <AccordionContent className={"flex flex-col gap-4"}>
                     {
-                        user.visitedTours
+                        visited
                             .slice(0, visibleTours)
                             .map(tour => <ReviewForm key={tour.id} tour={tour}/>)
                     }

@@ -11,8 +11,8 @@ type EditClientProps = {
 
 export const Index: FC<EditClientProps> = ({name, isEdit, setIsEdit}) => {
 
-    const {userId} = useAuthContext()
-    const {data: user} = useUser(userId)
+    const {user: userAuth} = useAuthContext()
+    const {data: user} = useUser(userAuth?.id as number)
 
     const [newName, setNewName] = useState<string>(name)
     const {mutate} = useUpdateUser()

@@ -15,8 +15,8 @@ type FormProps = {
 
 export const Index: FC<FormProps> = ({tour}) => {
 
-    const {userId} = useAuthContext()
-    const {data: user} = useUser(userId)
+    const {user: userAuth} = useAuthContext()
+    const {data: user} = useUser(userAuth?.id as number)
 
     const {mutate: createReview} = useCreateReview()
 

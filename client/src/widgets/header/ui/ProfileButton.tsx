@@ -20,16 +20,15 @@ export const ProfileButton: FC = () => {
 
     const navigate = useNavigate()
 
-    const {role, isAuth, setIsAuth} = useAuthContext()
+    const {user, isAuth, logout} = useAuthContext()
 
     const logIn = () => {
-        setIsAuth(true)
-        navigate(`/${RouteNames.MAIN}`)
+        navigate(`/${RouteNames.AUTH}`)
     }
 
     const logOut = () => {
-        setIsAuth(false)
-        navigate(`/${RouteNames.MAIN}`)
+        logout()
+        navigate(`/${RouteNames.AUTH}`)
     }
 
     const createItem: JSX.Element =
@@ -64,7 +63,7 @@ export const ProfileButton: FC = () => {
         <>
             <DropdownMenuSeparator/>
             <DropdownMenuItem onClick={logIn} className={"font-normal text-grayscale-500"} path={`/${RouteNames.CREATE}`}>
-                Войти в профиль
+                Войти
             </DropdownMenuItem>
         </>
 
@@ -89,7 +88,7 @@ export const ProfileButton: FC = () => {
                         <img alt={"star"} src={star} height={16} width={16}/>
                         Избранное
                     </DropdownMenuItem>
-                    {role === UserRole.contributor && isAuth && createItem}
+                    {user?.role === UserRole.contributor && isAuth && createItem}
                     {isAuth && logOutButton}
                     {!isAuth && logInButton}
                 </DropdownMenuGroup>

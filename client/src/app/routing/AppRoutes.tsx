@@ -2,6 +2,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 import {RequireAuth} from "./RequireAuth.tsx";
 import {
+    AuthPage,
     BookingPage,
     ContributorPage, CreatePage, FavouritesPage,
     HomePage,
@@ -17,12 +18,10 @@ import {FC} from "react";
 export const AppRoutes: FC = () => {
     return (
         <Routes>
-            <Route
-                path={`/${RouteNames.ON_BOARDING}`}
-                element={<OnBoardingPage/>}
-            />
+            <Route path={`/${RouteNames.ON_BOARDING}`} element={<OnBoardingPage/>}/>
             <Route path={"/"} element={<Layout/>}>
                 <Route path={RouteNames.MAIN} element={<HomePage/>}/>
+                <Route path={RouteNames.AUTH} element={<AuthPage/>}/>
                 <Route path={RouteNames.LOCATIONS} element={<LocationsPage/>}/>
                 <Route path={`${RouteNames.TOURS}/:location`} element={<ToursPage/>}/>
                 <Route path={`${RouteNames.TOUR}/:id/:title`} element={<TourPage/>}/>
