@@ -60,6 +60,7 @@ export const useLocation = (store: ILocationTour): ReturnType => {
         }
     }
 
+
     const clear = () => {
         store.location.city = ""
     }
