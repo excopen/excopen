@@ -1,18 +1,22 @@
 package excopen.backend.servicesImpl;
 
-import excopen.backend.dto.TourDTO;
-import excopen.backend.entities.Description;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import excopen.backend.dto.FilterToursDTO;
+import excopen.backend.entities.QTour;
 import excopen.backend.entities.Tour;
 import excopen.backend.entities.User;
 import excopen.backend.iservices.ITourService;
-import excopen.backend.mapper.TourMapper;
 import excopen.backend.repositories.TourRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,37 +55,8 @@ public class TourServiceImpl implements ITourService {
 
 
     @Override
-    public Tour updateTour(Long tourId, Tour updatedTour, Description updatedDesc) {
-        Tour existingTour = getTourById(tourId);
-
-        if (updatedTour.getTitle() != null) {
-            existingTour.setTitle(updatedTour.getTitle());
-        }
-        if (updatedTour.getLocationId() != null) {
-            existingTour.setLocationId(updatedTour.getLocationId());
-        }
-        if (updatedTour.getPrice() != null) {
-            existingTour.setPrice(updatedTour.getPrice());
-        }
-        if (updatedTour.getDuration() != null) {
-            existingTour.setDuration(updatedTour.getDuration());
-        }
-        if (updatedTour.getRouteLength() != null) {
-            existingTour.setRouteLength(updatedTour.getRouteLength());
-        }
-        if (updatedTour.getMinAge() != null) {
-            existingTour.setMinAge(updatedTour.getMinAge());
-        }
-        if (updatedTour.getMaxCapacity() != null) {
-            existingTour.setMaxCapacity(updatedTour.getMaxCapacity());
-        }
-        if (updatedTour.getRating() != null) {
-            existingTour.setRating(updatedTour.getRating());
-        }
-
-
-
-        return tourRepository.save(existingTour);
+    public Tour updateTour(Tour tour) {
+        return tourRepository.save(tour);
     }
 
 
@@ -103,7 +78,7 @@ public class TourServiceImpl implements ITourService {
     }
 
     @Override
-    public List<Tour> findToursByDuration(String duration) {
+    public List<Tour> findToursByDuration(BigDecimal duration) {
         return tourRepository.findByDuration(duration);
     }
 
@@ -114,12 +89,66 @@ public class TourServiceImpl implements ITourService {
         return tourRepository.findRecommendedTours(preferencesVector);
     }
 
+    @Override
+    public List<Tour> getSimilarTours(Long tourId) {
+        Tour baseTour = this.getTourById(tourId);
+        String vectorString = convertArrayToVectorString(baseTour.getVectorRepresentation());
+        return tourRepository.findSimilarTours(tourId, vectorString);
+    }
+
+    public Page<Tour> filterTours(FilterToursDTO filter, Pageable pageable) {
+        QTour tour = QTour.tour;
+        BooleanBuilder predicate = new BooleanBuilder();
+
+        if (filter.getTitle() != null) {
+            predicate.and(tour.title.containsIgnoreCase(filter.getTitle()));
+        }
+        if (filter.getLocationId() != null) {
+            predicate.and(tour.locationId.eq(filter.getLocationId()));
+        }
+        if (filter.getPriceFrom() != null) {
+            predicate.and(tour.price.goe(filter.getPriceFrom()));
+        }
+        if (filter.getPriceTo() != null) {
+            predicate.and(tour.price.loe(filter.getPriceTo()));
+        }
+        if (filter.getDurationFrom() != null) {
+            predicate.and(tour.duration.goe(filter.getDurationFrom()));
+        }
+        if (filter.getDurationTo() != null) {
+            predicate.and(tour.duration.loe(filter.getDurationTo()));
+        }
+        if (filter.getRouteLengthFrom() != null) {
+            predicate.and(tour.routeLength.goe(filter.getRouteLengthFrom()));
+        }
+        if (filter.getRouteLengthTo() != null) {
+            predicate.and(tour.routeLength.loe(filter.getRouteLengthTo()));
+        }
+        if (filter.getRatingFrom() != null) {
+            predicate.and(tour.rating.goe(filter.getRatingFrom()));
+        }
+        if (filter.getRatingTo() != null) {
+            predicate.and(tour.rating.loe(filter.getRatingTo()));
+        }
+        if (filter.getTourType() != null) {
+            predicate.and(tour.tourType.eq(filter.getTourType()));
+        }
+        if (filter.getTransportType() != null) {
+            predicate.and(tour.transportType.eq(filter.getTransportType()));
+        }
+        if (filter.getMinAge() != null) {
+            predicate.and(tour.minAge.loe(filter.getMinAge()));
+        }
+        if (filter.getCapacity() != null) {
+            predicate.and(tour.maxCapacity.goe(filter.getCapacity()));
+        }
+
+        return tourRepository.findAll(predicate, pageable);
+    }
+
     private String convertArrayToVectorString(int[] array) {
         return "[" + Arrays.stream(array)
                 .mapToObj(String::valueOf)
                 .collect(Collectors.joining(", ")) + "]";
     }
-
-
-
 }

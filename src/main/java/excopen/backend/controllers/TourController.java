@@ -15,11 +15,17 @@ import excopen.backend.mapper.TourMapper;
 import excopen.backend.security.RequiresOwnership;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -63,6 +69,29 @@ public class TourController {
 
         return tourMapper.toResponseDTO(newTour, description);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<TourResponseDTO>> searchTours(
+            @ModelAttribute FilterToursDTO filter,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder) {
+
+        Sort.Direction direction = sortOrder.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Tour> tours = tourService.filterTours(filter, pageable);
+
+        Page<TourResponseDTO> response = tours.map(tour -> {
+            Description description = descriptionService.getDescriptionByTourId(tour.getId());
+            return tourMapper.toResponseDTO(tour, description);
+        });
+
+        return ResponseEntity.ok(response);
+    }
+
+
 
     @RequiresOwnership(entityClass = Tour.class)
     @PutMapping("/{tourId}")
@@ -110,7 +139,7 @@ public class TourController {
     }
 
     @GetMapping("/duration/{duration}")
-    public List<TourResponseDTO> findToursByDuration(@PathVariable String duration) {
+    public List<TourResponseDTO> findToursByDuration(@PathVariable BigDecimal duration) {
         List<Tour> tours = tourService.findToursByDuration(duration);
         return tourMapper.toResponseDTOList(tours, descriptionService);
     }
@@ -121,19 +150,9 @@ public class TourController {
         return tourMapper.toResponseDTOList(recommendedTours, descriptionService);
     }
 
-    @GetMapping("/location/{locationId}")
-    public List<Tour> findToursByLocation(@PathVariable Long locationId) {
-        return tourService.findToursByLocation(locationId);
+    @GetMapping("/{tourId}/similar")
+    public List<TourResponseDTO> getSimilarTours(@PathVariable Long tourId) {
+        List<Tour> similarTours = tourService.getSimilarTours(tourId);
+        return tourMapper.toResponseDTOList(similarTours, descriptionService);
     }
-
-    @GetMapping("/duration/{duration}")
-    public List<Tour> findToursByDuration(@PathVariable String duration) {
-        return tourService.findToursByDuration(duration);
-    }
-
-    @GetMapping("/recommendations/{userId}")
-    public List<TourDTO> getRecommendedTours(@PathVariable Long userId) {
-        return tourService.getRecommendedTours(userId);
-    }
-
 }
