@@ -4,26 +4,33 @@ import excopen.backend.entities.Review;
 import excopen.backend.iservices.IReviewService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import excopen.backend.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
 public class ReviewServiceImpl implements IReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final TourServiceImpl tourService;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, TourServiceImpl tourService) {
         this.reviewRepository = reviewRepository;
+        this.tourService = tourService;
     }
 
     @Override
+    @Transactional
     public Review createReview(Review review) {
-        return reviewRepository.save(review);
+        Review savedReview = reviewRepository.save(review);
+        tourService.updateTourStats(review.getTourId());
+        return savedReview;
     }
 
     @Override
@@ -33,21 +40,24 @@ public class ReviewServiceImpl implements IReviewService {
     }
 
     @Override
+    @Transactional
     public Review updateReview(Review review) {
-        if (reviewRepository.existsById(review.getId())) {
-            return reviewRepository.save(review);
-        } else {
-            throw new IllegalArgumentException("Review with ID " + review.getId() + " does not exist.");
+        Review existingReview = getReviewById(review.getId());
+
+        Review updatedReview = reviewRepository.save(review);
+        if (!Objects.equals(existingReview.getRating(), review.getRating())) {
+            tourService.updateTourStats(review.getTourId());
         }
+        return updatedReview;
     }
 
     @Override
+    @Transactional
     public void deleteReview(Long reviewId) {
-        if (reviewRepository.existsById(reviewId)) {
-            reviewRepository.deleteById(reviewId);
-        } else {
-            throw new IllegalArgumentException("Review with ID " + reviewId + " does not exist.");
-        }
+        Review review = getReviewById(reviewId);
+        Long tourId = review.getTourId();
+        reviewRepository.delete(review);
+        tourService.updateTourStats(tourId);
     }
 
     @Override
@@ -60,14 +70,18 @@ public class ReviewServiceImpl implements IReviewService {
         return reviewRepository.findByUserId(userId);
     }
 
-    @Override
-    public double getAverageRatingForTour(Long tourId) {
-        List<Review> reviews = reviewRepository.findByTourId(tourId);
-        if (reviews.isEmpty()) {
-            return 0.0;
-        }
-        double totalRating = reviews.stream().mapToDouble(Review::getRating).sum();
-        return totalRating / reviews.size();
-    }
+//    @Override
+//    public double getAverageRatingForTour(Long tourId) {
+//        List<Review> reviews = reviewRepository.findByTourId(tourId);
+//        if (reviews.isEmpty()) {
+//            return 0.0;
+//        }
+//        double totalRating = reviews.stream().mapToDouble(Review::getRating).sum();
+//        return totalRating / reviews.size();
+//    }
+
+
+
+
 }
 

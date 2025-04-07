@@ -22,6 +22,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,12 +54,12 @@ public class TourController {
     @ResponseStatus(HttpStatus.CREATED)
     public TourResponseDTO createTour(
             @Valid @RequestBody TourCreateDTO request,
-            @AuthenticationPrincipal Jwt jwt
+            @AuthenticationPrincipal OAuth2User principal
     ) {
-        if (jwt == null) {
+        if (principal == null) {
             throw new IllegalStateException("Пользователь не аутентифицирован");
         }
-        String googleId = jwt.getClaim("sub");
+        String googleId = principal.getAttribute("sub");
         User creator = userService.getUserByGoogleId(googleId);
 
         Tour newTour = tourMapper.toEntity(request);
@@ -96,26 +97,26 @@ public class TourController {
     @RequiresOwnership(entityClass = Tour.class)
     @PutMapping("/{tourId}")
     public TourResponseDTO updateTour(
-            @PathVariable Long id,
+            @PathVariable Long tourId,
             @Valid @RequestBody TourUpdateDTO updateDTO,
-            @AuthenticationPrincipal Jwt jwt
+            @AuthenticationPrincipal OAuth2User principal
     ) {
-        if (!id.equals(updateDTO.getId())) {
-            throw new IllegalArgumentException("ID в URL и теле запроса не совпадают");
-        }
         Tour newTour = tourMapper.toEntity(updateDTO);
+        newTour.setId(tourId);
+
         Tour updatedTour = tourService.updateTour(newTour);
 
         Description description = descriptionMapper.toEntity(updateDTO.getDescription());
         Description updatedDescription = descriptionService.updateDescription(description);
 
-
         return tourMapper.toResponseDTO(updatedTour, updatedDescription);
     }
 
+
     @RequiresOwnership(entityClass = Tour.class)
     @DeleteMapping("/{tourId}")
-    public void deleteTour(@PathVariable Long tourId) {
+    public void deleteTour(@PathVariable Long tourId,
+                           @AuthenticationPrincipal OAuth2User principal) {
         tourService.deleteTour(tourId);
     }
 

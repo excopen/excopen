@@ -12,9 +12,6 @@ import java.math.BigDecimal;
 @Data
 public class TourUpdateDTO {
 
-    @NotNull(message = "ID тура обязателен")
-    private Long id;
-
     @NotBlank(message = "Название тура не может быть пустым")
     @Size(max = 100, message = "Название тура не должно превышать 100 символов")
     private String title;
@@ -44,13 +41,14 @@ public class TourUpdateDTO {
     @NotNull(message = "Максимальная вместимость обязательна")
     private Integer maxCapacity;
 
-    @NotBlank(message = "Укажите формат экскурсии")
+    @NotNull(message = "Укажите формат экскурсии")
     private TourType tourType;
 
-    @NotBlank(message = "Укажите тип транспорта")
+    @NotNull(message = "Укажите тип транспорта")
     private TransportType transportType;
 
     @Valid
     @NotNull(message = "Описание обязательно")
     private DescriptionDTO description;
 }
+

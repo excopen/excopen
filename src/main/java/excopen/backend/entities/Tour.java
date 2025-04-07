@@ -34,12 +34,14 @@ public class Tour implements Serializable {
     @Digits(integer = 2, fraction = 1)
     private BigDecimal routeLength;
 
+    @Column(updatable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     @JdbcTypeCode(SqlTypes.VECTOR)
     private int[] vectorRepresentation;
 
+    @Column(updatable = false)
     @JoinColumn(name = "creator_id")
     private Long creatorId;
 
@@ -48,6 +50,8 @@ public class Tour implements Serializable {
 
     @Digits(integer = 2, fraction = 1)
     private BigDecimal rating;
+
+    private Integer reviewCount = 0;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tour_type")
