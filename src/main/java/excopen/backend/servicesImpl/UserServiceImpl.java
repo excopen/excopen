@@ -1,28 +1,39 @@
 package excopen.backend.servicesImpl;
 
+import excopen.backend.constants.Role;
+import excopen.backend.dto.GuideRequestDto;
 import excopen.backend.entities.User;
 import excopen.backend.iservices.IUserService;
 import excopen.backend.repositories.UserRepository;
+import excopen.backend.util.PhoneNumberValidator;
+import excopen.backend.util.VerificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @Service
 public class UserServiceImpl extends DefaultOAuth2UserService implements IUserService {
 
-
     private final UserRepository userRepository;
-    // private final UserFactory userFactory;
+    private final VerificationService verificationService;
+    private final PhoneNumberValidator phoneNumberValidator;
+    private final ConcurrentMap<Long, GuideRequestDto> pendingGuideRequests = new ConcurrentHashMap<>();
+
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, VerificationService verificationService, PhoneNumberValidator phoneNumberValidator) {
         this.userRepository = userRepository;
+        this.verificationService = verificationService;
+        this.phoneNumberValidator = phoneNumberValidator;
     }
 
     @Override
@@ -92,6 +103,54 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
                 .map(User::getPreferencesVector)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
+
+
+    @Transactional
+    public void requestGuideRole(Long userId, GuideRequestDto guideRequestDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        if (user.getRole() == Role.GUIDE) {
+            throw new IllegalArgumentException("Вы уже являетесь гидом");
+        }
+
+        String normalizedPhone = phoneNumberValidator.normalizePhoneNumber(guideRequestDto.getPhoneNumber());
+
+        verificationService.sendVerificationCode(normalizedPhone);
+
+        pendingGuideRequests.put(userId, guideRequestDto);
+    }
+
+    @Transactional
+    public boolean confirmGuideRole(Long userId, String phoneNumber, String code) {
+        String normalizedPhone = phoneNumberValidator.normalizePhoneNumber(phoneNumber);
+
+        if (!verificationService.verifyCode(normalizedPhone, code)) {
+            return false;
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+
+        GuideRequestDto guideRequestDto = pendingGuideRequests.remove(userId);
+        if (guideRequestDto != null) {
+            user.setPhoneNumber(normalizedPhone);
+            user.setDescription(guideRequestDto.getDescription());
+            user.setCity(guideRequestDto.getCity());
+        }
+
+        user.setRole(Role.GUIDE);
+        userRepository.save(user);
+
+        return true;
+    }
+
+    public boolean isGuide(Long userId) {
+        return getUserById(userId).getRole().equals(Role.GUIDE);
+    }
+
+
+
 
 
 }

@@ -48,7 +48,6 @@ public class TourServiceImpl implements ITourService {
         Tour savedTour = tourRepository.save(tour);
         savedTour.setCreatorId(creatorId);
         return savedTour;
-
     }
 
 

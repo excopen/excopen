@@ -1,5 +1,6 @@
 package excopen.backend.mapper;
 
+import excopen.backend.dto.GuideResponseDTO;
 import excopen.backend.dto.UserCreateDTO;
 import excopen.backend.dto.UserResponseDTO;
 import excopen.backend.dto.UserUpdateDTO;
@@ -29,4 +30,8 @@ public interface UserMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "secondVector", ignore = true)
     void updateFromDTO(UserUpdateDTO dto, @MappingTarget User user);
+
+
+    GuideResponseDTO toGuideResponse(User user);
+
 }

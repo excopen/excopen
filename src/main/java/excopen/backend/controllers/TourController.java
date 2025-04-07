@@ -1,6 +1,7 @@
 package excopen.backend.controllers;
 
-
+import excopen.backend.constants.Role;
+import excopen.backend.dto.FilterToursDTO;
 import excopen.backend.dto.TourCreateDTO;
 import excopen.backend.dto.TourResponseDTO;
 import excopen.backend.dto.TourUpdateDTO;
@@ -23,8 +24,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -62,6 +63,10 @@ public class TourController {
         String googleId = principal.getAttribute("sub");
         User creator = userService.getUserByGoogleId(googleId);
 
+        if (!creator.getRole().equals(Role.GUIDE)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Только гид может создавать тур");
+        }
+
         Tour newTour = tourMapper.toEntity(request);
         tourService.createTour(newTour, creator.getId());
 
@@ -70,6 +75,24 @@ public class TourController {
 
         return tourMapper.toResponseDTO(newTour, description);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<TourResponseDTO>> searchTours(
+            @ModelAttribute FilterToursDTO filter,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder) {
+
+        Sort.Direction direction = sortOrder.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
+
+        Page<Tour> tours = tourService.filterTours(filter, pageable);
+
+        Page<TourResponseDTO> response = tours.map(tour -> {
+            Description description = descriptionService.getDescriptionByTourId(tour.getId());
+            return tourMapper.toResponseDTO(tour, description);
+        });
 
     @GetMapping("/search")
     public ResponseEntity<Page<TourResponseDTO>> searchTours(
@@ -131,6 +154,30 @@ public class TourController {
     public List<TourResponseDTO> getAllTours() {
         List<Tour> tours = tourService.getAllTours();
         return tourMapper.toResponseDTOList(tours, descriptionService);
+    }
+
+    @GetMapping("/location/{locationId}")
+    public List<TourResponseDTO> findToursByLocation(@PathVariable Long locationId) {
+        List<Tour> tours = tourService.findToursByLocation(locationId);
+        return tourMapper.toResponseDTOList(tours, descriptionService);
+    }
+
+    @GetMapping("/duration/{duration}")
+    public List<TourResponseDTO> findToursByDuration(@PathVariable BigDecimal duration) {
+        List<Tour> tours = tourService.findToursByDuration(duration);
+        return tourMapper.toResponseDTOList(tours, descriptionService);
+    }
+
+    @GetMapping("/recommendations/{userId}")
+    public List<TourResponseDTO> getRecommendedTours(@PathVariable Long userId) {
+        List<Tour> recommendedTours = tourService.getRecommendedTours(userId);
+        return tourMapper.toResponseDTOList(recommendedTours, descriptionService);
+    }
+
+    @GetMapping("/{tourId}/similar")
+    public List<TourResponseDTO> getSimilarTours(@PathVariable Long tourId) {
+        List<Tour> similarTours = tourService.getSimilarTours(tourId);
+        return tourMapper.toResponseDTOList(similarTours, descriptionService);
     }
 
     @GetMapping("/location/{locationId}")

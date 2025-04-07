@@ -14,7 +14,6 @@ import java.util.Optional;
 public class DescriptionServiceImpl implements IDescriptionService {
 
     private final DescriptionRepository descriptionRepository;
-  
     @Autowired
     public DescriptionServiceImpl(DescriptionRepository descriptionRepository, UserServiceImpl userService) {
         this.descriptionRepository = descriptionRepository;
