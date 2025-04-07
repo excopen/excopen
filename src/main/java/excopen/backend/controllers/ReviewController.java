@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,6 +59,7 @@ public class ReviewController {
 
         ReviewResponseDTO response = reviewMapper.toResponseDTO(reviewService.createReview(review));
         return ResponseEntity.ok(response);
+
     }
 
 
@@ -65,6 +67,7 @@ public class ReviewController {
     public ReviewResponseDTO getReviewById(@PathVariable Long reviewId) {
         Review review = reviewService.getReviewById(reviewId);
         return reviewMapper.toResponseDTO(review);
+
     }
 
     @RequiresOwnership(entityClass = Review.class)
@@ -77,12 +80,14 @@ public class ReviewController {
         reviewMapper.updateReviewFromDTO(reviewDTO, existingReview);
 
         return reviewMapper.toResponseDTO(reviewService.updateReview(existingReview));
+
     }
 
     @RequiresOwnership(entityClass = Review.class)
     @DeleteMapping("/{reviewId}")
     public void deleteReview(@PathVariable Long reviewId,
                              @AuthenticationPrincipal OAuth2User principal) {
+
         reviewService.deleteReview(reviewId);
     }
 

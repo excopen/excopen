@@ -26,7 +26,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -134,6 +133,7 @@ public class TourController {
 
         return tourMapper.toResponseDTO(updatedTour, updatedDescription);
     }
+
 
 
     @RequiresOwnership(entityClass = Tour.class)

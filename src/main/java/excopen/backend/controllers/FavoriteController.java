@@ -57,4 +57,5 @@ public class FavoriteController {
         List<Tour> tours = favoriteService.getFavoriteToursByUser(user.getId());
         return tourMapper.toResponseDTOList(tours, descriptionService);
     }
+
 }

@@ -35,6 +35,8 @@ public class TourServiceImpl implements ITourService {
     private final UserServiceImpl userService;
     private final DescriptionServiceImpl descriptionService;
 
+    private final UserServiceImpl userService;
+
     @Autowired
     public TourServiceImpl(TourRepository tourRepository, ReviewRepository reviewRepository,
                            UserServiceImpl userService) {
@@ -56,7 +58,6 @@ public class TourServiceImpl implements ITourService {
         return tourRepository.findById(tourId)
                 .orElseThrow(() -> new IllegalArgumentException("Tour not found"));
     }
-
 
     @Override
     public Tour updateTour(Tour tour) {

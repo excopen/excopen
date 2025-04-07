@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 
 import static excopen.backend.constants.Constants.tagCount;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,12 +45,12 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         role = Role.USER;
+
 
         this.preferencesVector = new int[tagCount];
         this.secondVector = new int[tagCount];

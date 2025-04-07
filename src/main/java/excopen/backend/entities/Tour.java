@@ -24,7 +24,7 @@ public class Tour implements Serializable {
     private Long id;
 
     private String title;
-
+  
     @JoinColumn(name = "location_id")
     private Long locationId;
 

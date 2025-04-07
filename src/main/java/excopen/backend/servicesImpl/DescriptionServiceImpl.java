@@ -22,7 +22,6 @@ public class DescriptionServiceImpl implements IDescriptionService {
 
     public Description createDescription(Description description, Long tourId) {
         description.setTourId(tourId);
-
         return descriptionRepository.save(description);
     }
 
@@ -31,7 +30,7 @@ public class DescriptionServiceImpl implements IDescriptionService {
     public Optional<Description> getDescriptionById(Long descriptionId) {
         return descriptionRepository.findById(descriptionId);
     }
-
+	
     @Override
     public Description getDescriptionByTourId(Long tourId) {
         return descriptionRepository.findByTourId(tourId)
