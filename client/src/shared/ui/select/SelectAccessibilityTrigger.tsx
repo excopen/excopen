@@ -8,14 +8,12 @@ import {Users} from "lucide-react";
 export const SelectAccessibilityTrigger = React.forwardRef<
     React.ElementRef<typeof SelectPrimitive.Trigger>,
     React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
-        placeholder: string;
         isSearch: boolean;
         isTouched: boolean;
     }
 >((
     {
         className,
-        placeholder,
         isSearch,
         isTouched,
         value,
@@ -53,9 +51,7 @@ export const SelectAccessibilityTrigger = React.forwardRef<
     return (
         <div className={containerStyles}>
             <SelectGroup>
-                <SelectLabel className={placeholderStyles}>
-                    {placeholder}
-                </SelectLabel>
+                <SelectLabel className={placeholderStyles}>Участники</SelectLabel>
             </SelectGroup>
             <SelectPrimitive.Trigger ref={ref} className={cn(triggerStyles, className)} {...props}>
                 <Users className={iconStyles}/>

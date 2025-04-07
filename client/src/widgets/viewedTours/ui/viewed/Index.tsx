@@ -1,5 +1,5 @@
 import {FC, useEffect, useState} from "react";
-import {searchByCity, searchByRegion, useViewFactory} from "@/features";
+import {searchTourByCity, searchTourByRegion, useViewFactory} from "@/features";
 import style from "@/widgets/viewedTours/ui/style.module.css";
 import {TourCard} from "@/entities";
 import {TourPagination} from "@/shared/ui";
@@ -21,8 +21,8 @@ export const Index: FC<ToursProps> = ({city, byCity}) => {
 
         let filteredTours: ITour[] = viewed
 
-        if (byCity) filteredTours = searchByRegion(filteredTours, byCity)
-        if (city) filteredTours = searchByCity(filteredTours, city)
+        if (byCity) filteredTours = searchTourByRegion(filteredTours, byCity)
+        if (city) filteredTours = searchTourByCity(filteredTours, city)
 
         setTours(filteredTours)
 

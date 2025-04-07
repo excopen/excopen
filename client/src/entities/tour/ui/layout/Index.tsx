@@ -11,11 +11,13 @@ type LayoutProps = {
 }
 
 export const Index: FC<LayoutProps> = ({tour}) => {
-    const {images, map} = tour;
     return (
         <div className={style.container}>
             <Header tour={tour}/>
-            <Carousel images={images} map={map}/>
+            <Carousel
+                images={tour.images as string[]}
+                coordinates={tour.coordinates}
+            />
             <div className={style.subContainer}>
                 <Description tour={tour}/>
                 <Sidebar tour={tour}/>

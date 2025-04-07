@@ -11,8 +11,8 @@ export const Index: FC<ContactsProps> = ({contacts}) => {
     return (
         <div className={style.container}>
             <ContactButton phone={contacts.phone}/>
-            <TelegramButton id={contacts.telegram as string}/>
-            <VKButton id={contacts.vk as string}/>
+            {contacts.telegram && <TelegramButton id={contacts.telegram as string}/>}
+            {contacts.vk && <VKButton id={contacts.vk as string}/>}
         </div>
     );
 };

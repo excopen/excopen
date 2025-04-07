@@ -19,7 +19,7 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
         <div className={style.container}>
 
             <div className={style.subContainer}>
-                <p>{tour.description?.mainInfo}</p>
+                <p>{tour.description.info}</p>
             </div>
 
             <h2 className={style.heading}>
@@ -32,7 +32,7 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                     Что вам встретится по пути
                 </span>
                 <ul className={style.list}>
-                    {tour.description?.locations.map((location, i) => (
+                    {tour.description.places.map((location, i) => (
                         <li key={i}>{location}</li>
                     ))}
                 </ul>

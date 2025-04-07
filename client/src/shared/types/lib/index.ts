@@ -1,1 +1,1 @@
-export * from "./YandexMapPoint.ts"
+export * from "./YandexMapCoordinates.ts"

@@ -1,7 +1,8 @@
 import {FC, ReactNode, useCallback, useEffect, useMemo, useState} from "react";
 import {WidgetContext} from "./context.ts"
-import {searchTourStore, useLocations} from "@/entities";
-import {searchByLocation} from "@/features";
+import {useLocations} from "@/entities";
+import {searchLocation, searchTourStore as store} from "@/features";
+import {ILocation} from "@/shared/types";
 
 export const Provider: FC<{children: ReactNode}> = ({children}) => {
 
@@ -13,7 +14,7 @@ export const Provider: FC<{children: ReactNode}> = ({children}) => {
 
     useEffect(() => {
         setCity(city || "А")
-        setCities(searchByLocation(city || "А", locations))
+        setCities(searchLocation(city || "А", locations))
     }, [city, locations])
 
     const focus = useCallback(() => {
@@ -23,12 +24,12 @@ export const Provider: FC<{children: ReactNode}> = ({children}) => {
 
     const blur = useCallback(() => {
         setIsActive(false)
-        setCities(searchByLocation(city, locations))
+        setCities(searchLocation(city, locations))
     }, [city, locations])
 
     const selectCity = useCallback((city: string) => {
         window.scroll(0,0)
-        searchTourStore.location = city
+        store.searchParams.location = locations.find(i => i.city === city) as ILocation
     }, [])
     
     const context = useMemo(() => ({

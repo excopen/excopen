@@ -1,11 +1,11 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
-import {ITag} from "@/shared/types";
 import {addTags} from "@/entities/tags/api";
+import {ITag} from "@/shared/types";
 
 type Props = {
     userId: number
-    tags: ITag[]
+    tags: string[]
 }
 
 export const useAddTags = () => {

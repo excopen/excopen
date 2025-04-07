@@ -1,7 +1,13 @@
 import {ITour} from "@/shared/types";
 import {useCallback, useEffect, useState} from "react";
-import {tourHistoryStore, useAddToFav, useDeleteFromFav, useFav} from "@/entities";
-import {useAuthContext} from "@/features";
+import {
+    HistoryEndpoint,
+    tourLocalHistoryStore as store,
+    useAddHistory,
+    useAuthContext,
+    useDeleteHistory,
+    useHistory
+} from "@/features";
 
 type ResultType = {
     isActive: boolean
@@ -12,11 +18,11 @@ export const useAddFavFactory = (tour: ITour): ResultType => {
 
     const { userId, isAuth } = useAuthContext()
 
-    const local = tourHistoryStore.favourites
-    const { data } = useFav(userId)
+    const local = store.favourites
+    const { data } = useHistory(userId, HistoryEndpoint.FAVOURITES)
 
-    const { mutate: addFav } = useAddToFav()
-    const { mutate: deleteFav } = useDeleteFromFav()
+    const { mutate: addFav } = useAddHistory()
+    const { mutate: deleteFav } = useDeleteHistory()
 
     const [isActive, setIsActive] = useState<boolean>(false)
 
@@ -28,11 +34,11 @@ export const useAddFavFactory = (tour: ITour): ResultType => {
 
     const clickHandler = useCallback(() => {
         if (!isActive) {
-            if (!isAuth) tourHistoryStore.addToFav(tour)
-            else addFav(tour.id)
+            if (!isAuth) store.addToFav(tour)
+            else addFav({tourId: tour.id, type: HistoryEndpoint.FAVOURITES})
         } else {
-            if (!isAuth) tourHistoryStore.deleteFromFav(tour)
-            else deleteFav(tour.id)
+            if (!isAuth) store.deleteFromFav(tour)
+            else deleteFav({tourId: tour.id, type: HistoryEndpoint.FAVOURITES})
         }
         setIsActive(!isActive)
     }, [addFav, deleteFav, isActive, isAuth, tour])

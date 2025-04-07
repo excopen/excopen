@@ -32,8 +32,14 @@ public interface TourRepository extends JpaRepository<Tour, Long>, QuerydslPredi
             "LIMIT 10", nativeQuery = true)
     List<Tour> findSimilarTours(@Param("tourId") Long tourId, @Param("vector") String vector);
 
+
     @Query(value = "SELECT * FROM tours ORDER BY vector_representation <=> CAST(:preferencesVector AS vector) LIMIT 10", nativeQuery = true)
     List<Tour> findRecommendedTours(@Param("preferencesVector") String preferencesVector);
 
+    @Query(value = "SELECT * FROM tours " +
+            "WHERE id <> :tourId " +
+            "ORDER BY vector_representation <-> CAST(:vector AS vector) " +
+            "LIMIT 10", nativeQuery = true)
+    List<Tour> findSimilarTours(@Param("tourId") Long tourId, @Param("vector") String vector);
 
 }

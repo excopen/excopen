@@ -7,7 +7,7 @@
 }
 
 .containerVerMode {
-    @apply w-[340px] py-8 px-4 max-lg:hidden
+    @apply w-[320px] py-8 px-4 max-lg:hidden
 }
 
 .header {

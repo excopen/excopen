@@ -59,37 +59,8 @@ public class TourServiceImpl implements ITourService {
 
 
     @Override
-    public Tour updateTour(Long tourId, Tour updatedTour, Description updatedDesc) {
-        Tour existingTour = getTourById(tourId);
-
-        if (updatedTour.getTitle() != null) {
-            existingTour.setTitle(updatedTour.getTitle());
-        }
-        if (updatedTour.getLocationId() != null) {
-            existingTour.setLocationId(updatedTour.getLocationId());
-        }
-        if (updatedTour.getPrice() != null) {
-            existingTour.setPrice(updatedTour.getPrice());
-        }
-        if (updatedTour.getDuration() != null) {
-            existingTour.setDuration(updatedTour.getDuration());
-        }
-        if (updatedTour.getRouteLength() != null) {
-            existingTour.setRouteLength(updatedTour.getRouteLength());
-        }
-        if (updatedTour.getMinAge() != null) {
-            existingTour.setMinAge(updatedTour.getMinAge());
-        }
-        if (updatedTour.getMaxCapacity() != null) {
-            existingTour.setMaxCapacity(updatedTour.getMaxCapacity());
-        }
-        if (updatedTour.getRating() != null) {
-            existingTour.setRating(updatedTour.getRating());
-        }
-
-
-
-        return tourRepository.save(existingTour);
+    public Tour updateTour(Tour tour) {
+        return tourRepository.save(tour);
     }
 
 
@@ -197,7 +168,6 @@ public class TourServiceImpl implements ITourService {
         tour.setRating(newRating);
         tour.setReviewCount(reviewCount);
         tourRepository.save(tour);
-
     }
 
     private String convertArrayToVectorString(int[] array) {

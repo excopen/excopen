@@ -1,17 +1,18 @@
 import {useMemo} from "react";
 import {ITour} from "@/shared/types";
-import {tourHistoryStore, useViewed} from "@/entities";
-import {useAuthContext} from "@/features";
+import {HistoryEndpoint, tourLocalHistoryStore as store, useAuthContext, useHistory} from "@/features";
 
 export const useViewFactory = () : ITour[] => {
 
     const {isAuth, userId} = useAuthContext()
-    const {data} = useViewed(userId)
-    const local = tourHistoryStore.viewed
+    const {data} = useHistory(userId, HistoryEndpoint.VIEWED)
+    const local = store.viewed
+
+    //isAuth ? data : local
 
     return useMemo(
-        () => isAuth ? data : local,
-        [local, data, isAuth]
+        () => local,
+        [local]
     )
 
 }

@@ -92,7 +92,6 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
         if (preferencesVector.length != user.getPreferencesVector().length) {
             throw new IllegalArgumentException("Vector length mismatch");
         }
-
         user.setPreferencesVector(preferencesVector);
         return userRepository.save(user);
     }

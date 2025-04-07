@@ -2,12 +2,13 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {RouteNames, UserRole} from "@/shared/types";
 import {RequireAuth} from "./RequireAuth.tsx";
 import {
-    ContributorInfoPage, CreateTourPage, FavouritesPage,
+    BookingPage,
+    ContributorPage, CreatePage, FavouritesPage,
     HomePage,
     Layout,
     LocationsPage,
     OnBoardingPage,
-    ProfilePage, SettingsPage,
+    ProfilePage, SettingsPage, SuccessPage,
     TourPage,
     ToursPage, WipPage
 } from "@/pages";
@@ -29,10 +30,26 @@ export const AppRoutes: FC = () => {
                 <Route path={RouteNames.LOCATIONS} element={<LocationsPage/>}/>
                 <Route path={`${RouteNames.TOURS}/:location`} element={<ToursPage/>}/>
                 <Route path={`${RouteNames.TOUR}/:id/:title`} element={<TourPage/>}/>
-                <Route path={`${RouteNames.CONTRIBUTOR}/:id/:name`} element={<ContributorInfoPage/>}/>
+                <Route path={`${RouteNames.CONTRIBUTOR}/:id/:name`} element={<ContributorPage/>}/>
                 <Route path={RouteNames.PROFILE} element={<ProfilePage/>}/>
                 <Route path={RouteNames.WIP} element={<WipPage/>}/>
                 <Route path={RouteNames.FAVOURITES} element={<FavouritesPage/>}/>
+                <Route
+                    path={`${RouteNames.BOOKING}/:id`}
+                    element={
+                        <RequireAuth>
+                            <BookingPage/>
+                        </RequireAuth>
+                    }
+                />
+                <Route
+                    path={RouteNames.SUCCESS}
+                    element={
+                        <RequireAuth>
+                            <SuccessPage/>
+                        </RequireAuth>
+                    }
+                />
                 <Route
                     path={RouteNames.SETTINGS}
                     element={
@@ -45,7 +62,7 @@ export const AppRoutes: FC = () => {
                     path={RouteNames.CREATE}
                     element={
                         <RequireAuth>
-                            <CreateTourPage/>
+                            <CreatePage/>
                         </RequireAuth>
                     }
                 />
