@@ -1,7 +1,7 @@
 import {FC} from "react";
 import style from "@/app/styles/pages.module.css";
 import {Cities, Overview} from "@/widgets";
-import {WidgetProvider} from "src/widgets/cities/context";
+import {WidgetProvider} from "@/widgets/cities/context";
 
 export const LocationsPage: FC = () => {
     return (

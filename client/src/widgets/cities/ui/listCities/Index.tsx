@@ -1,6 +1,6 @@
 import {FC} from "react";
 import style from "./style.module.css"
-import {useWidgetContext} from "src/widgets/cities/context";
+import {useWidgetContext} from "@/widgets/cities/context";
 
 export const Index: FC = () => {
 
