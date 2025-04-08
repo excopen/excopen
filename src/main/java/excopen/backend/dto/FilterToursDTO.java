@@ -39,10 +39,4 @@ public class FilterToursDTO {
     private Integer minAge;
     @Min(value = 0, message = "Вместимость не может быть отрицательной")
     private Integer capacity;
-
-    // sortBy - имя поля для сортировки (например, "rating", "price")
-    private String sortBy;
-
-    // sortOrder - направление сортировки ("ASC" или "DESC")
-    private String sortOrder;
 }

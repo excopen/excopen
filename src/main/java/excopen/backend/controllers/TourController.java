@@ -14,6 +14,7 @@ import excopen.backend.iservices.IUserService;
 import excopen.backend.mapper.DescriptionMapper;
 import excopen.backend.mapper.TourMapper;
 import excopen.backend.security.RequiresOwnership;
+import excopen.backend.security.CurrentUser;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,11 +23,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,10 +40,9 @@ public class TourController {
     private final TourMapper tourMapper;
     private final DescriptionMapper descriptionMapper;
 
-
-
     @Autowired
-    public TourController(ITourService tourService, IDescriptionService descriptionService, IUserService userService, TourMapper tourMapper, DescriptionMapper descriptionMapper) {
+    public TourController(ITourService tourService, IDescriptionService descriptionService, IUserService userService,
+                          TourMapper tourMapper, DescriptionMapper descriptionMapper) {
         this.tourService = tourService;
         this.descriptionService = descriptionService;
         this.userService = userService;
@@ -50,24 +50,13 @@ public class TourController {
         this.descriptionMapper = descriptionMapper;
     }
 
+    @PreAuthorize("hasRole('GUIDE')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TourResponseDTO createTour(
-            @Valid @RequestBody TourCreateDTO request,
-            @AuthenticationPrincipal OAuth2User principal
-    ) {
-        if (principal == null) {
-            throw new IllegalStateException("Пользователь не аутентифицирован");
-        }
-        String googleId = principal.getAttribute("sub");
-        User creator = userService.getUserByGoogleId(googleId);
-
-        if (!creator.getRole().equals(Role.GUIDE)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Только гид может создавать тур");
-        }
-
+    public TourResponseDTO createTour(@Valid @RequestBody TourCreateDTO request,
+                                      @CurrentUser User user) {
         Tour newTour = tourMapper.toEntity(request);
-        tourService.createTour(newTour, creator.getId());
+        tourService.createTour(newTour, user.getId());
 
         Description description = descriptionMapper.toEntity(request.getDescription());
         descriptionService.createDescription(description, newTour.getId());
@@ -77,25 +66,7 @@ public class TourController {
 
     @GetMapping("/search")
     public ResponseEntity<Page<TourResponseDTO>> searchTours(
-            @ModelAttribute FilterToursDTO filter,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "id") String sortBy,
-            @RequestParam(defaultValue = "asc") String sortOrder) {
-
-        Sort.Direction direction = sortOrder.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
-
-        Page<Tour> tours = tourService.filterTours(filter, pageable);
-
-        Page<TourResponseDTO> response = tours.map(tour -> {
-            Description description = descriptionService.getDescriptionByTourId(tour.getId());
-            return tourMapper.toResponseDTO(tour, description);
-        });
-
-    @GetMapping("/search")
-    public ResponseEntity<Page<TourResponseDTO>> searchTours(
-            @ModelAttribute FilterToursDTO filter,
+            @Valid @ModelAttribute FilterToursDTO filter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -114,19 +85,14 @@ public class TourController {
         return ResponseEntity.ok(response);
     }
 
-
-
     @RequiresOwnership(entityClass = Tour.class)
     @PutMapping("/{tourId}")
-    public TourResponseDTO updateTour(
-            @PathVariable Long tourId,
-            @Valid @RequestBody TourUpdateDTO updateDTO,
-            @AuthenticationPrincipal OAuth2User principal
-    ) {
-        Tour newTour = tourMapper.toEntity(updateDTO);
-        newTour.setId(tourId);
+    public TourResponseDTO updateTour(@PathVariable Long tourId,
+                                      @Valid @RequestBody TourUpdateDTO updateDTO) {
+        Tour tourToUpdate = tourMapper.toEntity(updateDTO);
+        tourToUpdate.setId(tourId);
 
-        Tour updatedTour = tourService.updateTour(newTour);
+        Tour updatedTour = tourService.updateTour(tourToUpdate);
 
         Description description = descriptionMapper.toEntity(updateDTO.getDescription());
         Description updatedDescription = descriptionService.updateDescription(description);
@@ -134,12 +100,9 @@ public class TourController {
         return tourMapper.toResponseDTO(updatedTour, updatedDescription);
     }
 
-
-
     @RequiresOwnership(entityClass = Tour.class)
     @DeleteMapping("/{tourId}")
-    public void deleteTour(@PathVariable Long tourId,
-                           @AuthenticationPrincipal OAuth2User principal) {
+    public void deleteTour(@PathVariable Long tourId) {
         tourService.deleteTour(tourId);
     }
 
@@ -149,6 +112,11 @@ public class TourController {
         Description description = descriptionService.getDescriptionByTourId(tourId);
         return tourMapper.toResponseDTO(tour, description);
     }
+
+//    @GetMapping("/guide/{guideId}")
+//    public List<TourResponseDTO> getTourByGuideId(@PathVariable Long guideId){
+//        ArrayList<Tour> tours = tourService.get
+//    }
 
     @GetMapping
     public List<TourResponseDTO> getAllTours() {

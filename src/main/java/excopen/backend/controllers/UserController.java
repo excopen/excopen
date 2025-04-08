@@ -1,18 +1,15 @@
 package excopen.backend.controllers;
 
-import excopen.backend.constants.Role;
-import excopen.backend.dto.GuideRequestDto;
-import excopen.backend.dto.GuideResponseDTO;
-import excopen.backend.dto.UserResponseDTO;
-import excopen.backend.dto.UserUpdateDTO;
+import excopen.backend.dto.*;
 import excopen.backend.entities.User;
 import excopen.backend.iservices.IUserService;
 import excopen.backend.mapper.UserMapper;
-import excopen.backend.security.RequiresUserAuthorization;
+import excopen.backend.security.CurrentUser;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -26,36 +23,27 @@ public class UserController {
     private final IUserService userService;
     private final UserMapper userMapper;
 
-
     @Autowired
     public UserController(IUserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
     }
 
-
-
     @PostMapping("/apply-guide")
-    public ResponseEntity<String> applyForGuide(@AuthenticationPrincipal OAuth2User principal,
+    public ResponseEntity<String> applyForGuide(@CurrentUser User user,
                                                 @RequestBody @Valid GuideRequestDto guideRequestDto) {
-        String googleId = principal.getAttribute("sub");
-        User user = userService.getUserByGoogleId(googleId);
         userService.requestGuideRole(user.getId(), guideRequestDto);
         return ResponseEntity.ok("Код отправлен на номер " + guideRequestDto.getPhoneNumber());
     }
 
-
     @PostMapping("/confirm-guide")
-    public ResponseEntity<String> confirmGuide(@AuthenticationPrincipal OAuth2User principal,
+    public ResponseEntity<String> confirmGuide(@CurrentUser User user,
                                                @RequestParam String phoneNumber,
                                                @RequestParam String code) {
-        String googleId = principal.getAttribute("sub");
-        User user = userService.getUserByGoogleId(googleId);
         boolean confirmed = userService.confirmGuideRole(user.getId(), phoneNumber, code);
-        if (confirmed) {
-            return ResponseEntity.ok("Поздравляем, теперь вы гид!");
-        }
-        return ResponseEntity.badRequest().body("Неверный код подтверждения");
+        return confirmed
+                ? ResponseEntity.ok("Поздравляем, теперь вы гид!")
+                : ResponseEntity.badRequest().body("Неверный код подтверждения");
     }
 
     @GetMapping("/test")
@@ -63,33 +51,23 @@ public class UserController {
         return "Контроллер работает!";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{userId}")
-    @RequiresUserAuthorization
-    public UserResponseDTO getUserById(
-            @PathVariable Long userId,
-            @AuthenticationPrincipal OAuth2User principal) {
+    public UserResponseDTO getUserById(@PathVariable Long userId) {
         User user = userService.getUserById(userId);
         return userMapper.toResponseDTO(user);
     }
 
     @GetMapping("/guide/{userId}")
     public ResponseEntity<GuideResponseDTO> getGuideInfo(@PathVariable Long userId) {
-        var user = userService.getUserById(userId);
-
         if (!userService.isGuide(userId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Гид с таким ID не найден");
         }
-
-        return ResponseEntity.ok(userMapper.toGuideResponse(user));
+        return ResponseEntity.ok(userMapper.toGuideResponse(userService.getUserById(userId)));
     }
 
-
-
-
     @GetMapping("/me")
-    public UserResponseDTO getCurrentUser(@AuthenticationPrincipal OAuth2User principal) {
-        String googleId = principal.getAttribute("sub");
-        User user = userService.getUserByGoogleId(googleId);
+    public UserResponseDTO getCurrentUser(@CurrentUser User user) {
         return userMapper.toResponseDTO(user);
     }
 
@@ -99,33 +77,22 @@ public class UserController {
         return principal.getAttributes();
     }
 
-    @RequiresUserAuthorization
-    @PutMapping("/{userId}")
-    public UserResponseDTO updateUser(
-            @PathVariable Long userId,
-            @Valid @RequestBody UserUpdateDTO userUpdateDTO,
-            @AuthenticationPrincipal OAuth2User principal) {
-        User existingUser = userService.getUserById(userId);
-        userMapper.updateFromDTO(userUpdateDTO, existingUser);
-        User updatedUser = userService.updateUser(userId, existingUser);
-        return userMapper.toResponseDTO(updatedUser);
+    @PutMapping("/me")
+    public UserResponseDTO updateUser(@Valid @RequestBody UserUpdateDTO userUpdateDTO,
+                                      @CurrentUser User user) {
+        userMapper.updateFromDTO(userUpdateDTO, user);
+        return userMapper.toResponseDTO(userService.updateUser(user));
     }
 
-    @RequiresUserAuthorization
-    @PutMapping("/{userId}/preferences-vector")
-    public UserResponseDTO updatePreferencesVector(
-            @PathVariable Long userId,
-            @RequestBody int[] preferencesVector,
-            @AuthenticationPrincipal OAuth2User principal) {
-        User updatedUser = userService.updatePreferencesVector(userId, preferencesVector);
-        return userMapper.toResponseDTO(updatedUser);
+    @PutMapping("/me/preferences-vector")
+    public UserResponseDTO updatePreferencesVector(@RequestBody int[] preferencesVector,
+                                                   @CurrentUser User user) {
+        return userMapper.toResponseDTO(userService.updatePreferencesVector(user.getId(), preferencesVector));
     }
 
-    @RequiresUserAuthorization
-    @DeleteMapping("/{userId}")
-    public void deleteUser(
-            @PathVariable Long userId,
-            @AuthenticationPrincipal OAuth2User principal) {
-        userService.deleteUser(userId);
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteUser(@CurrentUser User user) {
+        userService.deleteUser(user.getId());
+        return ResponseEntity.noContent().build();
     }
 }
