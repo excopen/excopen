@@ -4,7 +4,7 @@ import style from "./style.module.css"
 import {BookingButton, LinearPrice} from "@/shared/ui";
 import {Item} from "./item";
 import {Rating} from "./rating";
-import {ContributorButton, useContributor} from "@/entities";
+import {ContributorButton, useUser} from "@/entities";
 import {formatHours, formatPeople} from "@/shared/utills";
 
 type SidebarProps = {
@@ -13,7 +13,7 @@ type SidebarProps = {
 
 export const Index: FC<SidebarProps> = ({tour}) => {
 
-    const {data: contributor} = useContributor(tour.contributorId)
+    const {data: contributor} = useUser(tour.contributorId)
 
     return (
         <div className={style.container}>

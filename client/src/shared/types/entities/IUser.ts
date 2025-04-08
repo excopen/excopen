@@ -1,5 +1,5 @@
 import {IOrder} from "@/shared/types/entities/IOrder.ts";
-import {UserRole} from "@/shared/types";
+import {IContacts, ITour, UserRole} from "@/shared/types";
 
 export interface IUser {
     id: number
@@ -8,7 +8,11 @@ export interface IUser {
     name: string
     surname: string
     email: string
+    token: string
     orders: IOrder[]
+    rating?: number
+    ratingCount?: number
+    contacts?: IContacts
     description?: string
-    accessToken?: string
+    tours?: ITour[]
 }

@@ -4,7 +4,6 @@ export enum EndpointsType {
     LOCATIONS = "locations",
     USERS = "users",
     REVIEWS = "reviews",
-    CONTRIBUTOR = "contributor",
     TAGS = "tags",
     VIEWED = "viewed",
     ORDER = "order",

@@ -1,7 +1,7 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
 import {IUser} from "@/shared/types";
-import {deleteUser} from "@/entities";
+import {deleteUser} from "@/entities/user/api";
 
 export const useDeleteUser = () => {
 

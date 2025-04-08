@@ -6,20 +6,21 @@ import {formatName} from "@/shared/utills";
 
 type HeaderProps = {
     name: string
+    surname: string
     avatar: string
     contacts: IContacts
     rating: number
     ratingCount: number
 }
 
-export const Index: FC<HeaderProps> = ({name, rating, ratingCount, avatar, contacts}) => {
+export const Index: FC<HeaderProps> = ({name, surname, rating, ratingCount, avatar, contacts}) => {
     return (
         <div className={style.container}>
             <div className={style.startCol}>
                 <div className={style.contributor}>
                     <img width={64} height={64} alt={"contributor"} src={avatar}/>
                     <div className={style.desc}>
-                        <span className={style.name}>{formatName(name)}</span>
+                        <span className={style.name}>{formatName(`${name} ${surname}`)}</span>
                         <span>Представитель команды гидов</span>
                     </div>
                 </div>

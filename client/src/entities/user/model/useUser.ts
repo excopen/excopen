@@ -1,8 +1,8 @@
 import {useQuery} from "@tanstack/react-query";
 import {IUser} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
-import {getUser} from "@/entities";
 import {UserObject} from "@/shared/assets/tempData/UserObject.ts";
+import {getUser} from "@/entities/user/api";
 
 // TODO убрать моковые данные
 

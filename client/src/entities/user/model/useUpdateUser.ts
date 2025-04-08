@@ -1,7 +1,7 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {IUser} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
-import {updateUser} from "@/entities";
+import {updateUser} from "@/entities/user/api";
 
 export const useUpdateUser = () => {
 
