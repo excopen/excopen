@@ -4,9 +4,7 @@ import {HistoryEndpoint} from "@/features";
 
 export const getHistory = async (userId: number, endpoint: HistoryEndpoint): Promise<ITour[]> => {
     try {
-        const response = await apiClient.get<ITour[]>(endpoint, {
-            params: {userId}
-        })
+        const response = await apiClient.get<ITour[]>(`${endpoint}/${userId}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {
