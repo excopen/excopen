@@ -1,19 +1,18 @@
 import {FC, ReactNode} from "react";
 import {BrowserRouter} from "react-router-dom";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {AuthProvider} from "./AuthProvider.tsx";
-import {SearchTourProvider} from "./SearchTourProvider.tsx";
-import {TourViewProvider} from "./TourViewProvider.tsx";
+
+const queryClient = new QueryClient()
 
 export const AppProvider:FC<{children: ReactNode}> = ({children}) => {
     return(
-        <AuthProvider>
-            <SearchTourProvider>
-                <TourViewProvider>
-                    <BrowserRouter>
-                        {children}
-                    </BrowserRouter>
-                </TourViewProvider>
-            </SearchTourProvider>
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+                <BrowserRouter>
+                    {children}
+                </BrowserRouter>
+            </AuthProvider>
+        </QueryClientProvider>
     )
 }

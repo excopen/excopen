@@ -15,8 +15,9 @@ public class DescriptionServiceImpl implements IDescriptionService {
 
     private final DescriptionRepository descriptionRepository;
     @Autowired
-    public DescriptionServiceImpl(DescriptionRepository descriptionRepository) {
+    public DescriptionServiceImpl(DescriptionRepository descriptionRepository, UserServiceImpl userService) {
         this.descriptionRepository = descriptionRepository;
+        this.userService = userService;
     }
 
     public Description createDescription(Description description, Long tourId) {
@@ -29,7 +30,7 @@ public class DescriptionServiceImpl implements IDescriptionService {
     public Optional<Description> getDescriptionById(Long descriptionId) {
         return descriptionRepository.findById(descriptionId);
     }
-
+	
     @Override
     public Description getDescriptionByTourId(Long tourId) {
         return descriptionRepository.findByTourId(tourId)

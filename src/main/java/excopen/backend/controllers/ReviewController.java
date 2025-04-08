@@ -47,12 +47,14 @@ public class ReviewController {
 
         ReviewResponseDTO response = reviewMapper.toResponseDTO(reviewService.createReview(review));
         return ResponseEntity.ok(response);
+
     }
 
     @GetMapping("/{reviewId}")
     public ReviewResponseDTO getReviewById(@PathVariable Long reviewId) {
         Review review = reviewService.getReviewById(reviewId);
         return reviewMapper.toResponseDTO(review);
+
     }
 
     @RequiresOwnership(entityClass = Review.class)
@@ -62,6 +64,7 @@ public class ReviewController {
         Review existingReview = reviewService.getReviewById(reviewId);
         reviewMapper.updateReviewFromDTO(reviewDTO, existingReview);
         return reviewMapper.toResponseDTO(reviewService.updateReview(existingReview));
+
     }
 
     @RequiresOwnership(entityClass = Review.class)

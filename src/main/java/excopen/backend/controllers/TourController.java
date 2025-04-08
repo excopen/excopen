@@ -26,7 +26,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,6 +122,30 @@ public class TourController {
     public List<TourResponseDTO> getAllTours() {
         List<Tour> tours = tourService.getAllTours();
         return tourMapper.toResponseDTOList(tours, descriptionService);
+    }
+
+    @GetMapping("/location/{locationId}")
+    public List<TourResponseDTO> findToursByLocation(@PathVariable Long locationId) {
+        List<Tour> tours = tourService.findToursByLocation(locationId);
+        return tourMapper.toResponseDTOList(tours, descriptionService);
+    }
+
+    @GetMapping("/duration/{duration}")
+    public List<TourResponseDTO> findToursByDuration(@PathVariable BigDecimal duration) {
+        List<Tour> tours = tourService.findToursByDuration(duration);
+        return tourMapper.toResponseDTOList(tours, descriptionService);
+    }
+
+    @GetMapping("/recommendations/{userId}")
+    public List<TourResponseDTO> getRecommendedTours(@PathVariable Long userId) {
+        List<Tour> recommendedTours = tourService.getRecommendedTours(userId);
+        return tourMapper.toResponseDTOList(recommendedTours, descriptionService);
+    }
+
+    @GetMapping("/{tourId}/similar")
+    public List<TourResponseDTO> getSimilarTours(@PathVariable Long tourId) {
+        List<Tour> similarTours = tourService.getSimilarTours(tourId);
+        return tourMapper.toResponseDTOList(similarTours, descriptionService);
     }
 
     @GetMapping("/location/{locationId}")

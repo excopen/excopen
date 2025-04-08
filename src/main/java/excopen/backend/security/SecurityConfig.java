@@ -30,7 +30,7 @@ public class SecurityConfig {
                         )
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/**") // Отключаем CSRF для API
+                        .ignoringRequestMatchers("/api/**")
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll()
