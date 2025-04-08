@@ -3,9 +3,7 @@ import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 
 export const getTourById = async (id: number): Promise<ITour> => {
     try {
-        const response = await apiClient.get<ITour>(`${EndpointsType.TOURS}/tour`, {
-            params: { id }
-        })
+        const response = await apiClient.get<ITour>(`${EndpointsType.TOURS}/${id}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

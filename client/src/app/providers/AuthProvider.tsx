@@ -4,7 +4,7 @@ import {IUser} from "@/shared/types";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    const [isAuth, setIsAuth] = useState<boolean>(false)
+    const [isAuth, setIsAuth] = useState<boolean>(true)
     const [user, setUser] = useState<IUser | null>(null)
 
     const {data, isSuccess, isError, login} = useGoogleSingIn()

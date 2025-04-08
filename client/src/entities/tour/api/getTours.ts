@@ -5,10 +5,7 @@ import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 export const getTours = async (sort: string, searchParams: SearchParamsType): Promise<ITour[]> => {
     try {
         const response: AxiosResponse<ITour[]> = await apiClient.get<ITour[]>(EndpointsType.TOURS, {
-            params: {
-                sort: sort,
-                searchParams: searchParams
-            }
+            params: { sort, ...searchParams}
         })
         return response.data
     } catch (e) {
