@@ -2,8 +2,8 @@ import logo from "@/shared/assets/images/logo.svg";
 import { FC, useState } from "react";
 import style from "./style.module.css";
 import "./transition.css";
-import { Reqs } from "./reqs";
-import { Introduction } from "@/widgets/onboarding/ui/introduction/index.ts";
+import { Reqs } from "./reqs/index.ts";
+import { Introduction } from "@/widgets/onboarding/introduction/index.ts";
 
 export const Index: FC = () => {
 

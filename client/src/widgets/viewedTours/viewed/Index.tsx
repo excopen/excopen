@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from "react";
 import {searchTourByCity, searchTourByRegion, useViewFactory} from "@/features";
-import style from "@/widgets/viewedTours/ui/style.module.css";
+import style from "@/widgets/viewedTours/style.module.css";
 import {TourCard} from "@/entities";
 import {TourPagination} from "@/shared/ui";
 import {ITour} from "@/shared/types";

@@ -1,1 +1,1 @@
-export {Header} from "./ui"
+export {Index as Header} from "./Index.tsx"

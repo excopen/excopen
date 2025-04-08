@@ -1,1 +1,1 @@
-export * from "./ui"
+export {Index as ViewedTours} from "./Index.tsx"

@@ -3,7 +3,7 @@ import {FC} from "react";
 import {SearchInput} from "@/shared/ui";
 import {useLocations} from "@/entities";
 
-import {useWidgetContext} from "@/widgets/cities/model";
+import {useWidgetContext} from "src/widgets/cities/context";
 import {ListLetter} from "./listLetter";
 import {ListCities} from "./listCities";
 import style from "./style.module.css"

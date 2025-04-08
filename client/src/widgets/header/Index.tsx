@@ -1,5 +1,5 @@
 import {FC} from 'react';
-import {ProfileButton} from "@/widgets/header/ui/ProfileButton.tsx";
+import {ProfileButton} from "@/widgets/header/ProfileButton.tsx";
 import logo from "@/shared/assets/icons/logo.svg"
 import {Link} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
