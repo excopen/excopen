@@ -8,6 +8,7 @@ export const useGoogleSingIn = () => {
     const mutation = useMutation({
         mutationFn: async (token: string) => {
             const user = await loginWithGoogle(token)
+            // моковые данные уберу в будущем
             return user ??  UserObject
         }
     })

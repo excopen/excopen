@@ -16,7 +16,7 @@ export interface ITour {
     location: ILocation
     routeLength: number
     byCity: boolean
-    price: number
+    price?: number
     priceForPerson: number
     groupCapacity: number
     formatBehavior: TourFormatBehavior

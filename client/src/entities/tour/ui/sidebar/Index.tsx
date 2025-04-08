@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {ITour, RouteNames} from "@/shared/types";
 import style from "./style.module.css"
-import {BookingButton, LinearPrice} from "@/shared/ui";
+import {BookingButton, IndividualPrice} from "@/shared/ui";
 import {Item} from "./item";
 import {Rating} from "./rating";
 import {ContributorButton, useUser} from "@/entities";
@@ -29,7 +29,7 @@ export const Index: FC<SidebarProps> = ({tour}) => {
                 <Item option={"Формат проведения:"} value={tour.formatBehavior}/>
                 <Rating option={"Рейтинг:"} rating={tour.rating} ratingCount={tour.ratingCount}/>
                 <hr className={style.separator}/>
-                <LinearPrice price={tour.priceForPerson}/>
+                <IndividualPrice price={tour.priceForPerson}/>
                 <BookingButton
                     size={"lg"}
                     link={`/${RouteNames.BOOKING}/${tour.id}`}

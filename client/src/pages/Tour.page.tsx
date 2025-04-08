@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {TourLayout, useTour} from "@/entities";
+import {Carousel, Description, Header, Sidebar, Tags, useTour} from "@/entities";
 import {useParams} from "react-router-dom";
 
 export const TourPage: FC = () => {
@@ -9,6 +9,20 @@ export const TourPage: FC = () => {
 
     if (!tour || isError) return <div>Экскурсия не найдена</div>
     if (isLoading) return <div>Данные загружаются...</div>
-    return <TourLayout tour={tour}/>
+
+    return (
+        <div className={"flex flex-col justify-between py-12 huge:w-[1440px]"}>
+            <Tags tags={tour.tags}/>
+            <Header tour={tour}/>
+            <Carousel
+                images={tour.images as string[]}
+                coordinates={tour.coordinates}
+            />
+            <div className={"flex flex-col lg:flex-row"}>
+                <Description tour={tour}/>
+                <Sidebar tour={tour}/>
+            </div>
+        </div>
+    )
 
 }

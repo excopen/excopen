@@ -1,18 +1,10 @@
-import { FC } from "react";
+import {FC} from "react";
 import {ITour, RouteNames} from "@/shared/types";
-import {
-    Button,
-    CarouselVariant,
-    GroupPrice,
-    ImagesCarousel,
-    Rating,
-    TourParams
-} from "@/shared/ui";
+import {Button, CarouselVariant, ImagesCarousel, Price, Rating, TourParams} from "@/shared/ui";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
-import {ToFavourite} from "@/features";
+import {ToFavourite, useAddViewFactory} from "@/features";
 import {useWindowSize} from "usehooks-ts";
-import {useAddViewFactory} from "@/features";
 import {truncateText} from "@/shared/utills";
 
 type TourCardProps = {
@@ -49,7 +41,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
                             {truncateText(tour.description.info)}
                         </p>
                     </div>
-                    {width >= 768 && <GroupPrice price={tour.price}/>}
+                    {width >= 768 && <Price format={tour.format} price={tour.price} priceForPerson={tour.priceForPerson}/>}
                 </div>
 
                 <div className={style.details}>
@@ -58,7 +50,7 @@ export const Index: FC<TourCardProps> = ({tour}) => {
                         length={tour.routeLength}
                         formatBehavior={tour.formatBehavior}
                     />
-                    {width < 768 && <GroupPrice price={tour.price}/>}
+                    {width < 768 && <Price format={tour.format} price={tour.price} priceForPerson={tour.priceForPerson}/>}
                     <Button onClick={clickHandler}>Выбрать</Button>
                 </div>
 

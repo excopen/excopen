@@ -1,6 +1,6 @@
 import {FC} from "react";
 import {ITour, RouteNames} from "@/shared/types";
-import {BookingButton, GroupPrice, Rating, TourParams} from "@/shared/ui";
+import {BookingButton, Price, Rating, TourParams} from "@/shared/ui";
 import style from "./style.module.css"
 import {useWindowSize} from "usehooks-ts";
 import {ToFavourite} from "@/features";
@@ -30,7 +30,7 @@ export const Index: FC<HeaderProps> = ({tour}) => {
                 </div>
             </div>
             <div className={style.endCol}>
-                <GroupPrice price={tour.price}/>
+                <Price format={tour.format} price={tour.price} priceForPerson={tour.priceForPerson}/>
                 <div className={style.buttons}>
                     <ToFavourite tour={tour}/>
                     <BookingButton
