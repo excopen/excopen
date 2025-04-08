@@ -8,8 +8,9 @@ import {Button} from "@/shared/ui";
 
 import {Text} from "./Text.tsx";
 import style from "./style.module.css"
+import {observer} from "mobx-react-lite";
 
-export const Index: FC = () => {
+export const Index: FC = observer(() => {
 
     const navigate = useNavigate()
     const {tags, selected, disabled, add, remove, click} = useReqs()
@@ -47,4 +48,4 @@ export const Index: FC = () => {
             </div>
         </div>
     );
-};
+})

@@ -5,6 +5,7 @@ class TourLocalHistoryStore {
 
     private _favourites: ITour[] = []
     private _viewed: ITour[] = []
+    private _tags: string[] = []
 
     constructor() {
         makeAutoObservable(this)
@@ -17,6 +18,10 @@ class TourLocalHistoryStore {
 
     get viewed(): ITour[] {
         return this._viewed
+    }
+
+    get tags(): string[] {
+        return this._tags;
     }
 
     private loadFromStorage() {
@@ -49,6 +54,18 @@ class TourLocalHistoryStore {
             this.viewed.push(tour)
             this.saveViewedToStorage()
         }
+    }
+
+    get tagsCount(): number {
+        return this._tags.length
+    }
+
+    addTag(value: string) {
+        if (!this._tags.includes(value)) this._tags.push(value)
+    }
+
+    removeTag(value: string) {
+        this._tags = this._tags.filter(i => i !== value)
     }
 
 }

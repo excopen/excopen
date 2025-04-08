@@ -1,9 +1,8 @@
-import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 import {RouteNames} from "@/shared/types";
-import {useAuthContext} from "@/features";
-import {useAddTags, useTags} from "@/entities";
+import {tourLocalHistoryStore as store} from "@/features";
+import {useTags} from "@/entities";
 
 type ReturnType = {
     tags: string[]
@@ -18,28 +17,15 @@ export const useReqs = (): ReturnType => {
 
     const navigate = useNavigate()
 
-    const {user}  = useAuthContext()
     const {data: tags} = useTags()
-    const {mutate: addTags} = useAddTags()
 
-    const [selected, setSelected] = useState<string[]>([])
-
-    const add = (value: string) => {
-        if (!selected.includes(value)) setSelected([...selected, value])
-    }
-
-    const remove = (value: string) => {
-        setSelected(selected.filter(i => i !== value))
-    }
-
-    const click = () => {
-        addTags({userId: user?.id as number, tags: selected})
-        navigate(`/${RouteNames.MAIN}`)
-    }
+    const add = (value: string) => store.addTag(value)
+    const remove = (value: string) => store.removeTag(value)
+    const click = () => navigate(`/${RouteNames.MAIN}`)
 
     return {
-        disabled: selected.length === 0,
-        selected,
+        disabled: store.tagsCount === 0,
+        selected: store.tags,
         tags,
         add, remove, click
     }
