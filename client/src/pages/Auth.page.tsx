@@ -1,8 +1,7 @@
 import {FC} from "react";
 import s from "@/app/styles/pages.module.css"
 import {GoogleCredentialResponse} from "@react-oauth/google";
-import {useAuthContext} from "@/features";
-import {AuthForm} from "@/widgets";
+import {AuthForm, useAuthContext} from "@/features";
 
 export const AuthPage: FC = () => {
 

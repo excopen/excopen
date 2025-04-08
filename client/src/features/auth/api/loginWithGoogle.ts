@@ -3,7 +3,7 @@ import {EndpointsType, IUser} from "@/shared/types";
 
 export const loginWithGoogle = async (token: string): Promise<IUser> => {
     try {
-        const response = await apiClient.post<IUser>(EndpointsType.AUTH, token)
+        const response = await apiClient.post<IUser>(EndpointsType.AUTH, {token})
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {
