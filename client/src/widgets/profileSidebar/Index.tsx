@@ -6,6 +6,6 @@ import {GuestSidebar} from "./guestSidebar";
 import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
-    const {role, isAuth} = useAuthContext()
-    return isAuth ? (role === UserRole.client ? <ClientSidebar/> : <ContributorSidebar/>) : <GuestSidebar/>
+    const {user, isAuth} = useAuthContext()
+    return isAuth ? (user?.role === UserRole.client ? <ClientSidebar/> : <ContributorSidebar/>) : <GuestSidebar/>
 };
