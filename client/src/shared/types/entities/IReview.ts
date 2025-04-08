@@ -6,4 +6,5 @@ export interface IReview {
     rating: number
     positiveText: string
     negativeText: string
+    userId: number
 }
