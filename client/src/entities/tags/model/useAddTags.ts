@@ -14,10 +14,11 @@ export const useAddTags = () => {
 
     return useMutation<void, ApiException<ITag[]>, Props>({
         mutationFn: ({userId, tags}: Props) => addTags(userId, tags),
-        onSuccess: () => queryClient.invalidateQueries({queryKey: ["tag"]}),
+        onMutate: async ({ userId }) => {
+            await queryClient.cancelQueries({ queryKey: ['user', userId] })
+        },
         onError: (e: ApiException<ITag[]>) => {
             throw new ApiException<ITag[]>(e.message, e.statusCode, e.data)
         }
     })
-
 }
