@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {useAuthContext, useOrder} from "@/features";
+import {useAuthContext, useBooking} from "@/features";
 import {useTour} from "@/entities";
 import {useEffect, useState} from "react";
 import {ITour, RouteNames} from "@/shared/types";
@@ -18,7 +18,7 @@ export const useBookingForm = (tourId: number): ReturnType => {
 
     const {user} = useAuthContext()
     const {data: tour} = useTour(tourId)
-    const {mutate: booking} = useOrder()
+    const {mutate: booking} = useBooking()
 
     const [disabled, setDisabled] = useState<boolean>(true)
     const [capacity, setCapacity] = useState<number>(0)

@@ -10,8 +10,11 @@ export const useAddHistory = () => {
 
     return useMutation<void, ApiException<ITour>, { tourId: number, type: HistoryEndpoint }>({
         mutationFn: ({tourId, type}) => addHistory(tourId, type),
-        onSuccess: (_, { type }) => {
-            queryClient.invalidateQueries({ queryKey: ["history", type] })
+        onMutate: async ({tourId}) => {
+            await queryClient.cancelQueries({ queryKey: ["history", tourId] })
+        },
+        onSuccess: async (_, { tourId }) => {
+            await queryClient.invalidateQueries({ queryKey: ["history", tourId] })
         },
         onError: (e: ApiException<ITour>) => {
             throw new ApiException<ITour>(e.message, e.statusCode, e.data)

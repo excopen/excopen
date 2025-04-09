@@ -2,9 +2,9 @@ import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 import {ITour} from "@/shared/types";
 import {HistoryEndpoint} from "@/features";
 
-export const getHistory = async (userId: number, endpoint: HistoryEndpoint): Promise<ITour[]> => {
+export const getHistory = async (tourId: number, endpoint: HistoryEndpoint): Promise<ITour[]> => {
     try {
-        const response = await apiClient.get<ITour[]>(`${endpoint}/${userId}`)
+        const response = await apiClient.get<ITour[]>(`${endpoint}/${tourId}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

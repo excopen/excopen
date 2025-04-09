@@ -10,8 +10,22 @@ export const useDeleteHistory = () => {
 
     return useMutation<void, ApiException<ITour>, { tourId: number, type: HistoryEndpoint }>({
         mutationFn: ({tourId, type}) => deleteHistory(tourId, type),
-        onSuccess: (_, { type }) => {
-            queryClient.invalidateQueries({ queryKey: ["history", type] })
+        onMutate: async ({tourId}) => {
+
+            await queryClient.cancelQueries({ queryKey: ["history", tourId] })
+
+            const previous = queryClient.getQueryData<ITour[]>(["history", tourId])
+
+            queryClient.setQueryData<ITour[]>(
+                ["history", tourId],
+                (old = []) => old.filter((tour) => tour.id !== tourId)
+            )
+
+            return { previous }
+
+        },
+        onSuccess: async (_, {tourId}) => {
+            await queryClient.invalidateQueries({ queryKey: ["history", tourId] })
         },
         onError: (e: ApiException<ITour>) => {
             throw new ApiException<ITour>(e.message, e.statusCode, e.data)
