@@ -2,27 +2,37 @@ import {Button, Rating, ReviewInput} from "@/shared/ui";
 import {FC, useCallback, useEffect, useState} from "react";
 import {Stars} from "./components";
 import style from "./style.module.css"
-import {ITour, RouteNames, TourAccessibility} from "@/shared/types";
+import {IReview, ITour, RouteNames, TourAccessibility} from "@/shared/types";
 import {useNavigate} from "react-router-dom";
 import {SquareArrowOutUpRight} from "lucide-react";
-import {useCreateReview} from "@/entities";
+import {useCreateReview, useReviewsByUserId, useUpdateReview} from "@/entities";
 import {useUser} from "@/entities/user/model";
 import {useAuthContext} from "@/features";
 
 type FormProps = {
+    type: "create" | "update"
     tour: ITour
 }
 
-export const Index: FC<FormProps> = ({tour}) => {
+export const Index: FC<FormProps> = ({tour, type}) => {
 
     const {user: userAuth} = useAuthContext()
     const {data: user} = useUser(userAuth?.id as number)
 
     const {mutate: createReview} = useCreateReview()
 
-    const [positive, setPositive] = useState<string>("")
-    const [negative, setNegative] = useState<string>("")
-    const [rating, setRating] = useState<number>(0)
+    const {data: oldReviews} = useReviewsByUserId(user.id)
+    const oldReview = oldReviews.find(r => r.tourId === tour.id) as IReview
+
+    const {mutate: updateReview} = useUpdateReview()
+
+    const initPositive = type === "create" ? "" : oldReview.positiveText
+    const initNegative = type === "create" ? "" : oldReview.negativeText
+    const initRating = type === "create" ? 0 : oldReview.rating
+
+    const [positive, setPositive] = useState<string>(initPositive)
+    const [negative, setNegative] = useState<string>(initNegative)
+    const [rating, setRating] = useState<number>(initRating)
 
     const [completed, setCompleted] = useState<boolean>(false)
 
@@ -31,15 +41,33 @@ export const Index: FC<FormProps> = ({tour}) => {
         else setCompleted(false)
     }, [negative, positive, rating]);
 
-    const saveReview = () => createReview({
-        id: Date.now(),
-        name: user.name,
-        rating: rating,
-        negativeText: negative,
-        positiveText: positive,
-        withChildren: tour.accessibility === TourAccessibility.WITH_CHILDREN,
-        personCount: user?.orders?.find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
-    })
+    const saveReview = () => {
+        if (type === "create") {
+            createReview({
+                id: Date.now(),
+                userId: user.id,
+                tourId: tour.id,
+                name: user.name,
+                rating: rating,
+                negativeText: negative,
+                positiveText: positive,
+                withChildren: tour.accessibility === TourAccessibility.WITH_CHILDREN,
+                personCount: user?.orders?.find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
+            })
+        } else {
+            updateReview({
+                id: Date.now(),
+                userId: user.id,
+                tourId: tour.id,
+                name: user.name,
+                rating: rating,
+                negativeText: negative,
+                positiveText: positive,
+                withChildren: tour.accessibility === TourAccessibility.WITH_CHILDREN,
+                personCount: user?.orders?.find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
+            })
+        }
+    }
 
     const navigate = useNavigate()
     const clickHandler = useCallback(() => {
@@ -76,7 +104,7 @@ export const Index: FC<FormProps> = ({tour}) => {
             </div>
             <div>
                 <Button className={"mt-4"} disabled={!completed} onClick={saveReview}>
-                    Добавить
+                    {type === "create" ? "Добавить" : "Изменить"}
                 </Button>
             </div>
         </div>

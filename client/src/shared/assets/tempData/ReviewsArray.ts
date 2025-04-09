@@ -9,7 +9,8 @@ export const ReviewsArray: IReview[] = [
         negativeText: "Хотелось бы больше времени на фотосессии.",
         withChildren: true,
         personCount: 4,
-        userId: 0
+        userId: 0,
+        tourId: 0
     },
     {
         id: 2,
@@ -19,7 +20,8 @@ export const ReviewsArray: IReview[] = [
         negativeText: "Автобус был не очень удобным, мало места для ног.",
         withChildren: false,
         personCount: 2,
-        userId: 0
+        userId: 0,
+        tourId: 0
     },
     {
         id: 3,
@@ -29,7 +31,8 @@ export const ReviewsArray: IReview[] = [
         negativeText: "Гид говорил слишком быстро, трудно было понять информацию.",
         withChildren: true,
         personCount: 3,
-        userId: 0
+        userId: 0,
+        tourId: 0
     },
     {
         id: 4,
@@ -39,7 +42,8 @@ export const ReviewsArray: IReview[] = [
         negativeText: "Экскурсия затянулась, было скучновато, а автобус приехал с опозданием.",
         withChildren: false,
         personCount: 1,
-        userId: 0
+        userId: 0,
+        tourId: 0
     },
     {
         id: 5,
@@ -49,6 +53,7 @@ export const ReviewsArray: IReview[] = [
         negativeText: "Гид неинтересно рассказывал, задержки на каждом этапе, организаторы не предупредили о сложном маршруте.",
         withChildren: false,
         personCount: 2,
-        userId: 0
+        userId: 0,
+        tourId: 0
     }
 ]

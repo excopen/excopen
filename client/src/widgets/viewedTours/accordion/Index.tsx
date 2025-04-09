@@ -42,7 +42,7 @@ export const Index: FC = () => {
                     {
                         visited
                             .slice(0, visibleTours)
-                            .map(tour => <ReviewForm key={tour.id} tour={tour}/>)
+                            .map(tour => <ReviewForm type={"create"} key={tour.id} tour={tour}/>)
                     }
                 </AccordionContent>
             </AccordionItem>

@@ -7,4 +7,5 @@ export interface IReview {
     positiveText: string
     negativeText: string
     userId: number
+    tourId: number
 }
