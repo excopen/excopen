@@ -9,9 +9,20 @@ export const useUpdateReview = () => {
 
     return useMutation<IReview, ApiException<IReview>,IReview>({
         mutationFn: updateReview,
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ["reviews", "tour"]})
-            queryClient.invalidateQueries({queryKey: ["reviews", "user"]})
+        onMutate: async (newReview) => {
+
+            const previous = queryClient.getQueryData<IReview[]>(["reviews", "user"]);
+
+            queryClient.setQueryData<IReview[]>(
+                ["reviews", "user"],
+                (oldReviews = []) => [...oldReviews, newReview]
+            )
+
+            return { previous }
+
+        },
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["reviews", "user"]})
         },
         onError: (e: ApiException<IReview>) => {
             throw new ApiException<IReview>(e.message, e.statusCode, e.data)

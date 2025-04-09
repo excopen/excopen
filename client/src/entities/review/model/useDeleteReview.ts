@@ -9,9 +9,8 @@ export const useDeleteReview = () => {
 
     return useMutation<void, ApiException<IReview>, number>({
         mutationFn: deleteReview,
-        onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ["reviews", "tour"]})
-            queryClient.invalidateQueries({queryKey: ["reviews", "user"]})
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["reviews", "user"]})
         },
         onError: (e: ApiException<IReview>) => {
             throw new ApiException<IReview>(e.message, e.statusCode, e.data)

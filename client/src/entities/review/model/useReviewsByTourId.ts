@@ -4,17 +4,26 @@ import {ApiException} from "@/shared/lib";
 import {getReviewsByTourId} from "@/entities/review/api";
 import {ReviewsArray} from "@/shared/assets/tempData/ReviewsArray.ts";
 
-// TODO убрать моковые данные в будущем
+// Список отзывов в туре
 
 export const useReviewsByTourId = (tourId: number) => {
-    return useQuery<IReview[], ApiException<IReview>>({
-        queryKey: ["reviews", "tour", tourId],
+
+    const fallback = ReviewsArray
+
+    const query = useQuery<IReview[], ApiException<IReview>>({
+        queryKey: ["reviews", "tour"],
         queryFn: async () => {
             const reviews: IReview[] = await getReviewsByTourId(tourId)
-            return reviews.length > 0 ? reviews : ReviewsArray
+            return reviews.length > 0 ? reviews : fallback
         },
         staleTime: 60_000,
-        initialData: ReviewsArray,
+        initialData: fallback,
         enabled: !!tourId
     })
+
+    return {
+        ...query,
+        isEmpty: query.data.length === 0
+    }
+
 }
