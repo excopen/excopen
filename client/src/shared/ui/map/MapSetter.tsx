@@ -1,7 +1,8 @@
 import {FC} from "react";
 import { YandexMapCoordinates } from "@/shared/types";
 import {Placemark, YMaps, Map, SearchControl} from "@pbe/react-yandex-maps";
-import {ApiKeys} from "@/app/config.ts";
+
+const YANDEX_API_KEY = import.meta.env.VITE_YANDEX_MAP_API
 
 type MapSetterProps = {
     value: YandexMapCoordinates
@@ -19,7 +20,7 @@ export const MapSetter: FC<MapSetterProps> = ({ value, update }) => {
     }
 
     return (
-        <YMaps query={{apikey: ApiKeys.YANDEX_MAP_API}}>
+        <YMaps query={{apikey: YANDEX_API_KEY}}>
             <div className={"w-full h-96 rounded-2xl overflow-hidden"}>
                 <Map
                     state={{
