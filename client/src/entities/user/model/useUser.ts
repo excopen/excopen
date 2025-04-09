@@ -4,17 +4,20 @@ import {ApiException} from "@/shared/lib";
 import {UserObject} from "@/shared/assets/tempData/UserObject.ts";
 import {getUser} from "@/entities/user/api";
 
-// TODO убрать моковые данные
+// Везде где запрашиваются данные пользователя или контрибьютера
 
 export const useUser = (id: number) => {
+
+    const fallback = UserObject
+
     return useQuery<IUser, ApiException<IUser>>({
         queryKey: ["user", id],
         queryFn: async (): Promise<IUser> => {
             const user = await getUser(id)
-            return user ?? UserObject
+            return user ?? fallback
         },
-        initialData: UserObject,
-        staleTime: 60_000,
+        initialData: fallback,
+        staleTime: 600_000,
         enabled: !!id
     })
 }

@@ -3,6 +3,8 @@ import {IReview} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {updateReview} from "@/entities/review/api";
 
+// Комментарий на странице профиля
+
 export const useUpdateReview = () => {
 
     const queryClient = useQueryClient()
@@ -11,22 +13,23 @@ export const useUpdateReview = () => {
         mutationFn: updateReview,
         onMutate: async (newReview) => {
 
+            await queryClient.cancelQueries({queryKey: ["reviews", "user", newReview.id]})
+
             const previous = queryClient.getQueryData<IReview[]>(["reviews", "user"]);
 
             queryClient.setQueryData<IReview[]>(
-                ["reviews", "user"],
-                (oldReviews = []) => [...oldReviews, newReview]
+                ["reviews", "user", newReview.id],
+                (old = []) => old.map((r) => (r.id === newReview.id ? newReview : r))
             )
 
             return { previous }
 
         },
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({queryKey: ["reviews", "user"]})
+        onSuccess: async (newReview) => {
+            await queryClient.invalidateQueries({queryKey: ["reviews", "user", newReview.id]})
+            await queryClient.invalidateQueries({queryKey: ["reviews", "tour"]})
         },
-        onError: (e: ApiException<IReview>) => {
-            throw new ApiException<IReview>(e.message, e.statusCode, e.data)
-        }
+        onError: (e: ApiException<IReview>) => console.log("Не удалось обновить отзыв", e.message)
     })
 
 }

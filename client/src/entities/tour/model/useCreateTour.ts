@@ -16,10 +16,7 @@ export const useCreateTour = () => {
             await queryClient.cancelQueries({ queryKey: ['tours'] })
 
             const previous = queryClient.getQueryData<ITour[]>(["tours"])
-            queryClient.setQueryData<ITour[]>(
-                ["tours"],
-                (old = []) => [...old, newTour]
-            )
+            queryClient.setQueryData<ITour[]>(["tours"], (old = []) => [...old, newTour])
 
             return { previous }
 
@@ -27,9 +24,7 @@ export const useCreateTour = () => {
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ["tours"]})
         },
-        onError: (e: ApiException<ITour>) => {
-            throw new ApiException<ITour>(e.message, e.statusCode, e.data)
-        }
+        onError: (e: ApiException<ITour>) => console.error("Не удалось добавить экскурсию", e.message)
     })
 
 }

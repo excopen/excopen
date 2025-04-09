@@ -8,6 +8,8 @@ type Props = {
     tags: string[]
 }
 
+// Контекст авторизации
+
 export const useAddTags = () => {
 
     const queryClient = useQueryClient()
@@ -15,10 +17,11 @@ export const useAddTags = () => {
     return useMutation<void, ApiException<ITag[]>, Props>({
         mutationFn: ({userId, tags}: Props) => addTags(userId, tags),
         onMutate: async ({ userId }) => {
-            await queryClient.cancelQueries({ queryKey: ['user', userId] })
+            await queryClient.cancelQueries({ queryKey: ["user", userId] })
         },
-        onError: (e: ApiException<ITag[]>) => {
-            throw new ApiException<ITag[]>(e.message, e.statusCode, e.data)
-        }
+        onSuccess: async (_, {userId}) => {
+            await queryClient.invalidateQueries({ queryKey: ["user", userId] })
+        },
+        onError: (e: ApiException<ITag[]>) => console.error("Теги пользователя не удалось обновить", e.message)
     })
 }

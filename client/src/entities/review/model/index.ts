@@ -1,5 +1,4 @@
 export {useCreateReview} from "./useCreateReview.ts"
 export {useUpdateReview} from "./useUpdateReview.ts"
-export {useDeleteReview} from "./useDeleteReview.ts"
 export {useReviewsByTourId} from "./useReviewsByTourId.ts"
 export {useReviewsByUserId} from "./useReviewsByUserId.ts"

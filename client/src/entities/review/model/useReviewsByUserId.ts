@@ -8,7 +8,7 @@ import {getReviewsByUserId} from "@/entities/review/api";
 export const useReviewsByUserId = (userId: number) => {
 
     const query = useQuery<IReview[], ApiException<IReview>>({
-        queryKey: ["reviews", "user"],
+        queryKey: ["reviews", "user", userId],
         queryFn: () => getReviewsByUserId(userId),
         staleTime: 60_000,
         initialData: [],

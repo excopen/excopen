@@ -11,12 +11,15 @@ export const useDeleteTour = () => {
 
     return useMutation<void, ApiException<ITour>, number>({
         mutationFn: deleteTour,
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({queryKey: ["tours"]})
+        onMutate: async (id) => {
+            await queryClient.cancelQueries({queryKey: ["tours"]})
+            await queryClient.cancelQueries({queryKey: ["tour", id]})
         },
-        onError: (e: ApiException<ITour>) => {
-            throw new ApiException<ITour>(e.message, e.statusCode, e.data)
-        }
+        onSuccess: async (_, id) => {
+            await queryClient.invalidateQueries({queryKey: ["tours"]})
+            queryClient.removeQueries({queryKey: ["tour", id]})
+        },
+        onError: (e: ApiException<ITour>) => console.error("Ошибка при удалении тура:", e.message)
     })
 
 }
