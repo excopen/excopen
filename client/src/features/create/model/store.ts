@@ -14,6 +14,8 @@ import {SelectOptionsStore} from "@/features/create/model/SelectOptionsStore.ts"
 
 class CreateTourStore extends BaseStore {
 
+    private _isEdit: boolean = false
+
     contacts = new ContactsStore()
     description = new DescriptionStore()
     price = new PriceStore()
@@ -97,6 +99,15 @@ class CreateTourStore extends BaseStore {
             this.location,
             this.coordinates,
         ].every(store => store.isDisabled)
+    }
+
+
+    get isEdit(): boolean {
+        return this._isEdit;
+    }
+
+    set isEdit(value: boolean) {
+        this._isEdit = value;
     }
 
 }

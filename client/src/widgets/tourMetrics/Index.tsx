@@ -5,6 +5,7 @@ import {ITour, IUser} from "@/shared/types";
 import s from "./style.module.css"
 import {useEditTour} from "@/shared/hooks";
 import {formatPeople} from "@/shared/utills";
+import {useDeleteTour} from "@/entities";
 
 type TourMetricsProps = {
     tour: ITour
@@ -15,6 +16,9 @@ type TourMetricsProps = {
 export const Index: FC<TourMetricsProps> = ({tour, users, capacity}) => {
 
     const {click} = useEditTour(tour)
+    const {mutate} = useDeleteTour()
+
+    const deleteTour = () => mutate(tour.id)
 
     return (
         <div className={s.container}>
@@ -60,7 +64,7 @@ export const Index: FC<TourMetricsProps> = ({tour, users, capacity}) => {
             </div>
             <div className={"flex flex-col gap-1"}>
                 <Button onClick={click}>Изменить</Button>
-                <Button className={s.deleteButton} variant={"outline"}>Отменить</Button>
+                <Button onClick={deleteTour} className={s.deleteButton} variant={"outline"}>Отменить</Button>
             </div>
         </div>
     );

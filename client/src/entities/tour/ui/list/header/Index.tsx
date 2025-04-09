@@ -8,13 +8,13 @@ import {Select} from "./select";
 export const Index: FC = () => {
 
     const {location} = useParams<{location: string}>()
-    const {data: tours} = useTours()
+    const {length} = useTours()
 
     return (
         <header className={style.container}>
             <div className={style.content}>
                 <h1 className={style.title}>{location}</h1>
-                <span className={style.desc}>{tours.length} найденных экскурсий</span>
+                <span className={style.desc}>{length} найденных экскурсий</span>
             </div>
             <div className={style.options}>
                 <Drawer/>

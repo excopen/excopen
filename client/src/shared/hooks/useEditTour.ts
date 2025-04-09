@@ -12,6 +12,7 @@ export const useEditTour = (tour: ITour): ReturnType => {
 
     const click = () => {
         store.tour = tour
+        store.isEdit = true
         navigate(`/${RouteNames.CREATE}`)
     }
 

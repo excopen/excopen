@@ -2,20 +2,31 @@ import {ITour} from "@/shared/types";
 import {useQuery} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
 import {getTours} from "@/entities/tour/api";
-import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
 import {searchTourStore as store} from "@/features";
 
-// Todo убрать ToursArray, когда будут приходить реальные данные
+import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
+
+// Страница Tours
 
 export const useTours = () => {
-    return useQuery<ITour[], ApiException<ITour>>({
-        queryKey: ["tours", store.searchParams, store.searchParams.sort],
+
+    const fallback = ToursArray
+
+    const query = useQuery<ITour[], ApiException<ITour>>({
+        queryKey: ["tours"],
         queryFn: async (): Promise<ITour[]> => {
             const tours = await getTours(store.searchParams.sort, store.searchParams)
-            return tours.length > 0 ? tours : ToursArray
+            return tours.length > 0 ? tours : fallback
         },
         staleTime: 60_000,
-        initialData: ToursArray
+        initialData: fallback
     })
+
+    return {
+        ...query,
+        length: query.data.length,
+        isEmpty: query.data.length === 0,
+        hasData: query.data.length > 0,
+    }
 
 }

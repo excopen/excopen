@@ -11,9 +11,7 @@ export const Index: FC = () => {
     const {data: myTours} = useContributorTours(user?.id as number)
     const visited = useViewFactory()
 
-    const [visibleTours, setVisibleTours] = useState<number>(
-        3
-    )
+    const [visibleTours, setVisibleTours] = useState<number>(3)
 
     return (
         <Accordion type={"single"} collapsible>

@@ -12,6 +12,7 @@ export const useCreateTour = (): ReturnType => {
 
     const click = () => {
         store.init()
+        store.isEdit = false
         navigate(`/${RouteNames.CREATE}`)
     }
 
