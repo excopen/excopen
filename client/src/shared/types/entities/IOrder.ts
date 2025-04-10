@@ -1,6 +1,8 @@
+import {ITour} from "@/shared/types";
+
 export interface IOrder {
     id: number
-    tourId: number
+    tour: ITour
     userId: number
     groupCapacity: number
 }

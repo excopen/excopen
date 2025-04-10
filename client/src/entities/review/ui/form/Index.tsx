@@ -10,11 +10,12 @@ import {useUser} from "@/entities/user/model";
 import {useAuthContext} from "@/features";
 
 type FormProps = {
-    type: "create" | "update"
-    tour: ITour
+    type: "create" | "update",
+    tour: ITour,
+    key?: any
 }
 
-export const Index: FC<FormProps> = ({tour, type}) => {
+export const Index: FC<FormProps> = ({tour, type, key}) => {
 
     const {user: userAuth} = useAuthContext()
     const {data: user} = useUser(userAuth?.id as number)

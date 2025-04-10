@@ -4,5 +4,6 @@ import {TourObject} from "@/shared/assets/tempData/TourObject.ts";
 export const OrderObject: IOrder = {
     id: 0,
     groupCapacity: 4,
-    tour: TourObject
+    tour: TourObject,
+    userId: 0
 }

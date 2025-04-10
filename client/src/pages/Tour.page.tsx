@@ -1,14 +1,21 @@
 import {FC} from "react";
 import {Carousel, Description, Header, Sidebar, Tags, useTour} from "@/entities";
 import {useParams} from "react-router-dom";
+import {AppSkeleton, NotFound} from "@/shared/ui";
 
 export const TourPage: FC = () => {
 
     const {id } = useParams<{ id: string, title: string }>()
-    const {data: tour, isLoading, isError} = useTour(Number(id))
+    const {data: tour, isLoading, isError, isFallback} = useTour(Number(id))
 
-    if (!tour || isError) return <div>Экскурсия не найдена</div>
-    if (isLoading) return <div>Данные загружаются...</div>
+    if (isFallback || isError) return (
+        <NotFound
+            heading={"Экскурсия не найдена"}
+            text={"Возникла проблема с поиском экскурсии"}
+        />
+    )
+
+    if (isLoading) return <AppSkeleton/>
 
     return (
         <div className={"flex flex-col justify-between py-12 huge:w-[1440px]"}>
