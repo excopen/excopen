@@ -1,4 +1,4 @@
-@import "src/app/styles/index.css";
+@import "index.css";
 
 .layout {
     @apply w-full bg-grayscale-100
