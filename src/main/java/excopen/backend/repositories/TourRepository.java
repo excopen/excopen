@@ -1,7 +1,9 @@
 package excopen.backend.repositories;
 
 import com.querydsl.core.types.Predicate;
+import excopen.backend.entities.Location;
 import excopen.backend.entities.Tour;
+import excopen.backend.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,9 +20,11 @@ public interface TourRepository extends JpaRepository<Tour, Long>, QuerydslPredi
 
     Page<Tour> findAll(Predicate predicate, Pageable pageable);
 
-    List<Tour> findByLocationId(Long locationId);
+    List<Tour> findByLocation(Location location);
 
-    List<Tour> findByDuration(BigDecimal duration);
+    List<Tour> findByDuration(Double duration);
+
+    List<Tour> findByCreator(User creator);
 
     @Query(value = "SELECT * FROM tours ORDER BY vector_representation <=> CAST(:preferencesVector AS vector) LIMIT 10", nativeQuery = true)
     List<Tour> findRecommendedTours(@Param("preferencesVector") String preferencesVector);
@@ -30,5 +34,4 @@ public interface TourRepository extends JpaRepository<Tour, Long>, QuerydslPredi
             "ORDER BY vector_representation <-> CAST(:vector AS vector) " +
             "LIMIT 10", nativeQuery = true)
     List<Tour> findSimilarTours(@Param("tourId") Long tourId, @Param("vector") String vector);
-
 }

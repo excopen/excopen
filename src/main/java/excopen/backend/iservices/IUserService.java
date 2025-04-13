@@ -14,8 +14,9 @@ public interface IUserService {
     User updateUser(User user);
     void deleteUser(Long userId);
     User updatePreferencesVector(Long userId, int[] preferencesVector);
-    public int[] getUserPreferenceVector(Long userId);
-    public void requestGuideRole(Long userId, GuideRequestDto guideRequestDto);
-    public boolean confirmGuideRole(Long userId, String phoneNumber, String code);
-    public boolean isGuide(Long userId);
+    int[] getUserPreferenceVector(Long userId);
+    void requestGuideRole(Long userId, GuideRequestDto guideRequestDto);
+    boolean confirmGuideRole(Long userId, String phoneNumber, String code);
+    boolean isGuide(Long userId);
+    void updateGuideRating(Long userId);
 }

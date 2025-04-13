@@ -42,6 +42,6 @@ public class FavoriteController {
     @GetMapping
     public List<TourResponseDTO> getFavoriteToursByUser(@CurrentUser User user) {
         List<Tour> tours = favoriteService.getFavoriteToursByUser(user.getId());
-        return tourMapper.toResponseDTOList(tours, descriptionService);
+        return tourMapper.toResponseDTOList(tours);
     }
 }

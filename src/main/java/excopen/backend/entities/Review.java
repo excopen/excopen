@@ -1,12 +1,11 @@
 package excopen.backend.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -17,17 +16,20 @@ public class Review implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JoinColumn(name = "tour_id")
-    private Long tourId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_id", nullable = false)
+    private Tour tour;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @JoinColumn(name = "user_id")
-    private Long userId;
-
-    @Digits(integer = 2, fraction = 1)
-    private BigDecimal rating;
+    private Double rating;
 
     private String reviewText;
+
+    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ReviewImage> images;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

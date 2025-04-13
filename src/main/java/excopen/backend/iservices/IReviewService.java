@@ -12,5 +12,8 @@ public interface IReviewService {
     void deleteReview(Long reviewId);
     List<Review> getReviewsByTour(Long tourId);
     List<Review> getReviewsByUser(Long userId);
+    Double getAverageRatingByCreatorId(Long creatorId);
+    Integer getReviewCountByCreatorId(Long creatorId);
+
 //    double getAverageRatingForTour(Long tourId);
 }

@@ -25,12 +25,11 @@ public class ReviewImageServiceImpl implements IReviewImageService {
 
     @Override
     public ReviewImage addImageToReview(Long reviewId, String imageUrl) {
-
-      reviewRepository.findById(reviewId)
+        Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Review with ID " + reviewId + " not found."));
 
         ReviewImage reviewImage = new ReviewImage();
-        reviewImage.setReviewId(reviewId);
+        reviewImage.setReview(review); // сохраняем сущность
         reviewImage.setImageUrl(imageUrl);
         return reviewImageRepository.save(reviewImage);
     }
@@ -45,7 +44,9 @@ public class ReviewImageServiceImpl implements IReviewImageService {
 
     @Override
     public List<ReviewImage> getImagesByReview(Long reviewId) {
-        return reviewImageRepository.findByReviewId(reviewId);
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("Review with ID " + reviewId + " not found."));
+        return reviewImageRepository.findByReview(review);
     }
 
     @Override
@@ -53,6 +54,3 @@ public class ReviewImageServiceImpl implements IReviewImageService {
         return reviewImageRepository.findById(reviewImageId);
     }
 }
-
-
-

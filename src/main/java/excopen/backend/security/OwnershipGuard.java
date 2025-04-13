@@ -65,15 +65,16 @@ public class OwnershipGuard {
 
     private void checkTourOwnership(Long tourId, Long userId) {
         Tour tour = tourService.getTourById(tourId);
-        if (!tour.getCreatorId().equals(userId)) {
+        if (!tour.getCreator().getId().equals(userId)) {
             throw new AccessDeniedException("You are not the owner of this tour");
         }
     }
 
     private void checkReviewOwnership(Long reviewId, Long userId) {
         Review review = reviewService.getReviewById(reviewId);
-        if (!review.getUserId().equals(userId)) {
+        if (!review.getUser().getId().equals(userId)) {
             throw new AccessDeniedException("You are not the owner of this review");
         }
     }
+
 }

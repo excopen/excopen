@@ -5,7 +5,6 @@ import excopen.backend.constants.TransportType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
-import java.math.BigDecimal;
 
 @Data
 public class TourCreateDTO {
@@ -23,13 +22,11 @@ public class TourCreateDTO {
 
     @NotNull(message = "Длительность тура обязательна")
     @Positive(message = "Длительность должна быть положительной")
-    @Digits(integer = 2, fraction = 1)
-    private BigDecimal duration;
+    private Double duration;
 
     @NotNull(message = "Длина маршрута обязательна")
     @Positive(message = "Длина маршрута должна быть положительной")
-    @Digits(integer = 2, fraction = 1)
-    private BigDecimal routeLength;
+    private Double routeLength;
 
     @NotNull(message = "Минимальный возраст обязателен")
     private Integer minAge;

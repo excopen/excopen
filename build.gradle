@@ -64,8 +64,12 @@ dependencies {
 
 	implementation 'org.locationtech.jts:jts-core:1.18.2'
 
+	implementation 'org.flywaydb:flyway-core'
+
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+	testImplementation 'org.testng:testng:7.10.1'
 
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
