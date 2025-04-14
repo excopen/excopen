@@ -1,23 +1,26 @@
 import {FC} from "react";
-import {Input} from "@/shared/ui";
+import {SearchInput, Switch} from "@/shared/ui";
 import style from "./style.module.css"
 
 type IndexProps = {
-    onChangeHandler: (value: string) => void
+    setCity: (value: string) => void
+    setByCity: (value: boolean) => void
 }
 
-export const Index: FC<IndexProps> = ({onChangeHandler}) => {
+export const Index: FC<IndexProps> = ({setCity, setByCity}) => {
 
     return (
         <div className={style.container}>
-            <Input
-                onChangeHandler={onChangeHandler}
-                placeholder={"Искать"}
+            <SearchInput
+                className={"max-md:w-full"}
+                onChangeHandler={setCity}
+                placeholder={"Искать по городу"}
             />
-            <div className={style.subContainer}>
-                <span>
-                    Вы смотрели ранее
-                </span>
+            <div className={"flex justify-end"}>
+                <div className={"flex flex-row gap-2 text-grayscale-600"}>
+                    <Switch defaultValueBol={false} onChangeValue={setByCity}/>
+                    <span>Поиск в городе</span>
+                </div>
             </div>
         </div>
     );

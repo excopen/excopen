@@ -24,6 +24,11 @@ public class TourServiceImpl implements ITourService {
     private final ReviewRepository reviewRepository;
     private final UserServiceImpl userService;
 
+    private final UserServiceImpl userService;
+    private final DescriptionServiceImpl descriptionService;
+
+    private final UserServiceImpl userService;
+
     @Autowired
     public TourServiceImpl(TourRepository tourRepository,
                            ReviewRepository reviewRepository,
@@ -60,6 +65,8 @@ public class TourServiceImpl implements ITourService {
     public Tour updateTour(Tour tour) {
         return tourRepository.save(tour);
     }
+
+
 
     @Override
     public void deleteTour(Long tourId) {

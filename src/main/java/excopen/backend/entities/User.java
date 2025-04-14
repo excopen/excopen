@@ -50,7 +50,6 @@ public class User implements Serializable {
 
     @JdbcTypeCode(SqlTypes.VECTOR)
     private int[] secondVector;
-
     private String phoneNumber;
     private String description;
     private String city;
@@ -69,6 +68,7 @@ public class User implements Serializable {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
         this.role = Role.USER;
+
         this.preferencesVector = new int[tagCount];
         this.secondVector = new int[tagCount];
     }

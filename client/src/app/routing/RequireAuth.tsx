@@ -1,7 +1,7 @@
 import React, {FC} from "react";
-import {UserRole} from "@/shared/types";
+import {RouteNames, UserRole} from "@/shared/types";
 import {Navigate} from "react-router-dom";
-import {useAuthContext} from "@/app/context";
+import {useAuthContext} from "@/features";
 
 type RequireAuthProps = {
     children: React.ReactNode;
@@ -10,11 +10,15 @@ type RequireAuthProps = {
 
 export const RequireAuth: FC<RequireAuthProps> = (props) => {
 
-    const {isAuth, role} = useAuthContext();
+    const {isAuth} = useAuthContext()
 
+    /*
     if (!isAuth || (props.role !== null && props.role !== role)) {
         return <Navigate to={"/main"}/>
     }
+     */
+
+    if (!isAuth) return <Navigate to={`/${RouteNames.MAIN}`}/>
 
     return props.children;
 

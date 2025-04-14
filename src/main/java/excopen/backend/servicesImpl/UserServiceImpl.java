@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentMap;
 @Service
 public class UserServiceImpl extends DefaultOAuth2UserService implements IUserService {
 
+
     private final UserRepository userRepository;
     private final VerificationService verificationService;
     private final PhoneNumberValidator phoneNumberValidator;
@@ -167,7 +168,7 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
     public boolean isGuide(Long userId) {
         return getUserById(userId).getRole().equals(Role.GUIDE);
     }
-
+  
     @Override
     public void updateGuideRating(Long userId) {
         Double avgRating = reviewRepository.calculateAverageRatingByCreatorId(userId);
@@ -178,9 +179,6 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
         user.setTotalReviews(reviewCount);
         userRepository.save(user);
     }
-
-
-
 }
 
 
