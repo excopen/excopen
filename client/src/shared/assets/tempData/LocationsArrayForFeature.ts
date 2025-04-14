@@ -2,12 +2,14 @@ import bg from "@/shared/assets/tempData/assets/cardBg.png";
 import bg2 from "@/shared/assets/tempData/assets/cardBg2.png";
 import bg3 from "@/shared/assets/tempData/assets/cardBg3.png";
 import bg4 from "@/shared/assets/tempData/assets/cardBg4.png";
+import {ILocation} from "@/shared/types";
 
-export const LocationsArrayForFeature = [
+export const LocationsArrayForFeature: ILocation[] = [
     {
         id: 0,
         country: "Россия",
         city: "Омск",
+        region: "Омская область",
         tourCount: 100,
         image: bg,
     },
@@ -15,6 +17,7 @@ export const LocationsArrayForFeature = [
         id: 1,
         country: "Россия",
         city: "Санкт-Петербург",
+        region: "Ленинградская область",
         tourCount: 200,
         image: bg2,
     },
@@ -22,6 +25,7 @@ export const LocationsArrayForFeature = [
         id: 2,
         country: "Россия",
         city: "Новосибирск",
+        region: "Новосибирская область",
         tourCount: 300,
         image: bg3,
     },
@@ -29,6 +33,7 @@ export const LocationsArrayForFeature = [
         id: 3,
         country: "Россия",
         city: "Москва",
+        region: "Московская область",
         tourCount: 400,
         image: bg4,
     },
@@ -36,6 +41,7 @@ export const LocationsArrayForFeature = [
         id: 4,
         country: "Россия",
         city: "Абакан",
+        region: "Республика Хакасия",
         tourCount: 400,
         image: bg4,
     },
@@ -43,6 +49,7 @@ export const LocationsArrayForFeature = [
         id: 5,
         country: "Россия",
         city: "Ачинск",
+        region: "Красноярский край",
         tourCount: 400,
         image: bg4,
     },
@@ -50,6 +57,7 @@ export const LocationsArrayForFeature = [
         id: 6,
         country: "Россия",
         city: "Астрахань",
+        region: "Астраханская область",
         tourCount: 400,
         image: bg4,
     },
@@ -57,6 +65,7 @@ export const LocationsArrayForFeature = [
         id: 7,
         country: "Россия",
         city: "Алупка",
+        region: "Крым",
         tourCount: 400,
         image: bg4,
     },

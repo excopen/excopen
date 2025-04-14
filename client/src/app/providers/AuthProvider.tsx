@@ -1,14 +1,20 @@
 import {UserRole} from "@/shared/types";
-import {ReactNode} from "react";
-import {AuthContext} from "@/app/context";
+import {ReactNode, useState} from "react";
+import {AuthContext} from "@/features";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+
+    // заглушка
+    const [isAuth, setIsAuth] = useState<boolean>(true)
+
     return (
         <AuthContext.Provider value={{
-            role: UserRole.client,
-            isAuth: true
+            role: UserRole.contributor,
+            userId: 1,
+            isAuth,
+            setIsAuth
         }}>
             {children}
         </AuthContext.Provider>
     )
-};
+}

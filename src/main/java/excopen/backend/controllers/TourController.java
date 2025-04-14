@@ -139,4 +139,5 @@ public class TourController {
     public List<TourResponseDTO> getSimilarTours(@PathVariable Long tourId) {
         return tourMapper.toResponseDTOList(tourService.getSimilarTours(tourId));
     }
+
 }

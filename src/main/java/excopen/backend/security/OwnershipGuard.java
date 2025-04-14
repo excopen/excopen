@@ -48,6 +48,7 @@ public class OwnershipGuard {
         String googleId = principal.getAttribute("sub");
         User currentUser = userService.getUserByGoogleId(googleId);
 
+
         Long userId = currentUser.getId();
         Class<?> entityClass = requiresOwnership.entityClass();
 

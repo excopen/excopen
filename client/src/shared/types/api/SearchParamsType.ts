@@ -1,6 +1,8 @@
+import {ILocation, RangeType} from "@/shared/types";
+
 export type SearchParamsType = {
-    location: string
-    date: Date | undefined
+    location: ILocation
+    date: RangeType
     accessibility: string
     byCity: boolean
 }
