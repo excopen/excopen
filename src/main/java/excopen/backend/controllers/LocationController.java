@@ -1,6 +1,6 @@
 package excopen.backend.controllers;
 
-import excopen.backend.entities.Location;
+import excopen.backend.dto.LocationResponseDto;
 import excopen.backend.iservices.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,13 @@ public class LocationController {
         this.locationService = locationService;
     }
 
+//    @GetMapping
+//    public List<Location> getAllLocations() {
+//        return locationService.getAllLocations();
+//    }
+
     @GetMapping
-    public List<Location> getAllLocations() {
-        return locationService.getAllLocations();
+    public List<LocationResponseDto> getAllLocationsWithTourCount() {
+        return locationService.getAllLocationsWithTourCount();
     }
 }
