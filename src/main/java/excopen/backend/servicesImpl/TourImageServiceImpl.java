@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 import java.util.Optional;
 
 @Service
@@ -26,12 +25,11 @@ public class TourImageServiceImpl implements ITourImageService {
 
     @Override
     public TourImage addTourImage(Long tourId, String imageUrl) {
-        // Проверка на наличие тура
-        tourRepository.findById(tourId)
+        Tour tour = tourRepository.findById(tourId)
                 .orElseThrow(() -> new IllegalArgumentException("Tour with ID " + tourId + " not found."));
 
         TourImage tourImage = new TourImage();
-        tourImage.setTourId(tourId);
+        tourImage.setTour(tour);
         tourImage.setImageUrl(imageUrl);
         return tourImageRepository.save(tourImage);
     }
@@ -46,7 +44,9 @@ public class TourImageServiceImpl implements ITourImageService {
 
     @Override
     public List<TourImage> getImagesByTour(Long tourId) {
-        return tourImageRepository.findByTourId(tourId);
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("Tour with ID " + tourId + " not found."));
+        return tourImageRepository.findByTour(tour);
     }
 
     @Override

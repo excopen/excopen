@@ -9,14 +9,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constants {
 
-    public static int tagCount;
+    public static final int tagCount = 32;
 
-    @Autowired
-    private TagServiceImpl tagService;
-
-    // Используем аннотацию PostConstruct для инициализации
-    @PostConstruct
-    public void init() {
-        tagCount = (int) tagService.getTagCount();
-    }
+//    @Autowired
+//    private TagServiceImpl tagService;
+//
+//    // Используем аннотацию PostConstruct для инициализации
+//    @PostConstruct
+//    public void init() {
+//        tagCount = (int) tagService.getTagCount();
+//    }
 }

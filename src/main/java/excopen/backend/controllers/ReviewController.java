@@ -42,20 +42,21 @@ public class ReviewController {
         Tour tour = tourService.getTourById(reviewDTO.getTourId());
 
         Review review = reviewMapper.toEntity(reviewDTO);
-        review.setUserId(user.getId());
-        review.setTourId(tour.getId());
+
+        review.setUser(user);
+        review.setTour(tour);
 
         ReviewResponseDTO response = reviewMapper.toResponseDTO(reviewService.createReview(review));
         return ResponseEntity.ok(response);
 
     }
 
-    @GetMapping("/{reviewId}")
-    public ReviewResponseDTO getReviewById(@PathVariable Long reviewId) {
-        Review review = reviewService.getReviewById(reviewId);
-        return reviewMapper.toResponseDTO(review);
+//    @GetMapping("/{reviewId}")
+//    public ReviewResponseDTO getReviewById(@PathVariable Long reviewId) {
+//        Review review = reviewService.getReviewById(reviewId);
+//        return reviewMapper.toResponseDTO(review);
+//    }
 
-    }
 
     @RequiresOwnership(entityClass = Review.class)
     @PutMapping("/{reviewId}")
@@ -67,11 +68,11 @@ public class ReviewController {
 
     }
 
-    @RequiresOwnership(entityClass = Review.class)
-    @DeleteMapping("/{reviewId}")
-    public void deleteReview(@PathVariable Long reviewId) {
-        reviewService.deleteReview(reviewId);
-    }
+//    @RequiresOwnership(entityClass = Review.class)
+//    @DeleteMapping("/{reviewId}")
+//    public void deleteReview(@PathVariable Long reviewId) {
+//        reviewService.deleteReview(reviewId);
+//    }
 
     @GetMapping("/tour/{tourId}")
     public List<ReviewResponseDTO> getReviewsByTour(@PathVariable Long tourId) {

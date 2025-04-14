@@ -16,13 +16,14 @@ import java.util.Optional;
 public interface ITourService {
     Tour createTour(Tour tour, Long creatorId);
     Tour getTourById(Long tourId);
-    public Tour updateTour(Tour tour);
+    List<Tour> getToursByCreatorId(Long creatorId);
+    Tour updateTour(Tour tour);
     void deleteTour(Long tourId);
     List<Tour> getAllTours();
     List<Tour> findToursByLocation(Long locationId);
-    List<Tour> findToursByDuration(BigDecimal duration);
-    public List<Tour> getRecommendedTours(Long userId);
+    List<Tour> findToursByDuration(Double duration);
+    List<Tour> getRecommendedTours(Long userId);
     List<Tour> getSimilarTours(Long tourId);
-    public Page<Tour> filterTours(FilterToursDTO filter, Pageable pageable);
+    Page<Tour> filterTours(FilterToursDTO filter, Pageable pageable);
 }
 

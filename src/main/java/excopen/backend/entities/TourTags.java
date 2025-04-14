@@ -13,9 +13,11 @@ public class TourTags {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Assumes auto-increment primary key
     private Long id;
 
-    @JoinColumn(name = "tour_id", nullable = false)
-    private Long tourId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tour_id")
+    private Tour tour;
 
-    @JoinColumn(name = "tag_id", nullable = false)
-    private Long tagId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
 }

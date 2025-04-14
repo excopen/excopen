@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -16,4 +17,7 @@ public class Location implements Serializable {
 
     private String city;
     private String region;
+
+    @OneToMany(mappedBy = "location", fetch = FetchType.LAZY)
+    private List<Tour> tours;
 }

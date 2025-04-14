@@ -2,6 +2,7 @@ package excopen.backend.servicesImpl;
 
 import excopen.backend.entities.Favorite;
 import excopen.backend.entities.Tour;
+import excopen.backend.entities.User;
 import excopen.backend.iservices.IFavoriteService;
 import excopen.backend.repositories.FavoriteRepository;
 import excopen.backend.repositories.TourRepository;
@@ -19,7 +20,9 @@ public class FavoriteServiceImpl implements IFavoriteService {
     private final UserRepository userRepository;
 
     @Autowired
-    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, TourRepository tourRepository, UserRepository userRepository) {
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository,
+                               TourRepository tourRepository,
+                               UserRepository userRepository) {
         this.favoriteRepository = favoriteRepository;
         this.tourRepository = tourRepository;
         this.userRepository = userRepository;
@@ -27,28 +30,37 @@ public class FavoriteServiceImpl implements IFavoriteService {
 
     @Override
     public void addTourToFavorites(Long userId, Long tourId) {
-        userRepository.findById(userId);
-        tourRepository.findById(tourId);
-        if (favoriteRepository.existsByUserIdAndTourId(userId, tourId)) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("Tour not found with ID: " + tourId));
+
+        if (favoriteRepository.existsByUserAndTour(user, tour)) {
             throw new IllegalArgumentException("This tour is already in the user's favorites.");
         }
 
         Favorite favorite = new Favorite();
-        favorite.setUserId(userId);
-        favorite.setTourId(tourId);
+        favorite.setUser(user);
+        favorite.setTour(tour);
         favoriteRepository.save(favorite);
     }
 
     @Override
     public void removeTourFromFavorites(Long userId, Long tourId) {
-        Favorite favorite = favoriteRepository.findByUserIdAndTourId(userId, tourId)
+        User user = new User();
+        user.setId(userId);
+        Tour tour = new Tour();
+        tour.setId(tourId);
+
+        Favorite favorite = favoriteRepository.findByUserAndTour(user, tour)
                 .orElseThrow(() -> new IllegalArgumentException("Favorite tour not found for this user."));
         favoriteRepository.delete(favorite);
     }
 
     @Override
     public List<Tour> getFavoriteToursByUser(Long userId) {
-        List<Long> tourIds = favoriteRepository.findTourIdsByUserId(userId);
-        return tourRepository.findAllById(tourIds);
+        User user = new User();
+        user.setId(userId);
+        return favoriteRepository.findToursByUser(user);
     }
 }

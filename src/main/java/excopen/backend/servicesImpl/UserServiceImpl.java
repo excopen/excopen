@@ -3,7 +3,9 @@ package excopen.backend.servicesImpl;
 import excopen.backend.constants.Role;
 import excopen.backend.dto.GuideRequestDto;
 import excopen.backend.entities.User;
+import excopen.backend.iservices.IReviewService;
 import excopen.backend.iservices.IUserService;
+import excopen.backend.repositories.ReviewRepository;
 import excopen.backend.repositories.UserRepository;
 import excopen.backend.util.PhoneNumberValidator;
 import excopen.backend.util.VerificationService;
@@ -30,13 +32,16 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
     private final VerificationService verificationService;
     private final PhoneNumberValidator phoneNumberValidator;
     private final ConcurrentMap<Long, GuideRequestDto> pendingGuideRequests = new ConcurrentHashMap<>();
+    private final ReviewRepository reviewRepository;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, VerificationService verificationService, PhoneNumberValidator phoneNumberValidator) {
+    public UserServiceImpl(UserRepository userRepository, VerificationService verificationService,
+                           PhoneNumberValidator phoneNumberValidator, ReviewRepository reviewRepository) {
         this.userRepository = userRepository;
         this.verificationService = verificationService;
         this.phoneNumberValidator = phoneNumberValidator;
+        this.reviewRepository = reviewRepository;
     }
 
     @Override
@@ -86,6 +91,7 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
                     .name((String) attributes.get("given_name"))
                     .surname((String) attributes.get("family_name"))
                     .email((String) attributes.get("email"))
+                    .avatarUrl((String) attributes.get("picture"))
                     .role(Role.USER)
                     .build());
         }
@@ -124,6 +130,11 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
             throw new IllegalArgumentException("Вы уже являетесь гидом");
         }
 
+        if ((guideRequestDto.getVkLink() == null || guideRequestDto.getVkLink().isBlank()) &&
+                (guideRequestDto.getTelegramLink() == null || guideRequestDto.getTelegramLink().isBlank())) {
+            throw new IllegalArgumentException("Укажите хотя бы одну ссылку: VK или Telegram");
+        }
+
         String normalizedPhone = phoneNumberValidator.normalizePhoneNumber(guideRequestDto.getPhoneNumber());
 
         verificationService.sendVerificationCode(normalizedPhone);
@@ -156,6 +167,17 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
 
     public boolean isGuide(Long userId) {
         return getUserById(userId).getRole().equals(Role.GUIDE);
+    }
+  
+    @Override
+    public void updateGuideRating(Long userId) {
+        Double avgRating = reviewRepository.calculateAverageRatingByCreatorId(userId);
+        Integer reviewCount = reviewRepository.countReviewsByCreatorId(userId);
+
+        User user = getUserById(userId);
+        user.setGuideRating(avgRating != null ? avgRating : 0.0);
+        user.setTotalReviews(reviewCount);
+        userRepository.save(user);
     }
 }
 
