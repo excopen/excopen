@@ -2,13 +2,8 @@ package excopen.backend.servicesImpl;
 
 import com.querydsl.core.BooleanBuilder;
 import excopen.backend.dto.FilterToursDTO;
-import excopen.backend.dto.TourCreateDTO;
-import excopen.backend.dto.TourResponseDTO;
 import excopen.backend.entities.*;
-import excopen.backend.iservices.ILocationService;
 import excopen.backend.iservices.ITourService;
-import excopen.backend.mapper.DescriptionMapper;
-import excopen.backend.mapper.TourMapper;
 import excopen.backend.repositories.ReviewRepository;
 import excopen.backend.repositories.TourRepository;
 import jakarta.transaction.Transactional;
@@ -17,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.Arrays;
@@ -30,10 +23,6 @@ public class TourServiceImpl implements ITourService {
     private final TourRepository tourRepository;
     private final ReviewRepository reviewRepository;
     private final UserServiceImpl userService;
-    private final ILocationService locationService;
-    private final TourMapper tourMapper;
-
-    private final DescriptionServiceImpl descriptionService;
 
     private final UserServiceImpl userService;
     private final DescriptionServiceImpl descriptionService;
@@ -43,14 +32,10 @@ public class TourServiceImpl implements ITourService {
     @Autowired
     public TourServiceImpl(TourRepository tourRepository,
                            ReviewRepository reviewRepository,
-                           UserServiceImpl userService, ILocationService locationService,
-                           TourMapper tourMapper, DescriptionServiceImpl descriptionService) {
+                           UserServiceImpl userService) {
         this.tourRepository = tourRepository;
         this.reviewRepository = reviewRepository;
         this.userService = userService;
-        this.locationService = locationService;
-        this.tourMapper = tourMapper;
-        this.descriptionService = descriptionService;
     }
 
     @Transactional
