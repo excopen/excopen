@@ -24,11 +24,6 @@ public class TourServiceImpl implements ITourService {
     private final ReviewRepository reviewRepository;
     private final UserServiceImpl userService;
 
-    private final UserServiceImpl userService;
-    private final DescriptionServiceImpl descriptionService;
-
-    private final UserServiceImpl userService;
-
     @Autowired
     public TourServiceImpl(TourRepository tourRepository,
                            ReviewRepository reviewRepository,
