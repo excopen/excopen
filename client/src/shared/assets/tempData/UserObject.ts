@@ -24,4 +24,11 @@ export const UserObject: IUser = {
     contacts: ContactsObject,
     rating: 4.5,
     ratingCount: 8,
+    tags: [
+        "культурные ценности",
+        "достопримечательности",
+        "природа и экология",
+        "исторические места",
+        "путешествия с детьми"
+    ]
 }

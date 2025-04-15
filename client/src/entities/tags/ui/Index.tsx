@@ -11,7 +11,7 @@ type TagProps = {
 
 export const Index: FC<TagProps> = ({value, tag, add, remove, variant = "secondary"}) => {
 
-    const isSelected = value.includes(tag)
+    const isSelected = (value ?? []).includes(tag)
 
     const clickHandler = () => {
         if (!isSelected) add(tag)

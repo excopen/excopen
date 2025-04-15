@@ -4,7 +4,7 @@ import {RequireAuth} from "./RequireAuth.tsx";
 import {
     AuthPage,
     BookingPage,
-    ContributorPage, CreatePage, FavouritesPage,
+    ContributorPage, CreatePage, EditProfilePage, FavouritesPage,
     HomePage,
     Layout,
     LocationsPage,
@@ -58,6 +58,14 @@ export const AppRoutes: FC = () => {
                     element={
                         <RequireAuth>
                             <CreatePage/>
+                        </RequireAuth>
+                    }
+                />
+                <Route
+                    path={RouteNames.EDIT_PROFILE}
+                    element={
+                        <RequireAuth>
+                            <EditProfilePage/>
                         </RequireAuth>
                     }
                 />

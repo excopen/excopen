@@ -7,6 +7,7 @@ export interface IUser {
     avatar: string
     name: string
     surname: string
+    tags: string[]
     email: string
     token: string
     orders: IOrder[]

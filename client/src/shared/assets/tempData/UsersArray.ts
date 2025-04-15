@@ -19,7 +19,7 @@ export const usersArray: IUser[] = [
         surname: "Ivanov",
         email: "ivanov@mail.ru",
         orders: [OrderObject, OrderObject],
-        visitedTours: [
+        tours: [
             {
                 time: "",
                 byCity: false,
@@ -61,6 +61,8 @@ export const usersArray: IUser[] = [
             "много знаем о нём и готовы поделиться с вами знаниями. " +
             "С удовольствием поможем убедиться в том, что здесь каждому найдётся " +
             "что посмотреть и куда сходить.",
+        tags: [],
+        token: ""
     },
     {
         id: 1,
@@ -70,7 +72,7 @@ export const usersArray: IUser[] = [
         surname: "Ivanov",
         email: "ivanov@mail.ru",
         orders: [OrderObject, OrderObject],
-        visitedTours: [
+        tours: [
             {
                 time: "",
                 byCity: false,
@@ -112,6 +114,8 @@ export const usersArray: IUser[] = [
             "много знаем о нём и готовы поделиться с вами знаниями. " +
             "С удовольствием поможем убедиться в том, что здесь каждому найдётся " +
             "что посмотреть и куда сходить.",
+        tags: [],
+        token: ""
     },
     {
         id: 2,
@@ -121,7 +125,7 @@ export const usersArray: IUser[] = [
         surname: "Ivanov",
         email: "ivanov@mail.ru",
         orders: [OrderObject, OrderObject],
-        visitedTours: [
+        tours: [
             {
                 time: "",
                 byCity: false,
@@ -163,5 +167,7 @@ export const usersArray: IUser[] = [
             "много знаем о нём и готовы поделиться с вами знаниями. " +
             "С удовольствием поможем убедиться в том, что здесь каждому найдётся " +
             "что посмотреть и куда сходить.",
+        tags: [],
+        token: ""
     }
 ]
