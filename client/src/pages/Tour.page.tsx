@@ -8,12 +8,14 @@ export const TourPage: FC = () => {
     const {id } = useParams<{ id: string, title: string }>()
     const {data: tour, isLoading, isError, isFallback} = useTour(Number(id))
 
+    /*
     if (isFallback || isError) return (
         <NotFound
             heading={"Экскурсия не найдена"}
             text={"Возникла проблема с поиском экскурсии"}
         />
     )
+     */
 
     if (isLoading) return <AppSkeleton/>
 

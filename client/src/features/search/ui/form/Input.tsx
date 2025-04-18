@@ -32,7 +32,6 @@ export const Input: FC = observer(() => {
     return (
         <Command role={"form-command"} ref={commandRef}>
             <CommandInput
-                defaultValue={""}
                 isSubmitted={isSubmitted}
                 field={state}
                 value={value}

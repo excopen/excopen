@@ -11,8 +11,6 @@ export class ParamsStore implements IContributorId, ITitle, IIsDisabled {
         this._title = title
         this._contributorId = contributorId
 
-        console.log(title)
-
         makeAutoObservable(this)
 
     }

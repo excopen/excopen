@@ -12,7 +12,7 @@ export const Index: FC<ToursProps> = ({tours}) => {
         <div className={style.container}>
             <span className={style.heading}>Другие предложения</span>
             <div className={style.list}>
-                {tours.map(tour => <TourCard tour={tour}/>)}
+                {tours.map(tour => <TourCard key={tour.id} tour={tour}/>)}
             </div>
         </div>
     );

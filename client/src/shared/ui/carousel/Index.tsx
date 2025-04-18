@@ -10,11 +10,11 @@ import {CarouselVariant} from "@/shared/ui/carousel/CarouselVariant.ts";
 import {cn} from "@/app/lib/utils.ts";
 
 type CarouselProps = {
-    variant?: CarouselVariant
+    variant: CarouselVariant
     images: string[]
 }
 
-export const Index: FC<CarouselProps> = ({variant = CarouselVariant.LARGE, images}) => {
+export const Index: FC<CarouselProps> = ({variant, images}) => {
     return (
         <CarouselContainer>
             <Carousel>

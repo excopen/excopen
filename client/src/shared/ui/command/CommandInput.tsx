@@ -73,7 +73,7 @@ export const CommandInput = React.forwardRef<
                 />
                 {value && <X onClick={onClear} className={iconXStyles}/>}
             </div>
-            <label htmlFor="command-input" className={labelStyles}>
+            <label className={labelStyles}>
                 {label}
             </label>
         </div>

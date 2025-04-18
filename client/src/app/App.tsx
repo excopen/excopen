@@ -1,5 +1,10 @@
 import {AppRoutes} from "@/app/routing";
+import {StrictMode} from "react";
 
 export const App = () => {
-    return <AppRoutes/>
+    return (
+        <StrictMode>
+            <AppRoutes/>
+        </StrictMode>
+    )
 };

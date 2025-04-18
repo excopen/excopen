@@ -32,33 +32,33 @@ export const useUserData = (): Result => {
     
     const updateName = useCallback(
         (name: string) => setUpdatedUser({...updatedUser, name}),
-        [updatedUser]
+        []
     )
     
     const updateSurname = useCallback(
         (surname: string) => setUpdatedUser({...updatedUser, surname}),
-        [updatedUser]
+        []
     )
     
     const updateInfo = useCallback(
         (info: string) => setUpdatedUser({...updatedUser, info}), 
-        [updatedUser]
+        []
     )
     
     const updateImage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
         setUpdatedUser({...updatedUser, avatar: file ? URL.createObjectURL(file) : defaultAvatar})
-    }, [updatedUser])
+    }, [])
 
     const addTag = useCallback((tag: string) => {
         const newTags = updatedUser.tags.includes(tag) ? updatedUser.tags : [...updatedUser.tags, tag]
         setUpdatedUser({...updatedUser, tags: newTags})
-    }, [updatedUser])
+    }, [])
 
     const removeTag = useCallback((tag: string) => {
         const newTags = updatedUser.tags.filter(i => i !== tag)
         setUpdatedUser({...updatedUser, tags: newTags})
-    }, [updatedUser])
+    }, [])
 
     const load = () => update(updatedUser)
 

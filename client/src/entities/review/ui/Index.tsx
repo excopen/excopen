@@ -31,6 +31,7 @@ export const Index: FC<ReviewListProps> = ({rating, ratingCount, tourId}) => {
                     <div className={"flex flex-col gap-4"}>
                         {reviews.slice(0, visibleReviews).map(review =>
                             <Card
+                                key={review.id}
                                 name={review.name}
                                 rating={review.rating}
                                 positiveText={review.positiveText}

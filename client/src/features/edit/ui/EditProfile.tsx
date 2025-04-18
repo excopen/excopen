@@ -7,17 +7,19 @@ import {AvatarField} from "./AvatarField.tsx";
 
 export const EditProfile: FC = () => {
 
+    // TODO добавить контакты для контрибьютера
+
     const {
         isContributor,
         user,
-        uploadImage, updateName, updateSurname, updateInfo, load
+        updateImage, updateName, updateSurname, updateInfo, load
     } = useUserData()
 
     return (
         <div className={"flex flex-col gap-4 bg-grayscale-0 rounded-2xl p-6 lg:w-[700px]"}>
             <AvatarField
                 avatar={user.avatar}
-                update={uploadImage}
+                update={updateImage}
             />
             <Field
                 defaultValue={user.name}
