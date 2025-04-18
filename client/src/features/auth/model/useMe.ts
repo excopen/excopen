@@ -1,18 +1,18 @@
 import {useQuery} from "@tanstack/react-query";
-import {IUser, UserRole} from "@/shared/types";
+import {IMe, UserRole} from "@/shared/types";
 import {getMe} from "@/features/auth/api";
 
 export const useMe = () => {
 
-    const fallback: IUser = {
+    const fallback: IMe = {
         id: 0,
         role: UserRole.client,
         avatar: "",
         name: "",
         surname: "",
-        tags: [],
         email: "",
-        token: "",
+        tags: [],
+        tours: [],
         orders: []
     }
 

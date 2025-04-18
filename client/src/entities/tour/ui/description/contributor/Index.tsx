@@ -1,38 +1,38 @@
 import {FC} from "react";
 import next from "@/shared/assets/icons/next-secondary.svg";
-import contributor from "@/shared/assets/icons/contributor.svg";
+import icon from "@/shared/assets/icons/contributor.svg";
 import style from "./style.module.css"
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 import {Marker} from "@/shared/ui/rating/Marker.tsx";
+import {useUser} from "@/entities";
 
 type ContributorProps = {
     contributorId: number
-    name: string
-    description: string
-    rating: number
 }
 
-export const Index: FC<ContributorProps> = ({name, description, rating, contributorId}) => {
+export const Index: FC<ContributorProps> = ({contributorId}) => {
 
     const navigate = useNavigate()
-
-    const clickHandler = () => navigate(`/${RouteNames.CONTRIBUTOR}/${contributorId}/${encodeURIComponent(name)}`)
+    const {data: contributor} = useUser(contributorId)
 
     return (
         <div className={style.container}>
             <div className={style.info}>
-                <div onClick={clickHandler} className={style.name}>
-                    <span>{name} – представитель команды гидов</span>
+                <div
+                    onClick={() => navigate(`/${RouteNames.CONTRIBUTOR}/${contributorId}/${encodeURIComponent(contributor.name)}`)}
+                    className={style.name}
+                >
+                    <span>{contributor.name} – представитель команды гидов</span>
                     <img width={20} height={20} alt={"next"} src={next}/>
                 </div>
-                <p className={style.desc}>{description}</p>
+                <p className={style.desc}>{contributor.info}</p>
             </div>
             <div className={style.avatar}>
                 <div className={style.icon}>
-                    <img width={48} height={48} alt={"contributor"} src={contributor}/>
+                    <img width={48} height={48} alt={"contributor"} src={icon}/>
                     <div className={style.marker}>
-                        <Marker value={rating}/>
+                        <Marker value={contributor.rating}/>
                     </div>
                 </div>
             </div>

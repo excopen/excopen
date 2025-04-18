@@ -1,11 +1,9 @@
-import { apiClient, ApiException, isAxiosError } from "@/shared/lib";
 import {EndpointsType, IMe} from "@/shared/types";
+import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 
-export const getMe = async (): Promise<IMe> => {
+export const updateMe = async (user: IMe): Promise<IMe> => {
     try {
-        const response = await apiClient.get<IMe>(EndpointsType.ME, {
-            withCredentials: true
-        })
+        const response = await apiClient.put<IMe>(EndpointsType.ME, user)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

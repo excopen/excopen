@@ -1,7 +1,7 @@
 import {FC} from "react";
 import {CalendarCheck, Eye, Users} from "lucide-react";
 import {Button} from "@/shared/ui";
-import {ITour, IUser} from "@/shared/types";
+import {ITour, IMe} from "@/shared/types";
 import s from "./style.module.css"
 import {useEditTour} from "@/shared/hooks";
 import {formatPeople} from "@/shared/utills";
@@ -9,7 +9,7 @@ import {useDeleteTour} from "@/entities";
 
 type TourMetricsProps = {
     tour: ITour
-    users: IUser[]
+    users: IMe[]
     capacity: number
 }
 

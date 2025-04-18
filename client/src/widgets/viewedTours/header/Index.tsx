@@ -8,7 +8,6 @@ type IndexProps = {
 }
 
 export const Index: FC<IndexProps> = ({setCity, setByCity}) => {
-
     return (
         <div className={style.container}>
             <SearchInput

@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import {IUser, RouteNames} from "@/shared/types";
+import {RouteNames} from "@/shared/types";
 import {createTourStore as store, useAuthContext} from "@/features";
 import {useCreateTour, useUpdateTour} from "@/entities";
 
@@ -21,12 +21,13 @@ export const useCreateButton = (): ReturnType => {
 
         if (store.isDisabled) {
 
-            store.params.contributorId = user?.id as number
+            store.params.contributorId = user.id
 
             if (store.isEdit) updateTour(store.tour)
-            else createTour({user: user as IUser, tour: store.tour})
+            else createTour({user: user, tour: store.tour})
 
             navigate(`/${RouteNames.SUCCESS}`)
+
         }
 
     }

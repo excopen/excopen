@@ -1,10 +1,10 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {IReview, IUser} from "@/shared/types";
+import {IReview, IMe} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {createReview} from "@/entities/review/api";
 
 type PayloadType = {
-    user: IUser
+    user: IMe
     review: IReview
 }
 

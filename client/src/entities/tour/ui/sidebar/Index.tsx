@@ -4,7 +4,7 @@ import style from "./style.module.css"
 import {BookingButton, IndividualPrice} from "@/shared/ui";
 import {Item} from "./item";
 import {Rating} from "./rating";
-import {ContributorButton, useUser} from "@/entities";
+import {ContributorButton} from "@/entities";
 import {formatHours, formatPeople} from "@/shared/utills";
 
 type SidebarProps = {
@@ -12,16 +12,9 @@ type SidebarProps = {
 }
 
 export const Index: FC<SidebarProps> = ({tour}) => {
-
-    const {data: contributor} = useUser(tour.contributorId)
-
     return (
         <div className={style.container}>
-            <ContributorButton
-                contributorId={contributor.id}
-                name={contributor.name}
-                avatar={contributor.avatar}
-            />
+            <ContributorButton contributorId={tour.contributorId}/>
             <div className={style.subContainer}>
                 <Item option={"Формат:"} value={tour.format}/>
                 <Item option={"Длительность:"} value={formatHours(tour.duration)}/>
@@ -30,11 +23,7 @@ export const Index: FC<SidebarProps> = ({tour}) => {
                 <Rating option={"Рейтинг:"} rating={tour.rating} ratingCount={tour.ratingCount}/>
                 <hr className={style.separator}/>
                 <IndividualPrice price={tour.priceForPerson}/>
-                <BookingButton
-                    size={"lg"}
-                    link={`/${RouteNames.BOOKING}/${tour.id}`}
-                    text={"Забронировать место(а)"}
-                />
+                <BookingButton size={"lg"} link={`/${RouteNames.BOOKING}/${tour.id}`} text={"Забронировать место(а)"}/>
             </div>
         </div>
     );

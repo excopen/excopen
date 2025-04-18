@@ -1,7 +1,7 @@
-import {EndpointsType, ITour, IUser} from "@/shared/types";
+import {EndpointsType, ITour, IMe} from "@/shared/types";
 import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 
-export const createTour = async (user: IUser, tour: ITour): Promise<void> => {
+export const createTour = async (user: IMe, tour: ITour): Promise<void> => {
     try {
         await apiClient.post<ITour>(EndpointsType.TOURS, { user: user, tour: tour })
     } catch (e) {

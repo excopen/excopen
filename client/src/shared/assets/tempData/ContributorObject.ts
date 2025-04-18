@@ -1,9 +1,9 @@
-import {IContributor} from "@/shared/types/entities/IContributor.ts";
+import {IUser} from "@/shared/types/entities/IUser.ts";
 import {TourObject} from "@/shared/assets/tempData/TourObject.ts";
 import avatar from "@/shared/assets/icons/contributor.svg"
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 
-export const ContributorObject: IContributor = {
+export const ContributorObject: IUser = {
     id: 1,
     name: "Ирина Дмитриева",
     avatar: avatar,

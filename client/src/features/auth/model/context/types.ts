@@ -1,7 +1,7 @@
-import {IUser} from "@/shared/types";
+import {IMe} from "@/shared/types";
 
 export type AuthContextType = {
     isAuth: boolean
-    user: IUser
+    user: IMe
     logout: () => void
 }

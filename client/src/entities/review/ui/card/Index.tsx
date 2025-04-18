@@ -1,6 +1,6 @@
 import {FC} from "react";
 import style from "./style.module.css"
-import {cn} from "@/app/lib/utils.ts";
+import {Rating} from "./Rating.tsx";
 
 type ReviewCardProps = {
     name: string
@@ -22,13 +22,7 @@ export const Index: FC<ReviewCardProps> = ({rating, positiveText, negativeText, 
                         {personCount} персоны
                     </span>
                 </div>
-                <div className={cn(
-                    "flex items-center justify-center w-8 h-6 rounded-xl text-grayscale-0 text-sm",
-                    (rating <= 3) && "bg-red-gr",
-                    (rating > 3) && "bg-green-gr",
-                )}>
-                    {rating}
-                </div>
+                <Rating rating={rating}/>
             </div>
             <div className={style.reviews}>
                 <div className={style.review}>

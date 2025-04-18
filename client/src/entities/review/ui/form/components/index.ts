@@ -1,1 +1,2 @@
-export {Index as Stars} from "./Index.tsx"
+export {Stars} from "./Stars.tsx"
+export {Header} from "./Header.tsx"

@@ -7,7 +7,7 @@ type StarsProps = {
     setRating: (rating: number) => void
 }
 
-export const Index: FC<StarsProps> = ({rating, setRating}) => {
+export const Stars: FC<StarsProps> = ({rating, setRating}) => {
 
     const [hovered, setHovered] = useState<number>(0)
 

@@ -1,4 +1,4 @@
-import {IUser, TourAccessibility, TourFormat, TourFormatBehavior, UserRole} from "@/shared/types";
+import {IMe, TourAccessibility, TourFormat, TourFormatBehavior, UserRole} from "@/shared/types";
 import avatar from "@/shared/assets/icons/contributor.svg";
 import {OrderObject} from "@/shared/assets/tempData/OrderObject.ts";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
@@ -10,7 +10,7 @@ import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
 import {ReviewsArray} from "@/shared/assets/tempData/ReviewsArray.ts";
 
-export const usersArray: IUser[] = [
+export const usersArray: IMe[] = [
     {
         id: 0,
         role: UserRole.contributor,

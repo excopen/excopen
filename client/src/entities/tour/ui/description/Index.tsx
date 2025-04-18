@@ -5,16 +5,12 @@ import {Contributor} from "./contributor";
 import style from "./style.module.css"
 import {Reviews} from "@/entities/review";
 import {Contacts} from "@/shared/ui";
-import {useUser} from "@/entities";
 
 type DescriptionProps = {
     tour: ITour
 }
 
 export const Index: FC<DescriptionProps> = ({tour}) => {
-
-    const {data: contributor} = useUser(tour.contributorId)
-
     return (
         <div className={style.container}>
 
@@ -78,12 +74,7 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                 ratingCount={tour.ratingCount}
             />
 
-            <Contributor
-                contributorId={contributor.id}
-                name={contributor.name}
-                description={contributor.description as string}
-                rating={contributor.rating as number}
-            />
+            <Contributor contributorId={tour.contributorId}/>
 
         </div>
     );

@@ -4,8 +4,6 @@ import {ILocation} from "@/shared/types";
 import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
 import {getLocations} from "@/entities/location/api";
 
-// Все поля ввода с локацией
-
 export const useLocations = () => {
 
     const fallback = LocationsArrayForFeature

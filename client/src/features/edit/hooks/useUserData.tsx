@@ -1,25 +1,20 @@
-import {useAuthContext} from "@/features";
-import {useTags, useUpdateUser} from "@/entities";
+import {useAuthContext, useUpdateMe} from "@/features";
+import {useTags} from "@/entities";
 import React, {useCallback, useState} from "react";
-import defaultAvatar from "@/shared/assets/icons/avatar.svg";
-import {IUser, RouteNames, UserRole} from "@/shared/types";
-import {useNavigate} from "react-router-dom";
+import {IMe, UserRole} from "@/shared/types";
+import defaultAvatar from "@/shared/assets/icons/avatar.svg"
 
 type Result = {
     isContributor: boolean
-    name: string
-    surname: string
-    avatar: string
-    description: string
+    user: IMe
 
     tags: string[]
     userTags: string[]
 
     updateName: (value: string) => void
     updateSurname: (value: string) => void
-    updateAvatar: (value: string) => void
-    updateDesc: (value: string) => void
-    uploadImage: (event: React.ChangeEvent<HTMLInputElement>) => void
+    updateInfo: (value: string) => void
+    updateImage: (event: React.ChangeEvent<HTMLInputElement>) => void
 
     addTag: (value: string) => void
     removeTag: (value: string) => void
@@ -28,50 +23,51 @@ type Result = {
 }
 
 export const useUserData = (): Result => {
-
-    const navigate = useNavigate()
-
+    
     const {user} = useAuthContext()
-    const {mutate: updateUser} = useUpdateUser()
-    const {data: allTags} = useTags()
+    const {data: tags} = useTags()
+    const {mutate: update} = useUpdateMe()
 
-    const [name, setName] = useState<string>(user?.name as string)
-    const [surname, setSurname] = useState<string>(user?.surname as string)
-    const [description, setDescription] = useState<string>(user?.description || "")
-    const [avatar, setAvatar] = useState<string>(user?.avatar || defaultAvatar)
-    const [tags, setTags] = useState<string[]>(user?.tags || [])
-
-    const updateData = () => {
-        updateUser({...user as IUser, name, surname, avatar, description, tags})
-        navigate(`/${RouteNames.EDIT_PROFILE}`)
-    }
-
-    const uploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const [updatedUser, setUpdatedUser] = useState<IMe>(user)
+    
+    const updateName = useCallback(
+        (name: string) => setUpdatedUser({...updatedUser, name}),
+        [updatedUser]
+    )
+    
+    const updateSurname = useCallback(
+        (surname: string) => setUpdatedUser({...updatedUser, surname}),
+        [updatedUser]
+    )
+    
+    const updateInfo = useCallback(
+        (info: string) => setUpdatedUser({...updatedUser, info}), 
+        [updatedUser]
+    )
+    
+    const updateImage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0]
-        if (file) setAvatar(URL.createObjectURL(file))
-    }
+        setUpdatedUser({...updatedUser, avatar: file ? URL.createObjectURL(file) : defaultAvatar})
+    }, [updatedUser])
 
     const addTag = useCallback((tag: string) => {
-        setTags(prev => (prev.includes(tag) ? prev : [...prev, tag]))
-    }, [])
+        const newTags = updatedUser.tags.includes(tag) ? updatedUser.tags : [...updatedUser.tags, tag]
+        setUpdatedUser({...updatedUser, tags: newTags})
+    }, [updatedUser])
 
     const removeTag = useCallback((tag: string) => {
-        setTags(prev => prev.filter(t => t !== tag))
-    }, [])
+        const newTags = updatedUser.tags.filter(i => i !== tag)
+        setUpdatedUser({...updatedUser, tags: newTags})
+    }, [updatedUser])
+
+    const load = () => update(updatedUser)
 
     return {
-        isContributor: user?.role === UserRole.contributor,
-        name, surname, avatar, description,
-        tags: allTags,
-        userTags: user?.tags as string[],
-        addTag,
-        removeTag,
-        updateName: setName,
-        updateSurname: setSurname,
-        updateAvatar: setAvatar,
-        updateDesc: setDescription,
-        uploadImage: uploadImage,
-        load: updateData
+        isContributor: updatedUser.role === UserRole.contributor,
+        user: updatedUser,
+        tags,
+        userTags: updatedUser.tags,
+        addTag, removeTag, updateName, updateSurname, updateInfo, updateImage, load
     }
 
 }

@@ -9,27 +9,24 @@ export const EditProfile: FC = () => {
 
     const {
         isContributor,
-        avatar,
-        name,
-        surname,
-        description,
-        uploadImage, updateName, updateSurname, updateDesc, load
+        user,
+        uploadImage, updateName, updateSurname, updateInfo, load
     } = useUserData()
 
     return (
         <div className={"flex flex-col gap-4 bg-grayscale-0 rounded-2xl p-6 lg:w-[700px]"}>
             <AvatarField
-                avatar={avatar}
+                avatar={user.avatar}
                 update={uploadImage}
             />
             <Field
-                defaultValue={name}
+                defaultValue={user.name}
                 onChangeHandler={updateName}
                 title={"Имя"}
                 placeholder={"Введите имя"}
             />
             <Field
-                defaultValue={surname}
+                defaultValue={user.surname}
                 onChangeHandler={updateSurname}
                 title={"Фамилия"}
                 placeholder={"Введите фамилию"}
@@ -37,8 +34,8 @@ export const EditProfile: FC = () => {
             {
                 isContributor &&
                 <Field
-                    defaultValue={description}
-                    onChangeHandler={updateDesc}
+                    defaultValue={user.info || ""}
+                    onChangeHandler={updateInfo}
                     title={"Описание"}
                     placeholder={"Введите описание"}
                 />
