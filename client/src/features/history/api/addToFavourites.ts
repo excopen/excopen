@@ -1,10 +1,9 @@
 import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
-import {ITour} from "@/shared/types";
-import {HistoryEndpoint} from "@/features/history/types";
+import {EndpointsType, ITour} from "@/shared/types";
 
-export const deleteHistory = async (tourId: number, endpoint: HistoryEndpoint): Promise<void> => {
+export const addToFavourites = async (tourId: number): Promise<void> => {
     try {
-        await apiClient.delete(`${endpoint}/${tourId}`)
+        await apiClient.post<ITour>(`${EndpointsType.FAVOURITES}/${tourId}`)
     } catch (e) {
         if (isAxiosError(e)) {
             throw new ApiException<ITour>(e.message, e.response?.status, e.response?.data as ITour | undefined)

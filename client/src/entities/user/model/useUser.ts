@@ -4,14 +4,12 @@ import {ApiException} from "@/shared/lib";
 import {UserObject} from "@/shared/assets/tempData/UserObject.ts";
 import {getUser} from "@/entities/user/api";
 
-// Везде где запрашиваются данные пользователя или контрибьютера
-
 export const useUser = (id: number) => {
 
     const fallback = UserObject
 
     return useQuery<IUser, ApiException<IUser>>({
-        queryKey: ["user", id],
+        queryKey: ["user"],
         queryFn: async (): Promise<IUser> => {
             const user = await getUser(id)
             return user ?? fallback

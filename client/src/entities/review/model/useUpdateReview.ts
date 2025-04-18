@@ -3,8 +3,6 @@ import {IReview} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {updateReview} from "@/entities/review/api";
 
-// Комментарий на странице профиля
-
 export const useUpdateReview = () => {
 
     const queryClient = useQueryClient()

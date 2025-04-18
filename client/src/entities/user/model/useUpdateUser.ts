@@ -3,8 +3,6 @@ import {IUser} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {updateUser} from "@/entities/user/api";
 
-// Обновление данных в профиле
-
 export const useUpdateUser = () => {
 
     const queryClient = useQueryClient()
@@ -13,10 +11,10 @@ export const useUpdateUser = () => {
         mutationFn: updateUser,
         onMutate: async (user) => {
 
-            await queryClient.cancelQueries({ queryKey: ["user", user.id] })
+            await queryClient.cancelQueries({ queryKey: ["user"] })
 
-            const previous = queryClient.getQueryData<IUser>(["user", user.id])
-            queryClient.setQueryData(["user", user.id], user)
+            const previous = queryClient.getQueryData<IUser>(["user"])
+            queryClient.setQueryData(["user"], user)
 
             return { previous }
 

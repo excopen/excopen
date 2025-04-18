@@ -6,8 +6,6 @@ import {searchTourStore as store} from "@/features";
 
 import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
 
-// Страница Tours
-
 export const useTours = () => {
 
     const fallback = ToursArray

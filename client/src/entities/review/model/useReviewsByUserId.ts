@@ -3,8 +3,6 @@ import {IReview} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {getReviewsByUserId} from "@/entities/review/api";
 
-// Список оставленных отзывов в профиле
-
 export const useReviewsByUserId = (userId: number) => {
 
     const query = useQuery<IReview[], ApiException<IReview>>({

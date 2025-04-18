@@ -1,39 +1,31 @@
 import {ReactNode, useEffect, useState} from "react";
-import {AuthContext, useGoogleSingIn, useGoogleSignOut, tourLocalHistoryStore as history} from "@/features";
-import {IUser} from "@/shared/types";
+import {AuthContext, tourLocalHistoryStore as history, useLogout} from "@/features";
 import {useAddTags} from "@/entities";
+import {useMe} from "@/features/auth/model/useMe.ts";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const [isAuth, setIsAuth] = useState<boolean>(true)
-    const [user, setUser] = useState<IUser | null>(null)
 
-    const {data, isSuccess, isError, login} = useGoogleSingIn()
-    const {signOut} = useGoogleSignOut()
+    const {user, isSuccess} = useMe()
+    const {mutate: logoutFromGoogle} = useLogout()
+
     const {mutate: addTags} = useAddTags()
 
     useEffect(() => {
-        if (isSuccess && data) {
+        if (isSuccess) {
             setIsAuth(true)
-            setUser(data)
-            if (history.tagsCount !== 0) addTags({userId: data.id, tags: history.tags})
+            if (history.tagsCount !== 0) addTags(history.tags)
         }
-        if (isError) console.error("Ошибка при авторизации")
-    }, [data, isError, isSuccess]);
+    }, [addTags, isSuccess]);
 
     const logout = () => {
-        signOut()
         setIsAuth(false)
-        setUser(null)
+        logoutFromGoogle()
     }
 
     return (
-        <AuthContext.Provider value={{
-            user,
-            isAuth,
-            login,
-            logout
-        }}>
+        <AuthContext.Provider value={{user, isAuth, logout}}>
             {children}
         </AuthContext.Provider>
     )

@@ -1,1 +1,2 @@
-export {loginWithGoogle} from "./loginWithGoogle.ts"
+export {logout} from "./logout.ts"
+export {getMe} from "./getMe.ts"

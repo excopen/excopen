@@ -3,8 +3,6 @@ import {ITour} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {updateTour} from "@/entities/tour/api";
 
-// Профиль
-
 export const useUpdateTour = () => {
 
     const queryClient = useQueryClient()

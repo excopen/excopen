@@ -3,9 +3,7 @@ import {EndpointsType, IReview} from "@/shared/types";
 
 export const getReviewsByUserId = async (userId: number): Promise<IReview[]> => {
     try {
-        const response = await apiClient.get<IReview[]>(
-            `${EndpointsType.REVIEWS}/user/${userId}`
-        )
+        const response = await apiClient.get<IReview[]>(`${EndpointsType.REVIEWS}/user/${userId}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

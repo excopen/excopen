@@ -11,11 +11,10 @@ import {useAuthContext} from "@/features";
 
 type FormProps = {
     type: "create" | "update",
-    tour: ITour,
-    key?: any
+    tour: ITour
 }
 
-export const Index: FC<FormProps> = ({tour, type, key}) => {
+export const Index: FC<FormProps> = ({tour, type}) => {
 
     const {user: userAuth} = useAuthContext()
     const {data: user} = useUser(userAuth?.id as number)
@@ -45,15 +44,18 @@ export const Index: FC<FormProps> = ({tour, type, key}) => {
     const saveReview = () => {
         if (type === "create") {
             createReview({
-                id: Date.now(),
-                userId: user.id,
-                tourId: tour.id,
-                name: user.name,
-                rating: rating,
-                negativeText: negative,
-                positiveText: positive,
-                withChildren: tour.accessibility === TourAccessibility.WITH_CHILDREN,
-                personCount: user?.orders?.find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
+                user,
+                review: {
+                    id: Date.now(),
+                    userId: user.id,
+                    tourId: tour.id,
+                    name: user.name,
+                    rating: rating,
+                    negativeText: negative,
+                    positiveText: positive,
+                    withChildren: tour.accessibility === TourAccessibility.WITH_CHILDREN,
+                    personCount: user?.orders?.find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
+                }
             })
         } else {
             updateReview({

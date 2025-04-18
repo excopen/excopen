@@ -1,15 +1,20 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {IReview} from "@/shared/types";
+import {IReview, IUser} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {createReview} from "@/entities/review/api";
+
+type PayloadType = {
+    user: IUser
+    review: IReview
+}
 
 export const useCreateReview = () => {
 
     const queryClient = useQueryClient()
 
-    return useMutation<void, ApiException<IReview>, IReview>({
-        mutationFn: createReview,
-        onMutate: async (newReview) => {
+    return useMutation<void, ApiException<IReview>, PayloadType>({
+        mutationFn: ({user, review}) => createReview(user, review),
+        onMutate: async ({review: newReview}) => {
 
             const previous = queryClient.getQueryData<IReview[]>(["reviews", "user", newReview.id])
 
@@ -21,7 +26,7 @@ export const useCreateReview = () => {
             return { previous }
 
         },
-        onSuccess: async (_, newReview) => {
+        onSuccess: async (_, {review: newReview}) => {
             await queryClient.invalidateQueries({queryKey: ["reviews", "user", newReview.id]})
             await queryClient.invalidateQueries({queryKey: ["reviews", "tour"]})
         },

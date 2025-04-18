@@ -1,3 +1,3 @@
 export * from "./context"
-export {useGoogleSingIn} from "./useGoogleSingIn.ts"
-export {useGoogleSignOut} from "./useGoogleSingOut.ts"
+export {useLogout} from "./useLogout.ts"
+export {useMe} from "./useMe.ts"

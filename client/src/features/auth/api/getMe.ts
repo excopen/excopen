@@ -1,9 +1,11 @@
-import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
+import { apiClient, ApiException, isAxiosError } from "@/shared/lib";
 import {EndpointsType, IUser} from "@/shared/types";
 
-export const loginWithGoogle = async (token: string): Promise<IUser> => {
+export const getMe = async (): Promise<IUser> => {
     try {
-        const response = await apiClient.post<IUser>(EndpointsType.AUTH, {token})
+        const response = await apiClient.get<IUser>(EndpointsType.ME, {
+            withCredentials: true
+        })
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

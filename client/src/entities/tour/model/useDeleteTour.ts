@@ -3,8 +3,6 @@ import {ITour} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
 import {deleteTour} from "@/entities/tour/api";
 
-// Метрика тура
-
 export const useDeleteTour = () => {
 
     const queryClient = useQueryClient()

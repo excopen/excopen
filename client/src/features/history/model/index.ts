@@ -1,4 +1,4 @@
-export {useHistory} from "./useHistory.ts"
-export {useAddHistory} from "./useAddHistory.ts"
-export {useDeleteHistory} from "./useDeleteHistory.ts"
+export {useFavourites} from "./useFavourites.ts"
+export {useAddToFavourites} from "./useAddToFavourites.ts"
+export {useDeleteFromFavourites} from "./useDeleteFromFavourites.ts"
 export {tourLocalHistoryStore} from "./store.ts"

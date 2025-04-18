@@ -4,8 +4,6 @@ import {ApiException} from "@/shared/lib";
 import {getToursByContributor} from "@/entities/tour/api";
 import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
 
-// Профиль контрьбьютера
-
 export const useContributorTours = (contributorId: number) => {
 
     const fallback = ToursArray

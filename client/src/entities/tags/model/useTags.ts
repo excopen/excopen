@@ -11,7 +11,7 @@ export const useTags = () => {
     const fallback = TagsArray
 
     return useQuery<string[], ApiException<string>>({
-        queryKey: ["tag"],
+        queryKey: ["tags"],
         queryFn: async () => {
             const tags = await getTags()
             return tags.length > 0 ? tags : fallback

@@ -3,9 +3,7 @@ import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 
 export const getUser = async (id: number): Promise<IUser> => {
     try {
-        const response = await apiClient.get<IUser>(EndpointsType.USERS, {
-            params: { id }
-        })
+        const response = await apiClient.get<IUser>(`${EndpointsType.USERS}/${id}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

@@ -4,8 +4,6 @@ import {ApiException} from "@/shared/lib";
 import {getReviewsByTourId} from "@/entities/review/api";
 import {ReviewsArray} from "@/shared/assets/tempData/ReviewsArray.ts";
 
-// Список отзывов в туре
-
 export const useReviewsByTourId = (tourId: number) => {
 
     const fallback = ReviewsArray
