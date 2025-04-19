@@ -55,11 +55,11 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id,
-                                                      @CurrentUser User currentUser) {
+                                                   @CurrentUser(required = false) User currentUser) {
         User targetUser = userService.getUserById(id);
 
-        boolean isSelf = currentUser.getId().equals(targetUser.getId());
-        boolean isAdmin = currentUser.getRole().equals(Role.ADMIN);
+        boolean isSelf = currentUser != null && currentUser.getId().equals(targetUser.getId());
+        boolean isAdmin = currentUser != null && currentUser.getRole().equals(Role.ADMIN);
         boolean isGuide = targetUser.getRole().equals(Role.GUIDE);
 
         if (!isGuide && !isAdmin && !isSelf) {

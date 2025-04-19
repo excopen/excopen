@@ -1,6 +1,7 @@
 package excopen.backend.security;
 
 import excopen.backend.servicesImpl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,44 +28,54 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET,
-                                "/api/tours/**",
-                                "/api/locations/**",
-                                "/api/reviews/tour/**",
-                                "/api/reviews/user/**",
-                                "/api/users/test"
-                        ).permitAll()
-
-                        .requestMatchers("/login", "/oauth2/**").permitAll()
-
-                        .requestMatchers(HttpMethod.POST, "/api/users/apply-guide").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/api/users/confirm-guide").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/users/**").authenticated()
-
-                        .requestMatchers(HttpMethod.POST, "/api/tours").hasRole("GUIDE")
-                        .requestMatchers(HttpMethod.PUT, "/api/tours/**").hasRole("GUIDE")
-                        .requestMatchers(HttpMethod.DELETE, "/api/tours/**").hasRole("GUIDE")
-
-                        .requestMatchers(HttpMethod.POST, "/api/reviews").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/reviews/**").authenticated()
-
-                        .requestMatchers("/api/favorites/**").authenticated()
-
-                        // Fallback rule
-                        .anyRequest().denyAll()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfo ->
-                                userInfo.userService(customOAuth2UserService)
-                        )
-                )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/api/**")
                 )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/favorites",
+                                "/api/locations",
+                                "/api/reviews/tour/**",
+                                "/api/reviews/user/**",
+                                "/api/tours/**",
+                                "/api/users/**"
+                        ).permitAll()
+
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/users/apply-guide",
+                                "/api/users/confirm-guide",
+                                "/api/reviews",
+                                "/api/favorites/**",
+                                "/api/tours"
+                        ).authenticated()
+
+                        .requestMatchers(HttpMethod.PUT,
+                                "/api/reviews/**",
+                                "/api/tours/**",
+                                "/api/users/me",
+                                "/api/users/me/preferences-vector"
+                        ).authenticated()
+
+                        .requestMatchers(HttpMethod.DELETE,
+                                "/api/favorites/**",
+                                "/api/tours/**"
+                        ).authenticated()
+
+                        .anyRequest().denyAll()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                        )
+                )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll()
+                )
+                .exceptionHandling(eh -> eh
+                        .authenticationEntryPoint((req, res, ex) ->
+                                res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Пользователь не авторизован."))
+                        .accessDeniedHandler((req, res, ex) ->
+                                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Доступ запрещён."))
                 );
 
         return http.build();
