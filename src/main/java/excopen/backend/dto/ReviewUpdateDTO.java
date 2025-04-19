@@ -1,16 +1,15 @@
 package excopen.backend.dto;
 
-import jakarta.validation.constraints.*;
 import lombok.Data;
-
-import java.math.BigDecimal;
+import jakarta.validation.constraints.*;
 
 @Data
 public class ReviewUpdateDTO {
+
     @NotNull(message = "Rating is required")
-    @Min(value = 1, message = "Rating must be at least 1")
-    @Max(value = 5, message = "Rating must be at most 5")
-    private BigDecimal rating;
+    @DecimalMin(value = "1.0", message = "Rating must be at least 1.0")
+    @DecimalMax(value = "5.0", message = "Rating must be at most 5.0")
+    private Double rating;
 
     @NotBlank(message = "Review text cannot be empty")
     @Size(max = 2000, message = "Review text must be less than 2000 characters")

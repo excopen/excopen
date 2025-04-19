@@ -12,8 +12,9 @@ public class Description {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tour_id", nullable = false)
-    private Long tourId;
+    private Tour tour;
 
     private String mainInfo;
 

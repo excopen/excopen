@@ -7,7 +7,6 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import java.math.BigDecimal;
 
 @Data
 public class TourUpdateDTO {
@@ -25,11 +24,11 @@ public class TourUpdateDTO {
 
     @NotNull(message = "Длительность тура обязательна")
     @Positive(message = "Длительность должна быть положительной")
-    private BigDecimal duration;
+    private Double duration;
 
     @NotNull(message = "Длина маршрута обязательна")
     @Positive(message = "Длина маршрута должна быть положительной")
-    private BigDecimal routeLength;
+    private Double routeLength;
 
     @NotNull(message = "Необходимо выбрать категории для экскурсии")
     @JdbcTypeCode(SqlTypes.VECTOR)
@@ -51,4 +50,3 @@ public class TourUpdateDTO {
     @NotNull(message = "Описание обязательно")
     private DescriptionDTO description;
 }
-

@@ -2,11 +2,9 @@ package excopen.backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class GuideRequestDto {
 
     @NotBlank(message = "Номер телефона обязателен")
@@ -18,5 +16,8 @@ public class GuideRequestDto {
 
     @NotBlank(message = "Город обязателен")
     private String city;
+
+    private String vkLink;
+    private String telegramLink;
 }
 

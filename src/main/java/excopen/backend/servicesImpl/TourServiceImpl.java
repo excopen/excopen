@@ -2,27 +2,19 @@ package excopen.backend.servicesImpl;
 
 import com.querydsl.core.BooleanBuilder;
 import excopen.backend.dto.FilterToursDTO;
-import excopen.backend.entities.QTour;
-import excopen.backend.entities.Review;
-import excopen.backend.entities.Tour;
-import excopen.backend.entities.User;
+import excopen.backend.entities.*;
 import excopen.backend.iservices.ITourService;
 import excopen.backend.repositories.ReviewRepository;
 import excopen.backend.repositories.TourRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Arrays;
 
 @Service
 @Validated
@@ -32,11 +24,9 @@ public class TourServiceImpl implements ITourService {
     private final ReviewRepository reviewRepository;
     private final UserServiceImpl userService;
 
-    private final UserServiceImpl userService;
-    private final DescriptionServiceImpl descriptionService;
-
     @Autowired
-    public TourServiceImpl(TourRepository tourRepository, ReviewRepository reviewRepository,
+    public TourServiceImpl(TourRepository tourRepository,
+                           ReviewRepository reviewRepository,
                            UserServiceImpl userService) {
         this.tourRepository = tourRepository;
         this.reviewRepository = reviewRepository;
@@ -45,9 +35,12 @@ public class TourServiceImpl implements ITourService {
 
     @Transactional
     public Tour createTour(Tour tour, Long creatorId) {
-        Tour savedTour = tourRepository.save(tour);
-        savedTour.setCreatorId(creatorId);
-        return savedTour;
+        User creator = userService.getUserById(creatorId);
+
+        tour.setCreator(creator);
+        tour.getDescription().setTour(tour);
+
+        return tourRepository.save(tour);
     }
 
 
@@ -57,6 +50,11 @@ public class TourServiceImpl implements ITourService {
                 .orElseThrow(() -> new IllegalArgumentException("Tour not found"));
     }
 
+    @Override
+    public List<Tour> getToursByCreatorId(Long creatorId) {
+        User creator = userService.getUserById(creatorId);
+        return tourRepository.findByCreator(creator);
+    }
 
     @Override
     public Tour updateTour(Tour tour) {
@@ -67,8 +65,8 @@ public class TourServiceImpl implements ITourService {
 
     @Override
     public void deleteTour(Long tourId) {
-        Tour existingTour = getTourById(tourId);
-        tourRepository.delete(existingTour);
+        Tour tour = getTourById(tourId);
+        tourRepository.delete(tour);
     }
 
     @Override
@@ -78,11 +76,13 @@ public class TourServiceImpl implements ITourService {
 
     @Override
     public List<Tour> findToursByLocation(Long locationId) {
-        return tourRepository.findByLocationId(locationId);
+        Location location = new Location();
+        location.setId(locationId);
+        return tourRepository.findByLocation(location);
     }
 
     @Override
-    public List<Tour> findToursByDuration(BigDecimal duration) {
+    public List<Tour> findToursByDuration(Double duration) {
         return tourRepository.findByDuration(duration);
     }
 
@@ -95,7 +95,7 @@ public class TourServiceImpl implements ITourService {
 
     @Override
     public List<Tour> getSimilarTours(Long tourId) {
-        Tour baseTour = this.getTourById(tourId);
+        Tour baseTour = getTourById(tourId);
         String vectorString = convertArrayToVectorString(baseTour.getVectorRepresentation());
         return tourRepository.findSimilarTours(tourId, vectorString);
     }
@@ -109,7 +109,7 @@ public class TourServiceImpl implements ITourService {
             predicate.and(tour.title.containsIgnoreCase(filter.getTitle()));
         }
         if (filter.getLocationId() != null) {
-            predicate.and(tour.locationId.eq(filter.getLocationId()));
+            predicate.and(tour.location.id.eq(filter.getLocationId()));
         }
         if (filter.getPriceFrom() != null) {
             predicate.and(tour.price.goe(filter.getPriceFrom()));
@@ -153,19 +153,26 @@ public class TourServiceImpl implements ITourService {
 
     @Transactional
     public void updateTourStats(Long tourId) {
-        List<Review> reviews = reviewRepository.findByTourId(tourId);
+        Tour tour = getTourById(tourId);
 
-        BigDecimal newRating = reviews.stream()
+        List<Review> reviews = reviewRepository.findByTour(tour);
+
+        Double averageRating = reviews.stream()
                 .map(Review::getRating)
                 .filter(Objects::nonNull)
-                .reduce(BigDecimal.ZERO, BigDecimal::add)
-                .divide(BigDecimal.valueOf(reviews.size()), 1, RoundingMode.HALF_UP);
+                .mapToDouble(Double::doubleValue)
+                .average()
+                .orElse(Double.NaN);
 
         int reviewCount = reviews.size();
 
-        Tour tour = tourRepository.findById(tourId)
-                .orElseThrow(() -> new EntityNotFoundException("Tour not found"));
-        tour.setRating(newRating);
+        if (Double.isNaN(averageRating)) {
+            tour.setRating(null);
+        } else {
+            double rounded = Math.round(averageRating * 10.0) / 10.0;
+            tour.setRating(rounded);
+        }
+
         tour.setReviewCount(reviewCount);
         tourRepository.save(tour);
     }

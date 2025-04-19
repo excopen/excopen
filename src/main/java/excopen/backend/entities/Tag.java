@@ -6,6 +6,8 @@ import org.hibernate.annotations.Array;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "tags")
