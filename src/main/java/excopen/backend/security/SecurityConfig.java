@@ -38,7 +38,8 @@ public class SecurityConfig {
                                 "/api/reviews/tour/**",
                                 "/api/reviews/user/**",
                                 "/api/tours/**",
-                                "/api/users/**"
+                                "/api/users/**",
+                                "/api/tags"
                         ).permitAll()
 
                         .requestMatchers(HttpMethod.POST,
