@@ -1,6 +1,5 @@
-import {IMe, TourAccessibility, TourFormat, TourFormatBehavior, UserRole} from "@/shared/types";
+import {IUser, TourAccessibility, TourFormat, TourFormatBehavior} from "@/shared/types";
 import avatar from "@/shared/assets/icons/contributor.svg";
-import {OrderObject} from "@/shared/assets/tempData/OrderObject.ts";
 import {ContactsObject} from "@/shared/assets/tempData/ContactsObject.ts";
 import img1 from "@/shared/assets/tempData/assets/img1.png";
 import img2 from "@/shared/assets/tempData/assets/img2.png";
@@ -10,15 +9,12 @@ import {DescriptionObject} from "@/shared/assets/tempData/DescriptionObject.ts";
 import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
 import {ReviewsArray} from "@/shared/assets/tempData/ReviewsArray.ts";
 
-export const usersArray: IMe[] = [
+export const usersArray: IUser[] = [
     {
         id: 0,
-        role: UserRole.contributor,
-        name: "Ирина Дмитриева",
+        name: "Ирина",
         avatar: avatar,
-        surname: "Ivanov",
-        email: "ivanov@mail.ru",
-        orders: [OrderObject, OrderObject],
+        surname: "Дмитриева",
         tours: [
             {
                 time: "",
@@ -57,117 +53,116 @@ export const usersArray: IMe[] = [
                 reviews: ReviewsArray
             }
         ],
-        description: "Мы живем в Омске: любим этот город, " +
-            "много знаем о нём и готовы поделиться с вами знаниями. " +
-            "С удовольствием поможем убедиться в том, что здесь каждому найдётся " +
-            "что посмотреть и куда сходить.",
-        tags: [],
-        token: ""
+        info: "Мы живем в Омске: любим этот город, много знаем о нём и готовы поделиться с вами знаниями.",
+        rating: 0,
+        ratingCount: 0,
+        contacts: {
+            vk: "@excopenVK",
+            telegram: "@excopenTg",
+            phone: "88005553535"
+        }
     },
     {
         id: 1,
-        role: UserRole.contributor,
-        name: "Ирина Дмитриева",
+        name: "Алексей",
         avatar: avatar,
-        surname: "Ivanov",
-        email: "ivanov@mail.ru",
-        orders: [OrderObject, OrderObject],
+        surname: "Миронов",
         tours: [
             {
                 time: "",
-                byCity: false,
+                byCity: true,
                 coordinates: {
                     point: {
-                        latitude: 55.0072,
-                        longitude: 73.3242
+                        latitude: 59.9386,
+                        longitude: 30.3141
                     },
-                    zoom: 12
+                    zoom: 13
                 },
-                date: new Date("2025-04-04T10:00:00"),
+                date: new Date("2025-06-15T14:30:00"),
                 tags: [
-                    "гастрономический туризм",
-                    "активный отдых",
-                    "морские путешествия",
-                    "походы и кемпинг",
+                    "история",
+                    "архитектура",
+                    "пешеходная экскурсия"
                 ],
                 contacts: ContactsObject,
-                accessibility: TourAccessibility.WITHOUT_CHILDREN,
-                priceForPerson: 4000,
-                id: 0,
-                title: "«Привокзалка»: место встречи изменить нельзя",
-                images: [img1, img2, img3, img4],
-                price: 12800,
-                duration: 2,
-                routeLength: 2,
-                rating: 4.8,
-                ratingCount: 10,
+                accessibility: TourAccessibility.WITH_CHILDREN,
+                priceForPerson: 2500,
+                id: 1,
+                title: "Секреты старого Петрограда",
+                images: [img2, img3, img4],
+                price: 7500,
+                duration: 1,
+                routeLength: 4,
+                rating: 4.6,
+                ratingCount: 8,
                 format: TourFormat.GROUP,
-                groupCapacity: 11,
+                groupCapacity: 5,
                 formatBehavior: TourFormatBehavior.WALK,
                 description: DescriptionObject,
-                contributorId: 1,
-                location: LocationsArrayForFeature[0],
+                contributorId: 2,
+                location: LocationsArrayForFeature[1],
                 reviews: ReviewsArray
             }
         ],
-        description: "Мы живем в Омске: любим этот город, " +
-            "много знаем о нём и готовы поделиться с вами знаниями. " +
-            "С удовольствием поможем убедиться в том, что здесь каждому найдётся " +
-            "что посмотреть и куда сходить.",
-        tags: [],
-        token: ""
+        info: "Экскурсовод с 7-летним стажем. Провожу атмосферные прогулки по Санкт-Петербургу.",
+        rating: 4.9,
+        ratingCount: 45,
+        contacts: {
+            vk: "@guideAlex",
+            telegram: "@mironovSPB",
+            phone: "+79211234567"
+        }
     },
     {
         id: 2,
-        role: UserRole.contributor,
-        name: "Ирина Дмитриева",
+        name: "Светлана",
         avatar: avatar,
-        surname: "Ivanov",
-        email: "ivanov@mail.ru",
-        orders: [OrderObject, OrderObject],
+        surname: "Орлова",
         tours: [
             {
                 time: "",
                 byCity: false,
                 coordinates: {
                     point: {
-                        latitude: 55.0072,
-                        longitude: 73.3242
+                        latitude: 43.1155,
+                        longitude: 131.8855
                     },
-                    zoom: 12
+                    zoom: 11
                 },
-                date: new Date("2025-04-04T10:00:00"),
+                date: new Date("2025-07-20T09:00:00"),
                 tags: [
-                    "гастрономический туризм",
-                    "активный отдых",
-                    "морские путешествия",
+                    "природа",
+                    "экотуризм",
                     "походы и кемпинг",
+                    "местные традиции"
                 ],
                 contacts: ContactsObject,
                 accessibility: TourAccessibility.WITHOUT_CHILDREN,
-                priceForPerson: 4000,
-                id: 0,
-                title: "«Привокзалка»: место встречи изменить нельзя",
-                images: [img1, img2, img3, img4],
-                price: 12800,
-                duration: 2,
-                routeLength: 2,
-                rating: 4.8,
-                ratingCount: 10,
+                priceForPerson: 3000,
+                id: 2,
+                title: "Тайны Уссурийской тайги",
+                images: [img1, img4],
+                price: 9000,
+                duration: 3,
+                routeLength: 12,
+                rating: 4.7,
+                ratingCount: 16,
                 format: TourFormat.GROUP,
-                groupCapacity: 11,
-                formatBehavior: TourFormatBehavior.WALK,
+                groupCapacity: 8,
+                formatBehavior: TourFormatBehavior.BIKE,
                 description: DescriptionObject,
-                contributorId: 1,
-                location: LocationsArrayForFeature[0],
+                contributorId: 3,
+                location: LocationsArrayForFeature[2],
                 reviews: ReviewsArray
             }
         ],
-        description: "Мы живем в Омске: любим этот город, " +
-            "много знаем о нём и готовы поделиться с вами знаниями. " +
-            "С удовольствием поможем убедиться в том, что здесь каждому найдётся " +
-            "что посмотреть и куда сходить.",
-        tags: [],
-        token: ""
+        info: "Люблю дикие тропы и делюсь своей страстью к природе с гостями Приморского края.",
+        rating: 4.8,
+        ratingCount: 32,
+        contacts: {
+            vk: "@ecoSvetlana",
+            telegram: "@taiga_tour",
+            phone: "+74232001234"
+        }
     }
 ]

@@ -1,13 +1,11 @@
 import {FC} from "react";
 import {Button} from "@/shared/ui";
-
 import {useUserData} from "@/features/edit/hooks";
-import {Field} from "./Field.tsx";
-import {AvatarField} from "./AvatarField.tsx";
+import {Field, AvatarField} from "./fields"
+import {Contacts} from "./contacts";
+import {useEditContext} from "@/features/edit/model";
 
 export const EditProfile: FC = () => {
-
-    // TODO добавить контакты для контрибьютера
 
     const {
         isContributor,
@@ -15,12 +13,12 @@ export const EditProfile: FC = () => {
         updateImage, updateName, updateSurname, updateInfo, load
     } = useUserData()
 
+    const {context} = useEditContext()
+
     return (
         <div className={"flex flex-col gap-4 bg-grayscale-0 rounded-2xl p-6 lg:w-[700px]"}>
-            <AvatarField
-                avatar={user.avatar}
-                update={updateImage}
-            />
+            <AvatarField avatar={user.avatar} update={updateImage}/>
+            <span className={"text-lg text-grayscale-500 font-semibold py-2"}>Основное</span>
             <Field
                 defaultValue={user.name}
                 onChangeHandler={updateName}
@@ -33,6 +31,7 @@ export const EditProfile: FC = () => {
                 title={"Фамилия"}
                 placeholder={"Введите фамилию"}
             />
+            <Contacts/>
             {
                 isContributor &&
                 <Field
@@ -42,7 +41,7 @@ export const EditProfile: FC = () => {
                     placeholder={"Введите описание"}
                 />
             }
-            <Button className={"mt-12"} onClick={load}>
+            <Button className={"mt-12"} disabled={context.isDisabled} onClick={load}>
                 Изменить данные
             </Button>
         </div>

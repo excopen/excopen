@@ -1,14 +1,15 @@
 import {FC} from "react";
 import {Carousel, Description, Header, Sidebar, Tags, useTour} from "@/entities";
 import {useParams} from "react-router-dom";
-import {AppSkeleton, NotFound} from "@/shared/ui";
+import {AppSkeleton} from "@/shared/ui";
 
 export const TourPage: FC = () => {
 
     const {id } = useParams<{ id: string, title: string }>()
-    const {data: tour, isLoading, isError, isFallback} = useTour(Number(id))
+    const {data: tour, isLoading} = useTour(Number(id))
 
     /*
+    TODO обновить когда заработает сервер
     if (isFallback || isError) return (
         <NotFound
             heading={"Экскурсия не найдена"}

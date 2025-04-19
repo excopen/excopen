@@ -7,7 +7,7 @@ export const EditReqs: FC = () => {
     const {tags, userTags, addTag, removeTag} = useUserData()
 
     return (
-        <div className={"flex flex-col gap-4 p-6 rounded-2xl bg-grayscale-0"}>
+        <div className={"flex flex-col gap-4 p-6 rounded-2xl bg-grayscale-0 max-lg:order-last"}>
             <span className={"text-lg font-semibold text-grayscale-500"}>
                 Любимые темы экскурсии:
             </span>
