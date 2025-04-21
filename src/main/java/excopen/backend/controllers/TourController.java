@@ -1,19 +1,18 @@
 package excopen.backend.controllers;
 
-import excopen.backend.dto.FilterToursDTO;
-import excopen.backend.dto.TourCreateDTO;
-import excopen.backend.dto.TourResponseDTO;
-import excopen.backend.dto.TourUpdateDTO;
+import excopen.backend.dto.*;
 import excopen.backend.entities.Description;
 import excopen.backend.entities.Location;
 import excopen.backend.entities.Tour;
 import excopen.backend.entities.User;
 import excopen.backend.iservices.ILocationService;
+import excopen.backend.iservices.ITourImageService;
 import excopen.backend.iservices.ITourService;
 import excopen.backend.mapper.DescriptionMapper;
 import excopen.backend.mapper.TourMapper;
 import excopen.backend.security.RequiresOwnership;
 import excopen.backend.security.CurrentUser;
+import excopen.backend.servicesImpl.FileStorageService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,9 +20,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @RestController
@@ -34,34 +36,48 @@ public class TourController {
     private final ILocationService locationService;
     private final TourMapper tourMapper;
     private final DescriptionMapper descriptionMapper;
+    private final FileStorageService fileStorageService;
+    private final ITourImageService tourImageService;
 
     @Autowired
     public TourController(ITourService tourService,
                           ILocationService locationService,
                           TourMapper tourMapper,
-                          DescriptionMapper descriptionMapper) {
+                          DescriptionMapper descriptionMapper, FileStorageService fileStorageService, ITourImageService tourImageService) {
         this.tourService = tourService;
         this.locationService = locationService;
         this.tourMapper = tourMapper;
         this.descriptionMapper = descriptionMapper;
+        this.fileStorageService = fileStorageService;
+        this.tourImageService = tourImageService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('GUIDE')")
     public TourResponseDTO createTour(
-            @Valid @RequestBody TourCreateDTO request,
+            @Valid @ModelAttribute TourCreateForm form,
             @CurrentUser User user) {
 
-        Location location = locationService.getLocationById(request.getLocationId());
-        Tour tour = tourMapper.toEntity(request, location);
+        TourCreateDTO dto = form.getTour();
+        List<MultipartFile> images = form.getImages();
 
-        Description description = descriptionMapper.toEntity(request.getDescription());
+        Location location = locationService.getLocationById(dto.getLocationId());
+        Tour tour = tourMapper.toEntity(dto, location);
+
+        Description description = descriptionMapper.toEntity(dto.getDescription());
         tour.setDescription(description);
 
         Tour createdTour = tourService.createTour(tour, user.getId());
+
+        for (MultipartFile image : images) {
+            String imageUrl = fileStorageService.storeTourImage(image);
+            tourImageService.addTourImage(createdTour.getId(), imageUrl);
+        }
+
         return tourMapper.toResponseDTO(createdTour);
     }
+
 
     @GetMapping("/search")
     public ResponseEntity<Page<TourResponseDTO>> searchTours(

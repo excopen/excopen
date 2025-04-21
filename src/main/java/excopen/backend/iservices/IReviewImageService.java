@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IReviewImageService {
+    void saveImages(Long reviewId, List<String> imageUrls);
 
-    ReviewImage addImageToReview(Long reviewId, String imageUrl);
+    ReviewImage addReviewImage(Long reviewId, String imageUrl);
 
     List<ReviewImage> getImagesByReview(Long reviewId);
 

@@ -6,17 +6,23 @@ import excopen.backend.dto.ReviewUpdateDTO;
 import excopen.backend.entities.Review;
 import excopen.backend.entities.Tour;
 import excopen.backend.entities.User;
+import excopen.backend.iservices.IReviewImageService;
 import excopen.backend.iservices.IReviewService;
 import excopen.backend.iservices.ITourService;
 import excopen.backend.iservices.IUserService;
 import excopen.backend.mapper.ReviewMapper;
 import excopen.backend.security.RequiresOwnership;
 import excopen.backend.security.CurrentUser;
+import excopen.backend.servicesImpl.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @RestController
@@ -27,29 +33,44 @@ public class ReviewController {
     private final ITourService tourService;
     private final IUserService userService;
     private final ReviewMapper reviewMapper;
+    private final FileStorageService fileStorageService;
+    private final IReviewImageService reviewImageService;
 
     @Autowired
-    public ReviewController(IReviewService reviewService, ITourService tourService, IUserService userService, ReviewMapper reviewMapper) {
+    public ReviewController(IReviewService reviewService, ITourService tourService, IUserService userService, ReviewMapper reviewMapper, FileStorageService fileStorageService, IReviewImageService reviewImageService) {
         this.reviewService = reviewService;
         this.tourService = tourService;
         this.userService = userService;
         this.reviewMapper = reviewMapper;
+        this.fileStorageService = fileStorageService;
+        this.reviewImageService = reviewImageService;
     }
 
-    @PostMapping
-    public ResponseEntity<ReviewResponseDTO> createReview(@Valid @RequestBody ReviewCreateDTO reviewDTO,
-                                                          @CurrentUser User user) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ReviewResponseDTO createReview(
+            @Valid @ModelAttribute ReviewCreateDTO reviewDTO,
+            @CurrentUser User user) {
+
         Tour tour = tourService.getTourById(reviewDTO.getTourId());
-
         Review review = reviewMapper.toEntity(reviewDTO);
-
         review.setUser(user);
         review.setTour(tour);
 
-        ReviewResponseDTO response = reviewMapper.toResponseDTO(reviewService.createReview(review));
-        return ResponseEntity.ok(response);
+        Review savedReview = reviewService.createReview(review);
+        System.out.println(savedReview.getId());
 
+        List<MultipartFile> images = reviewDTO.getImages();
+
+        if (reviewDTO.getImages() != null && !reviewDTO.getImages().isEmpty()) {
+                for (MultipartFile image : images) {
+                String imageUrl = fileStorageService.storeReviewImage(image);
+                reviewImageService.addReviewImage(savedReview.getId(), imageUrl);
+                }
+        }
+
+        return reviewMapper.toResponseDTO(savedReview);
     }
+
 
 //    @GetMapping("/{reviewId}")
 //    public ReviewResponseDTO getReviewById(@PathVariable Long reviewId) {

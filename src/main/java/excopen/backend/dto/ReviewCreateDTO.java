@@ -2,6 +2,9 @@ package excopen.backend.dto;
 
 import lombok.Data;
 import jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 public class ReviewCreateDTO {
@@ -15,9 +18,9 @@ public class ReviewCreateDTO {
     private Double rating;
 
     @NotNull(message = "withChildren is required")
-    private boolean withChildren;
+    private Boolean withChildren;
     @NotNull(message = "personCount is required")
-    private double personCount;
+    private Double personCount;
 
     @NotBlank(message = "Review text cannot be empty")
     @Size(max = 2000, message = "Review text must be less than 2000 characters")
@@ -27,5 +30,5 @@ public class ReviewCreateDTO {
     @Size(max = 2000, message = "Review text must be less than 2000 characters")
     private String negativeText;
 
-
+    private List<MultipartFile> images;
 }

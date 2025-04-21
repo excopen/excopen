@@ -31,10 +31,21 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/api/**")
                 )
+//                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET,
+                                "/test-tour-upload.html",
+                                "/test-review-upload.html",
+                                "/tour-details.html",
+                                "/static/**",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/api/favorites",
                                 "/api/locations",
+                                "/api/locations/**",
                                 "/api/reviews/tour/**",
                                 "/api/reviews/user/**",
                                 "/api/tours/**",
@@ -47,9 +58,9 @@ public class SecurityConfig {
                                 "/api/users/confirm-guide",
                                 "/api/reviews",
                                 "/api/favorites/**",
-                                "/api/tours"
+                                "/logout"
                         ).authenticated()
-
+                        .requestMatchers(HttpMethod.POST, "/api/tours").hasRole("GUIDE")
                         .requestMatchers(HttpMethod.PUT,
                                 "/api/reviews/**",
                                 "/api/tours/**",
@@ -87,7 +98,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:8080"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
+        config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -47,7 +47,7 @@ public interface TourMapper {
 
     @Mapping(target = "locationId", source = "location.id")
     @Mapping(target = "description", source = "description")
-   // @Mapping(target = "images", expression = "java(mapImages(tour.getImages()))")
+    @Mapping(source = "images", target = "imageUrls")
     TourResponseDTO toResponseDTO(Tour tour);
 
 //    default List<String> mapImages(List<TourImage> images) {
@@ -62,5 +62,12 @@ public interface TourMapper {
         return tours.stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    default List<String> mapTourImages(List<TourImage> images) {
+        if (images == null) return List.of();
+        return images.stream()
+                .map(TourImage::getImageUrl)
+                .toList();
     }
 }
