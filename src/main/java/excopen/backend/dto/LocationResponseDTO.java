@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LocationResponseDto {
+public class LocationResponseDTO {
     private Long id;
     private String city;
     private String region;

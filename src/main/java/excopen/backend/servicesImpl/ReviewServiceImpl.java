@@ -33,19 +33,18 @@ public class ReviewServiceImpl implements IReviewService {
     @Override
     @Transactional
     public Review createReview(Review review) {
-        Review savedReview = reviewRepository.save(review);
+        Review saved = reviewRepository.save(review);
 
-        Tour tour = review.getTour();
+        Tour tour = saved.getTour();
         if (tour == null || tour.getId() == null) {
             throw new IllegalArgumentException("Tour must be set for review");
         }
-
         tourService.updateTourStats(tour.getId());
+        eventPublisher.publishEvent(
+                new ReviewCreatedEvent(this, tour.getCreator().getId())
+        );
 
-        Long creatorId = tour.getCreator().getId();
-        eventPublisher.publishEvent(new ReviewCreatedEvent(this, creatorId));
-
-        return savedReview;
+        return saved;
     }
 
     @Override

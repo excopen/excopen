@@ -4,6 +4,7 @@ import excopen.backend.constants.TourType;
 import excopen.backend.constants.TransportType;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class TourResponseDTO {
@@ -17,6 +18,7 @@ public class TourResponseDTO {
     private Integer maxCapacity;
     private Double rating;
     private Integer reviewCount;
+    private List<String> imageUrls;
     private Long creatorId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
