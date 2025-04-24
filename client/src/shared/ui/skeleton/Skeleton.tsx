@@ -1,4 +1,5 @@
 import { cn } from "@/app/lib"
+import React from "react";
 
 export function Skeleton({
   className,

@@ -22,7 +22,7 @@ export const Index: FC = () => {
                         country={location.country}
                         city={location.city}
                         tourCount={location.tourCount}
-                        image={location.image}
+                        image={location.image as string}
                     />
                 ))}
             </div>

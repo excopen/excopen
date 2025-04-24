@@ -4,11 +4,12 @@ import {ApiException} from "@/shared/lib";
 import {getTours} from "@/entities/tour/api";
 import {searchTourStore as store} from "@/features";
 
-import {ToursArray} from "@/shared/assets/tempData/ToursArray.ts";
+// TODO моковый список экскурсий
+import {ToursMock} from "@/shared/mocks/ToursMock.ts";
 
 export const useTours = () => {
 
-    const fallback = ToursArray
+    const fallback = ToursMock
 
     const query = useQuery<ITour[], ApiException<ITour>>({
         queryKey: ["tours"],

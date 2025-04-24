@@ -6,10 +6,6 @@
     @apply text-3xl text-grayscale-500 font-semibold
 }
 
-.subContainer {
-    @apply flex flex-col gap-4 p-6 rounded-2xl bg-grayscale-0
-}
-
 .smHeading {
     @apply text-lg font-semibold text-grayscale-500
 }

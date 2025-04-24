@@ -46,8 +46,12 @@ export const useUserData = (): Result => {
     )
     
     const updateImage = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0]
-        setUpdatedUser({...updatedUser, avatar: file ? URL.createObjectURL(file) : defaultAvatar})
+        const file = event.target.files?.[0] ?? null
+        setUpdatedUser(prevState => ({
+            ...prevState,
+            avatarFile: file,
+            avatar: file ? URL.createObjectURL(file) : defaultAvatar
+        }))
     }, [])
 
     const addTag = useCallback((tag: string) => {

@@ -1,12 +1,14 @@
 import {useQuery} from "@tanstack/react-query";
 import {IUser} from "@/shared/types";
 import {ApiException} from "@/shared/lib";
-import {UserObject} from "@/shared/assets/tempData/UserObject.ts";
 import {getUser} from "@/entities/user/api";
+
+// TODO убрать MOCK
+import {UserMock} from "@/shared/mocks/UserMock.ts";
 
 export const useUser = (id: number) => {
 
-    const fallback = UserObject
+    const fallback = UserMock
 
     return useQuery<IUser, ApiException<IUser>>({
         queryKey: ["user"],

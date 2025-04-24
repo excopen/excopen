@@ -2,13 +2,12 @@ import {useQuery} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
 import {getTags} from "@/entities/tags/api";
 
-import {TagsArray} from "@/shared/assets/tempData/TagsArray.ts";
-
-// Выбор из списка тегов
+// TODO убрать MOCK теги
+import {AllTagsMock} from "@/shared/mocks/AllTagsMock.ts";
 
 export const useTags = () => {
 
-    const fallback = TagsArray
+    const fallback = AllTagsMock
 
     return useQuery<string[], ApiException<string>>({
         queryKey: ["tags"],

@@ -1,4 +1,4 @@
-export const TagsArray: string[] = [
+export const AllTagsMock: string[] = [
     "экстрим",
     "культурные ценности",
     "достопримечательности",

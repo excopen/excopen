@@ -4,7 +4,7 @@ import {IDescription} from "./IDescription.ts";
 import {ILocation} from "./ILocation.ts"
 import {IContacts} from "./IContacts.ts";
 import {IReview} from "./IReview.ts";
-import {IMe} from "@/shared/types";
+import {IUser} from "@/shared/types";
 
 export interface ITour {
     id: number
@@ -30,5 +30,5 @@ export interface ITour {
     rating: number
     ratingCount: number
     reviews?: IReview[]
-    registered?: IMe[]
+    registered?: IUser[]
 }

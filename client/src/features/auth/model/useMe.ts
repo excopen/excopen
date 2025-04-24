@@ -11,6 +11,7 @@ export const useMe = () => {
         id: 0,
         role: UserRole.client,
         avatar: avatar,
+        avatarFile: null,
         name: "Дмитрий",
         surname: "Иванов",
         email: "",

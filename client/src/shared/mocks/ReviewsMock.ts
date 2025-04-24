@@ -1,6 +1,6 @@
 import {IReview} from "@/shared/types";
 
-export const ReviewsArray: IReview[] = [
+export const ReviewsMock: IReview[] = [
     {
         id: 1,
         name: "Макс",

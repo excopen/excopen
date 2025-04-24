@@ -1,12 +1,14 @@
 import {useQuery} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
 import {ILocation} from "@/shared/types";
-import {LocationsArrayForFeature} from "@/shared/assets/tempData/LocationsArrayForFeature.ts";
 import {getLocations} from "@/entities/location/api";
+
+// TODO убрать моковые данные отзывов
+import {LocationsMock} from "@/shared/mocks/LocationsMock.ts";
 
 export const useLocations = () => {
 
-    const fallback = LocationsArrayForFeature
+    const fallback = LocationsMock
 
     return useQuery<ILocation[], ApiException<ILocation>>({
         queryKey: ["locations"],

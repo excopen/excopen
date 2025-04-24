@@ -8,6 +8,7 @@ export interface IMe {
     email: string
     role: UserRole
     avatar: string
+    avatarFile: File | null
     tags: string[]
     orders: IOrder[]
     tours: ITour[]

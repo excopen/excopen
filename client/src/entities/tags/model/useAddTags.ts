@@ -1,13 +1,13 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
 import {addTags} from "@/entities/tags/api";
-import {ITag} from "@/shared/types";
 
+// noinspection Annotator
 export const useAddTags = () => {
 
     const queryClient = useQueryClient()
 
-    return useMutation<void, ApiException<ITag[]>, string[]>({
+    return useMutation<void, ApiException<string[]>, string[]>({
         mutationFn: (tags) => addTags(tags),
         onMutate: async () => {
             await queryClient.cancelQueries({ queryKey: ["user"] })
@@ -15,6 +15,6 @@ export const useAddTags = () => {
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ["user"] })
         },
-        onError: (e: ApiException<ITag[]>) => console.error("Теги пользователя не удалось обновить", e.message)
+        onError: (e: ApiException<string[]>) => console.error("Теги пользователя не удалось обновить", e.message)
     })
 }
