@@ -1,10 +1,10 @@
 package excopen.backend.servicesImpl;
 
-import excopen.backend.dto.DescriptionDTO;
 import excopen.backend.entities.Description;
+import excopen.backend.entities.Tour;
 import excopen.backend.iservices.IDescriptionService;
-import excopen.backend.mapper.DescriptionMapper;
 import excopen.backend.repositories.DescriptionRepository;
+import excopen.backend.repositories.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,30 +14,36 @@ import java.util.Optional;
 public class DescriptionServiceImpl implements IDescriptionService {
 
     private final DescriptionRepository descriptionRepository;
+    private final TourRepository tourRepository;
+
     @Autowired
-    public DescriptionServiceImpl(DescriptionRepository descriptionRepository, UserServiceImpl userService) {
+    public DescriptionServiceImpl(DescriptionRepository descriptionRepository,
+                                  TourRepository tourRepository) {
         this.descriptionRepository = descriptionRepository;
-        this.userService = userService;
+        this.tourRepository = tourRepository;
     }
 
+    @Override
     public Description createDescription(Description description, Long tourId) {
-        description.setTourId(tourId);
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("Tour not found with ID: " + tourId));
 
+        description.setTour(tour);
         return descriptionRepository.save(description);
     }
-
 
     @Override
     public Optional<Description> getDescriptionById(Long descriptionId) {
         return descriptionRepository.findById(descriptionId);
     }
-
+	
     @Override
     public Description getDescriptionByTourId(Long tourId) {
-        return descriptionRepository.findByTourId(tourId)
-                .orElseThrow(() -> new IllegalArgumentException("Description not found"));
+        Tour tour = new Tour();
+        tour.setId(tourId);
+        return descriptionRepository.findByTour(tour)
+                .orElseThrow(() -> new IllegalArgumentException("Description not found for tourId: " + tourId));
     }
-
 
     @Override
     public Description updateDescription(Description description) {

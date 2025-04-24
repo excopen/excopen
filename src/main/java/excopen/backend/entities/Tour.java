@@ -3,16 +3,13 @@ package excopen.backend.entities;
 import excopen.backend.constants.TourType;
 import excopen.backend.constants.TransportType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Digits;
 import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-
+import java.util.List;
 
 @Data
 @Entity
@@ -25,31 +22,46 @@ public class Tour implements Serializable {
 
     private String title;
 
-    @JoinColumn(name = "location_id")
-    private Long locationId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
 
     private int price;
-    @Digits(integer = 2, fraction = 1)
-    private BigDecimal duration;
-    @Digits(integer = 2, fraction = 1)
-    private BigDecimal routeLength;
+
+    private Double duration;        // в часах
+    private Double routeLength;     // в километрах
 
     @Column(updatable = false)
     private LocalDateTime createdAt;
+
     private LocalDateTime updatedAt;
 
     @JdbcTypeCode(SqlTypes.VECTOR)
     private int[] vectorRepresentation;
 
-    @JoinColumn(name = "creator_id")
-    private Long creatorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "creator_id", updatable = false)
+    private User creator;
+
+    @OneToOne(mappedBy = "tour", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Description description;
+
+    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<TourImage> images;
+
+    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
+    private List<TourTags> tags;
+
+    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
+    private List<Favorite> favorites;
 
     private Integer minAge;
     private Integer maxCapacity;
 
-    @Digits(integer = 2, fraction = 1)
-    private BigDecimal rating;
-
+    private Double rating;         // от 0.0 до 5.0
     private Integer reviewCount = 0;
 
     @Enumerated(EnumType.STRING)
@@ -64,9 +76,7 @@ public class Tour implements Serializable {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
-        this.rating = BigDecimal.ZERO;
-
-      //  this.vectorRepresentation = new float[tagCount];
+        this.rating = 0.0;
     }
 
     @PreUpdate
