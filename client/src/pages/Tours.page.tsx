@@ -1,9 +1,14 @@
-import {FC} from "react";
+import React, {FC, Suspense} from "react";
 import pages from "@/app/styles/pages.module.css";
-import {SidebarButton} from "@/shared/ui";
+import {AppSkeleton, SidebarButton} from "@/shared/ui";
 import favourite from "@/shared/assets/icons/favourite-secondary.svg";
 import {Form, Orientation} from "@/features";
-import {Tours} from "@/entities";
+
+const LazyTours = React.lazy(() =>
+    import('../entities/tour/ui/list').then(module => ({
+        default: module.Tours,
+    }))
+)
 
 export const ToursPage: FC = () => {
     return (
@@ -12,7 +17,9 @@ export const ToursPage: FC = () => {
                 <Form orientation={Orientation.VERTICAL}/>
                 <SidebarButton image={favourite} label={"Избранное"}/>
             </div>
-            <Tours/>
+            <Suspense fallback={<AppSkeleton/>}>
+                <LazyTours/>
+            </Suspense>
         </div>
     );
 };

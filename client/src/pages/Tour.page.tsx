@@ -1,7 +1,13 @@
-import {FC} from "react";
-import {Carousel, Description, Header, Sidebar, Tags, useTour} from "@/entities";
+import React, {FC, Suspense} from "react";
+import {Description, Header, Sidebar, Tags, useTour} from "@/entities";
 import {useParams} from "react-router-dom";
-import {AppSkeleton} from "@/shared/ui";
+import {AppSkeleton, CarouselSkeleton} from "@/shared/ui";
+
+const LazyCarousel = React.lazy(() =>
+    import('../entities/tour/ui/carousel').then(module => ({
+        default: module.Carousel,
+    }))
+)
 
 export const TourPage: FC = () => {
 
@@ -24,10 +30,12 @@ export const TourPage: FC = () => {
         <div className={"flex flex-col justify-between py-12 huge:w-[1440px]"}>
             <Tags tags={tour.tags}/>
             <Header tour={tour}/>
-            <Carousel
-                images={tour.images as string[]}
-                coordinates={tour.coordinates}
-            />
+            <Suspense fallback={<CarouselSkeleton/>}>
+                <LazyCarousel
+                    images={tour.images as string[]}
+                    coordinates={tour.coordinates}
+                />
+            </Suspense>
             <div className={"flex flex-col lg:flex-row"}>
                 <Description tour={tour}/>
                 <Sidebar tour={tour}/>
