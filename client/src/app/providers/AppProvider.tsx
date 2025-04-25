@@ -8,11 +8,11 @@ const queryClient = new QueryClient()
 export const AppProvider:FC<{children: ReactNode}> = ({children}) => {
     return(
         <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-                <BrowserRouter>
+            <BrowserRouter>
+                <AuthProvider>
                     {children}
-                </BrowserRouter>
-            </AuthProvider>
+                </AuthProvider>
+            </BrowserRouter>
         </QueryClientProvider>
     )
 }
