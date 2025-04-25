@@ -5,22 +5,30 @@ import excopen.backend.entities.TourImage;
 import excopen.backend.iservices.ITourImageService;
 import excopen.backend.repositories.TourImageRepository;
 import excopen.backend.repositories.TourRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class TourImageServiceImpl implements ITourImageService {
 
     private final TourImageRepository tourImageRepository;
     private final TourRepository tourRepository;
 
-    @Autowired
-    public TourImageServiceImpl(TourImageRepository tourImageRepository, TourRepository tourRepository) {
-        this.tourImageRepository = tourImageRepository;
-        this.tourRepository = tourRepository;
+    @Override
+    public void saveImages(Long tourId, List<String> imageUrls) {
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new IllegalArgumentException("Tour with ID " + tourId + " not found."));
+
+        for (String url : imageUrls) {
+            TourImage image = new TourImage();
+            image.setTour(tour);
+            image.setImageUrl(url);
+            tourImageRepository.save(image);
+        }
     }
 
     @Override
@@ -44,9 +52,7 @@ public class TourImageServiceImpl implements ITourImageService {
 
     @Override
     public List<TourImage> getImagesByTour(Long tourId) {
-        Tour tour = tourRepository.findById(tourId)
-                .orElseThrow(() -> new IllegalArgumentException("Tour with ID " + tourId + " not found."));
-        return tourImageRepository.findByTour(tour);
+        return tourImageRepository.findByTourId(tourId);
     }
 
     @Override

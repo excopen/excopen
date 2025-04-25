@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,12 +25,16 @@ public class Review implements Serializable {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private boolean withChildren;
+    private double personCount;
+
     private Double rating;
 
-    private String reviewText;
+    private String positiveText;
+    private String negativeText;
 
-    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ReviewImage> images;
+    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY)
+    private List<ReviewImage> images = new ArrayList<>();
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

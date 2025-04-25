@@ -9,4 +9,6 @@ import java.util.List;
 public interface TourImageRepository extends JpaRepository<TourImage, Long> {
     List<TourImage> findByTour(Tour tour);
     boolean existsByTour(Tour tour);
+
+    List<TourImage> findByTourId(Long tourId);
 }

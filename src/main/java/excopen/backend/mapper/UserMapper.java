@@ -21,7 +21,9 @@ public interface UserMapper {
     @Mapping(target = "secondVector", ignore = true)
     User toEntity(UserCreateDTO dto);
 
-    UserResponseDTO toResponseDTO(User user);
+    UserResponseDTO toUserResponseDTO(User user);
+
+    GuideResponseDTO toGuideResponseDTO(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "googleId", ignore = true)

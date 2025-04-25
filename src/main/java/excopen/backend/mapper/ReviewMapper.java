@@ -4,6 +4,8 @@ import excopen.backend.dto.ReviewCreateDTO;
 import excopen.backend.dto.ReviewResponseDTO;
 import excopen.backend.dto.ReviewUpdateDTO;
 import excopen.backend.entities.Review;
+import excopen.backend.entities.ReviewImage;
+import excopen.backend.entities.TourImage;
 import org.mapstruct.*;
 
 import java.util.Collections;
@@ -21,6 +23,7 @@ public interface ReviewMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateReviewFromDTO(ReviewUpdateDTO dto, @MappingTarget Review review);
 
+    @Mapping(target = "imageUrls", source = "images")
     ReviewResponseDTO toResponseDTO(Review review);
 
     default List<ReviewResponseDTO> toResponseDTOList(List<Review> reviews) {
@@ -30,5 +33,12 @@ public interface ReviewMapper {
         return reviews.stream()
                 .map(this::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    default List<String> mapReviewImages(List<ReviewImage> images) {
+        if (images == null) return List.of();
+        return images.stream()
+                .map(ReviewImage::getImageUrl)
+                .toList();
     }
 }
