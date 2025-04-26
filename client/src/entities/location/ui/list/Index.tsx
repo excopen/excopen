@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Button} from "@/shared/ui";
+import {AppSkeleton, Button} from "@/shared/ui";
 import style from "./style.module.css"
 import {Link, useLocation} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
@@ -9,6 +9,8 @@ export const Index: FC = () => {
 
     const location = useLocation()
     const {data} = useLocations()
+
+    if (!data) return <AppSkeleton/>
 
     return (
         <section className={style.container}>

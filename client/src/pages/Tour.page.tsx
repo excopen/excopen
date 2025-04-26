@@ -1,7 +1,7 @@
 import React, {FC, Suspense} from "react";
 import {Description, Header, Sidebar, Tags, useTour} from "@/entities";
 import {useParams} from "react-router-dom";
-import {AppSkeleton, CarouselSkeleton} from "@/shared/ui";
+import {AppSkeleton, CarouselSkeleton, NotFound} from "@/shared/ui";
 
 const LazyCarousel = React.lazy(() =>
     import('../entities/tour/ui/carousel').then(module => ({
@@ -12,22 +12,13 @@ const LazyCarousel = React.lazy(() =>
 export const TourPage: FC = () => {
 
     const {id } = useParams<{ id: string, title: string }>()
-    const {data: tour, isLoading} = useTour(Number(id))
+    const {data: tour, isLoading, isError} = useTour(Number(id))
 
-    /*
-    TODO обновить когда заработает сервер
-    if (isFallback || isError) return (
-        <NotFound
-            heading={"Экскурсия не найдена"}
-            text={"Возникла проблема с поиском экскурсии"}
-        />
-    )
-     */
-
-    if (isLoading) return <AppSkeleton/>
+    if (isError) return <NotFound heading={"Экскурсия не найдена"} text={"Возникла проблема с поиском экскурсии"}/>
+    if (isLoading || !tour) return <AppSkeleton />
 
     return (
-        <div className={"flex flex-col justify-between py-12 huge:w-[1440px]"}>
+        <div className={"flex flex-col justify-between py-12 huge:w-[1440px] h-screen"}>
             <Tags tags={tour.tags}/>
             <Header tour={tour}/>
             <Suspense fallback={<CarouselSkeleton/>}>

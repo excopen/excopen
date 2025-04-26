@@ -4,6 +4,7 @@ import next from "@/shared/assets/icons/next-secondary.svg";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 import {useUser} from "@/entities";
+import {AppSkeleton} from "@/shared/ui";
 
 type ContributorButtonProps = {
     contributorId: number
@@ -12,7 +13,9 @@ type ContributorButtonProps = {
 export const Index: FC<ContributorButtonProps> = ({contributorId}) => {
 
     const navigate = useNavigate()
-    const {data: contributor} = useUser(contributorId)
+    const {data: contributor, isLoading} = useUser(contributorId)
+
+    if (isLoading || !contributor) return <AppSkeleton/>
 
     return (
         <div

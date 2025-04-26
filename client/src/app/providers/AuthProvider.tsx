@@ -2,15 +2,32 @@ import {ReactNode, useEffect, useState} from "react";
 import {AuthContext, tourLocalHistoryStore as history, useLogout} from "@/features";
 import {useAddTags} from "@/entities";
 import {useMe} from "@/features/auth/model/useMe.ts";
+import {useNavigate} from "react-router-dom";
+import {RouteNames} from "@/shared/types";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-    const [isAuth, setIsAuth] = useState<boolean>(true)
+    const navigate = useNavigate()
+
+    const [isAuth, setIsAuth] = useState<boolean>(false)
 
     const {user, isSuccess} = useMe()
     const {mutate: logoutFromGoogle} = useLogout()
 
     const {mutate: addTags} = useAddTags()
+
+    useEffect(() => {
+        if (!isAuth) {
+
+            const hasVisited = localStorage.getItem("hasVisitedOnboarding")
+
+            if (!hasVisited) {
+                localStorage.setItem("hasVisitedOnboarding", "true")
+                navigate(`/${RouteNames.ON_BOARDING}`)
+            }
+
+        }
+    }, [isAuth, navigate])
 
     useEffect(() => {
         if (isSuccess) {
