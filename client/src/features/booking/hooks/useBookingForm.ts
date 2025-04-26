@@ -17,7 +17,10 @@ export const useBookingForm = (tourId: number): ReturnType => {
     const navigate = useNavigate()
 
     const {user} = useAuthContext()
+
     const {data: tour} = useTour(tourId)
+    if (!tour) throw new Error("Tour not found")
+
     const {mutate: booking} = useBooking()
 
     const [disabled, setDisabled] = useState<boolean>(true)

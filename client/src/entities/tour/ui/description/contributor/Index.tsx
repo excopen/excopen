@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
 import {Marker} from "@/shared/ui/rating/Marker.tsx";
 import {useUser} from "@/entities";
+import {AppSkeleton, NotFound} from "@/shared/ui";
 
 type ContributorProps = {
     contributorId: number
@@ -14,7 +15,10 @@ type ContributorProps = {
 export const Index: FC<ContributorProps> = ({contributorId}) => {
 
     const navigate = useNavigate()
-    const {data: contributor} = useUser(contributorId)
+    const {data: contributor, isError, isLoading} = useUser(contributorId)
+
+    if (isError) return <NotFound heading={"Гид не найдена"} text={"Возникла проблема с поиском гида"}/>
+    if (isLoading || !contributor) return <AppSkeleton />
 
     return (
         <div className={style.container}>
