@@ -14,5 +14,6 @@ export enum RouteNames {
     BOOKING = "booking",
     AUTH = "auth",
     EDIT_PROFILE = "edit",
+    NOT_FOUND = "404",
     LOGIN = "https://excopen.ru/auth/google",
 }

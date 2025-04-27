@@ -11,7 +11,7 @@ type ReturnType = {
 
 export const useTagsList = (store: ITags): ReturnType => {
 
-    const {data} = useTags()
+    const {data = []} = useTags()
 
     return {
         visible: data,

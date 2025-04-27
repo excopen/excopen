@@ -17,7 +17,8 @@ export const useReqs = (): ReturnType => {
 
     const navigate = useNavigate()
 
-    const {data: tags} = useTags()
+    const {data: tags = []} = useTags()
+
 
     const add = (value: string) => store.addTag(value)
     const remove = (value: string) => store.removeTag(value)

@@ -47,3 +47,15 @@
 .auth {
     @apply flex flex-col h-screen pt-44 gap-4 items-center
 }
+
+.error {
+    @apply flex flex-col h-screen pt-44 gap-4 items-center
+}
+
+.errorHeading {
+    @apply text-2xl text-grayscale-500 font-semibold
+}
+
+.errorText {
+    @apply text-xl text-grayscale-400 lg:w-2/5 text-center
+}
