@@ -15,5 +15,5 @@ export enum RouteNames {
     AUTH = "auth",
     EDIT_PROFILE = "edit",
     NOT_FOUND = "404",
-    LOGIN = "https://excopen.ru/auth/google",
+    LOGIN = "https://localhost:8080/auth/google",
 }
