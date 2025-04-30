@@ -7,6 +7,6 @@ export const useTags = () => {
         queryKey: ["tags"],
         queryFn: () => getTags(),
         staleTime: 600_000,
-        initialData: [],
+        placeholderData: [],
     })
 }

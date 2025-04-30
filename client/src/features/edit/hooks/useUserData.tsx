@@ -25,7 +25,7 @@ type Result = {
 export const useUserData = (): Result => {
     
     const {user} = useAuthContext()
-    const {data: tags} = useTags()
+    const {data: tags = []} = useTags()
     const {mutate: update} = useUpdateMe()
 
     const [updatedUser, setUpdatedUser] = useState<IMe>(user)
