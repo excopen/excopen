@@ -14,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @RestController
@@ -74,10 +75,32 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<Object> getCurrentUser(@CurrentUser User currentUser) {
+    public ResponseEntity<UserResponseDTO> getCurrentUser(@CurrentUser User currentUser) {
             return ResponseEntity.ok(userMapper.toUserResponseDTO(currentUser));
     }
 
+    @GetMapping("/test/me")
+    public ResponseEntity<UserResponseDTO> getCurrentUser() {
+        return ResponseEntity.ok(createMockUser());
+    }
+
+    private static UserResponseDTO createMockUser() {
+        UserResponseDTO dto = new UserResponseDTO();
+        dto.setName("Иван");
+        dto.setSurname("Иванов");
+        dto.setEmail("ivan.ivanov@example.com");
+        dto.setCreatedAt(LocalDateTime.of(2023, 1, 15, 14, 30));
+        dto.setPreferencesVector(new int[]{1, 0, 1});
+        dto.setRole(Role.USER);
+        dto.setDescription("Пример описания пользователя");
+        dto.setCity("Москва");
+        dto.setGuideRating(4.7);
+        dto.setTotalReviews(25);
+        dto.setVkLink("https://example.com/");
+        dto.setTelegramLink("https://example.com/");
+
+        return dto;
+    }
 
     /// Только для разработки
     @GetMapping("/attributes")
