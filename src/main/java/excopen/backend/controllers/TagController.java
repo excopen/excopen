@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/tags")
@@ -22,8 +23,15 @@ public class TagController {
     }
 
 
+//    @GetMapping
+//    public List<TagResponseDTO> getAllTags() {
+//        return tagMapper.toResponseDTOList(tagService.getAllTags());
+//    }
+
     @GetMapping
-    public List<TagResponseDTO> getAllTags() {
-        return tagMapper.toResponseDTOList(tagService.getAllTags());
+    public List<String> getAllTags() {
+        return tagService.getAllTags().stream()
+                .map(tag -> tag.getName())
+                .collect(Collectors.toList());
     }
 }
