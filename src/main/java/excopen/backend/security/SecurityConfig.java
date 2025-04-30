@@ -79,6 +79,9 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService)
                         )
+                        .successHandler((request, response, authentication) -> {
+                            response.sendRedirect("http://localhost:5173/main");
+                        })
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll()
