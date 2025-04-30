@@ -7,6 +7,7 @@ import excopen.backend.iservices.IUserService;
 import excopen.backend.mapper.UserMapper;
 import excopen.backend.security.CurrentUser;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -14,6 +15,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -74,10 +79,37 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<Object> getCurrentUser(@CurrentUser User currentUser) {
+    public ResponseEntity<UserResponseDTO> getCurrentUser(@CurrentUser User currentUser) {
             return ResponseEntity.ok(userMapper.toUserResponseDTO(currentUser));
     }
 
+    @GetMapping("/test/me")
+    public ResponseEntity<UserDTO> getCurrentUser() {
+        // Создаем и заполняем основной DTO
+        UserDTO dto = new UserDTO();
+        dto.setId(123L);
+        dto.setName("Тест");
+        dto.setSurname("Пользователь");
+        dto.setEmail("test@example.com");
+        dto.setRole("USER");
+        dto.setAvatar("https://example.com/avatar.jpg");
+        dto.setAvatarFile(null);
+        dto.setTags(Arrays.asList("история", "искусство"));
+        dto.setOrders(Collections.emptyList());
+        dto.setTours(Collections.emptyList());
+        dto.setRating(null);
+        dto.setRatingCount(null);
+        dto.setInfo("Тестовый аккаунт");
+
+        // Создаем и заполняем контакты
+        ContactsDTO contacts = new ContactsDTO();
+        contacts.setPhone("+79991234567");
+        contacts.setVk("vk.com/test_user");
+        contacts.setTelegram("@test_tg");
+        dto.setContacts(contacts);
+
+        return ResponseEntity.ok(dto);
+    }
 
     /// Только для разработки
     @GetMapping("/attributes")
@@ -103,4 +135,43 @@ public class UserController {
 //        userService.deleteUser(user.getId());
 //        return ResponseEntity.noContent().build();
 //    }
+
+
+
+    @Data
+    private static class UserDTO {
+        private Long id;
+        private String name;
+        private String surname;
+        private String email;
+        private String role;
+        private String avatar;
+        private String avatarFile;
+        private List<String> tags;
+        private List<OrderDTO> orders;
+        private List<TourDTO> tours;
+        private Double rating;
+        private Integer ratingCount;
+        private ContactsDTO contacts;
+        private String info;
+
+    }
+
+    @Data
+    private static class ContactsDTO {
+        private String phone;
+        private String vk;
+        private String telegram;
+
+    }
+
+    private static class OrderDTO {
+    }
+
+    private static class TourDTO {
+    }
+
+
+
+
 }
