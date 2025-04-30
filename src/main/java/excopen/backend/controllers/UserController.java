@@ -7,6 +7,7 @@ import excopen.backend.iservices.IUserService;
 import excopen.backend.mapper.UserMapper;
 import excopen.backend.security.CurrentUser;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -15,6 +16,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -80,26 +84,31 @@ public class UserController {
     }
 
     @GetMapping("/test/me")
-    public ResponseEntity<UserResponseDTO> getCurrentUser() {
-        return ResponseEntity.ok(createMockUser());
-    }
+    public ResponseEntity<UserDTO> getCurrentUser() {
+        // Создаем и заполняем основной DTO
+        UserDTO dto = new UserDTO();
+        dto.setId(123L);
+        dto.setName("Тест");
+        dto.setSurname("Пользователь");
+        dto.setEmail("test@example.com");
+        dto.setRole("USER");
+        dto.setAvatar("https://example.com/avatar.jpg");
+        dto.setAvatarFile(null);
+        dto.setTags(Arrays.asList("история", "искусство"));
+        dto.setOrders(Collections.emptyList());
+        dto.setTours(Collections.emptyList());
+        dto.setRating(null);
+        dto.setRatingCount(null);
+        dto.setInfo("Тестовый аккаунт");
 
-    private static UserResponseDTO createMockUser() {
-        UserResponseDTO dto = new UserResponseDTO();
-        dto.setName("Иван");
-        dto.setSurname("Иванов");
-        dto.setEmail("ivan.ivanov@example.com");
-        dto.setCreatedAt(LocalDateTime.of(2023, 1, 15, 14, 30));
-        dto.setPreferencesVector(new int[]{1, 0, 1});
-        dto.setRole(Role.USER);
-        dto.setDescription("Пример описания пользователя");
-        dto.setCity("Москва");
-        dto.setGuideRating(4.7);
-        dto.setTotalReviews(25);
-        dto.setVkLink("https://example.com/");
-        dto.setTelegramLink("https://example.com/");
+        // Создаем и заполняем контакты
+        ContactsDTO contacts = new ContactsDTO();
+        contacts.setPhone("+79991234567");
+        contacts.setVk("vk.com/test_user");
+        contacts.setTelegram("@test_tg");
+        dto.setContacts(contacts);
 
-        return dto;
+        return ResponseEntity.ok(dto);
     }
 
     /// Только для разработки
@@ -126,4 +135,43 @@ public class UserController {
 //        userService.deleteUser(user.getId());
 //        return ResponseEntity.noContent().build();
 //    }
+
+
+
+    @Data
+    private static class UserDTO {
+        private Long id;
+        private String name;
+        private String surname;
+        private String email;
+        private String role;
+        private String avatar;
+        private String avatarFile;
+        private List<String> tags;
+        private List<OrderDTO> orders;
+        private List<TourDTO> tours;
+        private Double rating;
+        private Integer ratingCount;
+        private ContactsDTO contacts;
+        private String info;
+
+    }
+
+    @Data
+    private static class ContactsDTO {
+        private String phone;
+        private String vk;
+        private String telegram;
+
+    }
+
+    private static class OrderDTO {
+    }
+
+    private static class TourDTO {
+    }
+
+
+
+
 }
