@@ -9,5 +9,5 @@ public class UserUpdateDTO {
     private String name;
     @NotBlank(message = "Фамилия не может быть пустым")
     private String surname;
-    private int[] preferencesVector;
+    private int[] tags;
 }

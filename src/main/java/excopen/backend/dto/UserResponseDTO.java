@@ -9,11 +9,12 @@ import java.time.LocalDateTime;
 
 @Data
 public class UserResponseDTO {
+    private Long id;
     private String name;
     private String surname;
     private String email;
     private LocalDateTime createdAt;
-    private int[] preferencesVector;
+    private int[] tags;
     @Enumerated(EnumType.STRING)
     private Role role;
     private String description;

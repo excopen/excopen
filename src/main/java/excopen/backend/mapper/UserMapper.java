@@ -21,6 +21,7 @@ public interface UserMapper {
     @Mapping(target = "secondVector", ignore = true)
     User toEntity(UserCreateDTO dto);
 
+    @Mapping(source = "preferencesVector", target = "tags")
     UserResponseDTO toUserResponseDTO(User user);
 
     GuideResponseDTO toGuideResponseDTO(User user);
@@ -31,6 +32,7 @@ public interface UserMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "secondVector", ignore = true)
+    @Mapping(target = "preferencesVector", source = "tags")
     void updateFromDTO(UserUpdateDTO dto, @MappingTarget User user);
 
 
