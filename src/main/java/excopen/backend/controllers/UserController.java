@@ -91,7 +91,7 @@ public class UserController {
         dto.setName("Тест");
         dto.setSurname("Пользователь");
         dto.setEmail("test@example.com");
-        dto.setRole("USER");
+        dto.setRole("GUIDE");
         dto.setAvatar("https://example.com/avatar.jpg");
         dto.setAvatarFile(null);
         dto.setTags(Arrays.asList("история", "искусство"));
