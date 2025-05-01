@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Constants {
 
-    public static final int tagCount = 32;
+    public static final int tagCount = 12;
 
 //    @Autowired
 //    private TagServiceImpl tagService;
