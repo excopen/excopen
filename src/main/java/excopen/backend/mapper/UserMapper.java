@@ -23,8 +23,11 @@ public interface UserMapper {
 
     @Mapping(source = "preferencesVector", target = "tags")
     @Mapping(target = "contacts", source = ".")
+    @Mapping(source = "avatarUrl", target = "avatar")
     UserResponseDTO toUserResponseDTO(User user);
 
+    @Mapping(target = "contacts", source = ".")
+    @Mapping(source = "avatarUrl", target = "avatar")
     GuideResponseDTO toGuideResponseDTO(User user);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -37,10 +40,12 @@ public interface UserMapper {
     @Mapping(target = "vkLink", source = "contacts.vk")
     @Mapping(target = "telegramLink", source = "contacts.telegram")
     @Mapping(target = "phoneNumber", source = "contacts.phone")
+//    @Mapping(target = "avatarUrl", source = "avatar")
     void updateFromDTO(UserUpdateDTO dto, @MappingTarget User user);
 
-    @Mapping(target = "contacts", source = ".")
-    GuideResponseDTO toGuideResponse(User user);
+//    @Mapping(target = "contacts", source = ".")
+//    @Mapping(source = "avatarUrl", target = "avatar")
+//    GuideResponseDTO toGuideResponse(User user);
 
     default UserResponseDTO.ContactsDTO mapContacts(User user) {
         UserResponseDTO.ContactsDTO contacts = new UserResponseDTO.ContactsDTO();
