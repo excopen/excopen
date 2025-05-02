@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UserResponseDTO {
@@ -14,7 +15,7 @@ public class UserResponseDTO {
     private String surname;
     private String email;
 //    private LocalDateTime createdAt;
-    private int[] tags;
+    private List<String> tags;
     @Enumerated(EnumType.STRING)
     private Role role;
     private String info;

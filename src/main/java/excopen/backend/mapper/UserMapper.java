@@ -5,13 +5,12 @@ import excopen.backend.dto.UserCreateDTO;
 import excopen.backend.dto.UserResponseDTO;
 import excopen.backend.dto.UserUpdateDTO;
 import excopen.backend.entities.User;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import excopen.backend.servicesImpl.TagVectorService;
+import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+import java.util.List;
+
+@Mapper(componentModel = "spring", uses = {TagVectorService.class })
 public interface UserMapper {
 
     @Mapping(target = "id", ignore = true)
@@ -43,9 +42,15 @@ public interface UserMapper {
 //    @Mapping(target = "avatarUrl", source = "avatar")
     void updateFromDTO(UserUpdateDTO dto, @MappingTarget User user);
 
-//    @Mapping(target = "contacts", source = ".")
-//    @Mapping(source = "avatarUrl", target = "avatar")
-//    GuideResponseDTO toGuideResponse(User user);
+    @Named("toVector")
+    default int[] mapTagsToVector(List<String> tags, @Context TagVectorService svc) {
+        return svc.toVector(tags);
+    }
+
+    @Named("toNames")
+    default List<String> mapVectorToTags(int[] vector, @Context TagVectorService svc) {
+        return svc.toNames(vector);
+    }
 
     default UserResponseDTO.ContactsDTO mapContacts(User user) {
         UserResponseDTO.ContactsDTO contacts = new UserResponseDTO.ContactsDTO();

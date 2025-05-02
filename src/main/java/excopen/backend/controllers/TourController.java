@@ -13,6 +13,7 @@ import excopen.backend.mapper.TourMapper;
 import excopen.backend.security.RequiresOwnership;
 import excopen.backend.security.CurrentUser;
 import excopen.backend.servicesImpl.FileStorageService;
+import excopen.backend.servicesImpl.TagVectorService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,18 +39,23 @@ public class TourController {
     private final DescriptionMapper descriptionMapper;
     private final FileStorageService fileStorageService;
     private final ITourImageService tourImageService;
+    private final TagVectorService tagVectorService;
 
     @Autowired
     public TourController(ITourService tourService,
                           ILocationService locationService,
                           TourMapper tourMapper,
-                          DescriptionMapper descriptionMapper, FileStorageService fileStorageService, ITourImageService tourImageService) {
+                          DescriptionMapper descriptionMapper,
+                          FileStorageService fileStorageService,
+                          ITourImageService tourImageService,
+                          TagVectorService tagVectorService) {
         this.tourService = tourService;
         this.locationService = locationService;
         this.tourMapper = tourMapper;
         this.descriptionMapper = descriptionMapper;
         this.fileStorageService = fileStorageService;
         this.tourImageService = tourImageService;
+        this.tagVectorService = tagVectorService;
     }
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -63,7 +69,7 @@ public class TourController {
         List<MultipartFile> images = form.getImages();
 
         Location location = locationService.getLocationById(dto.getLocationId());
-        Tour tour = tourMapper.toEntity(dto, location);
+        Tour tour = tourMapper.toEntity(dto, location, tagVectorService); // FIXED
 
         Description description = descriptionMapper.toEntity(dto.getDescription());
         tour.setDescription(description);
@@ -75,9 +81,8 @@ public class TourController {
             tourImageService.addTourImage(createdTour.getId(), imageUrl);
         }
 
-        return tourMapper.toResponseDTO(createdTour);
+        return tourMapper.toResponseDTO(createdTour, tagVectorService);
     }
-
 
     @GetMapping("/search")
     public ResponseEntity<Page<TourResponseDTO>> searchTours(
@@ -91,26 +96,28 @@ public class TourController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
 
         Page<Tour> tours = tourService.filterTours(filter, pageable);
-        return ResponseEntity.ok(tours.map(tourMapper::toResponseDTO));
+        return ResponseEntity.ok(tours.map(tour -> tourMapper.toResponseDTO(tour, tagVectorService)));
     }
 
     @RequiresOwnership(entityClass = Tour.class)
     @PutMapping("/{tourId}")
     public TourResponseDTO updateTour(@PathVariable Long tourId,
                                       @Valid @RequestBody TourUpdateDTO updateDTO) {
-        Location location = updateDTO.getLocationId() != null ?
-                locationService.getLocationById(updateDTO.getLocationId()) : null;
 
-        Tour tour = tourMapper.toEntity(updateDTO, location);
+        Location location = updateDTO.getLocationId() != null
+                ? locationService.getLocationById(updateDTO.getLocationId())
+                : null;
+
+        Tour tour = tourMapper.toEntity(updateDTO, location, tagVectorService); // FIXED
         tour.setId(tourId);
 
-        if(updateDTO.getDescription() != null) {
+        if (updateDTO.getDescription() != null) {
             Description description = descriptionMapper.toEntity(updateDTO.getDescription());
             tour.setDescription(description);
         }
 
         Tour updatedTour = tourService.updateTour(tour);
-        return tourMapper.toResponseDTO(updatedTour);
+        return tourMapper.toResponseDTO(updatedTour, tagVectorService);
     }
 
     @RequiresOwnership(entityClass = Tour.class)
@@ -123,37 +130,36 @@ public class TourController {
     @GetMapping("/{tourId}")
     public TourResponseDTO getTourById(@PathVariable Long tourId) {
         Tour tour = tourService.getTourById(tourId);
-        return tourMapper.toResponseDTO(tour);
+        return tourMapper.toResponseDTO(tour, tagVectorService);
     }
 
     @GetMapping("/guide/{guideId}")
     public List<TourResponseDTO> getToursByGuideId(@PathVariable Long guideId) {
-        return tourMapper.toResponseDTOList(tourService.getToursByCreatorId(guideId));
+        return tourMapper.toResponseDTOList(tourService.getToursByCreatorId(guideId), tagVectorService);
     }
 
     @GetMapping
     public List<TourResponseDTO> getAllTours() {
-        return tourMapper.toResponseDTOList(tourService.getAllTours());
+        return tourMapper.toResponseDTOList(tourService.getAllTours(), tagVectorService);
     }
 
     @GetMapping("/location/{locationId}")
     public List<TourResponseDTO> findToursByLocation(@PathVariable Long locationId) {
-        return tourMapper.toResponseDTOList(tourService.findToursByLocation(locationId));
+        return tourMapper.toResponseDTOList(tourService.findToursByLocation(locationId), tagVectorService);
     }
 
     @GetMapping("/duration/{duration}")
     public List<TourResponseDTO> findToursByDuration(@PathVariable Double duration) {
-        return tourMapper.toResponseDTOList(tourService.findToursByDuration(duration));
+        return tourMapper.toResponseDTOList(tourService.findToursByDuration(duration), tagVectorService);
     }
 
     @GetMapping("/recommendations/{userId}")
     public List<TourResponseDTO> getRecommendedTours(@PathVariable Long userId) {
-        return tourMapper.toResponseDTOList(tourService.getRecommendedTours(userId));
+        return tourMapper.toResponseDTOList(tourService.getRecommendedTours(userId), tagVectorService);
     }
 
     @GetMapping("/{tourId}/similar")
     public List<TourResponseDTO> getSimilarTours(@PathVariable Long tourId) {
-        return tourMapper.toResponseDTOList(tourService.getSimilarTours(tourId));
+        return tourMapper.toResponseDTOList(tourService.getSimilarTours(tourId), tagVectorService);
     }
-
 }
