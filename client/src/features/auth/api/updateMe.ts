@@ -3,7 +3,7 @@ import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 
 export const updateMe = async (user: IMe): Promise<IMe> => {
     try {
-        const response = await apiClient.put<IMe>(EndpointsType.ME, user)
+        const response = await apiClient.put<IMe>(`${EndpointsType.USERS}/${EndpointsType.ME}`, user)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

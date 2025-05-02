@@ -4,14 +4,21 @@ import s from "./style.module.css"
 import {Button} from "@/shared/ui";
 import {RouteNames} from "@/shared/types";
 import {useNavigate} from "react-router-dom";
+import {useAuthContext} from "@/features";
 
 export const Index: FC = () => {
 
     const navigate = useNavigate()
+    const {setIsAuth} = useAuthContext()
 
     const click = () => {
         window.location.href = RouteNames.LOGIN
         navigate(`/${RouteNames.MAIN}`)
+    }
+
+    const test = () => {
+        navigate(`/${RouteNames.MAIN}`)
+        setIsAuth(true)
     }
 
     return (
@@ -27,6 +34,9 @@ export const Index: FC = () => {
             </div>
             <Button onClick={click} size={"lg"}>
                 Войти с помощью Google
+            </Button>
+            <Button onClick={test} size={"lg"}>
+                Тестовый вход
             </Button>
         </div>
     );

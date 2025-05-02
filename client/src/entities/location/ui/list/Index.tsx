@@ -8,9 +8,9 @@ import {LocationCard, useLocations} from "@/entities";
 export const Index: FC = () => {
 
     const location = useLocation()
-    const {data} = useLocations()
+    const {data, isLoading, isSuccess} = useLocations()
 
-    if (!data) return <AppSkeleton/>
+    if (isLoading || !data) return <AppSkeleton/>
 
     return (
         <section className={style.container}>
@@ -18,7 +18,7 @@ export const Index: FC = () => {
                 Самые популярные направления
             </h2>
             <div className={style.list}>
-                {data.slice(0,4).map(location => (
+                {data.slice(0, 4).map(location => (
                     <LocationCard
                         key={location.id}
                         country={location.country}
@@ -28,7 +28,7 @@ export const Index: FC = () => {
                     />
                 ))}
             </div>
-            {location.pathname !== `/${RouteNames.LOCATIONS}` && (
+            {location.pathname !== `/${RouteNames.LOCATIONS}` && isSuccess && (
                 <Link to={`/${RouteNames.LOCATIONS}`}>
                     <Button role={"button"} variant={"outline"} size={"lg"}>
                         перейти к списку городов

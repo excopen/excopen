@@ -15,11 +15,13 @@ export const Index: FC = observer(() => {
     const navigate = useNavigate()
     const {tags, selected, disabled, add, remove, click} = useReqs()
 
+    const shortTags = tags.slice(0,10)
+
     return (
         <div className={cn(style.container, style.paddings)}>
             <Text/>
             <div className={style.tags}>
-                {tags.map((tag, index) => (
+                {shortTags.map((tag, index) => (
                     <Tag
                         key={index}
                         value={selected}

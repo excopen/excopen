@@ -1,6 +1,6 @@
-import {useAuthContext} from "@/features";
+import {useAuthContext, useUserOrders} from "@/features";
 import {useCreateReview, useReviewsByUserId, useUpdateReview} from "@/entities";
-import {IReview, ITour, TourAccessibility} from "@/shared/types";
+import {IOrder, IReview, ITour, TourAccessibility} from "@/shared/types";
 import {useCallback, useEffect, useState} from "react";
 import {findLastReview} from "@/entities/review/utills";
 
@@ -17,6 +17,7 @@ export const useReviewForm = (type: "create" | "update", tour: ITour): Result =>
 
     const {user} = useAuthContext()
     const {data: reviews} = useReviewsByUserId(user.id)
+    const {data: orders} = useUserOrders(user.id)
     const last = findLastReview(reviews, tour.id)
 
     const {mutate: create} = useCreateReview()
@@ -32,7 +33,7 @@ export const useReviewForm = (type: "create" | "update", tour: ITour): Result =>
         negativeText: type === "update" ? last.negativeText : "",
         positiveText: type === "update" ? last.positiveText : "",
         withChildren: tour.accessibility === TourAccessibility.WITH_CHILDREN,
-        personCount: user.orders.find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
+        personCount: (orders as IOrder[]).find(i => i.groupCapacity === tour.groupCapacity)?.groupCapacity || 0
     })
 
     useEffect(() => {
