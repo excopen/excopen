@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity<String> applyForGuide(@CurrentUser User user,
                                                 @RequestBody @Valid GuideRequestDto guideRequestDto) {
         userService.requestGuideRole(user.getId(), guideRequestDto);
-        return ResponseEntity.ok("Код отправлен на номер " + guideRequestDto.getPhoneNumber());
+        return ResponseEntity.ok("Код отправлен на номер " + guideRequestDto.getContacts().getPhone());
     }
 
     @PostMapping("/confirm-guide")

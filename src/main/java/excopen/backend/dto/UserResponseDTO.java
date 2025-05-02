@@ -21,6 +21,12 @@ public class UserResponseDTO {
     private String city;
     private Double guideRating = 0.0;
     private Integer totalReviews = 0;
-    private String vkLink;
-    private String telegramLink;
+    private ContactsDTO contacts;
+
+    @Data
+    public static class ContactsDTO {
+        private String vk;
+        private String telegram;
+        private String phone;
+    }
 }
