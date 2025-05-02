@@ -1,9 +1,7 @@
-// noinspection Annotator
-
 import axios from "axios";
 
 export const apiClient = axios.create({
-    baseURL: "https://localhost:8080/api/",
+    baseURL: "https://excopen-prod-back-v0-1-1.onrender.com/api/",
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',

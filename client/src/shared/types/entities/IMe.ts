@@ -1,5 +1,4 @@
-import {IOrder} from "@/shared/types/entities/IOrder.ts";
-import {IContacts, ITour, UserRole} from "@/shared/types";
+import {IContacts, UserRole} from "@/shared/types";
 
 export interface IMe {
     id: number
@@ -10,8 +9,6 @@ export interface IMe {
     avatar: string
     avatarFile: File | null
     tags: string[]
-    orders: IOrder[]
-    tours: ITour[]
     rating?: number
     ratingCount?: number
     contacts?: IContacts

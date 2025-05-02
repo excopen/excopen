@@ -23,6 +23,8 @@ export const useCreateButton = (): ReturnType => {
 
             store.params.contributorId = user.id
 
+            console.log(store.tour)
+
             if (store.isEdit) updateTour(store.tour)
             else createTour({user: user, tour: store.tour})
 

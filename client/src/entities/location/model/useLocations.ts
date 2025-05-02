@@ -4,13 +4,17 @@ import {ILocation} from "@/shared/types";
 import {getLocations} from "@/entities/location/api";
 
 export const useLocations = () => {
-    return useQuery<ILocation[], ApiException<ILocation>>({
+
+    const query = useQuery<ILocation[], ApiException<ILocation>>({
         queryKey: ["locations"],
         queryFn: () => getLocations(),
-        staleTime: 300_000,
-        refetchOnWindowFocus: false,
-        refetchInterval: false,
-        initialData: []
+        staleTime: 30_000,
+        placeholderData: []
     })
+
+    return {
+        ...query,
+        data: query.data ?? []
+    }
 
 }
