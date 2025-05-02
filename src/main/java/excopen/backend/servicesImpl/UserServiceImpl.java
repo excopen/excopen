@@ -130,12 +130,12 @@ public class UserServiceImpl extends DefaultOAuth2UserService implements IUserSe
             throw new IllegalArgumentException("Вы уже являетесь гидом");
         }
 
-        if ((guideRequestDto.getVkLink() == null || guideRequestDto.getVkLink().isBlank()) &&
-                (guideRequestDto.getTelegramLink() == null || guideRequestDto.getTelegramLink().isBlank())) {
+        if ((guideRequestDto.getContacts().getVk() == null || guideRequestDto.getContacts().getVk().isBlank()) &&
+                (guideRequestDto.getContacts().getTelegram() == null || guideRequestDto.getContacts().getTelegram().isBlank())) {
             throw new IllegalArgumentException("Укажите хотя бы одну ссылку: VK или Telegram");
         }
 
-        String normalizedPhone = phoneNumberValidator.normalizePhoneNumber(guideRequestDto.getPhoneNumber());
+        String normalizedPhone = phoneNumberValidator.normalizePhoneNumber(guideRequestDto.getContacts().getPhone());
 
         verificationService.sendVerificationCode(normalizedPhone);
 

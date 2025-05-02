@@ -22,6 +22,7 @@ public interface UserMapper {
     User toEntity(UserCreateDTO dto);
 
     @Mapping(source = "preferencesVector", target = "tags")
+    @Mapping(target = "contacts", source = ".")
     UserResponseDTO toUserResponseDTO(User user);
 
     GuideResponseDTO toGuideResponseDTO(User user);
@@ -33,9 +34,20 @@ public interface UserMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "secondVector", ignore = true)
     @Mapping(target = "preferencesVector", source = "tags")
+    @Mapping(target = "vkLink", source = "contacts.vk")
+    @Mapping(target = "telegramLink", source = "contacts.telegram")
+    @Mapping(target = "phoneNumber", source = "contacts.phone")
     void updateFromDTO(UserUpdateDTO dto, @MappingTarget User user);
 
-
+    @Mapping(target = "contacts", source = ".")
     GuideResponseDTO toGuideResponse(User user);
+
+    default UserResponseDTO.ContactsDTO mapContacts(User user) {
+        UserResponseDTO.ContactsDTO contacts = new UserResponseDTO.ContactsDTO();
+        contacts.setVk(user.getVkLink());
+        contacts.setTelegram(user.getTelegramLink());
+        contacts.setPhone(user.getPhoneNumber());
+        return contacts;
+    }
 
 }
