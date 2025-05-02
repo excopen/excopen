@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class GuideResponseDTO {
@@ -20,6 +21,7 @@ public class GuideResponseDTO {
     private Integer ratingCount = 0;
     private ContactsDTO contacts;
     private String avatar;
+    private List<String> tags;
 
     @Data
     public static class ContactsDTO {

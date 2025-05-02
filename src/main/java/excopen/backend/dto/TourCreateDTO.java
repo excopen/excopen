@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class TourCreateDTO {
 
@@ -35,8 +37,7 @@ public class TourCreateDTO {
     private Integer maxCapacity;
 
     @NotNull(message = "Необходимо выбрать категории для экскурсии")
-    private int[] vectorRepresentation;
-
+    private List<String> tags;
     @NotNull(message = "Укажите формат экскурсии")
     private TourType tourType;
 

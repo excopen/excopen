@@ -8,6 +8,8 @@ import lombok.Data;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.List;
+
 @Data
 public class TourUpdateDTO {
 
@@ -31,8 +33,7 @@ public class TourUpdateDTO {
     private Double routeLength;
 
     @NotNull(message = "Необходимо выбрать категории для экскурсии")
-    @JdbcTypeCode(SqlTypes.VECTOR)
-    private int[] vectorRepresentation;
+    private List<String> tags;
 
     @NotNull(message = "Минимальный возраст обязателен")
     private Integer minAge;
