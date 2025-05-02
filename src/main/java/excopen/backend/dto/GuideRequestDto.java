@@ -7,17 +7,20 @@ import lombok.Data;
 @Data
 public class GuideRequestDto {
 
-    @NotBlank(message = "Номер телефона обязателен")
-    @Pattern(regexp = "^\\+7\\d{10}$", message = "Номер должен быть в формате +7XXXXXXXXXX")
-    private String phoneNumber;
-
     @NotBlank(message = "Описание не должно быть пустым")
     private String description;
 
     @NotBlank(message = "Город обязателен")
     private String city;
+    private ContactsDTO contacts;
 
-    private String vkLink;
-    private String telegramLink;
+    @Data
+    public static class ContactsDTO {
+        private String vk;
+        private String telegram;
+        @NotBlank(message = "Номер телефона обязателен")
+        @Pattern(regexp = "^\\+7\\d{10}$", message = "Номер должен быть в формате +7XXXXXXXXXX")
+        private String phone;
+    }
 }
 

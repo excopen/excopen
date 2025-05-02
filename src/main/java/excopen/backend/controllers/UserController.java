@@ -38,7 +38,7 @@ public class UserController {
     public ResponseEntity<String> applyForGuide(@CurrentUser User user,
                                                 @RequestBody @Valid GuideRequestDto guideRequestDto) {
         userService.requestGuideRole(user.getId(), guideRequestDto);
-        return ResponseEntity.ok("Код отправлен на номер " + guideRequestDto.getPhoneNumber());
+        return ResponseEntity.ok("Код отправлен на номер " + guideRequestDto.getContacts().getPhone());
     }
 
     @PostMapping("/confirm-guide")
@@ -91,7 +91,7 @@ public class UserController {
         dto.setName("Тест");
         dto.setSurname("Пользователь");
         dto.setEmail("test@example.com");
-        dto.setRole("USER");
+        dto.setRole("GUIDE");
         dto.setAvatar("https://example.com/avatar.jpg");
         dto.setAvatarFile(null);
         dto.setTags(Arrays.asList("история", "искусство"));

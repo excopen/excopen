@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static excopen.backend.constants.Constants.tagCount;
 
 @Data
 @NoArgsConstructor

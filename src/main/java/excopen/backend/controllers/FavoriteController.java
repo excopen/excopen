@@ -7,6 +7,7 @@ import excopen.backend.iservices.IDescriptionService;
 import excopen.backend.iservices.IFavoriteService;
 import excopen.backend.mapper.TourMapper;
 import excopen.backend.security.CurrentUser;
+import excopen.backend.servicesImpl.TagVectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +20,16 @@ public class FavoriteController {
     private final IFavoriteService favoriteService;
     private final IDescriptionService descriptionService;
     private final TourMapper tourMapper;
+    private final TagVectorService tagVectorService;
 
     @Autowired
     public FavoriteController(IFavoriteService favoriteService,
                               IDescriptionService descriptionService,
-                              TourMapper tourMapper) {
+                              TourMapper tourMapper, TagVectorService tagVectorService) {
         this.favoriteService = favoriteService;
         this.descriptionService = descriptionService;
         this.tourMapper = tourMapper;
+        this.tagVectorService = tagVectorService;
     }
 
     @PostMapping("/{tourId}")
@@ -42,6 +45,6 @@ public class FavoriteController {
     @GetMapping
     public List<TourResponseDTO> getFavoriteToursByUser(@CurrentUser User user) {
         List<Tour> tours = favoriteService.getFavoriteToursByUser(user.getId());
-        return tourMapper.toResponseDTOList(tours);
+        return tourMapper.toResponseDTOList(tours, tagVectorService);
     }
 }

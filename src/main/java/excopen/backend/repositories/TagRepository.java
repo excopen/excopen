@@ -11,4 +11,7 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     // Метод для поиска тегов, ближайших к заданному вектору
     @Query(value = "SELECT * FROM Tags ORDER BY vector_representation <-> :inputVector LIMIT :limit", nativeQuery = true)
     List<Tag> findByVectorRepresentation(@Param("inputVector") float[] inputVector, @Param("limit") int limit);
+
+    @Query("SELECT t.name FROM Tag t ORDER BY t.id")
+    List<String> findAllNamesOrdered();
 }

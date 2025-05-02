@@ -6,6 +6,7 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class UserResponseDTO {
@@ -13,14 +14,21 @@ public class UserResponseDTO {
     private String name;
     private String surname;
     private String email;
-    private LocalDateTime createdAt;
-    private int[] tags;
+//    private LocalDateTime createdAt;
+    private List<String> tags;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private String description;
-    private String city;
-    private Double guideRating = 0.0;
-    private Integer totalReviews = 0;
-    private String vkLink;
-    private String telegramLink;
+    private String info;
+//    private String city;
+    private Double rating = 0.0;
+    private Integer ratingCount = 0;
+    private ContactsDTO contacts;
+    private String avatar;
+
+    @Data
+    public static class ContactsDTO {
+        private String vk;
+        private String telegram;
+        private String phone;
+    }
 }

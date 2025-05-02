@@ -24,5 +24,6 @@ public class TourResponseDTO {
     private LocalDateTime updatedAt;
     private TourType tourType;
     private TransportType transportType;
+    private List<String> tags;
     private DescriptionResponseDTO description;
 }

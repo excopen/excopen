@@ -50,9 +50,6 @@ public class Tour implements Serializable {
     private List<TourImage> images;
 
     @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
-    private List<TourTags> tags;
-
-    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
     @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY)
