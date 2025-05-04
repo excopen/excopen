@@ -15,7 +15,7 @@ export const useReviewsByTourId = (tourId: number) => {
 
     return {
         ...query,
-        isEmpty: query.data.length === 0
+        length: query.data.length
     }
 
 }

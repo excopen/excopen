@@ -16,7 +16,8 @@ export const Index: FC<ReviewListProps> = ({rating, ratingCount, tourId}) => {
     const {data: reviews, isLoading, isError} = useReviewsByTourId(tourId)
     const [visibleReviews, setVisibleReviews] = useState<number>(2)
 
-    if (isLoading || isError) return <AppSkeleton/>
+    if (isError) return null
+    if (isLoading) return <AppSkeleton/>
 
     return (
         <div className={"flex flex-col gap-8 my-4"}>

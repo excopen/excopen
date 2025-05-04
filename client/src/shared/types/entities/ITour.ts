@@ -3,7 +3,6 @@ import {YandexMapCoordinates} from "@/shared/types/lib";
 import {IDescription} from "./IDescription.ts";
 import {ILocation} from "./ILocation.ts"
 import {IContacts} from "./IContacts.ts";
-import {IReview} from "./IReview.ts";
 import {IUser} from "@/shared/types";
 
 export interface ITour {
@@ -29,6 +28,5 @@ export interface ITour {
     contributorId: number
     rating: number
     ratingCount: number
-    reviews?: IReview[]
     registered?: IUser[]
 }

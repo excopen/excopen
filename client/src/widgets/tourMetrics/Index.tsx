@@ -5,7 +5,7 @@ import {ITour, IUser} from "@/shared/types";
 import s from "./style.module.css"
 import {useEditTour} from "@/shared/hooks";
 import {formatPeople} from "@/shared/utills";
-import {useDeleteTour} from "@/entities";
+import {useDeleteTour, useReviewsByTourId} from "@/entities";
 
 type TourMetricsProps = {
     tour: ITour
@@ -17,6 +17,8 @@ export const Index: FC<TourMetricsProps> = ({tour, users, capacity}) => {
 
     const {click} = useEditTour(tour)
     const {mutate} = useDeleteTour()
+
+    const {length: reviewsLength} = useReviewsByTourId(tour.id)
 
     const deleteTour = () => mutate(tour.id)
 
@@ -39,9 +41,7 @@ export const Index: FC<TourMetricsProps> = ({tour, users, capacity}) => {
                         <Eye width={20} height={20} className={"text-grayscale-500"}/>
                         <span className={s.subHeading}>Отзывы</span>
                     </div>
-                    <p className={s.text}>
-                        Экскурсию прокоментировали {formatPeople(tour.reviews?.length as number)}
-                    </p>
+                    <p className={s.text}>Экскурсию прокоментировали {formatPeople(reviewsLength)}</p>
                 </div>
 
                 <div className={s.params}>
