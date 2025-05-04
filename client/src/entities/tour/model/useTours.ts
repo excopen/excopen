@@ -8,7 +8,7 @@ export const useTours = () => {
 
     const query = useQuery<ITour[], ApiException<ITour>>({
         queryKey: ["tours"],
-        queryFn: () => getTours(store.searchParams.sort, store.searchParams),
+        queryFn: () => getTours(store.searchParams),
         staleTime: 60_000,
         initialData: []
     })

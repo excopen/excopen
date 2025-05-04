@@ -24,7 +24,7 @@ export const Index: FC<FormProps> = ({orientation}) => {
                 <Input/>
                 <DatePicker/>
                 <SelectAccessibility/>
-                {width < 1440 || orientation === Orientation.VERTICAL && <SwitchByCity orientation={orientation}/>}
+                {(width < 1440 || orientation === Orientation.VERTICAL) && <SwitchByCity orientation={orientation}/>}
                 <SubmitButton orientation={orientation}/>
             </Header>
             {orientation === Orientation.HORIZONTAL && width > 1440 && <SwitchByCity orientation={orientation}/>}
