@@ -19,7 +19,7 @@ export const Telegram: FC = () => {
             ref={inputRef}
             field={state}
             value={value}
-            label={"Аккаунт ВКонтакте"}
+            label={"Аккаунт Telegram"}
             onClear={clear}
             onChangeCapture={clickInput}
             onFocus={focus}

@@ -57,12 +57,12 @@ export const useUserData = (): Result => {
     const addTag = useCallback((tag: string) => {
         const newTags = updatedUser.tags.includes(tag) ? updatedUser.tags : [...updatedUser.tags, tag]
         setUpdatedUser({...updatedUser, tags: newTags})
-    }, [])
+    }, [updatedUser])
 
     const removeTag = useCallback((tag: string) => {
         const newTags = updatedUser.tags.filter(i => i !== tag)
         setUpdatedUser({...updatedUser, tags: newTags})
-    }, [])
+    }, [updatedUser])
 
     const load = () => update(updatedUser)
 

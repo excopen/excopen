@@ -34,7 +34,7 @@ export const ImageLoader: FC<ImageLoaderProps> = ({ index, file, update, size })
             }
         }
         
-    }, [file, preview])
+    }, [file])
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         
