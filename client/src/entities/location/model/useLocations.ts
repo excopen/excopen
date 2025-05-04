@@ -8,7 +8,7 @@ export const useLocations = () => {
     const query = useQuery<ILocation[], ApiException<ILocation>>({
         queryKey: ["locations"],
         queryFn: () => getLocations(),
-        staleTime: 30_000,
+        staleTime: 300_000,
         placeholderData: []
     })
 

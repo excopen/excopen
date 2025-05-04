@@ -10,14 +10,13 @@ export const useTours = () => {
         queryKey: ["tours"],
         queryFn: () => getTours(store.searchParams),
         staleTime: 60_000,
-        initialData: []
+        placeholderData: []
     })
 
     return {
         ...query,
-        length: query.data.length,
-        isEmpty: query.data.length === 0,
-        hasData: query.data.length > 0,
+        data: query.data ?? [],
+        length: query.data ? query.data.length : 0
     }
 
 }

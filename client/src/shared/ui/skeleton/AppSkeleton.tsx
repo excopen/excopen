@@ -7,6 +7,9 @@ export const AppSkeleton: FC = () => {
             <Skeleton className="h-44 w-full rounded-2xl"/>
             <Skeleton className="h-6 w-4/5 rounded-2xl"/>
             <Skeleton className="h-6 w-2/3 rounded-2xl"/>
+            <Skeleton className="h-44 w-full rounded-2xl max-md:hidden"/>
+            <Skeleton className="h-6 w-4/5 rounded-2xl max-md:hidden"/>
+            <Skeleton className="h-6 w-2/3 rounded-2xl max-md:hidden"/>
         </div>
     );
 };
