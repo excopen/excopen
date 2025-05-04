@@ -21,10 +21,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         role: UserRole.client,
         avatar: avatar,
         avatarFile: null,
-        name: "",
-        surname: "",
+        name: "Имя",
+        surname: "Фамилия",
         email: "",
-        tags: []
+        tags: ["Гастрономический  ", "Водный сплав  ", "Горный треккинг  ", "Скрытые жемчужины  ", "Романтический  ",]
     }
 
     useEffect(() => {

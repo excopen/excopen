@@ -1,4 +1,4 @@
-import {IContacts, ITour} from "@/shared/types";
+import {IContacts} from "@/shared/types";
 
 export interface IUser {
     id: number
@@ -9,5 +9,4 @@ export interface IUser {
     rating: number
     ratingCount: number
     contacts: IContacts
-    tours: ITour[]
 }
