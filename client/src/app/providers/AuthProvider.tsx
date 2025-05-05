@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const navigate = useNavigate()
 
-    const [isAuth, setIsAuth] = useState<boolean>(false)
+    const [isAuth, setIsAuth] = useState<boolean>(true)
 
     const {data: user, isSuccess} = useMe()
     const {mutate: logoutFromGoogle} = useLogout()
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         name: "Имя",
         surname: "Фамилия",
         email: "",
-        tags: ["Гастрономический  ", "Водный сплав  ", "Горный треккинг  ", "Скрытые жемчужины  ", "Романтический  ",]
+        tags: ["Гастрономический  ", "Водный сплав  ", "Горный треккинг  ", "Скрытые жемчужины  ", "Романтический  "]
     }
 
     useEffect(() => {

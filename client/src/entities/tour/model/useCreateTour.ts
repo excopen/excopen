@@ -1,20 +1,15 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
-import {ITour, IMe} from "@/shared/types";
+import {ITour} from "@/shared/types";
 import {createTour} from "@/entities/tour/api";
-
-type PayloadType = {
-    user: IMe
-    tour: ITour
-}
 
 export const useCreateTour = () => {
 
     const queryClient = useQueryClient()
 
-    return useMutation<void, ApiException<ITour>, PayloadType>({
-        mutationFn: ({user, tour}) => createTour(user, tour),
-        onMutate: async ({tour: newTour}) => {
+    return useMutation<void, ApiException<ITour>, ITour>({
+        mutationFn: (tour) => createTour(tour),
+        onMutate: async (newTour) => {
 
             await queryClient.cancelQueries({ queryKey: ['tours'] })
 
