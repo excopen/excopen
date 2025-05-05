@@ -23,7 +23,7 @@ export const getTours = async (searchTourParams: SearchTourParamsType): Promise<
             "byCity": byCity,
         }
 
-        const response: AxiosResponse<ITour[]> = await apiClient.get<ITour[]>("search", {
+        const response: AxiosResponse<ITour[]> = await apiClient.get<ITour[]>("tours", {
             params
         })
         return response.data

@@ -3,7 +3,7 @@ import {EndpointsType, IMe} from "@/shared/types";
 
 export const getMe = async (): Promise<IMe> => {
     try {
-        const response = await apiClient.get<IMe>(`${EndpointsType.USERS}/test/${EndpointsType.ME}`)
+        const response = await apiClient.get<IMe>(`${EndpointsType.USERS}/${EndpointsType.ME}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const navigate = useNavigate()
 
-    const [isAuth, setIsAuth] = useState<boolean>(true)
+    const [isAuth, setIsAuth] = useState<boolean>(false)
 
     const {data: user, isSuccess} = useMe()
     const {mutate: logoutFromGoogle} = useLogout()
