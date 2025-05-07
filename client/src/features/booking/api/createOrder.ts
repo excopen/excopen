@@ -1,6 +1,5 @@
 import {EndpointsType, IOrder} from "@/shared/types";
-import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
-import {serializeOrderToFormData} from "@/shared/utills";
+import {apiClient, ApiException, isAxiosError, serializeOrderToFormData} from "@/shared/lib";
 
 export const createOrder = async (order: IOrder): Promise<void> => {
     try {

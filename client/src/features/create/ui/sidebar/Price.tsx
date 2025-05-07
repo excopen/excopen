@@ -32,7 +32,7 @@ export const Price: FC = observer(() => {
             value={value}
             label={"Цена за группу"}
             onClear={clear}
-            onChangeCapture={click}
+            onChange={click}
             onFocus={focus}
             onBlur={blur}
         />

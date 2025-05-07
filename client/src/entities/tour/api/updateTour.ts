@@ -1,6 +1,5 @@
-import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
+import {apiClient, ApiException, isAxiosError, serializeTourToFormData} from "@/shared/lib";
 import {EndpointsType, ITour} from "@/shared/types";
-import {serializeTourToFormData} from "@/shared/utills";
 
 export const updateTour = async (tour: ITour): Promise<ITour> => {
     try {

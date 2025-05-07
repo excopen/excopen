@@ -1,6 +1,5 @@
 import {EndpointsType, IReview} from "@/shared/types";
-import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
-import {serializeReviewToFormData} from "@/shared/utills";
+import {apiClient, ApiException, isAxiosError, serializeReviewToFormData} from "@/shared/lib";
 
 export const updateReview = async (review: IReview): Promise<IReview> => {
     try {

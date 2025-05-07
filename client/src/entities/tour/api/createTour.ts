@@ -1,10 +1,12 @@
 import {EndpointsType, ITour} from "@/shared/types";
-import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
-import {serializeTourToFormData} from "@/shared/utills";
+import {apiClient, ApiException, isAxiosError, serializeTourToFormData} from "@/shared/lib";
 
 export const createTour = async (tour: ITour): Promise<void> => {
     try {
         const formData = serializeTourToFormData(tour)
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value)
+        }
         await apiClient.post<ITour>(`${EndpointsType.TOURS}`, formData)
     } catch (e) {
         if (isAxiosError(e)) {
