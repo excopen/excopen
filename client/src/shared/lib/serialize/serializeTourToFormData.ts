@@ -13,7 +13,7 @@ export const serializeTourToFormData = (tour: ITour): FormData => {
     formData.append("format", tour.format)
     formData.append("accessibility", tour.accessibility)
     formData.append("byCity", tour.byCity.toString())
-    formData.append("date", tour.date?.toISOString() as string)
+    formData.append("date", tour.date?.toISOString().split("T")[0] as string)
     formData.append("time", tour.time)
     formData.append("duration", tour.duration.toString())
     formData.append("contributorId", tour.contributorId.toString())

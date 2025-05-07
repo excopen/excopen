@@ -4,9 +4,6 @@ import {apiClient, ApiException, isAxiosError, serializeTourToFormData} from "@/
 export const createTour = async (tour: ITour): Promise<void> => {
     try {
         const formData = serializeTourToFormData(tour)
-        for (const [key, value] of formData.entries()) {
-            console.log(`${key}:`, value)
-        }
         await apiClient.post<ITour>(`${EndpointsType.TOURS}`, formData)
     } catch (e) {
         if (isAxiosError(e)) {
