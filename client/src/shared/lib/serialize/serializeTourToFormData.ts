@@ -38,8 +38,8 @@ export const serializeTourToFormData = (tour: ITour): FormData => {
     formData.append("contacts.phone", tour.contacts.phone)
 
     // coordinates
-    formData.append("coordinates.latitude", tour.coordinates.point.latitude.toString())
-    formData.append("coordinates.longitude", tour.coordinates.point.longitude.toString())
+    formData.append("coordinates.point.latitude", tour.coordinates.point.latitude.toString())
+    formData.append("coordinates.point.longitude", tour.coordinates.point.longitude.toString())
     formData.append("coordinates.zoom", tour.coordinates.zoom.toString())
 
     // locations
