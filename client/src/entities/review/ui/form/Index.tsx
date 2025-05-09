@@ -15,13 +15,13 @@ export const Index: FC<FormProps> = ({tourId, type}) => {
 
     const {data: tour} = useTour(tourId)
 
-    if (!tour) return null
-
     const {
         completed,
         review,
         updateRating, updateNegative, updatePositive, save
-    } = useReviewForm(type, tour)
+    } = useReviewForm(type, tour!)
+
+    if (!tour) return null
 
     return (
         <div className={s.container}>
