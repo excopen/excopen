@@ -60,6 +60,8 @@ public class User implements Serializable {
     private Double guideRating = 0.0;     // средняя оценка гида
     private Integer totalReviews = 0;     // количество отзывов к его турам
 
+//    private Integer age;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

@@ -1,8 +1,10 @@
 package excopen.backend.security;
 
 import excopen.backend.servicesImpl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,20 +28,55 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(userInfo ->
-                                userInfo.userService(customOAuth2UserService)
-                        )
-                )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/api/**")
                 )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET,
+                                "/api/favorites",
+                                "/api/locations",
+                                "/api/reviews/tour/**",
+                                "/api/reviews/user/**",
+                                "/api/tours/**",
+                                "/api/users/**",
+                                "/api/tags"
+                        ).permitAll()
+
+                        .requestMatchers(HttpMethod.POST,
+                                "/api/users/apply-guide",
+                                "/api/users/confirm-guide",
+                                "/api/reviews",
+                                "/api/favorites/**",
+                                "/api/tours"
+                        ).authenticated()
+
+                        .requestMatchers(HttpMethod.PUT,
+                                "/api/reviews/**",
+                                "/api/tours/**",
+                                "/api/users/me",
+                                "/api/users/me/preferences-vector"
+                        ).authenticated()
+
+                        .requestMatchers(HttpMethod.DELETE,
+                                "/api/favorites/**",
+                                "/api/tours/**"
+                        ).authenticated()
+
+                        .anyRequest().denyAll()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                        )
+                )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll()
+                )
+                .exceptionHandling(eh -> eh
+                        .authenticationEntryPoint((req, res, ex) ->
+                                res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Пользователь не авторизован."))
+                        .accessDeniedHandler((req, res, ex) ->
+                                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Доступ запрещён."))
                 );
 
         return http.build();

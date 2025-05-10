@@ -16,4 +16,10 @@ public class UserResponseDTO {
     private int[] preferencesVector;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private String description;
+    private String city;
+    private Double guideRating = 0.0;
+    private Integer totalReviews = 0;
+    private String vkLink;
+    private String telegramLink;
 }
