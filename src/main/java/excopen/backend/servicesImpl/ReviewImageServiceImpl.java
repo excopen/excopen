@@ -2,6 +2,8 @@ package excopen.backend.servicesImpl;
 
 import excopen.backend.entities.Review;
 import excopen.backend.entities.ReviewImage;
+import excopen.backend.entities.Tour;
+import excopen.backend.entities.TourImage;
 import excopen.backend.iservices.IReviewImageService;
 import excopen.backend.repositories.ReviewImageRepository;
 import excopen.backend.repositories.ReviewRepository;
@@ -24,14 +26,28 @@ public class ReviewImageServiceImpl implements IReviewImageService {
     }
 
     @Override
-    public ReviewImage addImageToReview(Long reviewId, String imageUrl) {
+    public void saveImages(Long reviewId, List<String> imageUrls) {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new IllegalArgumentException("Review with ID " + reviewId + " not found."));
 
-        ReviewImage reviewImage = new ReviewImage();
-        reviewImage.setReview(review); // сохраняем сущность
-        reviewImage.setImageUrl(imageUrl);
-        return reviewImageRepository.save(reviewImage);
+        for (String url : imageUrls) {
+            ReviewImage image = new ReviewImage();
+            image.setReview(review);
+            image.setImageUrl(url);
+            reviewImageRepository.save(image);
+        }
+    }
+
+    @Override
+    public ReviewImage addReviewImage(Long reviewId, String imageUrl) {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new IllegalArgumentException("Review not found"));
+
+        ReviewImage image = new ReviewImage();
+        image.setReview(review);
+        image.setImageUrl(imageUrl);
+
+        return reviewImageRepository.save(image);
     }
 
     @Override

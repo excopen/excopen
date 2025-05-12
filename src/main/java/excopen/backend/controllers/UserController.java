@@ -8,14 +8,12 @@ import excopen.backend.mapper.UserMapper;
 import excopen.backend.security.CurrentUser;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
 import java.util.Map;
 
 @RestController
@@ -54,20 +52,32 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id,
-                                                      @CurrentUser User currentUser) {
+    public ResponseEntity<Object> getUser(@PathVariable Long id,
+                                                   @CurrentUser(required = false) User currentUser) {
         User targetUser = userService.getUserById(id);
 
-        boolean isSelf = currentUser.getId().equals(targetUser.getId());
-        boolean isAdmin = currentUser.getRole().equals(Role.ADMIN);
+        boolean isSelf = currentUser != null && currentUser.getId().equals(targetUser.getId());
+        boolean isAdmin = currentUser != null && currentUser.getRole().equals(Role.ADMIN);
         boolean isGuide = targetUser.getRole().equals(Role.GUIDE);
 
         if (!isGuide && !isAdmin && !isSelf) {
             throw new AccessDeniedException("Нет прав на просмотр профиля этого пользователя.");
         }
-
-        return ResponseEntity.ok(userMapper.toResponseDTO(targetUser));
+        if(targetUser.getRole().equals(Role.GUIDE))
+        {
+            return ResponseEntity.ok(userMapper.toGuideResponseDTO(targetUser));
+        }else
+      //  if(targetUser.getRole().equals(Role.USER))
+        {
+            return ResponseEntity.ok(userMapper.toUserResponseDTO(targetUser));
+        }
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<Object> getCurrentUser(@CurrentUser User currentUser) {
+            return ResponseEntity.ok(userMapper.toUserResponseDTO(currentUser));
+    }
+
 
     /// Только для разработки
     @GetMapping("/attributes")
@@ -79,13 +89,13 @@ public class UserController {
     public UserResponseDTO updateUser(@Valid @RequestBody UserUpdateDTO userUpdateDTO,
                                       @CurrentUser User user) {
         userMapper.updateFromDTO(userUpdateDTO, user);
-        return userMapper.toResponseDTO(userService.updateUser(user));
+        return userMapper.toUserResponseDTO(userService.updateUser(user));
     }
 
     @PutMapping("/me/preferences-vector")
     public UserResponseDTO updatePreferencesVector(@RequestBody int[] preferencesVector,
                                                    @CurrentUser User user) {
-        return userMapper.toResponseDTO(userService.updatePreferencesVector(user.getId(), preferencesVector));
+        return userMapper.toUserResponseDTO(userService.updatePreferencesVector(user.getId(), preferencesVector));
     }
 
 //    @DeleteMapping("/me")

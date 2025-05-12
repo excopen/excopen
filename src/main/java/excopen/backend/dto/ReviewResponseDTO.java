@@ -2,6 +2,7 @@ package excopen.backend.dto;
 
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class ReviewResponseDTO {
@@ -9,7 +10,11 @@ public class ReviewResponseDTO {
     private Long tourId;
     private Long userId;
     private Double rating;
-    private String reviewText;
+    private boolean withChildren;
+    private double personCount;
+    private String positiveText;
+    private String negativeText;
+    private List<String> imageUrls;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

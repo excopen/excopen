@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Детали экскурсии - Отзывы</title>
+  <style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+
+    .tour-header {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-bottom: 30px;
+    }
+
+    .tour-img {
+        width: 100%;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .section {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .review-form {
+        margin-top: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    input[type="number"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    .rating-input {
+        width: 120px;
+    }
+
+    .error {
+        color: #dc3545;
+        font-size: 0.85em;
+        margin-top: 5px;
+        display: none;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .review {
+        background: #fff;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .review-images img {
+        max-height: 100px;
+        margin-right: 10px;
+        margin-top: 10px;
+        border-radius: 4px;
+    }
+
+    .image-gallery {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 15px 0;
+    }
+
+    .image-gallery img {
+        width: 120px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .hidden {
+        display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="tour-header">
+  <h1 id="tourTitle">Загрузка...</h1>
+  <img id="mainImage" class="tour-img hidden" alt="Фото тура">
+
+  <div class="section">
+    <p><strong>Локация:</strong> <span id="locationName">…</span></p>
+    <p><strong>Цена:</strong> <span id="price">…</span> ₽</p>
+    <p><strong>Длительность:</strong> <span id="duration">…</span> ч</p>
+    <p><strong>Длина маршрута:</strong> <span id="routeLength">…</span> км</p>
+    <p><strong>Возраст:</strong> от <span id="minAge">…</span> лет</p>
+    <p><strong>Вместимость:</strong> до <span id="maxCapacity">…</span> чел</p>
+    <p><strong>Формат:</strong> <span id="tourType">…</span></p>
+    <p><strong>Транспорт:</strong> <span id="transportType">…</span></p>
+  </div>
+
+  <div class="section">
+    <h2>Описание</h2>
+    <p><strong>Основное:</strong> <span id="mainInfo">…</span></p>
+    <p><strong>Что ожидать:</strong> <span id="whatToExpect">…</span></p>
+    <p><strong>Орг. детали:</strong> <span id="orgDetails">…</span></p>
+    <p><strong>Место встречи:</strong> <span id="meetingPlace">…</span></p>
+  </div>
+
+  <div class="section">
+    <h2>Фотогалерея</h2>
+    <div class="image-gallery" id="gallery">Загрузка…</div>
+  </div>
+
+  <div class="section">
+    <h2>Отзывы</h2>
+    <div id="reviewsList">Загрузка отзывов…</div>
+  </div>
+
+  <div class="section review-form">
+    <h2>Оставить отзыв</h2>
+    <form id="reviewForm" enctype="multipart/form-data">
+      <input type="hidden" name="tourId" id="tourIdInput">
+
+      <div class="form-group">
+        <label>Оценка (0-10):</label>
+        <input type="number" name="rating" class="rating-input"
+               min="0" max="10" step="0.1" required>
+        <div class="error" id="ratingError">Оценка должна быть между 0 и 10</div>
+      </div>
+
+      <div class="form-group">
+        <label>С детьми:</label>
+        <select name="withChildren" required>
+          <option value="">— Выберите —</option>
+          <option value="true">Да</option>
+          <option value="false">Нет</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Количество человек:</label>
+        <input type="number" name="personCount" min="1" step="1" required>
+      </div>
+
+      <div class="form-group">
+        <label>Положительный отзыв:</label>
+        <textarea name="positiveText" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Отрицательный отзыв:</label>
+        <textarea name="negativeText" rows="4" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Изображения (максимум 5):</label>
+        <input type="file" name="images" multiple accept="image/*">
+      </div>
+
+      <button type="submit">Отправить отзыв</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  (async () => {
+    const params = new URLSearchParams(window.location.search);
+    const tourId = params.get('id');
+    document.getElementById('tourIdInput').value = tourId;
+
+    const loadTourData = async () => {
+      try {
+        const res = await fetch(`/api/tours/${tourId}`);
+        if (!res.ok) throw new Error('Не удалось загрузить тур');
+        const tour = await res.json();
+
+        document.getElementById('tourTitle').textContent = tour.title;
+        document.getElementById('price').textContent = tour.price;
+        document.getElementById('duration').textContent = tour.duration;
+        document.getElementById('routeLength').textContent = tour.routeLength;
+        document.getElementById('minAge').textContent = tour.minAge;
+        document.getElementById('maxCapacity').textContent = tour.maxCapacity;
+        document.getElementById('tourType').textContent = tour.tourType;
+        document.getElementById('transportType').textContent = tour.transportType;
+        document.getElementById('mainInfo').textContent = tour.description?.mainInfo || 'Нет информации';
+        document.getElementById('whatToExpect').textContent = tour.description?.whatToExpect || 'Нет информации';
+        document.getElementById('orgDetails').textContent = tour.description?.orgDetails || 'Нет информации';
+        document.getElementById('meetingPlace').textContent = tour.description?.meetingPlace || 'Нет информации';
+        document.getElementById('locationName').textContent = tour.location?.city && tour.location?.region
+          ? `${tour.location.city}, ${tour.location.region}` : '—';
+
+        const gallery = document.getElementById('gallery');
+        gallery.innerHTML = '';
+        if (tour.imageUrls?.length > 0) {
+          tour.imageUrls.forEach(url => {
+            const img = document.createElement('img');
+            img.src = url;
+            gallery.appendChild(img);
+          });
+          const mainImg = document.getElementById('mainImage');
+          mainImg.src = tour.imageUrls[0];
+          mainImg.classList.remove('hidden');
+        }
+      } catch (e) {
+        alert('Ошибка при загрузке тура');
+        console.error(e);
+      }
+    };
+
+    const loadReviews = async () => {
+      try {
+        const res = await fetch(`/api/reviews/tour/${tourId}`);
+        const reviews = res.ok ? await res.json() : [];
+        const list = document.getElementById('reviewsList');
+        list.innerHTML = '';
+        if (reviews.length === 0) {
+          list.innerHTML = '<p>Пока нет отзывов. Будьте первым!</p>';
+          return;
+        }
+        reviews.forEach(r => {
+          const div = document.createElement('div');
+          div.className = 'review';
+          div.innerHTML = `
+            <p><strong>Оценка:</strong> ${r.rating}/10</p>
+            <p><strong>С детьми:</strong> ${r.withChildren ? 'Да' : 'Нет'}</p>
+            <p><strong>Количество человек:</strong> ${r.personCount}</p>
+            <p><strong>Плюсы:</strong> ${r.positiveText}</p>
+            <p><strong>Минусы:</strong> ${r.negativeText}</p>
+            <div class="review-images">
+              ${(r.images || []).map(i => `<img src="${i.imageUrl}" alt="Фото отзыва">`).join('')}
+            </div>`;
+          list.appendChild(div);
+        });
+      } catch (e) {
+        console.error('Ошибка загрузки отзывов:', e);
+      }
+    };
+
+    document.querySelector('input[name="rating"]').addEventListener('input', function (e) {
+      const value = parseFloat(e.target.value);
+      const error = document.getElementById('ratingError');
+      error.style.display = (isNaN(value) || value < 0 || value > 10) ? 'block' : 'none';
+    });
+
+    document.getElementById('reviewForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const rating = parseFloat(formData.get('rating'));
+      if (isNaN(rating) || rating < 0 || rating > 10) {
+        alert('Оценка должна быть от 0 до 10');
+        return;
+      }
+      try {
+        const res = await fetch('/api/reviews', {
+          method: 'POST',
+          credentials: 'include',
+          body: formData
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.message || 'Ошибка сервера');
+        }
+        alert('Отзыв успешно отправлен!');
+        e.target.reset();
+        await loadReviews();
+      } catch (err) {
+        alert(`Ошибка отправки: ${err.message}`);
+      }
+    });
+
+    await loadTourData();
+    await loadReviews();
+  })();
+</script>
+</body>
+</html>

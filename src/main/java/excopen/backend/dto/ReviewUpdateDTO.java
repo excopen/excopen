@@ -7,11 +7,20 @@ import jakarta.validation.constraints.*;
 public class ReviewUpdateDTO {
 
     @NotNull(message = "Rating is required")
-    @DecimalMin(value = "1.0", message = "Rating must be at least 1.0")
-    @DecimalMax(value = "5.0", message = "Rating must be at most 5.0")
+    @DecimalMin(value = "0.0", message = "Rating must be at least 0.0")
+    @DecimalMax(value = "10.0", message = "Rating must be at most 10.0")
     private Double rating;
+
+    @NotNull(message = "withChildren is required")
+    private boolean withChildren;
+    @NotNull(message = "personCount is required")
+    private double personCount;
 
     @NotBlank(message = "Review text cannot be empty")
     @Size(max = 2000, message = "Review text must be less than 2000 characters")
-    private String reviewText;
+    private String positiveText;
+
+    @NotBlank(message = "Review text cannot be empty")
+    @Size(max = 2000, message = "Review text must be less than 2000 characters")
+    private String negativeText;
 }

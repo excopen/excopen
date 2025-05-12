@@ -1,5 +1,6 @@
 package excopen.backend.entities;
 
+import excopen.backend.config.TagCountHolder;
 import excopen.backend.constants.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -60,6 +61,8 @@ public class User implements Serializable {
     private Double guideRating = 0.0;     // средняя оценка гида
     private Integer totalReviews = 0;     // количество отзывов к его турам
 
+//    private Integer age;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -69,8 +72,8 @@ public class User implements Serializable {
         this.updatedAt = LocalDateTime.now();
         this.role = Role.USER;
 
-        this.preferencesVector = new int[tagCount];
-        this.secondVector = new int[tagCount];
+        this.preferencesVector = new int[TagCountHolder.TAG_COUNT];
+        this.secondVector = new int[TagCountHolder.TAG_COUNT];
     }
 
     @PreUpdate
