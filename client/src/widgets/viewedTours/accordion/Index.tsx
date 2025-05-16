@@ -1,7 +1,7 @@
 import {FC, useState} from "react";
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger, AppSkeleton, TourPagination} from "@/shared/ui";
 import {ReviewForm, TourCard, useContributorTours} from "@/entities";
-import {IUser, UserRole} from "@/shared/types";
+import {UserRole} from "@/shared/types";
 import {useAuthContext, useUserOrders} from "@/features";
 import {TourMetrics} from "@/widgets";
 
@@ -41,11 +41,7 @@ export const Index: FC = () => {
                                     tour => (
                                         <div key={tour.id} className={"flex flex-col lg:flex-row gap-4"}>
                                             <TourCard tour={tour}/>
-                                            <TourMetrics
-                                                tour={tour}
-                                                users={tour.registered as IUser[]}
-                                                capacity={tour.groupCapacity}
-                                            />
+                                            <TourMetrics tour={tour}/>
                                         </div>
                                     )
                                 )
