@@ -1,50 +1,35 @@
 package excopen.backend.servicesImpl;
 
 import excopen.backend.entities.Review;
-import excopen.backend.entities.Tour;
-import excopen.backend.entities.User;
-import excopen.backend.events.ReviewCreatedEvent;
 import excopen.backend.iservices.IReviewService;
-import excopen.backend.repositories.ReviewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
+import excopen.backend.repositories.ReviewRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class ReviewServiceImpl implements IReviewService {
 
     private final ReviewRepository reviewRepository;
     private final TourServiceImpl tourService;
-    private final ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository,
-                             TourServiceImpl tourService,
-                             ApplicationEventPublisher eventPublisher) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, TourServiceImpl tourService) {
         this.reviewRepository = reviewRepository;
         this.tourService = tourService;
-        this.eventPublisher = eventPublisher;
     }
 
     @Override
     @Transactional
     public Review createReview(Review review) {
         Review savedReview = reviewRepository.save(review);
-
-        Tour tour = review.getTour();
-        if (tour == null || tour.getId() == null) {
-            throw new IllegalArgumentException("Tour must be set for review");
-        }
-
-        tourService.updateTourStats(tour.getId());
-
-        Long creatorId = tour.getCreator().getId();
-        eventPublisher.publishEvent(new ReviewCreatedEvent(this, creatorId));
-
+        tourService.updateTourStats(review.getTourId());
         return savedReview;
     }
 
@@ -58,13 +43,10 @@ public class ReviewServiceImpl implements IReviewService {
     @Transactional
     public Review updateReview(Review review) {
         Review existingReview = getReviewById(review.getId());
-        Review updatedReview = reviewRepository.save(review);
 
+        Review updatedReview = reviewRepository.save(review);
         if (!Objects.equals(existingReview.getRating(), review.getRating())) {
-            Tour tour = review.getTour();
-            if (tour != null && tour.getId() != null) {
-                tourService.updateTourStats(tour.getId());
-            }
+            tourService.updateTourStats(review.getTourId());
         }
         return updatedReview;
     }
@@ -73,32 +55,33 @@ public class ReviewServiceImpl implements IReviewService {
     @Transactional
     public void deleteReview(Long reviewId) {
         Review review = getReviewById(reviewId);
-        Long tourId = review.getTour().getId();
+        Long tourId = review.getTourId();
         reviewRepository.delete(review);
         tourService.updateTourStats(tourId);
     }
 
     @Override
     public List<Review> getReviewsByTour(Long tourId) {
-        Tour tour = new Tour();
-        tour.setId(tourId);
-        return reviewRepository.findByTour(tour);
+        return reviewRepository.findByTourId(tourId);
     }
 
     @Override
     public List<Review> getReviewsByUser(Long userId) {
-        User user = new User();
-        user.setId(userId);
-        return reviewRepository.findByUser(user);
+        return reviewRepository.findByUserId(userId);
     }
 
-    @Override
-    public Double getAverageRatingByCreatorId(Long creatorId) {
-        return reviewRepository.calculateAverageRatingByCreatorId(creatorId);
-    }
+//    @Override
+//    public double getAverageRatingForTour(Long tourId) {
+//        List<Review> reviews = reviewRepository.findByTourId(tourId);
+//        if (reviews.isEmpty()) {
+//            return 0.0;
+//        }
+//        double totalRating = reviews.stream().mapToDouble(Review::getRating).sum();
+//        return totalRating / reviews.size();
+//    }
 
-    @Override
-    public Integer getReviewCountByCreatorId(Long creatorId) {
-        return reviewRepository.countReviewsByCreatorId(creatorId);
-    }
+
+
+
 }
+

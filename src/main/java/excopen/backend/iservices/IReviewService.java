@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IReviewService {
     Review createReview(Review review);
-    Review getReviewById(Long reviewId);
+    Optional<Review> getReviewById(Long reviewId);
     Review updateReview(Review review);
     void deleteReview(Long reviewId);
     List<Review> getReviewsByTour(Long tourId);
@@ -15,5 +15,5 @@ public interface IReviewService {
     Double getAverageRatingByCreatorId(Long creatorId);
     Integer getReviewCountByCreatorId(Long creatorId);
 
-//    double getAverageRatingForTour(Long tourId);
+    double getAverageRatingForTour(Long tourId);
 }

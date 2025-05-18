@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
     // Метод для поиска тегов, ближайших к заданному вектору
-    @Query(value = "SELECT * FROM Tags ORDER BY vector_representation <-> :inputVector LIMIT :limit", nativeQuery = true)
+    @Query(value = "SELECT * FROM TagsList ORDER BY vector_representation <-> :inputVector LIMIT :limit", nativeQuery = true)
     List<Tag> findByVectorRepresentation(@Param("inputVector") float[] inputVector, @Param("limit") int limit);
 }
