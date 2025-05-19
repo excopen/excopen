@@ -21,13 +21,16 @@ export const useTours = () => {
     const query = useQuery<ITour[], ApiException<ITour>>({
         queryKey: ["tours", params],
         queryFn: () => getTours(params),
-        placeholderData: []
+        placeholderData: [],
+        refetchOnWindowFocus: true
     })
 
     return {
         ...query,
         data: query.data ?? [],
-        length: query.data ? query.data.length : 0
+        length: query.data ? query.data.length : 0,
+        isEmpty: (query.data ?? []).length === 0,
+        refetch: query.refetch
     }
 
 }
