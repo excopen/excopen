@@ -49,6 +49,17 @@ export class SearchParamsStore implements ILocationTour, IDate, IAccessibility, 
         this.saveToStorage()
     }
 
+    clearLocation() {
+        this.location = {
+            id: 0,
+            city: "",
+            country: "",
+            tourCount: 0,
+            region: "",
+            image: ""
+        }
+    }
+
     get searchParams(): SearchParamsType {
         return this._searchParams
     }

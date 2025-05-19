@@ -4,13 +4,14 @@ import {ApiException} from "@/shared/lib";
 import {getTours} from "@/entities/tour/api";
 import {searchTourStore as store} from "@/features";
 import {SearchParamsType} from "@/entities/tour/types";
+import {safeGet} from "@/shared/utils";
 
 export const useTours = () => {
 
     const params: SearchParamsType = {
         sort: store.searchParams.sort,
-        city: store.searchParams.location.city,
-        region: store.searchParams.location.region,
+        city: safeGet(() => store.searchParams.location.city, ""),
+        region: safeGet(() => store.searchParams.location.region, ""),
         from: store.searchParams.date.from instanceof Date ? store.searchParams.date.from.toISOString().split("T")[0] : "",
         to: store.searchParams.date.to instanceof Date ? store.searchParams.date.to.toISOString().split("T")[0] : "",
         accessibility: store.searchParams.accessibility,
