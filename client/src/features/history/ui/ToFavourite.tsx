@@ -9,7 +9,7 @@ type ToFavProps = {
     tour: ITour
 }
 
-export const Index: FC<ToFavProps> = ({ tour }) => {
+export const ToFavourite: FC<ToFavProps> = ({ tour }) => {
 
     const {isActive, clickHandler} = useAddFavFactory(tour)
 
