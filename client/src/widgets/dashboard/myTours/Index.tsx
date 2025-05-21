@@ -1,5 +1,5 @@
 import {FC, useState} from "react";
-import {useAuthContext} from "@/features";
+import {useMe} from "@/features";
 import {TourCard, useContributorTours} from "@/entities";
 import {AccordionContent, AccordionItem, AccordionTrigger, AppSkeleton, TourPagination} from "@/shared/ui";
 import {TourMetrics} from "@/widgets";
@@ -7,7 +7,8 @@ import s from "./style.module.css"
 
 export const Index: FC = () => {
 
-    const {user} = useAuthContext()
+    const {userId} = useMe()
+    if (!userId) return null
 
     const {
         safeData,
@@ -16,7 +17,7 @@ export const Index: FC = () => {
         isEmpty,
         isFetching,
         isPlaceholderData
-    } = useContributorTours(user.id)
+    } = useContributorTours(userId)
 
     const [visibleTours, setVisibleTours] = useState<number>(3)
 
