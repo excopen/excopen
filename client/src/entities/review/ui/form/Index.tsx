@@ -37,7 +37,7 @@ export const Index: FC<FormProps> = ({tour, type}) => {
                 />
             </div>
             <div>
-                <Button className={"mt-4"} disabled={!completed} onClick={save}>
+                <Button className={"mt-4"} disabled={completed} onClick={save}>
                     {type === "create" ? "Добавить" : "Изменить"}
                 </Button>
             </div>

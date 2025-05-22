@@ -27,7 +27,7 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/", "/login").permitAll()
+                        .requestMatchers("/", "/loginWithGoogle").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/api/**")
                 )
-                .logout(logout -> logout
+                .logoutWithGoogle(logoutWithGoogle -> logoutWithGoogle
                         .logoutSuccessUrl("/").permitAll()
                 );
 
