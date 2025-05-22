@@ -4,7 +4,7 @@ import {useAddManyFavFactory} from "@/features";
 
 export const App = () => {
 
-    //useOnboardingRedirect()
+    //useFirstLoad()
     useAddManyFavFactory()
 
     return (

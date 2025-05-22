@@ -1,15 +1,35 @@
 import {ITour} from "@/shared/types";
 import {makeAutoObservable} from "mobx";
+import {StorageKeys} from "@/features/history/types";
 
 class TourLocalHistoryStore {
 
     private _favourites: ITour[] = []
     private _viewed: ITour[] = []
     private _tags: string[] = []
+    private _isFirstLoad: boolean = true
 
     constructor() {
         makeAutoObservable(this)
         this.loadFromStorage()
+    }
+
+    private loadFromStorage() {
+        this._favourites = JSON.parse(localStorage.getItem(StorageKeys.FAVOURITES) || "[]")
+        this._viewed = JSON.parse(localStorage.getItem(StorageKeys.VIEWED) || "[]")
+        this._isFirstLoad = JSON.parse(localStorage.getItem(StorageKeys.IS_FIRST_LOADED) ?? "true")
+    }
+
+    private saveFavouritesToStorage() {
+        localStorage.setItem(StorageKeys.FAVOURITES, JSON.stringify(this.favourites))
+    }
+
+    private saveViewedToStorage() {
+        localStorage.setItem(StorageKeys.VIEWED, JSON.stringify(this.viewed))
+    }
+
+    private saveIsFirstLoadToStorage() {
+        localStorage.setItem(StorageKeys.IS_FIRST_LOADED, JSON.stringify(this.isFirstLoad))
     }
 
     get favourites(): ITour[] {
@@ -24,17 +44,8 @@ class TourLocalHistoryStore {
         return this._tags;
     }
 
-    private loadFromStorage() {
-        this._favourites = JSON.parse(localStorage.getItem("favourites") || "[]")
-        this._viewed = JSON.parse(localStorage.getItem("viewed") || "[]")
-    }
-
-    private saveFavouritesToStorage() {
-        localStorage.setItem("favourites", JSON.stringify(this.favourites));
-    }
-
-    private saveViewedToStorage() {
-        localStorage.setItem("viewed", JSON.stringify(this.viewed));
+    get isFirstLoad(): boolean {
+        return this._isFirstLoad;
     }
 
     addToFav(tour: ITour) {
@@ -53,6 +64,13 @@ class TourLocalHistoryStore {
         if (!this.viewed.some((viewedTour) => viewedTour.id === tour.id)) {
             this.viewed.push(tour)
             this.saveViewedToStorage()
+        }
+    }
+
+    visit() {
+        if (this.isFirstLoad) {
+            this._isFirstLoad = false
+            this.saveIsFirstLoadToStorage()
         }
     }
 
