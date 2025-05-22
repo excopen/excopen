@@ -1,15 +1,12 @@
-import {ReactNode, useEffect, useState} from "react";
+import {ReactNode, useState} from "react";
 import {AuthContext, useLoginPermission} from "@/features";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const [isAuth, setIsAuth] = useState<boolean>(false)
-    const {isLoginAllowed, setIsLoginAllowed} = useLoginPermission()
+    const {isLoginAllowed, setIsLoginAllowed, isLoaded} = useLoginPermission()
 
-    useEffect(() => {
-        console.log("IS AUTH ",isAuth)
-        console.log("IS ALLOWED ",isLoginAllowed)
-    }, [isAuth]);
+    if (!isLoaded) return null
 
     const login = () => setIsAuth(true)
     const logout = () => setIsAuth(false)
