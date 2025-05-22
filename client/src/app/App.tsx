@@ -1,10 +1,10 @@
 import {AppRoutes} from "@/app/routing";
 import {StrictMode} from "react";
-import {useAddManyFavFactory} from "@/features";
+import {useAddManyFavFactory, useFirstLoad} from "@/features";
 
 export const App = () => {
 
-    //useFirstLoad()
+    useFirstLoad()
     useAddManyFavFactory()
 
     return (

@@ -1,12 +1,12 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import {RouteNames} from "@/shared/types";
-import {tourLocalHistoryStore as history, useAuthContext} from "@/features";
+import {authStore as auth, tourLocalHistoryStore as history} from "@/features";
 
 export const useFirstLoad = () => {
 
     const navigate = useNavigate()
-    const {isAuth} = useAuthContext()
+    const isAuth = auth.isAuth
     const isFirstLoad = history.isFirstLoad
 
     useEffect(() => {
@@ -16,6 +16,8 @@ export const useFirstLoad = () => {
             navigate(`/${RouteNames.ON_BOARDING}`)
         }
 
-    }, [])
+    }, [isAuth, isFirstLoad, navigate])
+
+    return null
 
 }

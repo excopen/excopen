@@ -5,9 +5,9 @@ import {useMe, useUpdateMe} from "@/features";
 
 export const EditProvider: FC<{children: ReactNode}> = ({children}) => {
 
-    const {user} = useMe()
+    const {me} = useMe()
     const {mutate: update} = useUpdateMe()
-    const [updatedUser, setUpdatedUser] = useState<IMe>(user)
+    const [updatedUser, setUpdatedUser] = useState<IMe>(me)
     
     const [isDisabledVk, setIsDisabledVk] = useState<boolean>(false)
     const [isDisabledTg, setIsDisabledTg] = useState<boolean>(false)

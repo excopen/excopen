@@ -2,9 +2,9 @@ import {EndpointsType, ITour} from "@/shared/types";
 import {apiClient, ApiException, isAxiosError} from "@/shared/lib";
 import {AxiosResponse} from "axios";
 
-export const getToursForReview = async (userId: number): Promise<ITour[]> => {
+export const getToursForReview = async (): Promise<ITour[]> => {
     try {
-        const response: AxiosResponse<ITour[]> = await apiClient.get<ITour[]>(`${EndpointsType.TOURS}/review/${userId}`)
+        const response: AxiosResponse<ITour[]> = await apiClient.get<ITour[]>(`${EndpointsType.TOURS}/${EndpointsType.BOOKING}/${EndpointsType.ME}`)
         return response.data
     } catch (e) {
         if (isAxiosError(e)) {

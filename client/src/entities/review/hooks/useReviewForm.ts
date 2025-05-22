@@ -15,11 +15,11 @@ type Result = {
 
 export const useReviewForm = (type: "create" | "update", tour: ITour): Result => {
 
-    const {userId, user} = useMe()
-    if (!userId) throw new Error("Неавторизованный пользователь не может создать экскурсию!")
+    const {myId, me} = useMe()
+    if (!myId) throw new Error("Неавторизованный пользователь не может создать экскурсию!")
 
-    const {data: reviews} = useReviewsByUserId(userId)
-    const {data: orders} = useUserOrders(userId)
+    const {data: reviews} = useReviewsByUserId(myId)
+    const {data: orders} = useUserOrders(myId)
     const last = findLastReview(reviews, tour.id)
 
     const {mutate: create} = useCreateReview()
@@ -29,7 +29,7 @@ export const useReviewForm = (type: "create" | "update", tour: ITour): Result =>
     const [review, setReview] = useState<IReview>({
         id: type === "update" ? last.id : Date.now(),
         tourId: tour.id,
-        name: user.name,
+        name: me.name,
         rating: type === "update" ? last.rating : 0,
         negativeText: type === "update" ? last.negativeText : "",
         positiveText: type === "update" ? last.positiveText : "",

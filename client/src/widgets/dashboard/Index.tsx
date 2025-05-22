@@ -1,9 +1,10 @@
 import React, {FC, Suspense, useState} from "react";
 import style from "./style.module.css";
 import {Header} from "./header/index.ts";
-import {useAuthContext} from "@/features";
+import {authStore as auth} from "@/features";
 import {ToursAccordion} from "./ToursAccordion.tsx";
 import {AppSkeleton} from "@/shared/ui";
+import {observer} from "mobx-react-lite";
 
 const LazyViewed = React.lazy(() =>
     import('@/widgets/dashboard/viewed').then(module => ({
@@ -11,13 +12,13 @@ const LazyViewed = React.lazy(() =>
     }))
 )
 
-export const Index: FC = () => {
+export const Index: FC = observer(() => {
 
-    const {isAuth} = useAuthContext()
+    const isAuth = auth.isAuth
 
     const [city, setCity] = useState<string>("")
     const [byCity, setByCity] = useState<boolean>(false)
-    
+
     return (
         <div className={style.container}>
             <Header setCity={setCity} setByCity={setByCity}/>
@@ -27,4 +28,4 @@ export const Index: FC = () => {
             </Suspense>
         </div>
     );
-};
+})

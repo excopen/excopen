@@ -1,9 +1,9 @@
-import {tourLocalHistoryStore as store, useAddManyToFavourites, useAuthContext} from "@/features";
+import {tourLocalHistoryStore as store, useAddManyToFavourites, authStore as auth} from "@/features";
 import {useEffect} from "react";
 
 export const useAddManyFavFactory = (): void => {
 
-    const {isAuth} = useAuthContext()
+    const isAuth = auth.isAuth
     const {mutate} = useAddManyToFavourites()
 
     const favourites: number[] = store.favourites.map(tour => tour.id)
@@ -16,6 +16,6 @@ export const useAddManyFavFactory = (): void => {
                 }
             })
         }
-    }, [isAuth])
+    }, [favourites, isAuth, mutate])
 
 }

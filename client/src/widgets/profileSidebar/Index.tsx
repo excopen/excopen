@@ -1,21 +1,26 @@
 import {FC} from "react";
 import {UserRole} from "@/shared/types";
-import {ClientSidebar} from "./clientSidebar";
-import {ContributorSidebar} from "./contributorSidebar";
-import {GuestSidebar} from "./guestSidebar";
-import {useAuthContext, useMe} from "@/features";
+import {ClientSidebar as Client} from "./clientSidebar";
+import {ContributorSidebar as Guide} from "./contributorSidebar";
+import {GuestSidebar as Guest} from "./guestSidebar";
+import {useMe} from "@/features";
+import {SidebarSkeleton} from "@/shared/ui";
 
 export const Index: FC = () => {
 
-    const {isAuth} = useAuthContext()
-    const {user} = useMe()
+    const {myRole, isLoading, isEmpty, isFetching} = useMe()
 
-    return isAuth ?
-        (
-            user?.role === UserRole.client ?
-                <ClientSidebar/> :
-                <ContributorSidebar/>
-        ) :
-        <GuestSidebar/>
+    if (isLoading || (isEmpty && isFetching)) return <SidebarSkeleton/>
+
+    switch (myRole) {
+        case UserRole.client:
+            return <Client/>
+        case UserRole.guide:
+            return <Guide/>
+        case UserRole.guest:
+            return <Guest/>
+        default:
+            return <Guest/>
+    }
 
 }

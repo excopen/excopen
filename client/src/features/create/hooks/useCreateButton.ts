@@ -14,8 +14,8 @@ export const useCreateButton = (): ReturnType => {
     const {mutate: createTour} = useCreateTour()
     const {mutate: updateTour} = useUpdateTour()
 
-    const {userId} = useMe()
-    if (!userId) throw new Error("Неавторизованный пользователь не может создать экскурсию!")
+    const {myId} = useMe()
+    if (!myId) throw new Error("Неавторизованный пользователь не может создать экскурсию!")
 
     const create = () => {
 
@@ -23,7 +23,7 @@ export const useCreateButton = (): ReturnType => {
 
         if (store.isDisabled) {
 
-            store.params.contributorId = userId
+            store.params.contributorId = myId
 
             console.log(store.tour)
 

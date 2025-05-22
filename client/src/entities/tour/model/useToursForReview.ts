@@ -3,11 +3,11 @@ import {useQuery} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
 import {getToursForReview} from "@/entities/tour/api";
 
-export const useToursForReview = (userId: number) => {
+export const useToursForReview = () => {
 
     const query = useQuery<ITour[], ApiException<ITour>>({
-        queryKey: ["tours", "reviews", userId],
-        queryFn: () => getToursForReview(userId),
+        queryKey: ["tours", "reviews"],
+        queryFn: () => getToursForReview(),
         placeholderData: []
     })
 

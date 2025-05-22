@@ -1,11 +1,8 @@
 import {FC, useState} from "react";
-import {useMe} from "@/features";
 import {ReviewForm, useToursForReview} from "@/entities";
 import {AccordionContent, AccordionItem, AccordionTrigger, AppSkeleton, TourPagination} from "@/shared/ui";
 
 export const Index: FC = () => {
-
-    const {user} = useMe()
 
     const {
         safeData,
@@ -14,9 +11,12 @@ export const Index: FC = () => {
         isFetching,
         isLoading,
         isPlaceholderData
-    } = useToursForReview(user.id)
+    } = useToursForReview()
 
-    const [visibleTours, setVisibleTours] = useState<number>(3)
+    const [
+        visibleTours,
+        setVisibleTours
+    ] = useState<number>(3)
 
     if (isError) return null
 

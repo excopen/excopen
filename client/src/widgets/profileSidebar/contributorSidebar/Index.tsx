@@ -6,13 +6,13 @@ import {useMe} from "@/features";
 
 export const Index: FC = () => {
 
-    const {user, userId} = useMe()
-    if (!userId) return null
+    const {me, myId} = useMe()
+    if (!myId) return null
 
     return (
         <div className={style.container}>
-            <UserName name={user.name} avatar={user.avatar}/>
-            {user.info && <div className={style.desc}>{user.info}</div>}
+            <UserName name={me.name} avatar={me.avatar}/>
+            {me.info && <div className={style.desc}>{me.info}</div>}
             <ProfileButtons/>
         </div>
     );

@@ -1,13 +1,13 @@
 import {useQuery} from "@tanstack/react-query";
 import {getMe} from "@/features/auth/api";
 import {getFallbackMe} from "@/features/auth/utils";
-import {IMe} from "@/shared/types";
-import {useAuthContext} from "@/features";
+import {IMe, UserRole} from "@/shared/types";
+import {authStore as auth} from "@/features";
 import {useEffect} from "react";
 
 export const useMe = () => {
 
-    const {login, logout, isLoginAllowed} = useAuthContext()
+    const isLoginAllowed = auth.isLoginAllowed
     const fallback: IMe = getFallbackMe()
 
     const query = useQuery({
@@ -18,14 +18,15 @@ export const useMe = () => {
     })
 
     useEffect(() => {
-        if (query.isSuccess && query.data && isLoginAllowed) login()
-        else if (query.isError || (!query.isFetching && !query.data) || !isLoginAllowed) logout()
-    }, [query.data, query.isSuccess, query.isError, query.isFetching])
+        if (query.isSuccess && query.data && isLoginAllowed) auth.isAuth = true
+        if (query.isError) auth.logout()
+    }, [isLoginAllowed, query.data, query.isError, query.isSuccess])
 
     return {
         ...query,
-        user: query.data ? query.data : fallback,
-        userId: query.data ? query.data.id : null,
+        me: query.data ? query.data : fallback,
+        myId: query.data ? query.data.id : null,
+        myRole: query.data && auth.isAuth ? query.data.role : UserRole.guest,
         isEmpty: !query.data
     }
 

@@ -17,7 +17,7 @@ class TourLocalHistoryStore {
     private loadFromStorage() {
         this._favourites = JSON.parse(localStorage.getItem(StorageKeys.FAVOURITES) || "[]")
         this._viewed = JSON.parse(localStorage.getItem(StorageKeys.VIEWED) || "[]")
-        this._isFirstLoad = JSON.parse(localStorage.getItem(StorageKeys.IS_FIRST_LOADED) ?? "true")
+        this._isFirstLoad = JSON.parse(localStorage.getItem(StorageKeys.IS_FIRST_LOADED) ?? "false")
     }
 
     private saveFavouritesToStorage() {

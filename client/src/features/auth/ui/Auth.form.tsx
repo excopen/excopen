@@ -2,12 +2,16 @@ import {KeySquare} from "lucide-react";
 import {FC} from "react";
 import s from "./style.module.css"
 import {Button} from "@/shared/ui";
-import {useLoginWithGoogle} from "@/features";
+import {RouteNames} from "@/shared/types";
+import {authStore as auth} from "@/features";
+import {observer} from "mobx-react-lite";
 
-export const Index: FC = () => {
+export const AuthForm: FC = observer(() => {
 
-    const loginWithGoogle = useLoginWithGoogle()
-    const login = () => loginWithGoogle()
+    const login = () => {
+        auth.allowedLogin()
+        window.location.href = RouteNames.LOGIN
+    }
 
     return (
         <div className={s.container}>
@@ -25,4 +29,4 @@ export const Index: FC = () => {
             </Button>
         </div>
     );
-};
+})

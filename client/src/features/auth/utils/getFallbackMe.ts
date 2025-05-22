@@ -3,7 +3,7 @@ import avatar from "@/shared/assets/icons/avatar.svg";
 
 export const getFallbackMe = (): IMe => ({
     id: 0,
-    role: UserRole.client,
+    role: UserRole.guest,
     avatar: avatar,
     avatarFile: null,
     name: "Имя",

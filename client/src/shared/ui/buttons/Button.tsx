@@ -15,6 +15,7 @@ const ButtonVariants = cva(
       variant: {
           default: "bg-primary-0 text-grayscale-500 hover:bg-primary-100",
           outline: "border border-grayscale-300 bg-transparent text-grayscale-400 hover:border-grayscale-500 hover:text-grayscale-500",
+          logout: "border border-secondary-red bg-transparent text-secondary-red hover:border-grayscale-500 hover:text-grayscale-500",
           secondary: "bg-grayscale-300 text-grayscale-500 hover:opacity-90 flex justify-between",
           profile: "bg-grayscale-0 text-grayscale-500 hover:bg-grayscale-100 duration-300 flex justify-between",
       },
