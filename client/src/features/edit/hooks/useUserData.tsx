@@ -18,12 +18,22 @@ type Result = {
 
     addTag: (value: string) => void
     removeTag: (value: string) => void
+
+    isLoading: boolean
+    isPlaceholderData: boolean
+    isError: boolean
 }
 
 export const useUserData = (): Result => {
 
     const {updatedUser, setUpdatedUser} = useEditContext()
-    const {data: tags = []} = useTags()
+
+    const {
+        data: tags = [],
+        isLoading,
+        isPlaceholderData,
+        isError
+    } = useTags()
 
     const updateName = (name: string) => setUpdatedUser({...updatedUser, name})
     const updateSurname = (surname: string) => setUpdatedUser({...updatedUser, surname})
@@ -57,7 +67,8 @@ export const useUserData = (): Result => {
         user: updatedUser,
         tags,
         userTags: updatedUser.tags,
-        addTag, removeTag, updateName, updateSurname, updateInfo, updateImage
+        addTag, removeTag, updateName, updateSurname, updateInfo, updateImage,
+        isLoading, isPlaceholderData, isError
     }
 
 }

@@ -1,5 +1,5 @@
-import {FC} from "react";
-import {Button} from "@/shared/ui";
+import {FC, useState} from "react";
+import {Alert, AlertDescription, Button} from "@/shared/ui";
 import {useUserData} from "@/features/edit/hooks";
 import {Field, AvatarField} from "./fields"
 import {Contacts} from "./contacts";
@@ -7,13 +7,22 @@ import {useEditContext} from "@/features/edit/model";
 import fallbackAvatar from "@/shared/assets/icons/avatar.svg"
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "@/shared/types";
+import {Info} from "lucide-react";
 
 export const EditProfile: FC = () => {
 
     const navigate = useNavigate()
 
+    const [visiableAlert, setVisiableAlert] = useState<boolean>(false)
+
     const {isContributor, user, updateImage, updateName, updateSurname, updateInfo} = useUserData()
     const {context, load} = useEditContext()
+
+    const click = () => {
+        setVisiableAlert(true)
+        setTimeout(() => setVisiableAlert(false), 3000)
+        load()
+    }
 
     return (
         <div className={"flex flex-col gap-4 bg-grayscale-0 rounded-2xl p-6 lg:min-w-80 max-lg:order-last"}>
@@ -41,7 +50,16 @@ export const EditProfile: FC = () => {
                     placeholder={"Введите описание"}
                 />
             }
-            <Button className={"mt-12"} disabled={context.isDisabled} onClick={load}>
+            {
+                visiableAlert &&
+                <Alert>
+                    <Info width={24} height={24}/>
+                    <AlertDescription>
+                        Ваши данные успешно обновлены!
+                    </AlertDescription>
+                </Alert>
+            }
+            <Button className={"mt-12"} disabled={context.isDisabled} onClick={click}>
                 Изменить данные
             </Button>
             <Button variant={"outline"} onClick={() => navigate(`/${RouteNames.PROFILE}`)}>

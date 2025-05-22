@@ -4,6 +4,7 @@ import favourite from "@/shared/assets/icons/favourite-secondary.svg";
 import {useCreateTour} from "@/shared/hooks";
 import {RouteNames} from "@/shared/types";
 import {useNavigate} from "react-router-dom";
+import {LogoutButton} from "@/features";
 
 export const Index: FC = () => {
 
@@ -19,6 +20,7 @@ export const Index: FC = () => {
             <Button className={"flex justify-center w-full"} variant={"secondary"} onClick={() => navigate(`/${RouteNames.ON_BOARDING}`)}>
                 Изменить рекомендации
             </Button>
+            <LogoutButton/>
         </>
     );
 };

@@ -21,7 +21,7 @@ export const LogoutButton: FC = observer(() => {
     if (!isAuth) return null
 
     return (
-        <Button onClick={logOut} variant={"logout"}>
+        <Button className={"w-full flex justify-center"} onClick={logOut} variant={"logout"}>
             Выйти
         </Button>
     )

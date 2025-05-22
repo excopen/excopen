@@ -1,10 +1,19 @@
 import {FC} from "react";
 import {Tag} from "@/entities";
 import {useUserData} from "@/features/edit/hooks";
+import {AppSkeleton} from "@/shared/ui";
 
 export const EditReqs: FC = () => {
 
-    const {tags, userTags, addTag, removeTag} = useUserData()
+    const {
+        tags,
+        userTags,
+        isLoading, isError, isPlaceholderData,
+        addTag, removeTag
+    } = useUserData()
+
+    if (isLoading || isPlaceholderData) return <AppSkeleton/>
+    if (isError) return null
 
     return (
         <div className={"flex flex-col gap-4 p-6 rounded-2xl bg-grayscale-0 max-lg:order-last"}>
