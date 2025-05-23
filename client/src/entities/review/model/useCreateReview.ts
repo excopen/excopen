@@ -11,19 +11,20 @@ export const useCreateReview = () => {
         mutationFn: (review) => createReview(review),
         onMutate: async (newReview) => {
 
-            const previous = queryClient.getQueryData<IReview[]>(["reviews", "user", newReview.id])
+            const previous = queryClient.getQueryData<IReview[]>(["tours", "reviews"])
 
             queryClient.setQueryData<IReview[]>(
-                ["reviews", "user", newReview.id],
-                (oldReviews = []) => [...oldReviews, newReview]
+                ["tours", "reviews"],
+                (oldReviews = []) => oldReviews.filter(
+                    tour => tour.id !== newReview.tourId
+                )
             )
 
             return { previous }
 
         },
-        onSuccess: async (_, newReview) => {
-            await queryClient.invalidateQueries({queryKey: ["reviews", "user", newReview.id]})
-            await queryClient.invalidateQueries({queryKey: ["reviews", "tour"]})
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ["tours", "reviews"]})
         },
         onError: (e: ApiException<IReview>) => console.log("Не удалось создать отзыв", e.message)
     })

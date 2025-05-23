@@ -8,14 +8,15 @@ export const useReviewsByUserId = (userId: number) => {
     const query = useQuery<IReview[], ApiException<IReview>>({
         queryKey: ["reviews", "user", userId],
         queryFn: () => getReviewsByUserId(userId),
-        staleTime: 60_000,
-        initialData: [],
+        placeholderData: [],
         enabled: !!userId
     })
 
     return {
         ...query,
-        isEmpty: query.data.length === 0
+        isEmpty: (query.data ?? []).length === 0,
+        safeData: query.data ?? [],
+        length: query.data ? query.data.length : 0
     }
 
 }

@@ -1,44 +1,42 @@
 import {FC} from "react";
 import {Button, ReviewInput} from "@/shared/ui";
-import {useReviewForm} from "@/entities/review/hooks";
-
 import {Header, Stars} from "./components";
 import s from "./style.module.css"
 import {ITour} from "@/shared/types";
+import {useCreateReviewForm} from "@/entities/review/hooks";
 
 type FormProps = {
-    type: "create" | "update",
     tour: ITour
 }
 
-export const Index: FC<FormProps> = ({tour, type}) => {
+export const ReviewForm: FC<FormProps> = ({tour}) => {
 
     const {
-        completed, review,
-        updateRating, updateNegative, updatePositive, save
-    } = useReviewForm(type, tour)
+        positive, rating, negative, completed,
+        updatePositive, updateNegative, updateRating, save
+    } = useCreateReviewForm(tour)
 
     return (
         <div className={s.container}>
             <Header tourId={tour.id} title={tour.title} rating={tour.rating} ratingCount={tour.ratingCount}/>
-            <Stars rating={review.rating} setRating={updateRating}/>
+            <Stars rating={rating} setRating={updateRating}/>
             <div className={s.reviews}>
                 <ReviewInput
-                    defaultValue={review.positiveText}
+                    value={positive}
                     className={"bg-grayscale-200"}
                     onChangeHandler={updatePositive}
                     placeholder={"Что понравилось"}
                 />
                 <ReviewInput
-                    defaultValue={review.negativeText}
+                    value={negative}
                     className={"bg-grayscale-200"}
                     onChangeHandler={updateNegative}
                     placeholder={"Что не понравилось"}
                 />
             </div>
             <div>
-                <Button className={"mt-4"} disabled={completed} onClick={save}>
-                    {type === "create" ? "Добавить" : "Изменить"}
+                <Button className={"mt-4"} disabled={!completed} onClick={save}>
+                    Добавить
                 </Button>
             </div>
         </div>

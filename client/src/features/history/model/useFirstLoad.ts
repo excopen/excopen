@@ -18,6 +18,4 @@ export const useFirstLoad = () => {
 
     }, [isAuth, isFirstLoad, navigate])
 
-    return null
-
 }

@@ -1,7 +1,5 @@
 import * as React from "react";
 import { cn } from "@/app/lib/utils.ts";
-import {useEffect, useState} from "react";
-import {useDebounceValue} from "usehooks-ts";
 
 type InputProps = React.ComponentProps<"input"> & {
     placeholder?: string
@@ -15,32 +13,32 @@ export const ReviewInput = React.forwardRef<HTMLInputElement, InputProps>(
             type,
             placeholder,
             onChangeHandler,
+            value,
             ...props
         },
         ref
     ) => {
 
-        const [value, setValue] = useState<string>("");
-        const clickHandler = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
-        const [debouncedValue] = useDebounceValue<string>(value, 300);
+        const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            onChangeHandler(e.target.value)
+        }
 
-        useEffect(() => {
-            onChangeHandler(debouncedValue)
-        }, [debouncedValue, onChangeHandler]);
+        const containerStyle: string = "relative flex flex-row items-center"
+        const inputStyle: string = [
+            "flex h-12 w-full rounded-xl bg-grayscale-0 px-4",
+            "py-3 text-base text-grayscale-500",
+            "placeholder:text-base placeholder:text-grayscale-400 ring-1 ring-white",
+            "focus:ring-1 focus:ring-black focus:outline-none",
+            "transition-all duration-300 ease-in-out",
+        ].join(" ")
 
         return (
-            <div className="relative flex flex-row items-center">
+            <div className={containerStyle}>
                 <input
-                    onChange={clickHandler}
+                    onChange={handleChange}
+                    value={value}
                     type={type}
-                    className={cn(
-                        "flex h-12 w-full rounded-xl bg-grayscale-0 px-4",
-                        "py-3 text-base text-grayscale-500",
-                        "placeholder:text-base placeholder:text-grayscale-400 ring-1 ring-white",
-                        "focus:ring-1 focus:ring-black focus:outline-none",
-                        "transition-all duration-300 ease-in-out",
-                        className
-                    )}
+                    className={cn(inputStyle, className)}
                     placeholder={placeholder}
                     ref={ref}
                     {...props}

@@ -8,13 +8,15 @@ export const useToursForReview = () => {
     const query = useQuery<ITour[], ApiException<ITour>>({
         queryKey: ["tours", "reviews"],
         queryFn: () => getToursForReview(),
-        placeholderData: []
+        placeholderData: [],
+        staleTime: 60_000
     })
 
     return {
         ...query,
         isEmpty: (query.data ?? []).length === 0,
-        safeData: query.data ?? []
+        safeData: query.data ?? [],
+        length: query.data ? query.data.length : 0
     }
 
 }
