@@ -1,7 +1,6 @@
 import {useNavigate} from "react-router-dom";
-
 import {RouteNames} from "@/shared/types";
-import {tourLocalHistoryStore as history} from "@/features";
+import {authStore as auth, tourLocalHistoryStore as history} from "@/features";
 import {useAddTags, useTags} from "@/entities";
 
 type ReturnType = {
@@ -21,17 +20,20 @@ export const useReqs = (): ReturnType => {
     const {data: tags = [], isPlaceholderData: isPlaceholderTags} = useTags()
     const {mutate: addTags} = useAddTags()
 
+    const isAuth = auth.isAuth
+
     const add = (value: string) => history.addTag(value)
     const remove = (value: string) => history.removeTag(value)
 
     const click = () => {
 
-        if (history.tagsCount !== 0) {
+        if (history.tagsCount !== 0 && isAuth) {
             addTags(history.tags)
             history.clearTags()
         }
 
         navigate(`/${RouteNames.MAIN}`)
+
     }
 
     return {
