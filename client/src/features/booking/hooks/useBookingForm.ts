@@ -32,7 +32,7 @@ export const useBookingForm = (tourId: number): ReturnType => {
     }, [capacity])
 
     const click = () => {
-        booking({ id: Date.now(), tourId: tour.id, groupCapacity: capacity })
+        booking({ id: Number(Date.now()), tourId: tour.id, groupCapacity: capacity })
         navigate(`/${RouteNames.SUCCESS}`)
     }
 
