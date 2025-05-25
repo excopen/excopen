@@ -11,15 +11,7 @@ import {observer} from "mobx-react-lite";
 export const Index: FC = observer(() => {
 
     const navigate = useNavigate()
-
-    const {
-        tags,
-        selected,
-        isPlaceholderTags,
-        disabled,
-        add, remove, click
-    } = useReqs()
-
+    const {tags, selected, isPlaceholderTags, disabled, add, remove} = useReqs()
     const shortTags = tags.slice(0,10)
 
     return (
@@ -44,7 +36,7 @@ export const Index: FC = observer(() => {
                 <Button onClick={() => navigate(`/${RouteNames.MAIN}`)} variant={"secondary"} size={"md"}>
                     Не интересно
                 </Button>
-                <Button onClick={click} disabled={disabled} size={"md"}>
+                <Button onClick={() => navigate(`/${RouteNames.MAIN}`)} disabled={disabled} size={"md"}>
                     Искать
                 </Button>
             </div>

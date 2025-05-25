@@ -1,13 +1,15 @@
-import {useQuery} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {getMe} from "@/features/auth/api";
 import {getFallbackMe} from "@/features/auth/utils";
 import {IMe, UserRole} from "@/shared/types";
-import {authStore as auth} from "@/features";
+import {authStore as auth, tourLocalHistoryStore as history} from "@/features";
 import {useEffect} from "react";
 
 export const useMe = () => {
 
+    const queryClient = useQueryClient()
     const isLoginAllowed = auth.isLoginAllowed
+    const tags = history.tags
     const fallback: IMe = getFallbackMe()
 
     const query = useQuery({
@@ -16,6 +18,14 @@ export const useMe = () => {
         retry: false,
         refetchOnWindowFocus: false
     })
+
+    useEffect(() => {
+        if (tags.length > 0 && query.data) {
+            const updatedUser: IMe = { ...query.data, tags }
+            queryClient.setQueryData(["me"], updatedUser)
+            history.clearTags()
+        }
+    }, [tags, query.data, queryClient])
 
     useEffect(() => {
         if (query.isSuccess && query.data && isLoginAllowed) auth.isAuth = true
