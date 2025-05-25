@@ -19,11 +19,22 @@ export const useFavFactory = () : ReturnType => {
     const localIds: number[] = local.map(tour => tour.id)
 
     const {safeData: serverData, isLoading} = useFavourites(isAuth)
-    const {mutate: sync, isPending} = useAddManyToFavourites()
+    const {
+        mutate: sync,
+        isPending,
+        isSuccess
+    } = useAddManyToFavourites()
 
     useEffect(() => {
         if (isAuth && local.length > 0) sync(localIds)
     }, [])
+
+    useEffect(() => {
+        if (isSuccess) {
+            console.log(history.favourites)
+            history.clearFavourites()
+        }
+    }, [isSuccess])
 
     const data = useMemo(() => {
         if (isAuth) return serverData

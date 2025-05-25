@@ -8,7 +8,7 @@ export const useFavourites = (enabled = true) => {
     const query = useQuery<ITour[], ApiException<ITour>>({
         queryKey: ["favourites"],
         queryFn: () => getFavourites(),
-        staleTime: 120_000,
+        staleTime: 60_000,
         placeholderData: [],
         enabled
     })

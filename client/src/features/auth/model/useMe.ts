@@ -14,9 +14,7 @@ export const useMe = () => {
 
     const query = useQuery({
         queryKey: ["me"],
-        queryFn: getMe,
-        retry: false,
-        refetchOnWindowFocus: false
+        queryFn: getMe
     })
 
     useEffect(() => {

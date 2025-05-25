@@ -10,15 +10,12 @@ export const useAddManyToFavourites = () => {
 
     return useMutation<void, ApiException<ITour>, number[]>({
         mutationFn: (tourIds) => addManyToFavourites(tourIds),
-        onMutate: async () => {
-            await queryClient.cancelQueries({ queryKey: ["favourites"] })
-        },
         onSuccess: async () => {
             store.clearFavourites()
             await queryClient.invalidateQueries({ queryKey: ["favourites"] })
         },
         onError: (e: ApiException<ITour>) => console.error("Ошибка синхронизации ", e.message),
-        retry: false
+        retry: 5
     })
 
 }
