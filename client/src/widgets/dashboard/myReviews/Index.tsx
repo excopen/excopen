@@ -5,7 +5,7 @@ import {useMe} from "@/features";
 
 export const Index: FC = () => {
 
-    const {myId} = useMe()
+    const {myId, isSuccess} = useMe()
     if (!myId) throw new Error("Пользователь не найден!")
 
     const {
@@ -33,18 +33,21 @@ export const Index: FC = () => {
         )
     }
 
-    if (isLoading || isPlaceholderData) return <AppSkeleton/>
-
     return (
         <AccordionItem value={"value 3"}>
             <AccordionTrigger>Ваши отзывы об экскурсиях</AccordionTrigger>
             <AccordionContent className={"flex flex-col gap-4"}>
                 {
-                    reviews.slice(0, visible).map(review => (
-                        <ReviewFormForUpdate key={review.id} myReview={review}/>
-                    ))
+                    isLoading || isPlaceholderData ?
+                        <AppSkeleton/> :
+                        reviews.slice(0, visible).map(review => (
+                            <ReviewFormForUpdate key={review.id} myReview={review}/>
+                        ))
                 }
-                <TourPagination visiable={visible} setVisible={setVisible} maxLength={length}/>
+                {
+                    isSuccess && !isPlaceholderData &&
+                    <TourPagination visiable={visible} setVisible={setVisible} maxLength={length}/>
+                }
             </AccordionContent>
         </AccordionItem>
     )
