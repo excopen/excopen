@@ -5,7 +5,7 @@ import {useMe} from "@/features";
 
 export const Index: FC = () => {
 
-    const {myId, isSuccess} = useMe()
+    const {myId} = useMe()
     if (!myId) throw new Error("Пользователь не найден!")
 
     const {
@@ -15,7 +15,8 @@ export const Index: FC = () => {
         isEmpty,
         isFetching,
         isLoading,
-        isPlaceholderData
+        isPlaceholderData,
+        isSuccess
     } = useReviewsByUserId(myId)
 
     const [visible, setVisible] = useState<number>(3)

@@ -16,7 +16,7 @@ const LazyViewed = React.lazy(() =>
 
 export const Index: FC = () => {
 
-    const {myRole} = useMe()
+    const {myRole, isSuccess} = useMe()
     const isAuth = auth.isAuth
 
     const [city, setCity] = useState<string>("")
@@ -28,7 +28,7 @@ export const Index: FC = () => {
             <Accordion type={"single"} collapsible>
                 {myRole === UserRole.guide && isAuth && <MyTours/>}
                 {isAuth && <ToursForReview/>}
-                {isAuth && <MyReviews/>}
+                {isAuth && isSuccess && <MyReviews/>}
             </Accordion>
             <Suspense fallback={<AppSkeleton/>}>
                 <LazyViewed city={city} byCity={byCity}/>
