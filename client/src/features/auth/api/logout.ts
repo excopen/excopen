@@ -5,7 +5,6 @@ export const logout = async (): Promise<void> => {
     try {
         await axios.post(
             "https://api.excopen.ru/logout",
-            {},
             {
                 withCredentials: true,
                 timeout: 5000,
