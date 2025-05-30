@@ -2,62 +2,66 @@ import {FC} from "react";
 import {ITour} from "@/shared/types";
 import {Details} from "./details";
 import {Contributor} from "./contributor";
-import style from "./style.module.css"
-import {Reviews} from "@/entities/review";
+import s from "./style.module.css"
+import {ReviewForm, Reviews} from "@/entities/review";
 import {Contacts} from "@/shared/ui";
+import {useToursForReview} from "@/entities";
 
 type DescriptionProps = {
     tour: ITour
 }
 
 export const Index: FC<DescriptionProps> = ({tour}) => {
-    return (
-        <div className={style.container}>
 
-            <div className={style.subContainer}>
+    const {safeData: toursForReview} = useToursForReview()
+
+    return (
+        <div className={s.container}>
+
+            <div className={s.subContainer}>
                 <p>{tour.description.info}</p>
             </div>
 
-            <h2 className={style.heading}>
+            <h2 className={s.heading}>
                 Что Вас ождает:
             </h2>
 
-            <div className={style.subContainer}>
-                <p>{tour.description?.whatToExpect}</p>
-                <span className={style.bold}>
+            <div className={s.subContainer}>
+                <p>{tour.description.whatToExpect}</p>
+                <span className={s.bold}>
                     Что вам встретится по пути
                 </span>
-                <ul className={style.list}>
+                <ul className={s.list}>
                     {tour.description.places.map((location, i) => (
                         <li key={i}>{location}</li>
                     ))}
                 </ul>
-                <span className={style.bold}>
+                <span className={s.bold}>
                     О чём будем беседовать
                 </span>
-                <ul className={style.list}>
-                    {tour.description?.topics.map((topic, i) => (
+                <ul className={s.list}>
+                    {tour.description.topics.map((topic, i) => (
                         <li key={i}>{topic}</li>
                     ))}
                 </ul>
             </div>
 
-            <div className={style.subContainer}>
-                <h3 className={style.heading}>
+            <div className={s.subContainer}>
+                <h3 className={s.heading}>
                     Организационные детали
                 </h3>
-                <p>{tour.description?.orgDetails}</p>
+                <p>{tour.description.orgDetails}</p>
             </div>
 
-            <div className={style.subContainer}>
-                <h3 className={style.heading}>
+            <div className={s.subContainer}>
+                <h3 className={s.heading}>
                     Место встречи
                 </h3>
-                <p>{tour.description?.meetingPlace}</p>
+                <p>{tour.description.meetingPlace}</p>
             </div>
 
-            <div className={style.contacts}>
-                <h3 className={style.heading}>
+            <div className={s.contacts}>
+                <h3 className={s.heading}>
                     Остались вопросы?
                 </h3>
                 <Contacts contacts={tour.contacts}/>
@@ -73,6 +77,16 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                 rating={tour.rating}
                 ratingCount={tour.ratingCount}
             />
+
+            {
+                toursForReview.some(i => i.id === tour.id) &&
+                <div className={s.toursForReview}>
+                    <h2 className={s.heading}>
+                        Поделитесь вашими впечатлениями от экскурсии
+                    </h2>
+                    <ReviewForm key={tour.id} tour={tour}/>
+                </div>
+            }
 
             <Contributor contributorId={tour.contributorId}/>
 

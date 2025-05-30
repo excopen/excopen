@@ -25,3 +25,7 @@
 .list {
     @apply list-disc px-6
 }
+
+.toursForReview {
+    @apply flex flex-col gap-4 pb-8
+}
