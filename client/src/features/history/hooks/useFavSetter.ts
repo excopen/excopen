@@ -13,12 +13,12 @@ type ResultType = {
     clickHandler: () => void
 }
 
-export const useAddFavFactory = (tour: ITour): ResultType => {
+export const useFavSetter = (tour: ITour): ResultType => {
 
     const isAuth = auth.isAuth
 
     const local = history.favourites
-    const { safeData } = useFavourites(isAuth)
+    const { favourites: safeData } = useFavourites()
 
     const { mutate: addFav } = useAddToFavourites()
     const { mutate: deleteFav } = useDeleteFromFavourites()

@@ -2,7 +2,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {ApiException} from "@/shared/lib";
 import {ITour} from "@/shared/types";
 import {addManyToFavourites} from "@/features/history/api";
-import {tourLocalHistoryStore as store} from "@/features";
+import {tourLocalHistoryStore as history} from "@/features";
 
 export const useAddManyToFavourites = () => {
 
@@ -11,7 +11,7 @@ export const useAddManyToFavourites = () => {
     return useMutation<void, ApiException<ITour>, number[]>({
         mutationFn: (tourIds) => addManyToFavourites(tourIds),
         onSuccess: async () => {
-            store.clearFavourites()
+            history.clearFavourites()
             await queryClient.invalidateQueries({ queryKey: ["favourites"] })
         },
         onError: (e: ApiException<ITour>) => console.error("Ошибка синхронизации ", e.message),

@@ -13,14 +13,10 @@ export const useDeleteFromFavourites = () => {
 
             await queryClient.cancelQueries({ queryKey: ["favourites"] })
 
-            const previous = queryClient.getQueryData<ITour[]>(["favourites"])
-
             queryClient.setQueryData<ITour[]>(
                 ["favourites"],
                 (old = []) => old.filter((tour) => tour.id !== tourId)
             )
-
-            return { previous }
 
         },
         onSuccess: async () => {
@@ -28,7 +24,8 @@ export const useDeleteFromFavourites = () => {
         },
         onError: (e: ApiException<ITour>) => {
             throw new ApiException<ITour>(e.message, e.statusCode, e.data)
-        }
+        },
+        retry: 3
     })
 
 }
