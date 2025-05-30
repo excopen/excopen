@@ -14,7 +14,7 @@ export const Index: FC<HeaderProps> = ({tour}) => {
     const {width} = useWindowSize()
 
     return (
-        <div className={style.container}>
+        <header className={style.container}>
             <div className={style.startCol}>
                 <h2 className={style.title}>{tour.title}</h2>
                 <div className={"flex flex-row md:flex-col gap-2 max-md:justify-between"}>
@@ -41,6 +41,6 @@ export const Index: FC<HeaderProps> = ({tour}) => {
                     />
                 </div>
             </div>
-        </div>
+        </header>
     );
 };

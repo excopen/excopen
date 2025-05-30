@@ -16,12 +16,7 @@ export const Index: FC = () => {
     } = useTours()
     const [visible, setVisible] = useState<number>(3)
 
-    if (isError || (isEmpty && !isFetching)) return (
-        <NotFound
-            heading={"Экскурсии не найдены"}
-            text={"Измените парметры поиска или воспользуйтесь сервисом чуть позже"}
-        />
-    )
+    if (isError || (isEmpty && !isFetching)) return <NotFound type={"tours"}/>
 
     return (
         <div className={"w-full flex flex-col gap-8"}>
