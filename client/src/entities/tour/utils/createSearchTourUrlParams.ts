@@ -7,5 +7,6 @@ export const createSearchTourUrlParams = (searchParams: SearchParamsType) => ({
     "from": searchParams.from,
     "to": searchParams.to,
     "accessibility": searchParams.accessibility,
-    "byCity": searchParams.byCity
+    "byCity": searchParams.byCity,
+    "withReqs": searchParams.withReqs
 })

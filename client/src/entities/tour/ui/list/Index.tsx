@@ -14,6 +14,7 @@ export const Index: FC = () => {
         isEmpty,
         isFetching
     } = useTours()
+
     const [visible, setVisible] = useState<number>(3)
 
     if (isError || (isEmpty && !isFetching)) return <NotFound type={"tours"}/>

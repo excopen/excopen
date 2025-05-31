@@ -5,6 +5,7 @@ import {useTours} from "@/entities";
 import {Select} from "./select";
 import {searchTourStore as store} from "@/features";
 import {formatTourCount} from "@/shared/lib";
+import {ReqsButton} from "@/shared/ui";
 
 export const Index: FC = () => {
 
@@ -19,7 +20,10 @@ export const Index: FC = () => {
             </div>
             <div className={style.options}>
                 <Drawer/>
-                <Select/>
+                <div className={"flex flex-row gap-2"}>
+                    <Select/>
+                    <ReqsButton/>
+                </div>
             </div>
         </header>
     );

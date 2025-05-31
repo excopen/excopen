@@ -28,7 +28,8 @@ export class SearchParamsStore implements ILocationTour, IDate, IAccessibility, 
             to: undefined
         },
         accessibility: "",
-        byCity: false
+        byCity: false,
+        withReqs: true
     }
 
     constructor() {
@@ -114,6 +115,14 @@ export class SearchParamsStore implements ILocationTour, IDate, IAccessibility, 
 
     set sort(sort: string) {
         this._sort = sort
+    }
+
+    get withReqs(): boolean {
+        return this._searchParams.withReqs
+    }
+
+    set withReqs(withReqs: boolean) {
+        this.updateParams({ withReqs })
     }
 
 }

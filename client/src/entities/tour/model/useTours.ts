@@ -15,7 +15,8 @@ export const useTours = () => {
         from: store.searchParams.date.from instanceof Date ? store.searchParams.date.from.toISOString().split("T")[0] : "",
         to: store.searchParams.date.to instanceof Date ? store.searchParams.date.to.toISOString().split("T")[0] : "",
         accessibility: store.searchParams.accessibility,
-        byCity: store.searchParams.byCity
+        byCity: store.searchParams.byCity,
+        withReqs: store.searchParams.withReqs
     }
 
     const query = useQuery<ITour[], ApiException<ITour>>({
