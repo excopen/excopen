@@ -1,15 +1,11 @@
 import React, {FC} from "react";
-import {useSafeAvatar} from "@/shared/utils";
 
-type AvatarField = {
+type AvatarInputProps = {
     avatar: string
     update: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const AvatarField: FC<AvatarField> = ({avatar, update}) => {
-
-    const {safeAvatar, handler} = useSafeAvatar(avatar)
-
+export const AvatarInput: FC<AvatarInputProps> = ({avatar, update}) => {
     return (
         <div className={"flex justify-center w-full"}>
             <label className="cursor-pointer rounded-full bg-cover bg-center transition hover:opacity-80">
@@ -18,8 +14,7 @@ export const AvatarField: FC<AvatarField> = ({avatar, update}) => {
                     className={"rounded-full max-h-24 max-w-24"}
                     width={96}
                     height={96}
-                    src={safeAvatar}
-                    onError={handler}
+                    src={avatar}
                 />
                 <input
                     type="file"
@@ -30,4 +25,4 @@ export const AvatarField: FC<AvatarField> = ({avatar, update}) => {
             </label>
         </div>
     );
-};
+}

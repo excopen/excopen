@@ -7,9 +7,9 @@ import {useEditContext} from "@/features/edit/model";
 export const Phone: FC = () => {
 
     const {value, state, click, clear, close, focus, blur} = usePhone()
-    const {setIsDisabledPhone} = useEditContext()
+    const {setIsDisabled} = useEditContext()
 
-    useEffect(() => setIsDisabledPhone(!state.isCorrected), [setIsDisabledPhone, state.isCorrected])
+    useEffect(() => setIsDisabled(state.isCorrected), [setIsDisabled, value])
 
     const inputRef = useRef<HTMLInputElement>(null)
     useOnClickOutside(inputRef,close)

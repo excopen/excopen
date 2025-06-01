@@ -21,7 +21,7 @@ type ReturnType = {
 
 export const useTelegram = (): ReturnType => {
 
-    const {updatedUser: user, setUpdatedUser} = useEditContext()
+    const {me: user, setMe} = useEditContext()
 
     const [state, setState] = useState<FieldType>({
         isOpen: false,
@@ -32,7 +32,7 @@ export const useTelegram = (): ReturnType => {
     const [telegram, setTelegram] = useState(user.contacts?.telegram ?? "")
 
     useEffect(() => {
-        setUpdatedUser({
+        setMe({
             ...user,
             contacts: {
                 ...user.contacts,

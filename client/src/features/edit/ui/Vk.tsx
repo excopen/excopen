@@ -7,9 +7,9 @@ import {useEditContext} from "@/features/edit/model";
 export const Vk: FC = () => {
 
     const {state, clear, focus, blur, clickInput, close, value} = useVk()
-    const {setIsDisabledVk} = useEditContext()
+    const {setIsDisabled} = useEditContext()
 
-    useEffect(() => setIsDisabledVk(!state.isCorrected), [setIsDisabledVk, state.isCorrected])
+    useEffect(() => setIsDisabled(state.isCorrected), [setIsDisabled, value])
 
     const inputRef = useRef<HTMLInputElement>(null)
     useOnClickOutside(inputRef,close)

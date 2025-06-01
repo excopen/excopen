@@ -7,9 +7,9 @@ import {useEditContext} from "@/features/edit/model";
 export const Telegram: FC = () => {
     
     const {state, clear, focus, blur, clickInput, close, value} = useTelegram()
-    const {setIsDisabledTg} = useEditContext()
+    const {setIsDisabled} = useEditContext()
 
-    useEffect(() => setIsDisabledTg(!state.isCorrected), [setIsDisabledTg, state.isCorrected])
+    useEffect(() => setIsDisabled(state.isCorrected), [setIsDisabled, value])
     
     const inputRef = useRef<HTMLInputElement>(null)
     useOnClickOutside(inputRef,close)

@@ -6,5 +6,4 @@ export type SearchParamsType = {
     to: string
     accessibility: string
     byCity: boolean
-    withReqs: boolean
 }

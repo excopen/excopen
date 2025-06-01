@@ -5,5 +5,4 @@ export type SearchParamsType = {
     date: RangeType
     accessibility: string
     byCity: boolean
-    withReqs: boolean
 }
