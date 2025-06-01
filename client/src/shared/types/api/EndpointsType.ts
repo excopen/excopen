@@ -7,5 +7,6 @@ export enum EndpointsType {
     TAGS = "tags",
     BOOKING = "bookings",
     ME = "me",
-    UNREVIEWED = "unreviewed"
+    UNREVIEWED = "unreviewed",
+    GUIDE = "guide"
 }

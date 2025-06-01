@@ -46,7 +46,7 @@ export const MyInfoInput = React.forwardRef<HTMLInputElement, InputProps>(
 
         return (
             <div className={"flex flex-col gap-2"}>
-                {error === null && <span className={"text-base text-grayscale-500"}>Описание</span>}
+                {error === null && <span className={"text-base text-grayscale-400"}>Описание</span>}
                 {error && <span className={"text-base text-secondary-red"}>{error}</span>}
                 <input
                     onChange={clickHandler}

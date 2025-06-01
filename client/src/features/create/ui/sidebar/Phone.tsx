@@ -21,6 +21,7 @@ export const Phone: FC = observer(() => {
 
     return (
         <PhoneInput
+            className={"wide:w-72"}
             ref={inputRef}
             isSubmitted={isSubmitted}
             field={state}
