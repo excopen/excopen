@@ -3,7 +3,6 @@ import {useCreateTour, useUpdateTour} from "@/entities";
 
 type ReturnType = {
     submit: () => void
-    disabled: boolean
 }
 
 export const useSubmitButton = (): ReturnType => {
@@ -27,6 +26,6 @@ export const useSubmitButton = (): ReturnType => {
 
     }
 
-    return { submit, disabled: store.isDisabled }
+    return { submit }
 
 }
