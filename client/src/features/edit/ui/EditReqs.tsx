@@ -6,17 +6,10 @@ import s from "./style.module.css"
 
 export const EditReqs: FC = () => {
 
-    const {
-        tags,
-        myTags,
-        isTagsLoading,
-        isPlaceholderTags,
-        isErrorTags,
-        addTag, removeTag
-    } = useEditContext()
+    const {context, addTag, removeTag} = useEditContext()
 
-    if (isTagsLoading || isPlaceholderTags) return <AppSkeleton/>
-    if (isErrorTags) return null
+    if (context.isTagsLoading || context.isPlaceholderTags) return <AppSkeleton/>
+    if (context.isErrorTags) return null
 
     return (
         <div className={s.tagsContainer}>
@@ -27,10 +20,10 @@ export const EditReqs: FC = () => {
                 Всегда можно указать другие!
             </p>
             <div className={s.tagsList}>
-                {tags.map((tag, i) => (
+                {context.tags.map((tag, i) => (
                     <Tag
                         key={i}
-                        value={myTags}
+                        value={context.myTags}
                         tag={tag}
                         add={addTag}
                         remove={removeTag}

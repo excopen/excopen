@@ -46,7 +46,7 @@ export const SurnameInput = React.forwardRef<HTMLInputElement, InputProps>(
 
         return (
             <div className={"flex flex-col gap-2"}>
-                {error === null && <span className={"text-base text-grayscale-500"}>Фамилия</span>}
+                {error === null && <span className={"text-base text-grayscale-400"}>Фамилия</span>}
                 {error && <span className={"text-base text-secondary-red"}>{error}</span>}
                 <input
                     onChange={clickHandler}

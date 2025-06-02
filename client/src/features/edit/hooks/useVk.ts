@@ -21,7 +21,8 @@ type ReturnType = {
 
 export const useVk = (): ReturnType => {
 
-    const {me: user, setMe} = useEditContext()
+    const {context, setMe} = useEditContext()
+    const user = context.me
     
     const [state, setState] = useState<FieldType>({
         isOpen: false,

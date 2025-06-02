@@ -1,9 +1,8 @@
 import {IMe} from "@/shared/types";
 import React from "react";
 
-export type EditContextType = {
+export type EditContextValue = {
     me: IMe
-    setMe: (value: IMe) => void
     isGuide: boolean
     isDisabled: boolean
     isSuccessLoad: boolean
@@ -12,6 +11,11 @@ export type EditContextType = {
     isErrorTags: boolean
     tags: string[]
     myTags: string[]
+}
+
+export type EditContextType = {
+    context: EditContextValue
+    setMe: (value: IMe) => void
     addTag: (value: string) => void
     removeTag: (value: string) => void
     setIsDisabled: (value: boolean) => void

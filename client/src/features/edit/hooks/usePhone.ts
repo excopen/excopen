@@ -22,7 +22,8 @@ type ReturnType = {
 
 export const usePhone = (): ReturnType => {
 
-    const {me: user, setMe} = useEditContext()
+    const {context, setMe} = useEditContext()
+    const user = context.me
 
     const [phone, setPhone] = useState(user.contacts?.phone ?? "")
 

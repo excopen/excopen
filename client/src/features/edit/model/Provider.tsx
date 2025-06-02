@@ -1,4 +1,4 @@
-import React, {FC, ReactNode, useEffect, useState} from "react";
+import React, {FC, ReactNode, useEffect, useMemo, useState} from "react";
 import {EditContext} from "./context.ts";
 import {IMe, RouteNames, UserRole} from "@/shared/types";
 import {useMe, useUpdateMe} from "@/features";
@@ -6,6 +6,7 @@ import {useTags} from "@/entities";
 import defaultAvatar from "@/shared/assets/icons/avatar.svg";
 import {useNavigate} from "react-router-dom";
 import {areEqualMe} from "@/shared/utils";
+import {EditContextValue} from "@/features/edit/model/types.ts";
 
 export const EditProvider: FC<{children: ReactNode}> = ({children}) => {
 
@@ -69,18 +70,22 @@ export const EditProvider: FC<{children: ReactNode}> = ({children}) => {
     }
 
     const goBack = () => navigate(`/${RouteNames.PROFILE}`)
+
+    const context: EditContextValue = useMemo(() => ({
+        me: updatedMe,
+        isGuide: me.role === UserRole.guide,
+        isDisabled,
+        isSuccessLoad,
+        tags,
+        myTags: updatedMe.tags,
+        isTagsLoading,
+        isErrorTags,
+        isPlaceholderTags,
+    }), [me, updatedMe, isDisabled, isSuccessLoad, tags, isTagsLoading, isErrorTags, isPlaceholderTags])
     
     return (
         <EditContext.Provider value={{
-            me: updatedMe,
-            isGuide: me.role === UserRole.guide,
-            isDisabled,
-            isSuccessLoad,
-            tags,
-            myTags: updatedMe.tags,
-            isTagsLoading,
-            isErrorTags,
-            isPlaceholderTags,
+            context,
             load, goBack,
             updateName, updateSurname, updateInfo, updateImage, setIsDisabled,
             setMe: setUpdatedMe,

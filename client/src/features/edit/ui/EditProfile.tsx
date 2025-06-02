@@ -10,19 +10,16 @@ import {Phone} from "./Phone.tsx";
 export const EditProfile: FC = () => {
 
     const {
-        me,
-        isGuide,
-        isDisabled,
-        isSuccessLoad,
+        context,
         goBack, load, updateName, updateSurname, updateInfo, updateImage, setIsDisabled
     } = useEditContext()
 
     return (
         <div className={s.container}>
-            <AvatarInput avatar={me.avatar} update={updateImage}/>
+            <AvatarInput avatar={context.me.avatar} update={updateImage}/>
             <h2 className={s.heading}>Основное</h2>
-            <NameInput defaultValue={me.name} updateName={updateName} setIsDisabled={setIsDisabled}/>
-            <SurnameInput defaultValue={me.surname} updateSurname={updateSurname} setIsDisabled={setIsDisabled}/>
+            <NameInput defaultValue={context.me.name} updateName={updateName} setIsDisabled={setIsDisabled}/>
+            <SurnameInput defaultValue={context.me.surname} updateSurname={updateSurname} setIsDisabled={setIsDisabled}/>
             <div className={s.contacts}>
                 <h3 className={s.contactsHeading}>Контакты</h3>
                 <Vk/>
@@ -30,11 +27,11 @@ export const EditProfile: FC = () => {
                 <Phone/>
             </div>
             {
-                isGuide &&
-                <MyInfoInput defaultValue={me.info ?? ""} updateInfo={updateInfo} setIsDisabled={setIsDisabled}/>
+                context.isGuide &&
+                <MyInfoInput defaultValue={context.me.info ?? ""} updateInfo={updateInfo} setIsDisabled={setIsDisabled}/>
             }
-            {isSuccessLoad && <SuccessAlert/>}
-            <Button className={s.loadButton} disabled={isDisabled} onClick={load}>
+            {context.isSuccessLoad && <SuccessAlert/>}
+            <Button className={s.loadButton} disabled={context.isDisabled} onClick={load}>
                 Изменить данные
             </Button>
             <Button variant={"outline"} onClick={() => goBack()}>
