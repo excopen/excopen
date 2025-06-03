@@ -29,11 +29,6 @@ export const serializeTourToFormData = (tour: ITour): FormData => {
             orgDetails: tour.description.orgDetails,
             meetingPlace: tour.description.meetingPlace
         },
-        contacts: {
-            vk: tour.contacts.vk || "",
-            telegram: tour.contacts.telegram || "",
-            phone: tour.contacts.phone
-        },
         coordinates: {
             point: {
                 latitude: tour.coordinates.point.latitude,

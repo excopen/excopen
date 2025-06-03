@@ -2,8 +2,6 @@ import {TourAccessibility, TourFormat, TourFormatBehavior} from "@/shared/types/
 import {YandexMapCoordinates} from "@/shared/types/lib";
 import {IDescription} from "./IDescription.ts";
 import {ILocation} from "./ILocation.ts"
-import {IContacts} from "./IContacts.ts";
-import {IUser} from "@/shared/types";
 
 export interface ITour {
     id: number
@@ -21,7 +19,6 @@ export interface ITour {
     formatBehavior: TourFormatBehavior
     format: TourFormat
     accessibility: TourAccessibility
-    contacts: IContacts
     date: Date | undefined
     time: string
     duration: number
@@ -29,5 +26,4 @@ export interface ITour {
     rating: number
     ratingCount: number
     freeSeats: number
-    registered?: IUser[]
 }

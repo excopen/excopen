@@ -3,12 +3,21 @@ import {useCreateTour, useUpdateTour} from "@/entities";
 
 type ReturnType = {
     submit: () => void
+    isCreatePending: boolean
+    isUpdatePending: boolean
 }
 
 export const useSubmitButton = (): ReturnType => {
 
-    const {mutate: create} = useCreateTour()
-    const {mutate: update} = useUpdateTour()
+    const {
+        mutate: create,
+        isPending: isCreatePending
+    } = useCreateTour()
+
+    const {
+        mutate: update,
+        isPending: isUpdatePending
+    } = useUpdateTour()
 
     const {myId} = useMe()
     if (!myId) throw new Error("Неавторизованный пользователь не может создать экскурсию!")
@@ -26,6 +35,6 @@ export const useSubmitButton = (): ReturnType => {
 
     }
 
-    return { submit }
+    return { submit, isCreatePending, isUpdatePending }
 
 }

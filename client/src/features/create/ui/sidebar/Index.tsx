@@ -16,9 +16,6 @@ import {FormatBehavior} from "./FormatBehavior.tsx";
 import {Price} from "./Price.tsx";
 import {PriceForPerson} from "./PriceForPerson.tsx";
 
-import {VK} from "./VK.tsx";
-import {Telegram} from "./Telegram.tsx";
-import {Phone} from "./Phone.tsx";
 import {GroupCapacity} from "./GroupCapacity.tsx";
 import {RouteLength} from "./RouteLength.tsx";
 import {Time} from "@/features/create/ui/sidebar/Time.tsx";
@@ -52,12 +49,6 @@ export const Index: FC = () => {
                 <Price/>
                 <PriceForPerson/>
                 <GroupCapacity/>
-            </div>
-            <div className={style.subContainer}>
-                <span className={style.heading}>Контакты</span>
-                <VK/>
-                <Telegram/>
-                <Phone/>
             </div>
             {width >= 1024 && <SubmitButton orientation={Orientation.HORIZONTAL}/>}
         </div>

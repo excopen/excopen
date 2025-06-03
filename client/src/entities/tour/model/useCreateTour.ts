@@ -3,6 +3,7 @@ import {ApiException} from "@/shared/lib";
 import {ITour, RouteNames} from "@/shared/types";
 import {createTour} from "@/entities/tour/api";
 import {useNavigate} from "react-router-dom";
+import {createTourStore as store} from "@/features";
 
 export const useCreateTour = () => {
 
@@ -10,8 +11,15 @@ export const useCreateTour = () => {
 
     return useMutation<void, ApiException<ITour>, ITour>({
         mutationFn: (tour) => createTour(tour),
-        onSuccess: async () => navigate(`/${RouteNames.SUCCESS}`),
-        onError: (e: ApiException<ITour>) => console.error("Не удалось добавить экскурсию", e.message)
+        onSuccess: () => {
+            store.init()
+            navigate(`/${RouteNames.SUCCESS}`)
+        },
+        onError: () => {
+            store.init()
+            navigate(`/${RouteNames.ERROR}`)
+        },
+        retry: 3
     })
 
 }

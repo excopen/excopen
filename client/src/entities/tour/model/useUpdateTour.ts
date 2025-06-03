@@ -25,7 +25,7 @@ export const useUpdateTour = () => {
             await queryClient.invalidateQueries({ queryKey: ["tour", updatedTour.id] })
             navigate(`/${RouteNames.SUCCESS}`)
         },
-        onError: (e: ApiException<ITour>) => console.error("Экскусрию не удалось обновить", e.message),
+        onError: () => navigate(`/${RouteNames.ERROR}`),
         retry: 3
     })
 

@@ -28,7 +28,6 @@ export const useTime = (store: ITime): ReturnType => {
             isTouched: true,
             isOpen: true
         })
-        console.log(store.time)
     }
 
     const click = (e: React.ChangeEvent<HTMLInputElement>) => {

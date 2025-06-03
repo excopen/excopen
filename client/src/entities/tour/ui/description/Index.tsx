@@ -1,11 +1,12 @@
 import {FC} from "react";
-import {ITour} from "@/shared/types";
+import {ITour, RouteNames} from "@/shared/types";
 import {Details} from "./details";
 import {Contributor} from "./contributor";
 import s from "./style.module.css"
 import {ReviewForm, Reviews} from "@/entities/review";
-import {Contacts} from "@/shared/ui";
-import {useToursForReview} from "@/entities";
+import {AppSkeleton, Contacts, ContributorSkeleton} from "@/shared/ui";
+import {useToursForReview, useUser} from "@/entities";
+import {useNavigate} from "react-router-dom";
 
 type DescriptionProps = {
     tour: ITour
@@ -13,7 +14,21 @@ type DescriptionProps = {
 
 export const Index: FC<DescriptionProps> = ({tour}) => {
 
-    const {safeData: toursForReview} = useToursForReview()
+    const navigate = useNavigate()
+
+    const {
+        safeData: toursForReview,
+        isError: isToursForReviewError,
+        isLoading: isToursForReviewLoading
+    } = useToursForReview()
+
+    const {
+        user: guide,
+        isLoading: isGuideLoading,
+        isError: isGuideError
+    } = useUser(tour.contributorId)
+
+    if (isGuideError || isToursForReviewError) navigate(`/${RouteNames.MAIN}`)
 
     return (
         <div className={s.container}>
@@ -64,7 +79,11 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                 <h3 className={s.heading}>
                     Остались вопросы?
                 </h3>
-                <Contacts contacts={tour.contacts}/>
+                {
+                    isGuideLoading ?
+                        <ContributorSkeleton/> :
+                        <Contacts contacts={guide.contacts}/>
+                }
             </div>
 
             <Details
@@ -84,7 +103,7 @@ export const Index: FC<DescriptionProps> = ({tour}) => {
                     <h2 className={s.heading}>
                         Поделитесь вашими впечатлениями от экскурсии
                     </h2>
-                    <ReviewForm key={tour.id} tour={tour}/>
+                    {isToursForReviewLoading ? <AppSkeleton/> : <ReviewForm key={tour.id} tour={tour}/>}
                 </div>
             }
 

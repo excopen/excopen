@@ -1,7 +1,6 @@
 import {BaseStore} from "@/shared/lib";
 import {ITour, TourAccessibility, TourFormat, TourFormatBehavior} from "@/shared/types";
 
-import {ContactsStore} from "./ContactsStore.ts";
 import {DescriptionStore} from "./DescriptionStore.ts";
 import {PriceStore} from "./PriceStore.ts";
 import {CoordinatesStore} from "./CoordinatesStore.ts";
@@ -15,9 +14,8 @@ import {SelectOptionsStore} from "./SelectOptionsStore.ts";
 class CreateTourStore extends BaseStore {
 
     private _isEdit: boolean = false
-    private _id: number = 0
+    private _id: number = Date.now()
 
-    contacts = new ContactsStore()
     description = new DescriptionStore()
     price = new PriceStore()
     coordinates = new CoordinatesStore()
@@ -36,7 +34,6 @@ class CreateTourStore extends BaseStore {
 
         this.isSubmitted = false
 
-        this.contacts = new ContactsStore()
         this.description = new DescriptionStore()
         this.price = new PriceStore()
         this.coordinates = new CoordinatesStore()
@@ -51,7 +48,6 @@ class CreateTourStore extends BaseStore {
 
     set tour(value: ITour) {
         this._id = value.id
-        this.contacts = new ContactsStore(value.contacts)
         this.description = new DescriptionStore(value.description)
         this.price = new PriceStore(value.format, value.price, value.priceForPerson, value.groupCapacity)
         this.coordinates = new CoordinatesStore(value.coordinates)
@@ -80,7 +76,6 @@ class CreateTourStore extends BaseStore {
             formatBehavior: this.selectOptions.formatBehavior as TourFormatBehavior,
             format: this.price.format as TourFormat,
             accessibility: this.selectOptions.accessibility as TourAccessibility,
-            contacts: this.contacts,
             date: this.time.date,
             time: this.time.time,
             duration: this.time.duration,
@@ -95,7 +90,7 @@ class CreateTourStore extends BaseStore {
         return [
             this.params, this.description, this.time, this.images,
             this.tags, this.price, this.location, this.coordinates,
-            this.selectOptions, this.contacts
+            this.selectOptions
         ]
     }
 
