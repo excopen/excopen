@@ -1,17 +1,16 @@
 import {FC} from "react";
 import {observer} from "mobx-react-lite";
 import {Calendar, CalendarSingleButton, Popover, PopoverContent, PopoverTrigger} from "@/shared/ui";
-import {useSingleDate, useSubmitted} from "@/shared/hooks";
-import {createTourStore as store} from "@/features/create/model";
+import {useSingleDate, useSubmitted} from "@/features/create/hooks";
 
 export const DatePicker: FC = observer(() => {
 
-    const {state, setIsOpen, select, click, clear} = useSingleDate(store.time)
-    const {isSubmitted} = useSubmitted(store)
+    const {state, setIsOpen, select, click, clear} = useSingleDate()
+    const isSubmitted = useSubmitted()
 
     return (
         <Popover open={state.isOpen} onOpenChange={setIsOpen}>
-            <PopoverTrigger role={"form-datePicker"} asChild>
+            <PopoverTrigger asChild>
                 <CalendarSingleButton
                     isSubmitted={isSubmitted}
                     state={state}
@@ -22,7 +21,7 @@ export const DatePicker: FC = observer(() => {
             <PopoverContent side={"bottom"}>
                 <Calendar
                     defaultMonth={state.date}
-                    mode="single"
+                    mode={"single"}
                     selected={state.date}
                     onSelect={select}
                     initialFocus

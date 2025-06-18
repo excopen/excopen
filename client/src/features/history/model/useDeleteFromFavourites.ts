@@ -24,8 +24,7 @@ export const useDeleteFromFavourites = () => {
         },
         onError: (e: ApiException<ITour>) => {
             throw new ApiException<ITour>(e.message, e.statusCode, e.data)
-        },
-        retry: 3
+        }
     })
 
 }

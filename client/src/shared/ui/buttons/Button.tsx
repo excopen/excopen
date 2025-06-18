@@ -18,6 +18,7 @@ const ButtonVariants = cva(
           logout: "border border-secondary-red bg-transparent text-secondary-red hover:border-grayscale-500 hover:text-grayscale-500",
           secondary: "bg-grayscale-300 text-grayscale-500 hover:opacity-90 flex justify-between",
           profile: "bg-grayscale-0 text-grayscale-500 hover:bg-grayscale-100 duration-300 flex justify-between",
+          booking: "bg-grayscale-300 text-grayscale-500 hover:opacity-80 transition-all flex justify-center w-full",
       },
       size: {
           default: "h-12 px-10 rounded-xl",

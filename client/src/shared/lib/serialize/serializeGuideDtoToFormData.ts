@@ -6,7 +6,8 @@ export const serializeGuideDtoToFormData = (dto: GuideDto) => {
 
     const guideDtoData: GuideDto = {
         phone: dto.phone,
-        info: dto.info
+        info: dto.info,
+        code: dto.code
     }
 
     formData.append(

@@ -8,5 +8,9 @@ export enum EndpointsType {
     BOOKING = "bookings",
     ME = "me",
     UNREVIEWED = "unreviewed",
-    GUIDE = "guide"
+    GUIDE = "guide",
+    SLOTS = "booking-slots",
+    CODE = "send-code",
+    APPLY_GUIDE = "apply",
+    ORDERS = "orders"
 }

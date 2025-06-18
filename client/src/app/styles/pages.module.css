@@ -25,7 +25,7 @@
 }
 
 .onboarding {
-    @apply w-full p-4
+    @apply w-full
 }
 
 .createTour {
@@ -33,7 +33,7 @@
 }
 
 .booking {
-    @apply flex flex-col h-screen pt-10 lg:pt-24 gap-4 items-center
+    @apply flex flex-col pt-10 lg:pt-24 gap-4 items-center w-full
 }
 
 .success {
@@ -85,7 +85,7 @@
 }
 
 .errorHeading {
-    @apply text-2xl text-grayscale-500 font-semibold
+    @apply text-2xl text-grayscale-500 font-semibold text-center
 }
 
 .errorText {

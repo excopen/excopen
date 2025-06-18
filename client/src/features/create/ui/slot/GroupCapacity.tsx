@@ -1,19 +1,18 @@
 import {FC} from "react";
 import {Slider} from "@/shared/ui";
-import {useSubmitted} from "@/shared/hooks";
 import {createTourStore as store} from "@/features/create/model";
 import {formatPeople} from "@/shared/lib/format";
 import {cn} from "@/app/lib";
 import {observer} from "mobx-react-lite";
-import {useGroupCapacity, useTourFormat} from "@/features/create/hooks";
+import {useGroupCapacity, useTourFormat, useSubmitted} from "@/features/create/hooks";
 import {tourFormatValues as values} from "@/shared/config";
 import {TourFormat} from "@/shared/types";
 
 export const GroupCapacity: FC = observer(() => {
 
-    const {state, isError, update} = useGroupCapacity(store.price)
     const {state: format} = useTourFormat(store.price, values)
-    const {isSubmitted} = useSubmitted(store)
+    const {state, isError, update} = useGroupCapacity()
+    const isSubmitted = useSubmitted()
 
     if (format.value === TourFormat.INDIVIDUAL) return null
 

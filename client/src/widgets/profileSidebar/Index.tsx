@@ -14,11 +14,12 @@ export const Index: FC = () => {
         isEmpty,
         isFetching,
         isError,
-        isRefetching
+        isRefetching,
+        isGuest
     } = useMe()
 
+    if (isGuest || isError || (isEmpty && !isFetching)) return <GuestSidebar/>
     if (isLoading || (isEmpty && isFetching) || isRefetching) return <SidebarSkeleton/>
-    if (isError || (isEmpty && !isFetching)) return <GuestSidebar/>
 
     switch (myRole) {
         case UserRole.client:

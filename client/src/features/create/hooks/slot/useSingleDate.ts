@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {ISingleDate} from "@/shared/types";
+import {createTourStore as store} from "@/features";
 
 type ReturnType = {
     state: {
@@ -13,16 +13,16 @@ type ReturnType = {
     clear: () => void
 }
 
-export const useSingleDate = (store: ISingleDate): ReturnType => {
+export const useSingleDate = (): ReturnType => {
 
-    const [date, setDate] = useState<Date | undefined>(store.date)
+    const [date, setDate] = useState<Date | undefined>(store.slots.current.date)
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [isTouched, setIsTouched] = useState<boolean>(false)
 
     useEffect(() => {
-        store.date = date
-    }, [date, store])
+        store.slots.current.date = date
+    }, [date])
 
     const select = (selectedRange: Date | undefined) => {
         if (selectedRange) setDate(selectedRange)

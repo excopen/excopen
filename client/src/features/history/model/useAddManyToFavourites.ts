@@ -14,8 +14,7 @@ export const useAddManyToFavourites = () => {
             history.clearFavourites()
             await queryClient.invalidateQueries({ queryKey: ["favourites"] })
         },
-        onError: (e: ApiException<ITour>) => console.error("Ошибка синхронизации ", e.message),
-        retry: 5
+        onError: (e: ApiException<ITour>) => console.error("Ошибка синхронизации ", e.message)
     })
 
 }

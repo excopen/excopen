@@ -13,9 +13,10 @@ import {
 import {useCreateTour} from "@/shared/hooks";
 import {useMe} from "@/features";
 import {UserRole} from "@/shared/types";
-import {Phone} from "@/features/auth/ui/Phone.tsx";
 import {useAuthGuide} from "@/features/auth/hooks";
 import {Speech} from "lucide-react";
+import {InputCodeOpt} from "./InputCodeOPT.tsx";
+import {PhoneInput} from "@/features/auth/ui/dialog/PhoneInput.tsx";
 
 export const AuthGuideDialog: FC = () => {
 
@@ -27,7 +28,13 @@ export const AuthGuideDialog: FC = () => {
         info,
         isDisabled,
         isPending,
-        setIsOpen, setIsCorrectedPhone, setIsCorrectedInfo, setInfo, setPhone, load
+        opt,
+        timeLeft,
+        isActiveTimer,
+        isShowOpt,
+        isCorrectedPhone,
+        setIsOpen, setIsCorrectedPhone, setIsCorrectedInfo,
+        setInfo, setPhone, load, sendCode, updateOpt, resetTimer
     } = useAuthGuide()
 
     if (me.role === UserRole.guide) return (
@@ -55,13 +62,22 @@ export const AuthGuideDialog: FC = () => {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4">
-                    <div className={"grid gap-2 w-full"}>
-                        <span className={"text-grayscale-400 text-sm"}>Номер телефона</span>
-                        <Phone
-                            setIsDisabled={setIsCorrectedPhone}
-                            setPhone={setPhone}
+                    <PhoneInput
+                        isCorrectedPhone={isCorrectedPhone}
+                        sendCode={sendCode}
+                        setIsCorrectedPhone={setIsCorrectedPhone}
+                        setPhone={setPhone}
+                    />
+                    {
+                        isShowOpt &&
+                        <InputCodeOpt
+                            value={opt}
+                            updateValue={updateOpt}
+                            timeLeft={timeLeft}
+                            resetTimer={resetTimer}
+                            isActiveTimer={isActiveTimer}
                         />
-                    </div>
+                    }
                     <div className={"grid gap-2 w-full"}>
                         <MyInfoInput
                             defaultValue={info}
@@ -78,7 +94,7 @@ export const AuthGuideDialog: FC = () => {
                         onClick={load}
                         disabled={isDisabled}
                     >
-                        {isPending ? "Загружаем" : "Стать гидом"}
+                    {isPending ? "Загружаем" : "Стать гидом"}
                     </Button>
                 </DialogFooter>
             </DialogContent>

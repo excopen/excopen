@@ -3,8 +3,9 @@ import {TourCard} from "@/entities";
 import s from "./style.module.css"
 import {useFavourites} from "@/features";
 import {AppSkeleton, TourPagination} from "@/shared/ui";
+import {observer} from "mobx-react-lite";
 
-export const FavList: FC = () => {
+export const FavList: FC = observer(() => {
 
     const {
         favourites,
@@ -31,7 +32,7 @@ export const FavList: FC = () => {
                 <span className={s.notFound}>Возникла проблема с загрузкой данных.</span>
             }
             {
-                isLoading || isPlaceholderData || isPendingSync
+                isLoading || (isPlaceholderData && isFetching) || isPendingSync
                     ?
                     <AppSkeleton/>
                     :
@@ -45,4 +46,4 @@ export const FavList: FC = () => {
             }
         </div>
     );
-};
+})

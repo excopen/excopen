@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import {ITime} from "@/shared/types";
+import {createTourStore as store} from "@/features";
 
 type FieldType = {
     isOpen: boolean
@@ -15,7 +15,7 @@ type ReturnType = {
     blur: () => void
 }
 
-export const useTime = (store: ITime): ReturnType => {
+export const useTime = (): ReturnType => {
 
     const [state, setState] = useState<FieldType>({
         isOpen: false,
@@ -23,11 +23,8 @@ export const useTime = (store: ITime): ReturnType => {
     })
 
     const updateField = (newValue: string) => {
-        store.time = newValue
-        setState({
-            isTouched: true,
-            isOpen: true
-        })
+        store.slots.current.time = newValue
+        setState({ isTouched: true, isOpen: true })
     }
 
     const click = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,13 +37,15 @@ export const useTime = (store: ITime): ReturnType => {
     }
 
     const blur = () => {
-        if (!state.isOpen && store.time === "") {
-            setState((prev) => ({ ...prev, isTouched: true }))
+        if (!state.isOpen && store.slots.current.time === "") {
+            setState((prev) => (
+                { ...prev, isTouched: true }
+            ))
         }
     }
 
     return {
-        value: store.time,
+        value: store.slots.current.time,
         state,
         click, focus, blur
     }
